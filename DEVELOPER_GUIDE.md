@@ -104,13 +104,15 @@ The code block below assumes you start on your own branch and want to update it 
 
 ## Pull requests
 
-When you are done with your changes, and want to merge your branch into `master`, you will need to create a Pull Request (PR). This is done by going to the "Pull requests" tab on GitHub, and clicking the "New pull request" button. You will then be presented with a page where you can select the branch you want to merge into `master`, and the branch you want to merge from. You can then click the "Create pull request" button. You will then be presented with a page where you can write a description of the changes you have made. In this repository you can approve your own PR, and merge it into `master`, without any other reviewers. If you want others to review your PR, you can add them as reviewers.
+When you are done with your changes, and want to merge your branch into `master`, you will need to create a Pull Request (PR). This is done by going to the "Pull requests" tab on GitHub, and clicking the "New pull request" button. You will then be presented with a page where you can select the branch you want to merge into `master`, and the branch you want to merge from. You can then click the "Create pull request" button. You will then be presented with a page where you can write a description of the changes you have made. If this PR closes an issue add this in the description: `Closes #issue-number`, this will automatically close the issue when the PR is merged.
+
+In this repository you can approve your own PR, and merge it into `master`, without any other reviewers. If you want others to review your PR, you can add them as reviewers.
 
 When the review is done, you are ready to merge into `master`. Click the "Merge pull request" button, and then the "Confirm merge" button (pick the default option (not squash merge)). You have now merged your branch into `master`, and your changes are now live.
 
 
 ## Note
-Note: I have not used GitLab extensively, so I am not completely sure how the workflow is there. I wrote this `DEVELOPER_GUIDE` with GitHub in mind, but I assume the workflow is similar on GitLab. If there is any devitation from the GitHub workflow, please update this guide.
+Note: I have not used GitLab extensively, so I am not completely sure how the workflow is there. I wrote this DEVELOPER_GUIDE with GitHub in mind, but I assume the workflow is similar on GitLab. If there is any devitation from the GitHub workflow, please update this guide.
 
 ## Best practices
 
@@ -123,6 +125,6 @@ Note: I have not used GitLab extensively, so I am not completely sure how the wo
 ### Other best practices
 - Always use `this` when referring to class variables (I believe this is automated with the settings.json file)
 - You should never use "[magic numbers](https://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)", instead create a constant variable and reference it instead, this makes the code clearer and easier to read.
-- You should create Javadoc comments for each class, where you explain it's use and functionality.
-![Alt text](image-3.png)
+- You should create Javadoc comments for each class, where you explain it's use and functionality. \
+<img src="img/really-important-image.png" alt="really great meme" style="width:400px;"/>
 - If you find yourself nesting a lot of if-statements, you should consider using the [guard clause](https://codingbeautydev.com/blog/stop-using-nested-ifs/?expand_article=1) pattern (invert the if statement and return early).
