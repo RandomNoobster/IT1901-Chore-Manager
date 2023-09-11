@@ -1,7 +1,12 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "[java]": {
-        "editor.tabSize": 2
+        "editor.tabSize": 2,
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "redhat.java",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true
+        },
     },
     "java.test.config": [
         {
@@ -15,5 +20,18 @@
     ],
     "java.test.defaultConfig": "modules-template testing",
     "java.compile.nullAnalysis.mode": "automatic",
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+
+    "java.cleanup.actionsOnSave": [
+        "addOverride"
+    ],
+    "java.saveActions.organizeImports": true,
+    "java.completion.importOrder": [
+        "#",
+        "java",
+        "javax",
+        "org",
+        "com",
+        ""
+    ],
 }
