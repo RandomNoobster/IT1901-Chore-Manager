@@ -1,4 +1,4 @@
-For a more detailed overview of how you should develop and what convensions this projects use, please see [DEVELOPER_GUIDE.md](/DEVELOPER_GUIDE.md).
+For a more detailed overview of how you should develop and what convensions this project uses, please see [DEVELOPER_GUIDE.md](/DEVELOPER_GUIDE.md).
 
 To run project:
 - Change directory to [module-template/ui](/modules-template/ui/)

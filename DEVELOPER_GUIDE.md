@@ -1,6 +1,6 @@
 # Developer guide
 
-This document is intended to provide information about the project structure, best practices and other useful information for contributors.
+This document is intended to provide information about the project structure, best practices and other useful information for developers.
 
 ## Prerequisites
 
@@ -77,13 +77,13 @@ mvn javafx:run
 
 ## Branching
 
-You should always make changes on a branch (never make direct changes to the `master` branch). A new branch should be created for work on a new issue. The branch name should be the issue number followed by a short description of the issue. For example, if you are working on issue #1, you should create a branch named `1-implementing-new-feature`. This will ensure that the branch is automatically linked to that issue, and add some QOL improvements when creating pull requests.
+You should always make changes on a branch (never make direct changes to the `master` branch). A new branch should be created for work on a new issue. The branch name should be the issue number followed by a short description of the issue. For example, if you are working on issue #1, you should create a branch named `1-implementing-new-feature`. This will ensure that the branch is automatically linked to that issue, and add some QOL improvements when creating merge requests.
 
 ### Creating a new branch
 This is a step by step guide on how to create a new branch. You first need to be on a branch in order to branch out from it (often just the `master` branch). Then you write the command `git checkout -b <branch-name>`. This will create a new branch with the name you specified, and automatically switch to that branch. You can now make changes to the code, and commit them to the branch. 
 
 ### Updating a branch with content in `master`
-Before you create a pull request, you should make sure that your branch is up to date with the `master` branch. This is to ensure that there are no merge conflicts when you create the pull request. \
+Before you create a merge request, you should make sure that your branch is up to date with the `master` branch. This is to ensure that there are no merge conflicts when you create the merge request. \
 The code block below assumes you start on your own branch and want to update it with main.
 ```
 (On your own branch)
@@ -102,11 +102,11 @@ The code block below assumes you start on your own branch and want to update it 
 > git push
 ```
 
-## Pull requests
+## Merge requests (or pull requests)
 
-When you are done with your changes, and want to merge your branch into `master`, you will need to create a Pull Request (PR). This is done by going to the "Pull requests" tab on GitHub, and clicking the "New pull request" button. You will then be presented with a page where you can select the branch you want to merge into `master`, and the branch you want to merge from. You can then click the "Create pull request" button. You will then be presented with a page where you can write a description of the changes you have made. If this PR closes an issue add this in the description: `Closes #issue-number`, this will automatically close the issue when the PR is merged.
+When you are done with your changes, and want to merge your branch into `master`, you will need to create a Merge Request. This is done by going to the "Merge requests" tab on GitLab, and clicking the "New merge request" button. You will then be presented with a page where you can select the branch you want to merge into `master`, and the branch you want to merge from. You can then click the "Create merge request" button. You will then be presented with a page where you can write a description of the changes you have made. If this PR closes an issue add this in the description: `Closes #issue-number`, this will automatically close the issue when the merge request is merged.
 
-In this repository you can approve your own PR, and merge it into `master`, without any other reviewers. If you want others to review your PR, you can add them as reviewers.
+In this repository you can approve your own merge request, and merge it into `master`, without any other reviewers. If you want others to review your PR, you can add them as reviewers.
 
 When the review is done, you are ready to merge into `master`. Click the "Merge pull request" button, and then the "Confirm merge" button (pick the default option (not squash merge)). You have now merged your branch into `master`, and your changes are now live.
 
@@ -125,6 +125,7 @@ Note: I have not used GitLab extensively, so I am not completely sure how the wo
 ### Other best practices
 - Always use `this` when referring to class variables (I believe this is automated with the settings.json file)
 - You should never use "[magic numbers](https://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)", instead create a constant variable and reference it instead, this makes the code clearer and easier to read.
-- You should create Javadoc comments for each class, where you explain it's use and functionality. \
-<img src="img/really-important-image.png" alt="really great meme" style="width:400px;"/>
-- If you find yourself nesting a lot of if-statements, you should consider using the [guard clause](https://codingbeautydev.com/blog/stop-using-nested-ifs/?expand_article=1) pattern (invert the if statement and return early).
+- If you find yourself nesting a lot of if-statements, you should consider using the [guard clause](https://codingbeautydev.com/blog/stop-using-nested-ifs/?expand_article=1) pattern (invert the if-statement and return early).
+- You should create Javadoc comments for each class, where you explain it's use and functionality.
+![really important meme](/img/really-important-image.png)
+
