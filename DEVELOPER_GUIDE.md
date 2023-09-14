@@ -81,6 +81,9 @@ Run the application:
 mvn javafx:run
 ```
 
+## Issues
+You should create a new issue in the Product Backlog, this issue should contain a user story. The short story should be in the title, and potential implementation details should be described in the description. When moving it to Sprint-Backlog be sure to update the description with the implementation details you have decided on. Optionally you could create a todo-list in the description, and check off the tasks as you complete them.
+
 ## Branching
 
 You should always make changes on a branch (never make direct changes to the `master` branch). A new branch should be created for work on a new issue. The branch name should be the issue number followed by a short description of the issue. For example, if you are working on issue #1, you should create a branch named `1-implementing-new-feature`. This will ensure that the branch is automatically linked to that issue, and add some QOL improvements when creating merge requests.
