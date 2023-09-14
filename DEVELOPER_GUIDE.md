@@ -58,6 +58,12 @@ Not sure if this is the best way to structure the project, I may change this. We
 
 ## Run the code
 
+First install the necessary dependencies in [chore-manager](/chore-manager/):
+```
+cd chore-manager/
+mvn install -DskipTests 
+```
+
 Make sure you are in the [ui folder](/chore-manager/ui/) when running these commands (`cd chore-manager/ui/`)
 
 Compile code:
