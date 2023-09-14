@@ -14,11 +14,11 @@
             "vmArgs": []
         },
         {
-            "name": "modules-template testing",
+            "name": "chore-manager testing",
             "vmArgs": ["--add-opens", "calc.ui/ui=ALL-UNNAMED", "--add-exports", "javafx.graphics/com.sun.javafx.application=ALL-UNNAMED"]
         }
     ],
-    "java.test.defaultConfig": "modules-template testing",
+    "java.test.defaultConfig": "chore-manager testing",
     "java.compile.nullAnalysis.mode": "automatic",
     "java.debug.settings.onBuildFailureProceed": true,
 

@@ -50,15 +50,15 @@ These settings have been added (you do not need to do anything to get this added
 ## Project structure
 
 This project follows the Model-View-Controller (MVC) pattern. \
-All code for the **model** is located in the [model package](/modules-template/core/src/main/java/core/). \
-All code for the **view** is located in the [resources/ui folder](/modules-template/ui/src/main/resources/ui/). \
-All code for the **controller** is located in the [ui package](/modules-template/ui/src/main/java/ui/). \
+All code for the **model** is located in the [model package](/chore-manager/core/src/main/java/core/). \
+All code for the **view** is located in the [resources/ui folder](/chore-manager/ui/src/main/resources/ui/). \
+All code for the **controller** is located in the [ui package](/chore-manager/ui/src/main/java/ui/). \
 \
 Not sure if this is the best way to structure the project, I may change this. We need to discuss this.
 
 ## Run the code
 
-Make sure you are in the [ui folder](/modules-template/ui/) when running these commands (`cd modules-template/ui/`)
+Make sure you are in the [ui folder](/chore-manager/ui/) when running these commands (`cd chore-manager/ui/`)
 
 Compile code:
 ```

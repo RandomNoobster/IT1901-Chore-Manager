@@ -12,7 +12,7 @@
         },
         {
             "type": "java",
-            "name": "Launch modules-template - multi-module, multi-package ",
+            "name": "Launch chore-manager - multi-module, multi-package ",
             "request": "launch",
             "mainClass": "calc.ui/ui.App",
             "projectName": "modules-ui",
