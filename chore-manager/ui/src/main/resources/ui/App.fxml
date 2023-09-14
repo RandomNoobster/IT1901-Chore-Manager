@@ -8,7 +8,7 @@
 <!-- Main page shall be login -->
 
 
-<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" prefHeight="720.0">
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController" minHeight="-Infinity" minWidth="-Infinity" prefWidth="854.0" prefHeight="480.0">
    <columnConstraints>
       <ColumnConstraints />
    </columnConstraints>
