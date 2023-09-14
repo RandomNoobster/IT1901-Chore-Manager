@@ -1,7 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
     "[java]": {
-        "editor.tabSize": 2,
+        "editor.tabSize": 4,
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "redhat.java",
         "editor.codeActionsOnSave": {
@@ -23,7 +23,8 @@
     "java.debug.settings.onBuildFailureProceed": true,
 
     "java.cleanup.actionsOnSave": [
-        "addOverride"
+        "addOverride",
+        "qualifyMembers"
     ],
     "java.saveActions.organizeImports": true,
     "java.completion.importOrder": [
