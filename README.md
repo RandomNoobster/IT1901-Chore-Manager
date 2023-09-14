@@ -1,6 +1,6 @@
 For a more detailed overview of how you should develop and what convensions this project uses, please see [DEVELOPER_GUIDE.md](/DEVELOPER_GUIDE.md).
 
-To run project: \
+To run project: 
 
 EITHER: \
 Run this command in the root folder:
