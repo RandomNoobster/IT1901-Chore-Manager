@@ -60,7 +60,7 @@ Not sure if this is the best way to structure the project, I may change this. We
 
 First install the necessary dependencies in [chore-manager](/chore-manager/):
 ```
-cd chore-manager/
+cd chore-manager
 mvn install -DskipTests 
 ```
 
