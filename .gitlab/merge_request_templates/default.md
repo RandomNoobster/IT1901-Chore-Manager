@@ -1,10 +1,9 @@
 ## Description (Enter your description below)
 
 ## Closes (List all issues closed)
-Closes #number
+Closes #%{source_branch}
 
 
-/done
 
 /unlabel ~"Sprint Backlog (To do)" ~"In Progress"
 
