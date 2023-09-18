@@ -20,7 +20,7 @@ public class App extends Application {
 
         // CSS
         Scene scene = new Scene(parent);
-        scene.getStylesheets().add(this.getClass().getResource("style.css").toExternalForm());
+        scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
 
         stage.setTitle("Chore Manager");
         stage.setScene(scene);
