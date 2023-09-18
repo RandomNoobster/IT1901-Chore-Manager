@@ -22,7 +22,7 @@
 
 
 
-.dayContainer {
+.dayContainer, .weekNumberContainer {
     -fx-background-color: none; 
 
     -fx-text-fill: derive(-textWhite, 0%); ; /* Text color */
@@ -37,11 +37,9 @@
 
 }
 
-.dayContainer:hover {
+.dayContainer:hover, .weekNumberContainer:hover {
     -fx-border-color: #8ecaf3; /* Border color */
     -fx-background-color: #67B05E;
-
-
 }
 
 .todayContainer {
