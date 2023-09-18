@@ -45,8 +45,11 @@ public class Chore {
         return this.points;
     }
 
-    public void addPoints(int points) {
-        this.points += points;
+    public void setPoints(int points) {
+        if (points < 0) {
+            throw new IllegalArgumentException("Points cannot be negative");
+        }
+        this.points = points;
     }
 
     public JSONObject encodeToJSON() {

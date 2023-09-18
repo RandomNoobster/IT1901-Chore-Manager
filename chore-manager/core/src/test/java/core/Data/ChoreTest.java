@@ -3,6 +3,7 @@ package core.Data;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 
@@ -63,9 +64,14 @@ public class ChoreTest {
     }
 
     @Test
-    public void testAddPoints() {
-        assertDoesNotThrow(() -> this.chore.addPoints(10));
-        assertEquals(20, this.chore.getPoints());
+    public void testSetPoints() {
+        // Test that the points are set correctly for positive values
+        int setPoints = 1;
+        assertDoesNotThrow(() -> this.chore.setPoints(setPoints));
+        assertEquals(setPoints, this.chore.getPoints());
+
+        // Test for negative values
+        assertThrows(IllegalArgumentException.class, () -> this.chore.setPoints(-1));
     }
 
     @Test
