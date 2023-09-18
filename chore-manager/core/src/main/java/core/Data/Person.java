@@ -5,8 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
     private UUID uuid;
     private String name;
@@ -20,7 +22,13 @@ public class Person {
     public Person(String name, List<Chore> chores) {
         this.uuid = UUID.randomUUID();
         this.name = name;
-        this.chores = chores;
+        this.chores = new ArrayList<Chore>(chores);
+    }
+
+    public Person(String name, UUID uuid, List<Chore> chores) {
+        this.uuid = uuid;
+        this.name = name;
+        this.chores = new ArrayList<Chore>(chores);
     }
 
     public String getName() {
@@ -42,9 +50,15 @@ public class Person {
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("uuid", this.uuid);
+        map.put("uuid", this.uuid.toString());
         map.put("name", this.name);
-        map.put("chores", this.chores);
+
+        JSONArray choresJSON = new JSONArray();
+        for (Chore chore : this.chores) {
+            choresJSON.add(chore.encodeToJSON());
+        }
+
+        map.put("chores", choresJSON);
 
         return new JSONObject(map);
     }

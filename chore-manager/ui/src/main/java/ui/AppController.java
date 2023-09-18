@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
+import core.FileHandling.JSONConverter;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import ui.ViewClasses.WeekView;
@@ -21,6 +23,7 @@ public class AppController {
 
     // Use this for future functionality for first iteration
     private Person TEMP_PERSON = new Person("TEST_PERS");
+    private Person TEMP_PERSON1 = new Person("TEST_PERS1");
 
     public AppController() {
 
@@ -34,6 +37,21 @@ public class AppController {
             this.weekContainer.getChildren().add(week.getFxml());
         }
 
+        // This is for testing File Handling
+        Chore chore1 = new Chore("TEST_CHORE", LocalDate.now(), LocalDate.now(), true, 10);
+        Chore chore2 = new Chore("TEST_CHORE1", LocalDate.now(), LocalDate.now(), true, 50);
+        this.TEMP_PERSON.addChore(chore1);
+        this.TEMP_PERSON.addChore(chore2);
+        this.TEMP_PERSON1.addChore(chore1);
+
+        JSONConverter jsonConverter = new JSONConverter("data.json");
+        jsonConverter.deleteFileContent();
+        jsonConverter.writePersonsToJSON(new ArrayList<>(List.of(this.TEMP_PERSON, this.TEMP_PERSON1)));
+        List<Person> personList = jsonConverter.getPersonsList();
+        for (Person person : personList) {
+            System.out.println(person.encodeToJSON());
+        }
+        // Testing end
     }
 
     private List<WeekView> createWeeks() {
