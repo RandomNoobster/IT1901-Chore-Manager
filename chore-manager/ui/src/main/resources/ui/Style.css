@@ -20,28 +20,3 @@
     -fx-background-color: derive(-pastWeekColor, 0%); 
 }
 
-
-
-.dayContainer, .weekNumberContainer {
-    -fx-background-color: none; 
-
-    -fx-text-fill: derive(-textWhite, 0%); ; /* Text color */
-    -fx-font-size: 14px; /* Font size */
-    -fx-padding: 10px 0px 10px 0px; /* Padding (top, right, bottom, left) */
-    -fx-border-color: derive(-textWhite, 0%); /* Border color */
-    -fx-border-width: 2px 0px 2px 0px; /* top right bottom left */
-
-    -fx-min-width: 104px; /* Minimum width as a percentage */
-    -fx-pref-width: 104px; /* Preferred width as a percentage */
-    -fx-max-width: 104px;
-
-}
-
-.dayContainer:hover, .weekNumberContainer:hover {
-    -fx-border-color: #8ecaf3; /* Border color */
-    -fx-background-color: #67B05E;
-}
-
-.todayContainer {
-    -fx-background-color: derive(-todayColor, 0%);
-}

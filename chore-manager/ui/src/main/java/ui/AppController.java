@@ -4,10 +4,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
 public class AppController {
@@ -20,7 +22,7 @@ public class AppController {
     private final int NUM_WEEKS = 5; // Number of weeks to create
 
     // Use this for future functionality for first iteration
-    private Person TEMP_PERSON = new Person("TEST_PERS");
+    public Person TEMP_PERSON = new Person("TEST_PERS");
 
     public AppController() {
 
@@ -34,12 +36,41 @@ public class AppController {
             this.weekContainer.getChildren().add(week.getFxml());
         }
 
+        for (WeekView week : this.weeks) {
+            List<DayView> days = week.getDayViews();
+            for (DayView day : days) {
+                day.getButton().setOnAction(e -> {
+                    DayView target = (DayView) e.getTarget();
+                    this.createChore(target.getDay().getDate());
+                });
+            }
+        }
+
+    }
+
+    public List<Person> getPeople() {
+        return new ArrayList<Person>() {
+            {
+                this.add(AppController.this.TEMP_PERSON);
+            }
+        };
+    }
+
+    public void createChore(LocalDate date) {
+        Chore chore = new Chore("◦ Påminnelseeeeee", date, date, false, 10);
+        this.TEMP_PERSON.addChore(chore);
+        System.out.println(this.TEMP_PERSON.getChores());
+        this.updateFxml();
+    }
+
+    public void updateFxml() {
+        this.weeks.forEach(w -> w.updateFxml());
     }
 
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
-            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * 7))));
+            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * 7)), this));
         }
         return weeks;
     }
