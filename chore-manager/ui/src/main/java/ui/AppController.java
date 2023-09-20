@@ -30,7 +30,7 @@ public class AppController {
         this.weeks = this.createWeeks();
         this.addDayActions();
 
-        // Uncomment this if you do not have a chore-manager
+        // Uncomment this if you do not have a chore-manager-data file
         // Storage.createTestFile();
         // this.updateFxml();
     }
