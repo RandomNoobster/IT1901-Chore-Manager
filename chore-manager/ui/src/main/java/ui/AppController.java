@@ -7,6 +7,7 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
+import core.FileHandling.Storage;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import ui.ViewClasses.DayView;
@@ -21,21 +22,20 @@ public class AppController {
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
     private final int NUM_WEEKS = 5; // Number of weeks to create
 
-    // Use this for future functionality for first iteration
-    public Person TEMP_PERSON = new Person("TEST_PERS");
-
     public AppController() {
-
     }
 
     @FXML
     protected void initialize() {
         this.weeks = this.createWeeks();
+        this.addDayActions();
 
-        for (WeekView week : this.weeks) {
-            this.weekContainer.getChildren().add(week.getFxml());
-        }
+        // Uncomment this if you do not have a chore-manager
+        // Storage.createTestFile();
+        // this.updateFxml();
+    }
 
+    private void addDayActions() {
         for (WeekView week : this.weeks) {
             List<DayView> days = week.getDayViews();
             for (DayView day : days) {
@@ -45,21 +45,13 @@ public class AppController {
                 });
             }
         }
-
-    }
-
-    public List<Person> getPeople() {
-        return new ArrayList<Person>() {
-            {
-                this.add(AppController.this.TEMP_PERSON);
-            }
-        };
     }
 
     public void createChore(LocalDate date) {
         Chore chore = new Chore("◦ Påminnelseeeeee", date, date, false, 10);
-        this.TEMP_PERSON.addChore(chore);
-        System.out.println(this.TEMP_PERSON.getChores());
+        Person testPerson = Storage.getPersons().get(0);
+        testPerson.addChore(chore);
+        System.out.println(testPerson.getChores());
         this.updateFxml();
     }
 
@@ -70,7 +62,12 @@ public class AppController {
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
-            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * 7)), this));
+            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * Week.WEEK_LENGTH))));
+        }
+
+        // Draw weeks
+        for (WeekView week : weeks) {
+            this.weekContainer.getChildren().add(week.getFxml());
         }
         return weeks;
     }

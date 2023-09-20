@@ -7,17 +7,16 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Day;
 import core.Data.Person;
+import core.FileHandling.Storage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import ui.AppController;
 
 public class DayView extends Button implements ViewInterface {
 
     private Day day;
-    private AppController controller;
     private VBox realContainer = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
@@ -25,7 +24,7 @@ public class DayView extends Button implements ViewInterface {
     // @FXML
     // private Button container = new Button();
 
-    public DayView(Day day, AppController controller) {
+    public DayView(Day day) {
         super();
 
         this.scrollContainer.setContent(this.vBoxContainer);
@@ -33,7 +32,6 @@ public class DayView extends Button implements ViewInterface {
 
         this.realContainer.getChildren().addAll(this, this.scrollContainer);
 
-        this.controller = controller;
         this.day = day;
         this.updateFxml();
 
@@ -61,7 +59,7 @@ public class DayView extends Button implements ViewInterface {
 
         List<Label> labels = new ArrayList<>();
 
-        for (Person person : this.controller.getPeople()) {
+        for (Person person : Storage.getPersons()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
                     labels.add(new Label(chore.getName()));
@@ -73,23 +71,3 @@ public class DayView extends Button implements ViewInterface {
     }
 
 }
-
-// @FXML
-// private Button container = new Button();
-
-// public Day(LocalDate date) {
-// this.date = date;
-// this.container.setText(date.getDayOfWeek().toString() + " - " +
-// Integer.toString(date.getDayOfMonth()));
-// this.container.getStyleClass().add("dayContainer");
-
-// // If date = today, assign special class
-// if (date.isEqual(LocalDate.now())) {
-// this.container.getStyleClass().add("todayContainer");
-
-// }
-// }
-
-// public Button getFxml() {
-// return this.container;
-// }
