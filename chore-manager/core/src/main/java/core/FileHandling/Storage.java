@@ -9,7 +9,7 @@ import core.Data.Chore;
 import core.Data.Person;
 
 /**
- * This class holds the information about the applications' state.
+ * This class holds the information about the application's state.
  * It is used to store and retrieve data from the file system.
  */
 public class Storage {
