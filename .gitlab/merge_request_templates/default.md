@@ -3,7 +3,7 @@
 ## Closes (List all issues closed)
 
 
-/unlabel ~"Sprint Backlog (To do)" ~"In Progress"
+/unlabel ~"In Progress" ~"Sprint Backlog (To do)" 
 
 /label ~Done 
 
