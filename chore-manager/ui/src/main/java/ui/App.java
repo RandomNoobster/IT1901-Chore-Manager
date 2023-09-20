@@ -18,14 +18,21 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
         Parent parent = fxmlLoader.load();
 
-        // CSS
         Scene scene = new Scene(parent);
 
+        // CSS
         scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
 
         stage.setTitle("Chore Manager");
         stage.setScene(scene);
         stage.show();
+
+        // Storage.initialize();
+        // stage.setOnCloseRequest(event -> {
+        //     // Storage.save();
+        //     System.exit(0);
+        // });
+
     }
 
     public static void main(String[] args) {

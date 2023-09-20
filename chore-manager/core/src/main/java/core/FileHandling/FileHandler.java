@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -23,6 +25,7 @@ public class FileHandler {
     private File file;
     private final Path PROJECT_PATH = Paths.get("").toAbsolutePath();
     private final String DATA_PATH = "/chore-manager/core/src/main/resources/core/Files";
+    private final String RESOURCE_PATH = "/core/Files/";
 
     /**
      * <p>Creates a FileHandler for a specific file</p>
@@ -30,8 +33,23 @@ public class FileHandler {
      * @param fileName The name of the file in ''../resources/core/Files' to read from
      */
     public FileHandler(String fileName) {
-        String fullPath = this.PROJECT_PATH.toString() + this.DATA_PATH + "/" + fileName;
-        this.file = new File(fullPath);
+        String path = this.RESOURCE_PATH + fileName;
+        URL fileUrl = this.getClass().getClassLoader().getResource(path);
+        System.out.println(fileUrl.getFile());
+        // this.file = new File(fileUrl.getFile());
+        try {
+            this.file = new File(fileUrl.toURI());
+            System.out.println(fileUrl.toURI());
+        } catch (URISyntaxException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        ;
+
+        // File c = new File(b.toURI());
+        // System.out.println(c.exists());
+
+        System.out.println("File:" + this.file.exists());
     }
 
     public File getFile() {

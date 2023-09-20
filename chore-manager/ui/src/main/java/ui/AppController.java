@@ -24,20 +24,27 @@ public class AppController {
 
     // Use this for future functionality for first iteration
     public Person TEMP_PERSON = new Person("TEST_PERS");
-    private Person TEMP_PERSON1 = new Person("TEST_PERS1");
 
     public AppController() {
-
     }
 
     @FXML
     protected void initialize() {
+        // Storage.initialize();
         this.weeks = this.createWeeks();
+        this.addDayActions();
 
-        for (WeekView week : this.weeks) {
-            this.weekContainer.getChildren().add(week.getFxml());
+        JSONConverter jsonConverter = new JSONConverter("data.json");
+        jsonConverter.deleteFileContent();
+        jsonConverter.writePersonsToJSON(new ArrayList<>(List.of(this.TEMP_PERSON)));
+        List<Person> personList = jsonConverter.getPersonsList();
+        for (Person person : personList) {
+            System.out.println(person.encodeToJSON());
         }
 
+    }
+
+    private void addDayActions() {
         for (WeekView week : this.weeks) {
             List<DayView> days = week.getDayViews();
             for (DayView day : days) {
@@ -47,15 +54,6 @@ public class AppController {
                 });
             }
         }
-
-    }
-
-    public List<Person> getPeople() {
-        return new ArrayList<Person>() {
-            {
-                this.add(AppController.this.TEMP_PERSON);
-            }
-        };
     }
 
     public void createChore(LocalDate date) {
@@ -67,27 +65,17 @@ public class AppController {
 
     public void updateFxml() {
         this.weeks.forEach(w -> w.updateFxml());
-        // This is for testing File Handling
-        Chore chore1 = new Chore("TEST_CHORE", LocalDate.now(), LocalDate.now(), true, 10);
-        Chore chore2 = new Chore("TEST_CHORE1", LocalDate.now(), LocalDate.now(), true, 50);
-        this.TEMP_PERSON.addChore(chore1);
-        this.TEMP_PERSON.addChore(chore2);
-        this.TEMP_PERSON1.addChore(chore1);
-
-        JSONConverter jsonConverter = new JSONConverter("data.json");
-        jsonConverter.deleteFileContent();
-        jsonConverter.writePersonsToJSON(new ArrayList<>(List.of(this.TEMP_PERSON, this.TEMP_PERSON1)));
-        List<Person> personList = jsonConverter.getPersonsList();
-        for (Person person : personList) {
-            System.out.println(person.encodeToJSON());
-        }
-        // Testing end
     }
 
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
-            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * 7)), this));
+            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * Week.WEEK_LENGTH))));
+        }
+
+        // Draw weeks
+        for (WeekView week : this.weeks) {
+            this.weekContainer.getChildren().add(week.getFxml());
         }
         return weeks;
     }
