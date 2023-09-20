@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 
+import core.FileHandling.Storage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -27,11 +28,10 @@ public class App extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // Storage.initialize();
-        // stage.setOnCloseRequest(event -> {
-        //     // Storage.save();
-        //     System.exit(0);
-        // });
+        stage.setOnCloseRequest(event -> {
+            Storage.save();
+            System.exit(0);
+        });
 
     }
 

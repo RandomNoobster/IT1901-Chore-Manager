@@ -35,7 +35,6 @@ public class JSONConverter extends FileHandler {
         JSONArray personsJSON = this.readJSONFile();
         for (Object personObject : personsJSON) {
             JSONObject personJSON = (JSONObject) personObject;
-            // TODO: Tests should check if fields are invalid and type conversion is invalid, havn't implemented type checking properly
 
             String name = (String) personJSON.get("name");
             UUID uuid = UUID.fromString((String) personJSON.get("uuid"));

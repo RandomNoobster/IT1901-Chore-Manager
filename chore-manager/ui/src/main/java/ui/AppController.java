@@ -7,7 +7,7 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
-import core.FileHandling.JSONConverter;
+import core.FileHandling.Storage;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import ui.ViewClasses.DayView;
@@ -22,26 +22,17 @@ public class AppController {
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
     private final int NUM_WEEKS = 5; // Number of weeks to create
 
-    // Use this for future functionality for first iteration
-    public Person TEMP_PERSON = new Person("TEST_PERS");
-
     public AppController() {
     }
 
     @FXML
     protected void initialize() {
-        // Storage.initialize();
         this.weeks = this.createWeeks();
         this.addDayActions();
 
-        JSONConverter jsonConverter = new JSONConverter("data.json");
-        jsonConverter.deleteFileContent();
-        jsonConverter.writePersonsToJSON(new ArrayList<>(List.of(this.TEMP_PERSON)));
-        List<Person> personList = jsonConverter.getPersonsList();
-        for (Person person : personList) {
-            System.out.println(person.encodeToJSON());
-        }
-
+        // Uncomment this if you do not have a chore-manager
+        // Storage.createTestFile();
+        // this.updateFxml();
     }
 
     private void addDayActions() {
@@ -58,8 +49,9 @@ public class AppController {
 
     public void createChore(LocalDate date) {
         Chore chore = new Chore("◦ Påminnelseeeeee", date, date, false, 10);
-        this.TEMP_PERSON.addChore(chore);
-        System.out.println(this.TEMP_PERSON.getChores());
+        Person testPerson = Storage.getPersons().get(0);
+        testPerson.addChore(chore);
+        System.out.println(testPerson.getChores());
         this.updateFxml();
     }
 
@@ -74,7 +66,7 @@ public class AppController {
         }
 
         // Draw weeks
-        for (WeekView week : this.weeks) {
+        for (WeekView week : weeks) {
             this.weekContainer.getChildren().add(week.getFxml());
         }
         return weeks;

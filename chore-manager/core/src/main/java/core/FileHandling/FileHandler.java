@@ -2,13 +2,14 @@ package core.FileHandling;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.URISyntaxException;
-import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -23,33 +24,20 @@ import org.json.simple.parser.ParseException;
 public class FileHandler {
 
     private File file;
-    private final Path PROJECT_PATH = Paths.get("").toAbsolutePath();
-    private final String DATA_PATH = "/chore-manager/core/src/main/resources/core/Files";
-    private final String RESOURCE_PATH = "/core/Files/";
 
     /**
      * <p>Creates a FileHandler for a specific file</p>
      * <p>If the file does not exist, it will be created</p>
-     * @param fileName The name of the file in ''../resources/core/Files' to read from
+     * @param fileName The name of the file in home folder to read from
      */
     public FileHandler(String fileName) {
-        String path = this.RESOURCE_PATH + fileName;
-        URL fileUrl = this.getClass().getClassLoader().getResource(path);
-        System.out.println(fileUrl.getFile());
-        // this.file = new File(fileUrl.getFile());
+        Path path = Paths.get(System.getProperty("user.home"), fileName);
+        this.file = path.toFile();
         try {
-            this.file = new File(fileUrl.toURI());
-            System.out.println(fileUrl.toURI());
-        } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            this.file.createNewFile(); // Creates a new file if it does not exist, else does nothing
+        } catch (IOException e) {
+            System.out.println("Error creating file");
         }
-        ;
-
-        // File c = new File(b.toURI());
-        // System.out.println(c.exists());
-
-        System.out.println("File:" + this.file.exists());
     }
 
     public File getFile() {
@@ -77,8 +65,9 @@ public class FileHandler {
      * @param string The string to append to the file
      */
     public void writeToFile(String string, boolean append) {
-        try (FileWriter fileWriter = new FileWriter(this.file, append)) {
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        try (FileOutputStream fileWriter = new FileOutputStream(this.file, append)) {
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileWriter, StandardCharsets.UTF_8);
+            BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
             bufferedWriter.write(string);
             bufferedWriter.close();
         } catch (FileNotFoundException e) {
@@ -140,8 +129,14 @@ public class FileHandler {
      */
     public JSONArray readJSONFile() {
         JSONParser jsonParser = new JSONParser();
-        try (FileReader fileReader = new FileReader(this.file)) {
-            JSONArray jsonObject = (JSONArray) jsonParser.parse(fileReader);
+        if (this.file.length() == 0) {
+            System.out.println("File is empty, consider using the Storage.createTestFile(); (Look into AppController)");
+            return new JSONArray();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream(this.file)) {
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+            JSONArray jsonObject = (JSONArray) jsonParser.parse(inputStreamReader);
             return jsonObject;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
