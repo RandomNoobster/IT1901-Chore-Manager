@@ -24,6 +24,7 @@ import org.json.simple.parser.ParseException;
 public class FileHandler {
 
     private File file;
+    private boolean createdNewFile;
 
     /**
      * <p>Creates a FileHandler for a specific file</p>
@@ -34,10 +35,14 @@ public class FileHandler {
         Path path = Paths.get(System.getProperty("user.home"), fileName);
         this.file = path.toFile();
         try {
-            this.file.createNewFile(); // Creates a new file if it does not exist, else does nothing
+            this.createdNewFile = this.file.createNewFile(); // Creates a new file if it does not exist, else does nothing
         } catch (IOException e) {
             System.out.println("Error creating file");
         }
+    }
+
+    public boolean getCreatedNewFile() {
+        return this.createdNewFile;
     }
 
     public File getFile() {
@@ -130,7 +135,7 @@ public class FileHandler {
     public JSONArray readJSONFile() {
         JSONParser jsonParser = new JSONParser();
         if (this.file.length() == 0) {
-            System.out.println("File is empty, consider using the Storage.createTestFile(); (Look into AppController)");
+            System.out.println("File is empty, consider using the Storage.fillFileWithTestData();");
             return new JSONArray();
         }
 

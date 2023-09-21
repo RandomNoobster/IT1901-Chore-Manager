@@ -20,6 +20,10 @@ public class Storage {
 
     // Initialize
     static {
+        if (jsonConverter.getCreatedNewFile()) {
+            System.out.println("Created new file");
+            fillFileWithTestData();
+        }
         persons = jsonConverter.getPersonsList();
     }
 
@@ -48,9 +52,9 @@ public class Storage {
      * This should be called if you do not have any persons in the application.
      * This can be considered test data.
      */
-    public static void createTestFile() {
-        Person person = new Person("TEST_PERS");
-        Chore chore = new Chore("chore1", LocalDate.now(), LocalDate.now(), false, 10);
+    public static void fillFileWithTestData() {
+        Person person = new Person("Test Person");
+        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10);
         person.addChore(chore);
         persons = new ArrayList<>(Arrays.asList(person));
         Storage.save();
