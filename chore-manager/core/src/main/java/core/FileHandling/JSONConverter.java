@@ -33,6 +33,11 @@ public class JSONConverter extends FileHandler {
     public List<Person> getPersonsList() {
         List<Person> persons = new ArrayList<>();
         JSONArray personsJSON = this.readJSONFile();
+
+        if (personsJSON == null) {
+            return persons;
+        }
+
         for (Object personObject : personsJSON) {
             JSONObject personJSON = (JSONObject) personObject;
 

@@ -20,7 +20,7 @@ public class Storage {
 
     // Initialize
     static {
-        if (jsonConverter.getCreatedNewFile()) {
+        if (jsonConverter.getCreatedNewFile() || jsonConverter.getPersonsList().isEmpty()) {
             System.out.println("Created new file");
             fillFileWithTestData();
         }

@@ -100,7 +100,6 @@ public class AppController {
         Chore chore = new Chore("Reminder", date, date, false, 10);
         Person testPerson = Storage.getPersons().get(0);
         testPerson.addChore(chore);
-        System.out.println(testPerson.getChores());
         this.updateFxml();
     }
 
