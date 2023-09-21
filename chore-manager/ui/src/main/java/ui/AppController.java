@@ -2,6 +2,7 @@ package ui;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import core.Data.Chore;
@@ -9,6 +10,9 @@ import core.Data.Person;
 import core.Data.Week;
 import core.FileHandling.Storage;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
@@ -18,23 +22,56 @@ public class AppController {
     @FXML
     private VBox weekContainer;
 
+    @FXML
+    private GridPane scene;
+
     private List<WeekView> weeks = new ArrayList<>();
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
-    private final int NUM_WEEKS = 5; // Number of weeks to create
+    private final int NUM_WEEKS = 4; // Number of weeks to create
 
     public AppController() {
     }
 
     @FXML
     protected void initialize() {
+        // Set top column that displays what each column means
+        HBox topLabelContainer = new HBox();
+        this.weekContainer.getChildren().add(topLabelContainer);
+        for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+                "Sunday")) {
+            Label label = new Label(info);
+            label.getStyleClass().addAll("label", "weekLabelsColor", "header");
+            topLabelContainer.getChildren().add(label);
+        }
+
+        // Create weekview elements and add them to view
         this.weeks = this.createWeeks();
         this.addDayActions();
 
         // Uncomment this if you do not have a chore-manager-data file
-        // Storage.createTestFile();
-        // this.updateFxml();
+        Storage.createTestFile();
+        this.updateFxml();
+
+        // Handle screen resizing
+        this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+            double width = newValue.doubleValue();
+            this.weekContainer.setPrefWidth(width);
+            this.weeks.forEach(w -> w.updateWidth(width));
+            topLabelContainer.setPrefWidth(width);
+            topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+
+        });
+
+        this.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+            double height = newValue.doubleValue();
+            double topLabelHeight = 30;
+
+            this.weekContainer.setPrefHeight(height);
+            this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight) / this.NUM_WEEKS));
+        });
     }
 
+    // Make buttons run function
     private void addDayActions() {
         for (WeekView week : this.weeks) {
             List<DayView> days = week.getDayViews();
@@ -47,8 +84,16 @@ public class AppController {
         }
     }
 
+    public List<Person> getPeople() {
+        return new ArrayList<Person>() {
+            {
+                this.add(Storage.getPersons().get(0));
+            }
+        };
+    }
+
     public void createChore(LocalDate date) {
-        Chore chore = new Chore("◦ Påminnelseeeeee", date, date, false, 10);
+        Chore chore = new Chore("Reminder", date, date, false, 10);
         Person testPerson = Storage.getPersons().get(0);
         testPerson.addChore(chore);
         System.out.println(testPerson.getChores());

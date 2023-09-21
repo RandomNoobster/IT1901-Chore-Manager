@@ -2,6 +2,7 @@ package ui.ViewClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import core.Data.Chore;
@@ -12,33 +13,51 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import ui.AppController;
 
 public class DayView extends Button implements ViewInterface {
 
     private Day day;
-    private VBox realContainer = new VBox();
+    private AppController controller;
+    private VBox container = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
-
-    // @FXML
-    // private Button container = new Button();
+    private Label pastDate;
 
     public DayView(Day day) {
         super();
 
+        // Add CSS
+        this.container.getStyleClass().add("dayContainer");
+        this.vBoxContainer.getStyleClass().add("list-item-container");
+        this.getStyleClass().addAll("header", "button", "hoverClass");
+
         this.scrollContainer.setContent(this.vBoxContainer);
-        super.setText("Add chore");
 
-        this.realContainer.getChildren().addAll(this, this.scrollContainer);
-
+        // Saving classes
         this.day = day;
+
         this.updateFxml();
 
         // If date = today, assign special class
         if (day.getDate().isEqual(LocalDate.now())) {
-            // add special css here
+            this.container.getStyleClass().add("thisDay");
         }
+
+        // If date before today, make button a label instead
+        if (day.getDate().isBefore(LocalDate.now())) {
+            this.pastDate = new Label();
+            this.pastDate.getStyleClass().add("label");
+            this.container.getChildren().add(this.pastDate);
+        } else {
+            super.setText("Add");
+            this.container.getChildren().add(this);
+        }
+
+        this.container.getChildren().add(this.scrollContainer);
+
     }
 
     public Day getDay() {
@@ -47,7 +66,7 @@ public class DayView extends Button implements ViewInterface {
 
     @Override
     public Node getFxml() {
-        return this.realContainer;
+        return this.container;
     }
 
     public Button getButton() {
@@ -62,7 +81,9 @@ public class DayView extends Button implements ViewInterface {
         for (Person person : Storage.getPersons()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
-                    labels.add(new Label(chore.getName()));
+                    Label choreLabel = new Label(chore.getName());
+                    choreLabel.getStyleClass().add("list-item");
+                    labels.add(choreLabel);
                 }
             }
         }
@@ -70,4 +91,34 @@ public class DayView extends Button implements ViewInterface {
         this.vBoxContainer.getChildren().addAll(labels);
     }
 
+    public void updateWidth(double newWidth) {
+        if (this.pastDate != null) {
+            this.pastDate.setPrefWidth(newWidth);
+
+        }
+        for (Node node : Arrays.asList(this, this.container, this.scrollContainer, this.vBoxContainer)) {
+            ((Region) node).setPrefWidth(newWidth);
+        }
+    }
+
 }
+
+// @FXML
+// private Button container = new Button();
+
+// public Day(LocalDate date) {
+// this.date = date;
+// this.container.setText(date.getDayOfWeek().toString() + " - " +
+// Integer.toString(date.getDayOfMonth()));
+// this.container.getStyleClass().add("dayContainer");
+
+// // If date = today, assign special class
+// if (date.isEqual(LocalDate.now())) {
+// this.container.getStyleClass().add("todayContainer");
+
+// }
+// }
+
+// public Button getFxml() {
+// return this.container;
+// }
