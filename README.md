@@ -23,8 +23,8 @@ cd chore-manager/ui/
 mvn javafx:run
 ```
 
-To test project:
-First change directory to [chore-manager/](/chore-manager/):
+## To test project:
+First change directory to [chore-manager](/chore-manager/):
 ```
 cd chore-manager/
 ```
