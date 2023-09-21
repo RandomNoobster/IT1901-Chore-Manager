@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 
+import core.FileHandling.Storage;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,13 +26,19 @@ public class App extends Application {
 
         // CSS
         Scene scene = new Scene(parent);
-
         scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
 
+        // Title
         stage.setTitle("Chore Manager");
 
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(event -> {
+            Storage.save();
+            System.exit(0);
+        });
+
     }
 
     public static void main(String[] args) {

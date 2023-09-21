@@ -9,7 +9,6 @@ import core.Data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import ui.AppController;
 
 public class WeekView implements ViewInterface {
 
@@ -21,13 +20,12 @@ public class WeekView implements ViewInterface {
     private HBox container = new HBox();
     private Label weekNumberLabel;
 
-    public WeekView(Week week, AppController controller) {
+    public WeekView(Week week) {
         this.week = week;
 
         // Add week label to VBox
         this.weekNumberLabel = new Label(week.getWeekNumber().toString());
-        this.weekNumberLabel.getStyleClass().add("weekNumberContainer");
-        this.weekNumberLabel.getStyleClass().add("header");
+        this.weekNumberLabel.getStyleClass().addAll("weekNumberContainer", "header");
 
         this.container.getChildren().add(this.weekNumberLabel);
 
@@ -41,7 +39,7 @@ public class WeekView implements ViewInterface {
 
         // Add day containers to VBox
         for (Day day : week.getDays()) {
-            DayView dayView = new DayView(day, controller);
+            DayView dayView = new DayView(day);
             this.dayViews.add(dayView);
             this.container.getChildren().add(dayView.getFxml());
         }
@@ -76,7 +74,6 @@ public class WeekView implements ViewInterface {
     public void updateHeight(double newHeight) {
         this.container.setPrefHeight(newHeight);
         this.weekNumberLabel.setPrefHeight(newHeight);
-
     }
 
 }

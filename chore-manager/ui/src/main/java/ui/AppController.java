@@ -8,6 +8,7 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
+import core.FileHandling.Storage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -26,13 +27,9 @@ public class AppController {
 
     private List<WeekView> weeks = new ArrayList<>();
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
-    private final int NUM_WEEKS = 3; // Number of weeks to create
-
-    // Use this for future functionality for first iteration
-    public Person TEMP_PERSON = new Person("TEST_PERS");
+    private final int NUM_WEEKS = 4; // Number of weeks to create
 
     public AppController() {
-
     }
 
     @FXML
@@ -43,27 +40,17 @@ public class AppController {
         for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
                 "Sunday")) {
             Label label = new Label(info);
-            label.getStyleClass().add("label");
+            label.getStyleClass().addAll("label", "weekLabelsColor", "header");
             topLabelContainer.getChildren().add(label);
         }
 
         // Create weekview elements and add them to view
         this.weeks = this.createWeeks();
+        this.addDayActions();
 
-        for (WeekView week : this.weeks) {
-            this.weekContainer.getChildren().add(week.getFxml());
-        }
-
-        // Make buttons run function
-        for (WeekView week : this.weeks) {
-            List<DayView> days = week.getDayViews();
-            for (DayView day : days) {
-                day.getButton().setOnAction(e -> {
-                    DayView target = (DayView) e.getTarget();
-                    this.createChore(target.getDay().getDate());
-                });
-            }
-        }
+        // Uncomment this if you do not have a chore-manager-data file
+        Storage.createTestFile();
+        this.updateFxml();
 
         // Handle screen resizing
         this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -82,21 +69,34 @@ public class AppController {
             this.weekContainer.setPrefHeight(height);
             this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight) / this.NUM_WEEKS));
         });
+    }
 
+    // Make buttons run function
+    private void addDayActions() {
+        for (WeekView week : this.weeks) {
+            List<DayView> days = week.getDayViews();
+            for (DayView day : days) {
+                day.getButton().setOnAction(e -> {
+                    DayView target = (DayView) e.getTarget();
+                    this.createChore(target.getDay().getDate());
+                });
+            }
+        }
     }
 
     public List<Person> getPeople() {
         return new ArrayList<Person>() {
             {
-                this.add(AppController.this.TEMP_PERSON);
+                this.add(Storage.getPersons().get(0));
             }
         };
     }
 
     public void createChore(LocalDate date) {
         Chore chore = new Chore("Reminder", date, date, false, 10);
-        this.TEMP_PERSON.addChore(chore);
-        System.out.println(this.TEMP_PERSON.getChores());
+        Person testPerson = Storage.getPersons().get(0);
+        testPerson.addChore(chore);
+        System.out.println(testPerson.getChores());
         this.updateFxml();
     }
 
@@ -107,7 +107,12 @@ public class AppController {
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
-            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * 7)), this));
+            weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * Week.WEEK_LENGTH))));
+        }
+
+        // Draw weeks
+        for (WeekView week : weeks) {
+            this.weekContainer.getChildren().add(week.getFxml());
         }
         return weeks;
     }

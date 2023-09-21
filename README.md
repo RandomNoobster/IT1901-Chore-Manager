@@ -1,5 +1,15 @@
-For a more detailed overview of how you should develop and what convensions this project uses, please see [DEVELOPER_GUIDE.md](/DEVELOPER_GUIDE.md).
+# About the project
+## Project structure
+The project is located in [/chore-manager/](/chore-manager/). The project follows the Model-View-Controller (MVC) principle, where the model is located in the [core module](/chore-manager/core/) and the view and controller are located in the [ui module](/chore-manager/ui/). Documentation and user stories are located in [docs](/docs/).
 
+## Project description
+A description of the project can be found in [/chore-manager/README.md](/chore-manager/README.md).
+
+## Dependencies
+- Java 17.0.8-tem
+- Maven 3.9.4
+
+## How to run
 To run project: 
 
 First install the necessary dependencies in [chore-manager](/chore-manager/):
@@ -8,7 +18,7 @@ cd chore-manager/
 mvn install -DskipTests 
 ```
 
-EITHER: \
+EITHER: 
 Run this command in the root folder:
 ```
 mvn javafx:run -f chore-manager/ui/pom.xml

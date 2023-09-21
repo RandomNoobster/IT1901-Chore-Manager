@@ -8,6 +8,7 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Day;
 import core.Data.Person;
+import core.FileHandling.Storage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,19 +26,19 @@ public class DayView extends Button implements ViewInterface {
     private VBox vBoxContainer = new VBox();
     private Label pastDate;
 
-    // @FXML
-    // private Button container = new Button();
-
-    public DayView(Day day, AppController controller) {
+    public DayView(Day day) {
         super();
 
+        // Add CSS
         this.container.getStyleClass().add("dayContainer");
         this.vBoxContainer.getStyleClass().add("list-item-container");
+        this.getStyleClass().addAll("header", "button", "hoverClass");
 
         this.scrollContainer.setContent(this.vBoxContainer);
 
-        this.controller = controller;
+        // Saving classes
         this.day = day;
+
         this.updateFxml();
 
         // If date = today, assign special class
@@ -45,10 +46,7 @@ public class DayView extends Button implements ViewInterface {
             this.container.getStyleClass().add("thisDay");
         }
 
-        this.getStyleClass().add("header");
-        this.getStyleClass().add("button");
-        this.getStyleClass().add("hoverClass");
-
+        // If date before today, make button a label instead
         if (day.getDate().isBefore(LocalDate.now())) {
             this.pastDate = new Label();
             this.pastDate.getStyleClass().add("label");
@@ -80,7 +78,7 @@ public class DayView extends Button implements ViewInterface {
 
         List<Label> labels = new ArrayList<>();
 
-        for (Person person : this.controller.getPeople()) {
+        for (Person person : Storage.getPersons()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
                     Label choreLabel = new Label(chore.getName());
@@ -101,8 +99,6 @@ public class DayView extends Button implements ViewInterface {
         for (Node node : Arrays.asList(this, this.container, this.scrollContainer, this.vBoxContainer)) {
             ((Region) node).setPrefWidth(newWidth);
         }
-
-        //this.vBoxContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(newWidth));
     }
 
 }

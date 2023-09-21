@@ -56,8 +56,8 @@ public class Chore {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         map.put("choreName", this.choreName);
-        map.put("timeFrom", this.timeFrom);
-        map.put("timeTo", this.timeTo);
+        map.put("timeFrom", this.timeFrom.toString());
+        map.put("timeTo", this.timeTo.toString());
         map.put("isWeekly", this.isWeekly);
         map.put("points", this.points);
 

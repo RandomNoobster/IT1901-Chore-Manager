@@ -3,13 +3,15 @@
     -thisWeekColor: #E1E3E7;
     -listItem: #cb8d2f;
 
-    -todayColor: #DADCE0;
+    -todayColor: #B3CFBD;
     -textWhite: #FFFFFF;
     -textBlack: #000000;
 
     -buttonColor: #9CC0F8;
     -buttonHover: #669EF6;
     -pastDay: #FFF0C3;
+
+    -weekLabels: #FCE292;
 
 }
 
@@ -39,6 +41,7 @@
 .pastWeek {
     -fx-background-color: derive(-pastWeekColor, 0%); 
 }
+
 
 .weekContainer {
     -fx-pref-height: 90px;
@@ -99,4 +102,8 @@
     -fx-background-color: derive(-buttonColor, 0%); 
     -fx-pref-width: 60px;
 
+}
+
+.weekLabelsColor {
+    -fx-background-color: derive(-weekLabels, 0%); 
 }
