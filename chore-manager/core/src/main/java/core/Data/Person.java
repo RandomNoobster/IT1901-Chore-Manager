@@ -62,4 +62,12 @@ public class Person {
 
         return new JSONObject(map);
     }
+
+    @Override
+    public boolean equals(Object arg0) {
+        if (!(arg0 instanceof Person)) {
+            return false;
+        }
+        return this.uuid.equals(((Person) arg0).getUUID());
+    }
 }
