@@ -70,6 +70,7 @@
 .label {
     -fx-background-color: derive(-buttonColor, 0%); 
     -fx-pref-height: 30px;
+    -fx-min-height: 30px;
     -fx-pref-width: 110px;
 }
 
