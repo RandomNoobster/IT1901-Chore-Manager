@@ -15,19 +15,24 @@ public class WeekView implements ViewInterface {
 
     private Week week;
     private List<DayView> dayViews = new ArrayList<>();
+    private Integer COLUMN_COUNT = 8;
 
     @FXML
     private HBox container = new HBox();
+    private Label weekNumberLabel;
 
     public WeekView(Week week, AppController controller) {
         this.week = week;
 
         // Add week label to VBox
-        Label weekNumberLabel = new Label(week.getWeekNumber().toString());
-        weekNumberLabel.getStyleClass().add("weekNumberContainer");
-        this.container.getChildren().add(weekNumberLabel);
+        this.weekNumberLabel = new Label(week.getWeekNumber().toString());
+        this.weekNumberLabel.getStyleClass().add("weekNumberContainer");
+        this.weekNumberLabel.getStyleClass().add("header");
+
+        this.container.getChildren().add(this.weekNumberLabel);
 
         // Assign special class to week if week is current week
+        this.container.getStyleClass().add("weekContainer");
         if (week.containsDay(LocalDate.now())) {
             this.container.getStyleClass().add("thisWeek");
         } else {
@@ -57,6 +62,21 @@ public class WeekView implements ViewInterface {
 
     public void updateFxml() {
         this.getDayViews().forEach(d -> d.updateFxml());
+    }
+
+    public void updateWidth(double newWidth) {
+        this.container.setPrefWidth(newWidth);
+        this.weekNumberLabel.setPrefWidth(newWidth / 8);
+
+        for (DayView day : this.getDayViews()) {
+            day.updateWidth(newWidth / this.COLUMN_COUNT);
+        }
+    }
+
+    public void updateHeight(double newHeight) {
+        this.container.setPrefHeight(newHeight);
+        this.weekNumberLabel.setPrefHeight(newHeight);
+
     }
 
 }

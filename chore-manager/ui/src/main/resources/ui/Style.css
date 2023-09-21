@@ -1,22 +1,102 @@
 .root {
-    -pastWeekColor: #678193;
-    -thisWeekColor: #266d9c;
-    -todayColor: #3498db;
-    -textWhite: #ffffff;
+    -pastWeekColor: #F1F3F4;
+    -thisWeekColor: #E1E3E7;
+    -listItem: #cb8d2f;
+
+    -todayColor: #DADCE0;
+    -textWhite: #FFFFFF;
+    -textBlack: #000000;
+
+    -buttonColor: #9CC0F8;
+    -buttonHover: #669EF6;
+    -pastDay: #FFF0C3;
+
 }
 
 * {
     -fx-border-radius: 0px; /* Border radius */
     -fx-background-radius: 0px;
     -fx-alignment: center;
-
+    -fx-background-color: none;
+    -fx-padding: 0px;
+    -fx-margin: 0px;
+    -fx-font-family: "Helvetica Neue", Arial, sans-serif;
+    -fx-font-size: 12px;
+    -fx-text-fill: derive(-textWhite, 0%); 
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+    
 }
 
 .thisWeek {
     -fx-background-color: derive(-thisWeekColor, 0%); 
 }
 
+.thisDay {
+    -fx-background-color: derive(-todayColor, 0%); 
+}
+
 .pastWeek {
     -fx-background-color: derive(-pastWeekColor, 0%); 
 }
 
+.weekContainer {
+    -fx-pref-height: 90px;
+}
+
+.dayContainer {
+    -fx-pref-width: 110px;
+    -fx-alignment: TOP_CENTER;
+    -fx-border-color: derive(-textWhite, 0%); 
+    -fx-border-width: 2px; 
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+.header {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+
+}
+
+.button {
+    -fx-pref-height: 30px;
+    -fx-min-height: 30px;
+}
+
+.label {
+    -fx-background-color: derive(-buttonColor, 0%); 
+    -fx-pref-height: 30px;
+    -fx-pref-width: 110px;
+}
+
+.hoverClass {
+    -fx-background-color: derive(-buttonColor, 0%); 
+    -fx-underline: false;
+}
+
+.hoverClass:hover {
+    -fx-background-color: derive(-buttonHover, 0%); 
+    -fx-underline: true;
+}
+
+.list-item-container {
+    -fx-spacing: 5px;
+}
+
+.list-item {
+    -fx-background-radius: 5px;
+    -fx-background-color:  derive(-textWhite, 0%); 
+    -fx-text-fill: derive(-textBlack, 0%); 
+    -fx-pref-width: 90px;
+
+
+}
+
+.weekNumberContainer {
+    -fx-pref-height: 100px;
+    -fx-min-height: 90px;
+    -fx-background-color: derive(-buttonColor, 0%); 
+    -fx-pref-width: 60px;
+
+}

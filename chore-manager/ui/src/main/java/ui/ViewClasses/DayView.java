@@ -2,6 +2,7 @@ package ui.ViewClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import core.Data.Chore;
@@ -11,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.AppController;
 
@@ -18,9 +20,10 @@ public class DayView extends Button implements ViewInterface {
 
     private Day day;
     private AppController controller;
-    private VBox realContainer = new VBox();
+    private VBox container = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
+    private Label pastDate;
 
     // @FXML
     // private Button container = new Button();
@@ -28,10 +31,10 @@ public class DayView extends Button implements ViewInterface {
     public DayView(Day day, AppController controller) {
         super();
 
-        this.scrollContainer.setContent(this.vBoxContainer);
-        super.setText("Add chore");
+        this.container.getStyleClass().add("dayContainer");
+        this.vBoxContainer.getStyleClass().add("list-item-container");
 
-        this.realContainer.getChildren().addAll(this, this.scrollContainer);
+        this.scrollContainer.setContent(this.vBoxContainer);
 
         this.controller = controller;
         this.day = day;
@@ -39,8 +42,24 @@ public class DayView extends Button implements ViewInterface {
 
         // If date = today, assign special class
         if (day.getDate().isEqual(LocalDate.now())) {
-            // add special css here
+            this.container.getStyleClass().add("thisDay");
         }
+
+        this.getStyleClass().add("header");
+        this.getStyleClass().add("button");
+        this.getStyleClass().add("hoverClass");
+
+        if (day.getDate().isBefore(LocalDate.now())) {
+            this.pastDate = new Label();
+            this.pastDate.getStyleClass().add("label");
+            this.container.getChildren().add(this.pastDate);
+        } else {
+            super.setText("Add");
+            this.container.getChildren().add(this);
+        }
+
+        this.container.getChildren().add(this.scrollContainer);
+
     }
 
     public Day getDay() {
@@ -49,7 +68,7 @@ public class DayView extends Button implements ViewInterface {
 
     @Override
     public Node getFxml() {
-        return this.realContainer;
+        return this.container;
     }
 
     public Button getButton() {
@@ -64,12 +83,26 @@ public class DayView extends Button implements ViewInterface {
         for (Person person : this.controller.getPeople()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
-                    labels.add(new Label(chore.getName()));
+                    Label choreLabel = new Label(chore.getName());
+                    choreLabel.getStyleClass().add("list-item");
+                    labels.add(choreLabel);
                 }
             }
         }
 
         this.vBoxContainer.getChildren().addAll(labels);
+    }
+
+    public void updateWidth(double newWidth) {
+        if (this.pastDate != null) {
+            this.pastDate.setPrefWidth(newWidth);
+
+        }
+        for (Node node : Arrays.asList(this, this.container, this.scrollContainer, this.vBoxContainer)) {
+            ((Region) node).setPrefWidth(newWidth);
+        }
+
+        //this.vBoxContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(newWidth));
     }
 
 }
