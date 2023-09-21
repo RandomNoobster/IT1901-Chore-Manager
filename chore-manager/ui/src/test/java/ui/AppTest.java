@@ -14,19 +14,17 @@ import javafx.stage.Stage;
  */
 public class AppTest extends ApplicationTest {
 
-    private AppController controller;
     private Parent root;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
-        root = fxmlLoader.load();
-        controller = fxmlLoader.getController();
-        stage.setScene(new Scene(root));
+        this.root = fxmlLoader.load();
+        stage.setScene(new Scene(this.root));
         stage.show();
     }
 
     public Parent getRootNode() {
-        return root;
+        return this.root;
     }
 }

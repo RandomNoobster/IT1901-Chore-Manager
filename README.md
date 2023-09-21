@@ -32,3 +32,14 @@ OR:
 cd chore-manager/ui/
 mvn javafx:run
 ```
+
+## To test project:
+First change directory to [chore-manager](/chore-manager/):
+```
+cd chore-manager/
+```
+Then run the maven test command:
+```
+mvn test
+```
+A jacoco report will then be generated in [chore-manager/jacocoAggregateReporter/target/site](/chore-manager/jacocoAggregateReporter/target/site/)

@@ -15,12 +15,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import ui.AppController;
 
 public class DayView extends Button implements ViewInterface {
 
     private Day day;
-    private AppController controller;
     private VBox container = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
@@ -102,23 +100,3 @@ public class DayView extends Button implements ViewInterface {
     }
 
 }
-
-// @FXML
-// private Button container = new Button();
-
-// public Day(LocalDate date) {
-// this.date = date;
-// this.container.setText(date.getDayOfWeek().toString() + " - " +
-// Integer.toString(date.getDayOfMonth()));
-// this.container.getStyleClass().add("dayContainer");
-
-// // If date = today, assign special class
-// if (date.isEqual(LocalDate.now())) {
-// this.container.getStyleClass().add("todayContainer");
-
-// }
-// }
-
-// public Button getFxml() {
-// return this.container;
-// }
