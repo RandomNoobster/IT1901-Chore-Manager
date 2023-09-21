@@ -18,4 +18,12 @@ public class Day {
         this.date = date;
     }
 
+    @Override
+    public boolean equals(Object arg0) {
+        if (!(arg0 instanceof Day)) {
+            return false;
+        }
+        return this.date.equals(((Day) arg0).getDate());
+    }
+
 }
