@@ -78,12 +78,12 @@
     -fx-background-color: derive(-buttonColor, 0%); 
     -fx-underline: false;
 }
-
+/*
 .hoverClass:hover {
     -fx-background-color: derive(-buttonHover, 0%); 
     -fx-underline: true;
 }
-
+*/
 .list-item-container {
     -fx-spacing: 5px;
 }
@@ -98,10 +98,7 @@
 }
 
 .weekNumberContainer {
-    -fx-pref-height: 100px;
-    -fx-min-height: 90px;
     -fx-background-color: derive(-buttonColor, 0%); 
-    -fx-pref-width: 60px;
 
 }
 

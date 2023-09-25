@@ -78,7 +78,8 @@ public class DayView extends Button implements ViewInterface {
 
         for (Person person : Storage.getPersons()) {
             for (Chore chore : person.getChores()) {
-                if (chore.getTimeFrom().equals(this.getDay().getDate())) {
+                if (chore.getTimeFrom().equals(this.getDay().getDate())
+                        && chore.getTimeTo().equals(this.getDay().getDate())) {
                     Label choreLabel = new Label(chore.getName());
                     choreLabel.getStyleClass().add("list-item");
                     labels.add(choreLabel);
