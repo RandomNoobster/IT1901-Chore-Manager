@@ -16,6 +16,7 @@
 
 # Package Files #
 *.jar
+!PlantUML/plantuml.jar
 *.war
 *.nar
 *.ear
@@ -49,7 +50,8 @@ replay_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
