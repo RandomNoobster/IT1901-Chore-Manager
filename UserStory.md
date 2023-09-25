@@ -1,4 +1,3 @@
-
 # Superior Goal
 The superior goal of the application is to make living alone and with other people easier. The application aims to delivere an easy way to keep track of different chores that should be done in and around the house. Through and easy to navigate and beautiful user interface the app should let users add and delete chores, as well as specify wether a chore should be recurring or not. Each user should also have a clear overview of who should do what chores at which time.
 
@@ -84,3 +83,6 @@ To remind her to chop down a tree before Christmas, Lisa added a chore for that 
 - Specify how many points a chore is worth in the chore-creation-menu
 - Receive said amount of points when having done a chore
 	- The points will add up, and everyone in the group should be able to see the "scoreboard".
+
+
+![](test.svg)

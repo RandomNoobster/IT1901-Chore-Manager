@@ -138,3 +138,21 @@ Note: I have not used GitLab extensively, so I am not completely sure how the wo
 - You should create Javadoc comments for each class, where you explain it's use and functionality.
 ![really important meme](/img/really-important-image.png)
 
+### PlantUML
+To create a new PlantUML diagram, you go into `PlantUML/` and create a `.pu` file with the name `name_of_diagram.pu`.
+
+The file has the following format:
+```
+@startuml 
+
+PlantUml code
+
+@enduml
+```
+
+When you are done with the diagram, you go into `PlantUML/` and write:
+```
+java -jar plantuml.jar -v -tsvg name_of_diagram.pu
+```
+
+Now a file with the name `name_of_diagram.svg` should have been created, which you can then link to in your markdown file. 
