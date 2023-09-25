@@ -1,8 +1,8 @@
 schemaVersion: 2.1.0
 metadata:
-  name: todolist
+  name: chore-manager
 components:
-  - name: todolist
+  - name: chore-manager
     container:
       image: gr2316/it1901:latest
       memoryLimit: 3Gi
