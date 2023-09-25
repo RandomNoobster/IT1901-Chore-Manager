@@ -8,13 +8,13 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Day;
 import core.Data.Person;
-import core.FileHandling.Storage;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import persistance.FileHandling.Storage;
 
 public class DayView extends Button implements ViewInterface {
 

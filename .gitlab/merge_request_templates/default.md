@@ -2,7 +2,7 @@
 
 /label ~Done 
 
-/milestone %"Deliverable 1" 
+/milestone %"Deliverable 2" 
 
 ## Description (Enter your description below)
 

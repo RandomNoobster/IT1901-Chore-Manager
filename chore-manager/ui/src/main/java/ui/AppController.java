@@ -8,12 +8,12 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import core.Data.Week;
-import core.FileHandling.Storage;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import persistance.FileHandling.Storage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
