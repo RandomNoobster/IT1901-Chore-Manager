@@ -15,7 +15,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ui.ViewClasses.DayView;
-import ui.ViewClasses.WeekButton;
 import ui.ViewClasses.WeekView;
 
 public class AppController {
@@ -45,7 +44,6 @@ public class AppController {
 
         // Make buttons run function on click
         this.addDayActions();
-        this.addWeekActions();
 
         // Make app responsive
         this.handleScreenResizing();
@@ -61,21 +59,9 @@ public class AppController {
             for (DayView day : days) {
                 day.getButton().setOnAction(e -> {
                     DayView target = (DayView) e.getTarget();
-                    LocalDate date = target.getDay().getDate();
-                    this.createChore(date, date);
+                    this.createChore(target.getDay().getDate());
                 });
             }
-        }
-    }
-
-    private void addWeekActions() {
-        for (WeekView week : this.weeks) {
-            week.getWeekButton().setOnAction(e -> {
-                WeekButton target = (WeekButton) e.getTarget();
-                LocalDate dateFrom = target.getWeek().getStartDate();
-                LocalDate dateTo = target.getWeek().getStartDate().plusDays(6);
-                this.createChore(dateFrom, dateTo);
-            });
         }
     }
 
@@ -110,8 +96,8 @@ public class AppController {
         });
     }
 
-    public void createChore(LocalDate dateFrom, LocalDate dateTo) {
-        Chore chore = new Chore("Reminder", dateFrom, dateTo, false, 10);
+    public void createChore(LocalDate date) {
+        Chore chore = new Chore("Reminder", date, date, false, 10);
         Person testPerson = Storage.getPersons().get(0);
         testPerson.addChore(chore);
         this.updateFxml();
