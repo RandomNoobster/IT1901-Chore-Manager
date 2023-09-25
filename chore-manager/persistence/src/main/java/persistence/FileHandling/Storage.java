@@ -18,13 +18,21 @@ public class Storage {
     private static JSONConverter jsonConverter = new JSONConverter(FILE_NAME);
     private static List<Person> persons = new ArrayList<>();
 
-    // Initialize
     static {
+        initialize();
+    }
+
+    public static void initialize() {
         if (jsonConverter.getCreatedNewFile() || jsonConverter.getPersonsList().isEmpty()) {
             System.out.println("Created new file");
             fillFileWithTestData();
         }
         persons = jsonConverter.getPersonsList();
+    }
+
+    public static void setFilePath(String fileName) {
+        Storage.jsonConverter = new JSONConverter(fileName);
+        initialize();
     }
 
     public static void save() {
@@ -58,6 +66,10 @@ public class Storage {
         person.addChore(chore);
         persons = new ArrayList<>(Arrays.asList(person));
         Storage.save();
+    }
+
+    public static boolean deleteFile() {
+        return jsonConverter.deleteFile();
     }
 
 }
