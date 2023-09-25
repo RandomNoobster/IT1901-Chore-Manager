@@ -4,7 +4,7 @@ metadata:
 components:
   - name: chore-manager
     container:
-      image: gr2316/it1901:latest
+      image: adrianstoica/it1901:latest
       memoryLimit: 3Gi
       endpoints:
         - exposure: public

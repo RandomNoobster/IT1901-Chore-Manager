@@ -1,5 +1,5 @@
 {
-    "image":"gr2316/it1901:latest",
+    "image":"adrianstoica/it1901:latest",
     "forwardPorts": [6080,8080,5901],
     "postStartCommand": "nohup bash -c '~/.vnc/startup  &'",
     "customizations":{
