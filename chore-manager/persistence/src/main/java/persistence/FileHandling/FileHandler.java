@@ -1,4 +1,4 @@
-package core.FileHandling;
+package persistence.FileHandling;
 
 import java.io.BufferedWriter;
 import java.io.File;

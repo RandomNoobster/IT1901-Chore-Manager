@@ -79,6 +79,7 @@
 
     <modules>
         <module>core</module>
+        <module>persistence</module>
         <module>ui</module>
         <module>jacocoAggregateReporter</module>
     </modules>
