@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import persistance.FileHandling.Storage;
+import persistence.FileHandling.Storage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 

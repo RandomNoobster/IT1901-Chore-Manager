@@ -19,7 +19,7 @@
         </dependency>
         <dependency>
             <groupId>it1901</groupId>
-            <artifactId>modules-persistance</artifactId>
+            <artifactId>modules-persistence</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

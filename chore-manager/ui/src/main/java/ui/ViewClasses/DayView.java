@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import persistance.FileHandling.Storage;
+import persistence.FileHandling.Storage;
 
 public class DayView extends Button implements ViewInterface {
 
