@@ -98,8 +98,8 @@ public class AppController {
 
     public void createChore(LocalDate date) {
         Chore chore = new Chore("Reminder", date, date, false, 10);
-        Person testPerson = Storage.getPersons().get(0);
-        testPerson.addChore(chore);
+        Person testPerson = Storage.getInstance().getPersonsList().get(0);
+        Storage.getInstance().addChore(chore, testPerson);
         this.updateFxml();
     }
 

@@ -31,12 +31,12 @@ public class AppTest extends ApplicationTest {
 
     @BeforeEach
     public void setupItems() {
-        Storage.setFilePath("chore-manager-data-test.json");
+        Storage.getInstance("chore-manager-data-ui-test.json");
     }
 
     @AfterEach
     public void clearItems() {
-        Storage.deleteFile();
+        Storage.getInstance().deleteFile();
     }
 
     public Parent getRootNode() {

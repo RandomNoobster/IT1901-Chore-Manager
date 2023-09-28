@@ -7,7 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,16 +47,18 @@ public class JSONConverterTest {
         Chore chore = new Chore("test", this.date, this.date, false, 10);
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Person person = new Person("name", chores);
-        List<Person> persons = new ArrayList<Person>(Arrays.asList(person));
+        HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+        persons.put(person.getUUID(), person);
 
         this.jsonConverter.writePersonsToJSON(persons);
         assertTrue(this.jsonConverter.getFile().length() > 0);
 
-        List<Person> personsFromJSON = this.jsonConverter.getPersonsList();
-        assertEquals(persons.get(0), personsFromJSON.get(0));
+        HashMap<UUID, Person> personsFromJSON = this.jsonConverter.getPersons();
+        assertTrue(personsFromJSON.containsKey(person.getUUID()));
+        assertEquals(person, personsFromJSON.get(person.getUUID()));
 
-        assertEquals(persons.get(0).getChores().get(0).encodeToJSON(),
-                personsFromJSON.get(0).getChores().get(0).encodeToJSON());
+        assertEquals(person.getChores().get(0).encodeToJSON(),
+                personsFromJSON.get(person.getUUID()).getChores().get(0).encodeToJSON());
         assertEquals(chore.encodeToJSON(), this.jsonConverter.getChoresList().get(0).encodeToJSON());
     }
 
