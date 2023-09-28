@@ -53,9 +53,17 @@ public class Storage {
 
         if (!instance.filePath.equals(filePath)) {
             System.out.println("\033[0;31m"
-                    + "Storage instance already exists, will not create a new one with the specified path" + "\033[0m");
+                    + "NOTE: Storage instance already exists, will not create a new one with the specified path"
+                    + "\033[0m");
         }
         return instance;
+    }
+
+    /** Use with care. 
+     * This method will delete the current instance, since it is a singleton, this will affect all other classes using this singleton for information.
+     */
+    public static void deleteInstance() {
+        instance = null;
     }
 
     public void save() {
