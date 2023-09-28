@@ -41,3 +41,9 @@ Then run the maven test command:
 mvn test
 ```
 A jacoco report will then be generated in [chore-manager/jacocoAggregateReporter/target/site](/chore-manager/jacocoAggregateReporter/target/site/).
+
+A checkstyle report will be generated during the first maven phase, `validate`, meaning it will be generated if you run `mvn test`. If you want to generate a spotbugs report as well, you can run the following command:
+```
+mvn verify
+```
+The `mvn verify` command will generate a checkstyle report, jacoco report and a spotbugs report. The checkstyle reports are located in [persistance](/chore-manager/persistance/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The spotbugs reports are located in [persistance](/chore-manager/persistance/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).
