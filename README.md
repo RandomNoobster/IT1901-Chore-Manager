@@ -36,6 +36,17 @@ cd chore-manager/ui/
 mvn javafx:run
 ```
 
+## How to view the javadocs
+First change directory to [chore-manager](/chore-manager/):
+```
+cd chore-manager/
+```
+Then run the maven javadoc command:
+```
+mvn javadoc:aggregate
+```
+Then open the [/chore-manager/target/site/apidocs/index.html](/chore-manager/target/site/apidocs/index.html) file.
+
 ## How to test
 First change directory to [chore-manager](/chore-manager/):
 ```
