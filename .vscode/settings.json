@@ -38,4 +38,6 @@
         "com",
         ""
     ],
+    "java.checkstyle.configuration": "${workspaceFolder}\\chore-manager\\config\\checkstyle.xml",
+    "java.checkstyle.version": "10.12.3",
 }

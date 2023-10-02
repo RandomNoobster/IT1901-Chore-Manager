@@ -122,12 +122,19 @@ public class Storage {
      * This can be considered test data.
      */
     public void fillFileWithTestData() {
-        Person person = new Person("Test Person");
-        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10);
-        person.addChore(chore);
+        Person person1 = new Person("Christian");
+        Person person2 = new Person("Sebastian");
+        Person person3 = new Person("Kristoffer");
+        Person person4 = new Person("Lasse");
+
+        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10, "#FFFFFF");
+        person1.addChore(chore);
 
         HashMap<UUID, Person> persons = new HashMap<>();
-        persons.put(person.getUUID(), person);
+        persons.put(person1.getUUID(), person1);
+        persons.put(person2.getUUID(), person2);
+        persons.put(person3.getUUID(), person3);
+        persons.put(person4.getUUID(), person4);
         this.persons = persons;
         this.save();
     }

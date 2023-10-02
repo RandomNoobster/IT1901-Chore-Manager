@@ -44,7 +44,7 @@ public class JSONConverterTest {
 
     @Test
     public void writeAndReadToJSONTest() {
-        Chore chore = new Chore("test", this.date, this.date, false, 10);
+        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Person person = new Person("name", chores);
         HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
