@@ -53,10 +53,12 @@ public class Storage {
      * This can be considered test data.
      */
     public static void fillFileWithTestData() {
-        Person person = new Person("Test Person");
-        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10);
+        Person person = new Person("Christian");
+
+        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10, "#FFFFFF");
         person.addChore(chore);
-        persons = new ArrayList<>(Arrays.asList(person));
+        persons = new ArrayList<>(
+                Arrays.asList(person, new Person("Sebastian"), new Person("Kristoffer"), new Person("Lasse")));
         Storage.save();
     }
 

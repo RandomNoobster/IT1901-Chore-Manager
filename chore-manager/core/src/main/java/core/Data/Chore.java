@@ -16,13 +16,15 @@ public class Chore {
     private LocalDate timeTo;
     private boolean isWeekly;
     private int points;
+    private String color;
 
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly, int points) {
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly, int points, String color) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.isWeekly = isWeekly;
         this.points = points;
+        this.color = color;
     }
 
     public String getName() {
@@ -39,6 +41,10 @@ public class Chore {
 
     public boolean getIsWeekly() {
         return this.isWeekly;
+    }
+
+    public String getColor() {
+        return this.color;
     }
 
     public int getPoints() {
@@ -60,6 +66,7 @@ public class Chore {
         map.put("timeTo", this.timeTo.toString());
         map.put("isWeekly", this.isWeekly);
         map.put("points", this.points);
+        map.put("color", this.color);
 
         JSONObject json = new JSONObject(map);
         return json;
