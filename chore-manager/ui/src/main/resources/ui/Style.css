@@ -198,3 +198,11 @@
 .combo-box .arrow-button {
 
 }
+
+.noBackground {
+    -fx-background-color: none;
+}
+
+.darkText {
+    -fx-text-fill: derive(-buttonColor, 0%);
+}
