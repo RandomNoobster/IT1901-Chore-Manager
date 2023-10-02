@@ -79,7 +79,7 @@
                         <String fx:value="roundedBorderLeft" />
                      </styleClass>
                   </Label>
-                  <Slider fx:id="points" onContextMenuRequested="#pointsChanged" onDragDetected="#pointsChanged" onDragDone="#pointsChanged" onDragDropped="#pointsChanged" onDragEntered="#pointsChanged" onDragExited="#pointsChanged" onDragOver="#pointsChanged" onInputMethodTextChanged="#pointsChanged" onMouseClicked="#pointsChanged" onMouseDragEntered="#pointsChanged" onMouseDragExited="#pointsChanged" onMouseDragOver="#pointsChanged" onMouseDragReleased="#pointsChanged" onMouseDragged="#pointsChanged" onMouseEntered="#pointsChanged" onMouseExited="#pointsChanged" onMouseMoved="#pointsChanged" onMousePressed="#pointsChanged" onMouseReleased="#pointsChanged" onRotate="#pointsChanged" onRotationFinished="#pointsChanged" onRotationStarted="#pointsChanged" onScroll="#pointsChanged" onScrollFinished="#pointsChanged" onScrollStarted="#pointsChanged" onSwipeDown="#pointsChanged" onSwipeLeft="#pointsChanged" onSwipeRight="#pointsChanged" onSwipeUp="#pointsChanged" onTouchMoved="#pointsChanged" onTouchPressed="#pointsChanged" onTouchReleased="#pointsChanged" onTouchStationary="#pointsChanged" styleClass="roundedBorderRight" />
+                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="roundedBorderRight" />
                </children>
             </HBox>
             <Button fx:id="createButton" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create">
