@@ -61,8 +61,9 @@ public class JSONConverter extends FileHandler {
             LocalDate timeTo = LocalDate.parse((String) choreObject.get("timeTo"));
             boolean isWeekly = (boolean) choreObject.get("isWeekly");
             int points = ((Long) choreObject.get("points")).intValue();
+            String color = (String) choreObject.get("color");
 
-            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points);
+            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color);
             chores.add(newChore);
         }
 

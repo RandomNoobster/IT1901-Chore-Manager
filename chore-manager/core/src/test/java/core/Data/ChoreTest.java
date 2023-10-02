@@ -25,12 +25,12 @@ public class ChoreTest {
         this.choreName = "Vaske";
         this.isWeekly = false;
         this.points = 10;
-        this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly, this.points);
+        this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly, this.points, "#FFFFFF");
     }
 
     @Test
     public void testConstructor() {
-        assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10));
+        assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10, "#FFFFFF"));
     }
 
     @Test
@@ -44,7 +44,7 @@ public class ChoreTest {
         assertDoesNotThrow(() -> this.chore.getTimeFrom());
         assertTrue(this.timeFrom.equals(this.chore.getTimeFrom()));
     }
-    
+
     @Test
     public void testGetTimeTo() {
         assertDoesNotThrow(() -> this.chore.getTimeTo());

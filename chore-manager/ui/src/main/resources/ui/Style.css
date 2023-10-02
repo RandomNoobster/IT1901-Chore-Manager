@@ -13,6 +13,12 @@
 
     -weekLabels: #FCE292;
 
+    -sliderBackground: #94D2A6;
+
+    -menuBackground: #F1F3F4;
+
+    -menuHeader: #DBDDE1;
+
 }
 
 * {
@@ -24,7 +30,9 @@
     -fx-margin: 0px;
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
     -fx-font-size: 12px;
+    /*
     -fx-text-fill: derive(-textWhite, 0%); 
+    */
     -fx-hbar-policy: never;
     -fx-vbar-policy: never;
     
@@ -65,6 +73,8 @@
 .button {
     -fx-pref-height: 30px;
     -fx-min-height: 30px;
+    -fx-pref-width: 110px;
+    -fx-text-fill: derive(-textWhite, 0%);
 }
 
 .label {
@@ -91,7 +101,6 @@
 .list-item {
     -fx-background-radius: 5px;
     -fx-background-color:  derive(-textWhite, 0%); 
-    -fx-text-fill: derive(-textBlack, 0%); 
     -fx-pref-width: 90px;
 
 
@@ -107,4 +116,85 @@
 
 .weekLabelsColor {
     -fx-background-color: derive(-weekLabels, 0%); 
+}
+
+.slider .thumb {
+    -fx-border-radius: 15px; /* Border radius */
+    -fx-background-radius: 15px;
+    -fx-alignment: center;
+    -fx-background-color: derive(-buttonColor, 0%);
+    -fx-padding: 13px;  
+    
+    -fx-border: 2px;
+    -fx-border-color: derive(-textWhite, 0%);
+}
+
+.slider {
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-border-color: derive(-buttonColor, 0%);
+    -fx-border: 2px;
+}
+
+.whiteText {
+    -fx-text-fill: derive(-textWhite, 0%);
+}
+
+.whiteText .label {
+    -fx-text-fill: derive(-textWhite, 0%);
+
+}
+
+.roundedBorder {
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.roundedBorderRight, .combo-box {
+    -fx-border-radius: 0 5px 5px 0;
+    -fx-background-radius: 0 5px 5px 0;
+}
+
+.roundedBorderLeft {
+    -fx-border-radius: 5px 0 0 5px;
+    -fx-background-radius: 5px 0 0 5px;
+}
+
+.roundedBorderLeft .label {
+    -fx-border-radius: 5px 0 0 5px;
+    -fx-background-radius: 5px 0 0 5px;
+}
+
+.roundedBorderRight .label {
+    -fx-border-radius: 0 5px 5px 0;
+    -fx-background-radius: 0 5px 5px 0;
+}
+
+.textInput, .combo-box {
+    -fx-background-color: derive(-textWhite, 0%); 
+    -fx-pref-height: 30px;
+    -fx-min-height: 30px;
+    -fx-pref-width: 110px;
+    -fx-border-color: derive(-buttonColor, 0%);
+    -fx-border: 2px;
+}
+
+.menuBackground {
+    -fx-background-color: derive(-menuBackground, 0%);
+    -fx-padding: 20px;
+}
+
+.menuHeader {
+    -fx-text-fill: derive(-menuHeader, 0%);
+    -fx-font-size: 25px;
+    -fx-background-color: none;
+    -fx-pref-width: 200px;
+}
+
+.combo-box .list-cell {
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-text-fill: derive(-textBlack, 0%);
+}
+
+.combo-box .arrow-button {
+
 }
