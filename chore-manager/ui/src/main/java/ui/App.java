@@ -17,25 +17,38 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
+
+        System.out.println("Test0");
+
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Login.fxml"));
         Parent parent = fxmlLoader.load();
 
-        AppController controller = fxmlLoader.getController();
-        controller.setStage(stage);
+        System.out.println("Test1");
+
+        /*
+         * AppController controller = fxmlLoader.getController();
+         * controller.setStage(stage);
+         */
 
         // To be replaced
         Image icon = new Image(this.getClass().getResource("Icon.png").toExternalForm());
         stage.getIcons().add(icon);
 
+        System.out.println("Test2");
+
         // CSS
         Scene scene = new Scene(parent);
         scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
+
+        System.out.println("Test3");
 
         // Title
         stage.setTitle("Chore Manager");
 
         stage.setScene(scene);
         stage.show();
+
+        System.out.println("Test4");
 
         stage.setOnCloseRequest(event -> {
             Storage.save();
