@@ -18,7 +18,8 @@ public class Chore {
     private int points;
     private String color;
 
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly, int points, String color) {
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
+            int points, String color) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;

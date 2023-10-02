@@ -14,6 +14,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import core.Data.Chore;
 import core.Data.Person;
 
 public class StorageTest {
@@ -112,13 +113,16 @@ public class StorageTest {
         Person person = localPersons.get(0);
         int choreSize = person.getChores().size();
 
-        this.storage.addChore(person.getChores().get(0), person);
+        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF");
+        this.storage.addChore(chore, person);
         assertEquals(choreSize + 1, person.getChores().size());
 
         // Person does not exist
-        int totalChoreSize = this.storage.getPersonsList().stream().mapToInt(p -> p.getChores().size()).sum();
+        int totalChoreSize = this.storage.getPersonsList().stream()
+                .mapToInt(p -> p.getChores().size()).sum();
         this.storage.addChore(person.getChores().get(0), null);
-        assertEquals(totalChoreSize, this.storage.getPersonsList().stream().mapToInt(p -> p.getChores().size()).sum());
+        assertEquals(totalChoreSize,
+                this.storage.getPersonsList().stream().mapToInt(p -> p.getChores().size()).sum());
     }
 
 }

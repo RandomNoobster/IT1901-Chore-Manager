@@ -48,7 +48,8 @@ public class ChoreCreationController {
 
     }
 
-    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene, AppController controller) {
+    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene,
+            AppController controller) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.oldScene = oldScene;

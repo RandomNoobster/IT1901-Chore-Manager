@@ -18,13 +18,18 @@
         },
         {
             "name": "/chore-manager testing",
-            "vmArgs": ["--add-opens", "main.ui/ui=ALL-UNNAMED", "--add-exports", "javafx.graphics/com.sun.javafx.application=ALL-UNNAMED"]
+            "vmArgs": [
+                "--add-opens",
+                "main.ui/ui=ALL-UNNAMED",
+                "--add-exports",
+                "javafx.graphics/com.sun.javafx.application=ALL-UNNAMED"
+            ]
         }
     ],
     "java.test.defaultConfig": "/chore-manager testing",
     "java.compile.nullAnalysis.mode": "automatic",
     "java.debug.settings.onBuildFailureProceed": true,
-
+    "java.format.comments.enabled": true,
     "java.cleanup.actionsOnSave": [
         "addOverride",
         "qualifyMembers"
@@ -40,4 +45,5 @@
     ],
     "java.checkstyle.configuration": "${workspaceFolder}\\chore-manager\\config\\checkstyle.xml",
     "java.checkstyle.version": "10.12.3",
+    "java.format.settings.url": ".vscode/java-formatter.xml",
 }

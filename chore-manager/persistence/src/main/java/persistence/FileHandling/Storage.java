@@ -127,7 +127,8 @@ public class Storage {
         Person person3 = new Person("Kristoffer");
         Person person4 = new Person("Lasse");
 
-        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10, "#FFFFFF");
+        Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
+                "#FFFFFF");
         person1.addChore(chore);
 
         HashMap<UUID, Person> persons = new HashMap<>();

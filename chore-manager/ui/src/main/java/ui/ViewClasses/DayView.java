@@ -106,7 +106,8 @@ public class DayView extends Button implements ViewInterface {
             this.pastDate.setPrefWidth(newWidth);
 
         }
-        for (Node node : Arrays.asList(this, this.container, this.scrollContainer, this.vBoxContainer)) {
+        for (Node node : Arrays.asList(this, this.container, this.scrollContainer,
+                this.vBoxContainer)) {
             ((Region) node).setPrefWidth(newWidth);
         }
     }
