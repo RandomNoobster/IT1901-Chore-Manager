@@ -59,7 +59,6 @@ public class JSONConverterTest {
 
         assertEquals(person.getChores().get(0).encodeToJSON(),
                 personsFromJSON.get(person.getUUID()).getChores().get(0).encodeToJSON());
-        assertEquals(chore.encodeToJSON(), this.jsonConverter.getChoresList().get(0).encodeToJSON());
     }
 
 }

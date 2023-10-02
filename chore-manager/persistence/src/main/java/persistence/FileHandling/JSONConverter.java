@@ -72,12 +72,4 @@ public class JSONConverter extends FileHandler {
         return chores;
     }
 
-    public List<Chore> getChoresList() {
-        List<Chore> chores = new ArrayList<Chore>();
-        for (Person person : this.getPersons().values()) {
-            chores.addAll(new ArrayList<Chore>(person.getChores()));
-        }
-        return chores;
-    }
-
 }

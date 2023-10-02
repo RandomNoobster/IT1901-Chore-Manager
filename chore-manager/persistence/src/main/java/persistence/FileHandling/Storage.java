@@ -59,6 +59,10 @@ public class Storage {
         return instance;
     }
 
+    public String getFilePath() {
+        return this.filePath;
+    }
+
     /** Use with care. 
      * This method will delete the current instance, since it is a singleton, this will affect all other classes using this singleton for information.
      */
@@ -88,6 +92,14 @@ public class Storage {
 
     public void removePerson(Person person) {
         this.persons.remove(person.getUUID());
+    }
+
+    public List<Chore> getChoresList() {
+        List<Chore> chores = new ArrayList<Chore>();
+        for (Person person : this.persons.values()) {
+            chores.addAll(new ArrayList<Chore>(person.getChores()));
+        }
+        return chores;
     }
 
     public void addChore(Chore chore, Person assignedPerson) {
@@ -122,7 +134,7 @@ public class Storage {
 
     public boolean deleteFile() {
         boolean deleted = this.jsonConverter.deleteFile();
-        instance = null;
+        deleteInstance();
         return deleted;
     }
 
