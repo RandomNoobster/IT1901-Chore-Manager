@@ -78,7 +78,7 @@ public class DayView extends Button implements ViewInterface {
 
         List<Label> labels = new ArrayList<>();
 
-        for (Person person : Storage.getPersons()) {
+        for (Person person : Storage.getInstance().getPersonsList()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
                     Label choreLabel = new Label(chore.getName());
@@ -106,7 +106,8 @@ public class DayView extends Button implements ViewInterface {
             this.pastDate.setPrefWidth(newWidth);
 
         }
-        for (Node node : Arrays.asList(this, this.container, this.scrollContainer, this.vBoxContainer)) {
+        for (Node node : Arrays.asList(this, this.container, this.scrollContainer,
+                this.vBoxContainer)) {
             ((Region) node).setPrefWidth(newWidth);
         }
     }

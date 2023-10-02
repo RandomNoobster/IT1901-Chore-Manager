@@ -38,7 +38,7 @@ public class App extends Application {
         stage.show();
 
         stage.setOnCloseRequest(event -> {
-            Storage.save();
+            Storage.getInstance().save();
             System.exit(0);
         });
 

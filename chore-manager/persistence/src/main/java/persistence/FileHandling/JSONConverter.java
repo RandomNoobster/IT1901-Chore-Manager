@@ -2,6 +2,7 @@ package persistence.FileHandling;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,17 +22,18 @@ public class JSONConverter extends FileHandler {
         super(fileName);
     }
 
-    public void writePersonsToJSON(List<Person> persons) {
+    public void writePersonsToJSON(HashMap<UUID, Person> persons) {
         JSONArray personsJSON = new JSONArray();
-        for (Person person : persons) {
+        for (Person person : persons.values()) {
             personsJSON.add(person.encodeToJSON());
         }
         this.writeToFile(personsJSON);
     }
 
-    // This assumes that the write file was used, we can probably assume that?
-    public List<Person> getPersonsList() {
-        List<Person> persons = new ArrayList<>();
+    // This assumes that the write file was used
+    // TODO: Make it so it checks for formatting errors
+    public HashMap<UUID, Person> getPersons() {
+        HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
         JSONArray personsJSON = this.readJSONFile();
 
         if (personsJSON == null) {
@@ -46,8 +48,9 @@ public class JSONConverter extends FileHandler {
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
 
             Person person = new Person(name, uuid, chores);
-            persons.add(person);
+            persons.put(uuid, person);
         }
+
         return persons;
     }
 
@@ -67,16 +70,6 @@ public class JSONConverter extends FileHandler {
             chores.add(newChore);
         }
 
-        return chores;
-    }
-
-    // Temporary function, rewrite when using database
-    public List<Chore> getChoresList() {
-        List<Person> persons = this.getPersonsList();
-        List<Chore> chores = new ArrayList<Chore>();
-        for (Person person : persons) {
-            chores.addAll(new ArrayList<Chore>(person.getChores()));
-        }
         return chores;
     }
 

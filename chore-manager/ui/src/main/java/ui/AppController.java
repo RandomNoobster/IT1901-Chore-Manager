@@ -65,7 +65,8 @@ public class AppController {
             for (DayView day : days) {
                 day.getButton().setOnAction(e -> {
                     DayView target = (DayView) e.getTarget();
-                    this.switchToChoreCreation(target.getDay().getDate(), target.getDay().getDate());
+                    this.switchToChoreCreation(target.getDay().getDate(),
+                            target.getDay().getDate());
                 });
             }
         }
@@ -74,8 +75,8 @@ public class AppController {
     // Set top column that displays what each column means
     private void setTopColumn() {
         this.weekContainer.getChildren().add(this.topLabelContainer);
-        for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                "Sunday")) {
+        for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday",
+                "Friday", "Saturday", "Sunday")) {
             Label label = new Label(info);
             label.getStyleClass().addAll("label", "weekLabelsColor", "header");
             this.topLabelContainer.getChildren().add(label);
@@ -125,8 +126,10 @@ public class AppController {
             FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
             Scene choreCreationScene = new Scene(loader.load());
             ChoreCreationController choreCreationController = loader.getController();
-            choreCreationController.passData(dateFrom, dateTo, this.stage, this.stage.getScene(), this);
-            choreCreationScene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
+            choreCreationController.passData(dateFrom, dateTo, this.stage, this.stage.getScene(),
+                    this);
+            choreCreationScene.getStylesheets()
+                    .add(this.getClass().getResource("Style.css").toExternalForm());
 
             this.stage.setScene(choreCreationScene);
         } catch (Exception e) {

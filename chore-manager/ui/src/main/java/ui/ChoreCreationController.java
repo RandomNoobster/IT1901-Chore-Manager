@@ -36,7 +36,7 @@ public class ChoreCreationController {
     private Label pointsDisplay;
 
     @FXML
-    private ComboBox personsMenu;
+    private ComboBox<PersonMenuItem> personsMenu;
 
     LocalDate dateFrom;
     LocalDate dateTo;
@@ -48,7 +48,8 @@ public class ChoreCreationController {
 
     }
 
-    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene, AppController controller) {
+    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene,
+            AppController controller) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.oldScene = oldScene;
@@ -58,8 +59,7 @@ public class ChoreCreationController {
 
     @FXML
     protected void initialize() {
-
-        List<Person> persons = Storage.getPersons();
+        List<Person> persons = Storage.getInstance().getPersonsList();
 
         for (Person p : persons) {
             this.personsMenu.getItems().add(new PersonMenuItem(p));
@@ -74,7 +74,11 @@ public class ChoreCreationController {
         int green = (int) (selectedColor.getGreen() * 255);
         int blue = (int) (selectedColor.getBlue() * 255);
 
-        Person person = ((PersonMenuItem) this.personsMenu.getValue()).getPerson();
+        PersonMenuItem personMenuItem = (PersonMenuItem) this.personsMenu.getValue();
+        if (personMenuItem == null) {
+            return;
+        }
+        Person person = personMenuItem.getPerson();
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
