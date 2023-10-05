@@ -11,10 +11,13 @@ import javafx.stage.Stage;
 import persistence.FileHandling.Storage;
 
 /**
- * JavaFX App
+ * The App class has the logic to start the user interface of the project.
  */
 public class App extends Application {
 
+    /**
+     * The start method is called when the application is launched.
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));

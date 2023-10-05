@@ -10,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 
+/**
+ * The WeekView class represents a week in the calendar.
+ */
 public class WeekView implements ViewInterface {
 
     private Week week;
@@ -20,6 +23,10 @@ public class WeekView implements ViewInterface {
     private HBox container = new HBox();
     private Label weekNumberLabel;
 
+    /**
+     * A constructor for the WeekView class. It creates and styles the FXML-element.
+     * @param week The week to be represented by the WeekView.
+     */
     public WeekView(Week week) {
         this.week = week;
 
@@ -45,23 +52,42 @@ public class WeekView implements ViewInterface {
         }
     }
 
+    /**
+     * Outputs the week.
+     * @return The week
+     */
     public Week getWeek() {
         return this.week;
     }
 
+    /**
+     * Outputs a list of the DayViews in the week.
+     * @return A list of the DayViews in the week
+     */
     public List<DayView> getDayViews() {
         return this.dayViews;
     }
 
+    /**
+     * Outputs the container FXML-element.
+     * @return The container FXML-element
+     */
     @Override
     public HBox getFxml() {
         return this.container;
     }
 
+    /**
+     * Updates the FXML-elements of the DayViews in the week.
+     */
     public void updateFxml() {
         this.getDayViews().forEach(d -> d.updateFxml());
     }
 
+    /**
+     * Updates the width of the week.
+     * @param newWidth The new width of the week
+     */
     public void updateWidth(double newWidth) {
         this.container.setPrefWidth(newWidth);
         this.weekNumberLabel.setPrefWidth(newWidth / 8);

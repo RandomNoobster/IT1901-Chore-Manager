@@ -17,6 +17,9 @@ import persistence.FileHandling.Storage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
+/**
+ * The AppController class is the controller for the main view of the application.
+ */
 public class AppController {
 
     @FXML
@@ -30,9 +33,15 @@ public class AppController {
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
     private final int NUM_WEEKS = 4; // Number of weeks to create
 
+    /**
+     * A constructor for the AppController class.
+     */
     public AppController() {
     }
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     */
     @FXML
     protected void initialize() {
 
@@ -52,7 +61,9 @@ public class AppController {
         this.updateFxml();
     }
 
-    // Make buttons run function
+    /**
+     * Makes the DayView buttons run {@link #createChore} when clicked.
+     */
     private void addDayActions() {
         for (WeekView week : this.weeks) {
             List<DayView> days = week.getDayViews();
@@ -65,7 +76,9 @@ public class AppController {
         }
     }
 
-    // Set top column that displays what each column means
+    /**
+     * Sets the top column that displays what each column means.
+     */
     private void setTopColumn() {
         this.weekContainer.getChildren().add(this.topLabelContainer);
         for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
@@ -76,7 +89,9 @@ public class AppController {
         }
     }
 
-    // Make app responsive
+    /**
+     * Makes the app responsive to changes in window size.
+     */
     private void handleScreenResizing() {
         this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
@@ -96,6 +111,11 @@ public class AppController {
         });
     }
 
+    /**
+     * Creates a chore with the given date, and displays it.
+     * 
+     * @param date The date of the chore.
+     */
     public void createChore(LocalDate date) {
         Chore chore = new Chore("Reminder", date, date, false, 10);
         Person testPerson = Storage.getPersons().get(0);
@@ -103,10 +123,17 @@ public class AppController {
         this.updateFxml();
     }
 
+    /**
+     * Updates the fxml of the view.
+     */
     public void updateFxml() {
         this.weeks.forEach(w -> w.updateFxml());
     }
 
+    /**
+     * Creates the weekview elements and adds them to the view.
+     * @return A list of the WeekViews
+     */
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
