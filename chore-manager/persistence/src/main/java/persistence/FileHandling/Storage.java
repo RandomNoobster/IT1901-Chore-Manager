@@ -32,7 +32,7 @@ public class Storage {
         jsonConverter.writePersonsToJSON(persons);
     }
 
-    public static void setuser(Person person) {
+    public static void setUser(Person person) {
         user = person;
     }
 

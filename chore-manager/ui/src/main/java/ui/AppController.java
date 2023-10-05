@@ -7,13 +7,10 @@ import java.util.List;
 
 import core.Data.Week;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
@@ -24,8 +21,6 @@ public class AppController {
 
     @FXML
     private GridPane scene;
-
-    private Stage stage;
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
@@ -52,10 +47,6 @@ public class AppController {
 
         // Update view
         this.updateFxml();
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
     }
 
     // Make buttons run function
@@ -121,17 +112,6 @@ public class AppController {
 
     @FXML
     private void switchToChoreCreation(LocalDate dateFrom, LocalDate dateTo) {
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
-            Scene choreCreationScene = new Scene(loader.load());
-            ChoreCreationController choreCreationController = loader.getController();
-            choreCreationController.passData(dateFrom, dateTo, this.stage, this.stage.getScene(), this);
-            choreCreationScene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
-
-            this.stage.setScene(choreCreationScene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        App.setChoreCreationScene("ChoreCreation", dateFrom, dateTo);
     }
-
 }

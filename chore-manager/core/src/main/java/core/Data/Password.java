@@ -16,9 +16,4 @@ public class Password {
         return this.password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        return o.equals(this.getPassword());
-    }
-
 }

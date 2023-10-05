@@ -50,6 +50,10 @@ public class Person {
         this.password = password;
     }
 
+    public Password getPassword() {
+        return this.password;
+    }
+
     public String getName() {
         return this.name;
     }
@@ -64,10 +68,6 @@ public class Person {
 
     public List<Chore> getChores() {
         return this.chores;
-    }
-
-    public Password getPassword() {
-        return this.password;
     }
 
     public JSONObject encodeToJSON() {
