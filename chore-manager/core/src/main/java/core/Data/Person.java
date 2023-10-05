@@ -18,19 +18,21 @@ public class Person {
     private String name;
     private List<Chore> chores = new ArrayList<>();
 
-    /** 
+    /**
      * A constructor for the Person class that initializes the state of the object.
-     * @param name
+     *
+     * @param name The name of the person
      */
     public Person(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
     }
 
-    /** 
+    /**
      * A constructor for the Person class that initializes the state of the object.
-     * @param name
-     * @param chores
+     *
+     * @param name   The name of the person
+     * @param chores The chores of the person
      */
     public Person(String name, List<Chore> chores) {
         this.uuid = UUID.randomUUID();
@@ -40,9 +42,10 @@ public class Person {
 
     /**
      * A constructor for the Person class that initializes the state of the object.
-     * @param name
-     * @param uuid
-     * @param chores
+     *
+     * @param name   The name of the person
+     * @param uuid   The UUID of the person
+     * @param chores The chores of the person
      */
     public Person(String name, UUID uuid, List<Chore> chores) {
         this.uuid = uuid;
@@ -52,6 +55,7 @@ public class Person {
 
     /**
      * Outputs the name of the person.
+     *
      * @return The name of the person
      */
     public String getName() {
@@ -60,6 +64,7 @@ public class Person {
 
     /**
      * Outputs the UUID of the person.
+     *
      * @return The UUID of the person
      */
     public UUID getUUID() {
@@ -68,6 +73,7 @@ public class Person {
 
     /**
      * Adds a chore to the person.
+     *
      * @param chore The chore to add
      */
     public void addChore(Chore chore) {
@@ -76,6 +82,7 @@ public class Person {
 
     /**
      * Removes a chore from the person.
+     *
      * @param chore The chore to remove
      */
     public List<Chore> getChores() {
@@ -83,7 +90,9 @@ public class Person {
     }
 
     /**
-     * Outputs a {@link JSONObject} representing the person.
+     * Outputs a {@link JSONObject} representing the person. Object variables are
+     * turned into key/value pairs.
+     *
      * @return A {@link JSONObject} representing the person
      */
     public JSONObject encodeToJSON() {
@@ -104,6 +113,7 @@ public class Person {
 
     /**
      * Outputs a boolean indicating wether or not the objects have the same UUID.
+     *
      * @return If the UUIDs are equal
      */
     @Override

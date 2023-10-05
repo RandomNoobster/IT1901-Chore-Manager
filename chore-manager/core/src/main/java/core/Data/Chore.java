@@ -93,7 +93,8 @@ public class Chore {
     }
 
     /**
-     * Outputs a {@link JSONObject} representation of the chore's state. The object's variables will be turned into key/value pairs in the JSONObject.
+     * Outputs a {@link JSONObject} representation of the chore's state. The
+     * object's variables will be turned into key/value pairs in the JSONObject.
      *
      * @return A {@link JSONObject} representation of the chore
      */

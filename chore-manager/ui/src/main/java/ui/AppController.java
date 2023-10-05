@@ -18,7 +18,8 @@ import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
 /**
- * The AppController class is the controller for the main view of the application.
+ * The AppController class is the controller for the main view of the
+ * application.
  */
 public class AppController {
 
@@ -32,6 +33,8 @@ public class AppController {
     private List<WeekView> weeks = new ArrayList<>();
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
     private final int NUM_WEEKS = 4; // Number of weeks to create
+    private final List<String> WEEKDAYS = Arrays.asList("Monday", "Tuesday", "Wednesday", "Thursday", "Friday",
+            "Saturday", "Sunday");
 
     /**
      * A constructor for the AppController class.
@@ -40,7 +43,8 @@ public class AppController {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     * Initializes the controller class. This method is automatically called after
+     * the fxml file has been loaded.
      */
     @FXML
     protected void initialize() {
@@ -48,7 +52,7 @@ public class AppController {
         // Set top column that displays what each column means
         this.setTopColumn();
 
-        // Create weekview elements and add them to view
+        // Create WeekView elements and add them to view
         this.weeks = this.createWeeks();
 
         // Make buttons run function on click
@@ -77,12 +81,11 @@ public class AppController {
     }
 
     /**
-     * Sets the top column that displays what each column means.
+     * Sets the top column to the names of each weekday.
      */
     private void setTopColumn() {
         this.weekContainer.getChildren().add(this.topLabelContainer);
-        for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
-                "Sunday")) {
+        for (String info : WEEKDAYS) {
             Label label = new Label(info);
             label.getStyleClass().addAll("label", "weekLabelsColor", "header");
             this.topLabelContainer.getChildren().add(label);
@@ -113,7 +116,7 @@ public class AppController {
 
     /**
      * Creates a chore with the given date, and displays it.
-     * 
+     *
      * @param date The date of the chore.
      */
     public void createChore(LocalDate date) {
@@ -124,14 +127,15 @@ public class AppController {
     }
 
     /**
-     * Updates the fxml of the view.
+     * Updates the fxml of all the weeks by running {@link WeekView#updateFxml}.
      */
     public void updateFxml() {
         this.weeks.forEach(w -> w.updateFxml());
     }
 
     /**
-     * Creates the weekview elements and adds them to the view.
+     * Creates the WeekView elements and adds them to the view.
+     *
      * @return A list of the WeekViews
      */
     private List<WeekView> createWeeks() {

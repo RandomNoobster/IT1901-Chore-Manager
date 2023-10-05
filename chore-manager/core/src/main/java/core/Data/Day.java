@@ -3,7 +3,7 @@ package core.Data;
 import java.time.LocalDate;
 
 /**
- * The Day class represents a day in the calendar.
+ * The Day class represents a day in the year.
  * It stores information about the date.
  */
 public class Day {

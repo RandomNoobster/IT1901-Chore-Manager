@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * The Week class contains logic for a week in the calendar.
+ * The Week class contains logic for a week. It stores information about the
+ * days in the week.
  */
 public class Week {
 
@@ -19,6 +20,7 @@ public class Week {
 
     /**
      * A constructor for the Week class that initializes the state of the object.
+     *
      * @param dateInWeek The date whose week is to be created
      */
     public Week(LocalDate dateInWeek) {
@@ -35,6 +37,7 @@ public class Week {
 
     /**
      * Outputs a list of the days in the week.
+     *
      * @return A list of the days in the week
      */
     public List<Day> getDays() {
@@ -43,6 +46,7 @@ public class Week {
 
     /**
      * Outputs the start date of the week.
+     *
      * @return The start date of the week
      */
     public LocalDate getStartDate() {
@@ -50,7 +54,8 @@ public class Week {
     }
 
     /**
-     * Outputs the number of the week.
+     * Outputs the week number (0-52).
+     *
      * @return The number of the week
      */
     public Integer getWeekNumber() {
@@ -61,6 +66,7 @@ public class Week {
 
     /**
      * Outputs a boolean indicating wether or not the week contains a date.
+     *
      * @param date The date to check
      * @return If the week contains the date
      */

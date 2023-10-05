@@ -17,6 +17,9 @@ public class App extends Application {
 
     /**
      * The start method is called when the application is launched.
+     * It loads the FXML-file and sets the scene.
+     *
+     * @param stage The stage to be used for the application
      */
     @Override
     public void start(Stage stage) throws IOException {

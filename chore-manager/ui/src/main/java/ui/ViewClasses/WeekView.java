@@ -17,7 +17,7 @@ public class WeekView implements ViewInterface {
 
     private Week week;
     private List<DayView> dayViews = new ArrayList<>();
-    private Integer COLUMN_COUNT = 8;
+    private final Integer COLUMN_COUNT = 8;
 
     @FXML
     private HBox container = new HBox();
@@ -25,6 +25,7 @@ public class WeekView implements ViewInterface {
 
     /**
      * A constructor for the WeekView class. It creates and styles the FXML-element.
+     *
      * @param week The week to be represented by the WeekView.
      */
     public WeekView(Week week) {
@@ -54,6 +55,7 @@ public class WeekView implements ViewInterface {
 
     /**
      * Outputs the week.
+     *
      * @return The week
      */
     public Week getWeek() {
@@ -62,6 +64,7 @@ public class WeekView implements ViewInterface {
 
     /**
      * Outputs a list of the DayViews in the week.
+     *
      * @return A list of the DayViews in the week
      */
     public List<DayView> getDayViews() {
@@ -70,6 +73,7 @@ public class WeekView implements ViewInterface {
 
     /**
      * Outputs the container FXML-element.
+     *
      * @return The container FXML-element
      */
     @Override
@@ -85,18 +89,24 @@ public class WeekView implements ViewInterface {
     }
 
     /**
-     * Updates the width of the week.
+     * Updates the width of the week, the container and the DayViews.
+     *
      * @param newWidth The new width of the week
      */
     public void updateWidth(double newWidth) {
         this.container.setPrefWidth(newWidth);
-        this.weekNumberLabel.setPrefWidth(newWidth / 8);
+        this.weekNumberLabel.setPrefWidth(newWidth / this.COLUMN_COUNT);
 
         for (DayView day : this.getDayViews()) {
             day.updateWidth(newWidth / this.COLUMN_COUNT);
         }
     }
 
+    /**
+     * Updates the height of the week and the container.
+     *
+     * @param newHeight The new height of the week
+     */
     public void updateHeight(double newHeight) {
         this.container.setPrefHeight(newHeight);
         this.weekNumberLabel.setPrefHeight(newHeight);
