@@ -13,22 +13,41 @@ public class Person {
     private UUID uuid;
     private String name;
     private List<Chore> chores = new ArrayList<>();
+    private Password password;
 
     public Person(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
+        this.password = new Password();
+
     }
 
     public Person(String name, List<Chore> chores) {
         this.uuid = UUID.randomUUID();
         this.name = name;
         this.chores = new ArrayList<Chore>(chores);
+        this.password = new Password();
     }
 
     public Person(String name, UUID uuid, List<Chore> chores) {
         this.uuid = uuid;
         this.name = name;
         this.chores = new ArrayList<Chore>(chores);
+        this.password = new Password();
+    }
+
+    public Person(String name, Password password) {
+        this.name = name;
+        this.password = password;
+        this.uuid = UUID.randomUUID();
+        this.chores = new ArrayList<Chore>();
+    }
+
+    public Person(String name, UUID uuid, Password password, List<Chore> chores) {
+        this.uuid = uuid;
+        this.name = name;
+        this.chores = new ArrayList<Chore>(chores);
+        this.password = password;
     }
 
     public String getName() {
@@ -47,6 +66,10 @@ public class Person {
         return this.chores;
     }
 
+    public Password getPassword() {
+        return this.password;
+    }
+
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
@@ -59,6 +82,7 @@ public class Person {
         }
 
         map.put("chores", choresJSON);
+        map.put("password", this.password.getPassword());
 
         return new JSONObject(map);
     }

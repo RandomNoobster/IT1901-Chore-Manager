@@ -25,10 +25,8 @@ public class App extends Application {
 
         System.out.println("Test1");
 
-        /*
-         * AppController controller = fxmlLoader.getController();
-         * controller.setStage(stage);
-         */
+        LoginController controller = fxmlLoader.getController();
+        controller.setStage(stage);
 
         // To be replaced
         Image icon = new Image(this.getClass().getResource("Icon.png").toExternalForm());

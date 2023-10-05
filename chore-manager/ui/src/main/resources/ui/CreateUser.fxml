@@ -69,7 +69,7 @@
                   </PasswordField>
                </children>
             </HBox>
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create">
+            <Button fx:id="createButton" mnemonicParsing="false" stylesheets="@Style.css" text="Create">
                <styleClass>
                   <String fx:value="header" />
                   <String fx:value="button" />

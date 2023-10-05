@@ -17,6 +17,7 @@ public class Storage {
     private static final String FILE_NAME = "chore-manager-data.json";
     private static JSONConverter jsonConverter = new JSONConverter(FILE_NAME);
     private static List<Person> persons = new ArrayList<>();
+    private static Person user;
 
     // Initialize
     static {
@@ -29,6 +30,14 @@ public class Storage {
 
     public static void save() {
         jsonConverter.writePersonsToJSON(persons);
+    }
+
+    public static void setuser(Person person) {
+        user = person;
+    }
+
+    public static Person getUser() {
+        return user;
     }
 
     public static void deleteFileContent() {

@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import core.Data.Chore;
+import core.Data.Password;
 import core.Data.Person;
 
 /**
@@ -44,6 +45,7 @@ public class JSONConverter extends FileHandler {
             String name = (String) personJSON.get("name");
             UUID uuid = UUID.fromString((String) personJSON.get("uuid"));
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
+            Password password = new Password((String) personJSON.get("password"));
 
             Person person = new Person(name, uuid, chores);
             persons.add(person);
