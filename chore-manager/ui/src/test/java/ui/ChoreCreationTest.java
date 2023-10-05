@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,8 +27,13 @@ public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
     private ChoreCreationController controller;
-    private final String filePath = "chore-manager-data-ui-test.json";
+    private static final String filePath = "chore-manager-data-ui-test.json";
     private final Person testPerson = new Person("Test");
+
+    // Set environment to testing
+    static {
+        Storage.getInstance(filePath);
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -49,13 +55,20 @@ public class ChoreCreationTest extends ApplicationTest {
     @BeforeEach
     public void setupItems() {
         Storage.deleteInstance();
-        Storage.getInstance(this.filePath);
+        Storage.getInstance(filePath);
         Storage.getInstance().addPerson(this.testPerson);
     }
 
     @AfterEach
     public void clearItems() {
-        Storage.getInstance().deleteFile();
+        Storage.getInstance().deleteFileContent();
+    }
+
+    @AfterAll
+    public static void deleteFile() {
+        if (Storage.getInstance().getFilePath().equals(filePath)) {
+            Storage.getInstance().deleteFile();
+        }
     }
 
     private void click(String... labels) {
@@ -67,8 +80,6 @@ public class ChoreCreationTest extends ApplicationTest {
     @Test
     public void testCreateChore() {
         List<Chore> savedChores = Storage.getInstance().getChoresList();
-        System.out.println(savedChores.size());
-        WaitForAsyncUtils.waitForFxEvents();
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
@@ -81,11 +92,6 @@ public class ChoreCreationTest extends ApplicationTest {
         });
 
         this.click("Create");
-
-        try {
-            Thread.sleep(15000);
-        } catch (InterruptedException e) {
-        }
 
         WaitForAsyncUtils.waitForFxEvents();
         assertTrue(savedChores.size() + 1 == Storage.getInstance().getChoresList().size());
