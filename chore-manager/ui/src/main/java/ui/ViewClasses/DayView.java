@@ -18,6 +18,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import persistence.FileHandling.Storage;
 
+/**
+ * The DayView class represents a day in the calendar. It extends Button because
+ * it should be clickable.
+ */
 public class DayView extends Button implements ViewInterface {
 
     private Day day;
@@ -26,6 +30,11 @@ public class DayView extends Button implements ViewInterface {
     private VBox vBoxContainer = new VBox();
     private Label pastDate;
 
+    /**
+     * A constructor for the DayView class. It creates and styles the FXML-element.
+     *
+     * @param day The day that the DayView should represent.
+     */
     public DayView(Day day) {
         super();
 
@@ -60,19 +69,37 @@ public class DayView extends Button implements ViewInterface {
 
     }
 
+    /**
+     * Outputs the day that the DayView represents.
+     *
+     * @return The day that the DayView represents
+     */
     public Day getDay() {
         return this.day;
     }
 
+    /**
+     * Outputs the container FXML-element of this DayView.
+     *
+     * @return The container FXML-element
+     */
     @Override
     public Node getFxml() {
         return this.container;
     }
 
+    /**
+     * Outputs itself as a Button.
+     *
+     * @return The button FXML-element
+     */
     public Button getButton() {
         return (Button) this;
     }
 
+    /**
+     * Updates the FXML of this DayView to include all active chores.
+     */
     public void updateFxml() {
         this.vBoxContainer.getChildren().clear();
 
@@ -101,6 +128,11 @@ public class DayView extends Button implements ViewInterface {
         this.vBoxContainer.getChildren().addAll(labels);
     }
 
+    /**
+     * Updates the width of this and the parent FXML-elements.
+     *
+     * @param newWidth The new width of the FXML-elements
+     */
     public void updateWidth(double newWidth) {
         if (this.pastDate != null) {
             this.pastDate.setPrefWidth(newWidth);

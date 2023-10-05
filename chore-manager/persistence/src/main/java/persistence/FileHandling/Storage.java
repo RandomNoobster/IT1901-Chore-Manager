@@ -117,7 +117,7 @@ public class Storage {
     }
 
     /**
-     * This a method to create a test file for the application. This should be called if you do not
+     * This is a method to create a test file for the application. This should be called if you do not
      * have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
