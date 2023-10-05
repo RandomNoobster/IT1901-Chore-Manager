@@ -123,4 +123,9 @@ public class Person {
         }
         return this.uuid.equals(((Person) arg0).getUUID());
     }
+
+    @Override
+    public String toString() {
+        return this.getName();
+    }
 }

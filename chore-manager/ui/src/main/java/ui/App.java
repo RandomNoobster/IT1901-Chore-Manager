@@ -26,6 +26,9 @@ public class App extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
         Parent parent = fxmlLoader.load();
 
+        AppController controller = fxmlLoader.getController();
+        controller.setStage(stage);
+
         // To be replaced
         Image icon = new Image(this.getClass().getResource("Icon.png").toExternalForm());
         stage.getIcons().add(icon);
@@ -41,7 +44,7 @@ public class App extends Application {
         stage.show();
 
         stage.setOnCloseRequest(event -> {
-            Storage.save();
+            Storage.getInstance().save();
             System.exit(0);
         });
 

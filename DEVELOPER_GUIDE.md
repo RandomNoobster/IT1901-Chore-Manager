@@ -17,15 +17,17 @@ Here is a list of VSCode extensions needed for this project (If you open this pr
 - SceneBuilder extension for Visual Studio Code
 - (Recommended) Todo Tree
 - (Recommended) GitLens
+
 </details>
 <br />
 
-Please ensure you have the correct versions of these tools installed before continuing. 
+Please ensure you have the correct versions of these tools installed before continuing.
 <br />
 
 I have also edited the settings.json file such that auto-format and organize imports are enabled on save. This is to ensure that the code style is consistent across the project. \
 These settings have been added (you do not need to do anything to get this added):
-```
+
+```JSON
 "java.cleanup.actionsOnSave": [
     "addOverride"
 ],
@@ -59,6 +61,7 @@ Not sure if this is the best way to structure the project, I may change this. We
 ## Run the code
 
 First install the necessary dependencies in [chore-manager](/chore-manager/):
+
 ```
 cd chore-manager
 mvn install -DskipTests 
@@ -67,21 +70,25 @@ mvn install -DskipTests
 Make sure you are in the [ui folder](/chore-manager/ui/) when running these commands (`cd chore-manager/ui/`)
 
 Compile code:
+
 ```
 mvn compile
 ```
 
 Run tests:
+
 ```
 mvn test
 ```
 
 Run the application:
+
 ```
 mvn javafx:run
 ```
 
 ## Issues
+
 You should create a new issue in the Product Backlog, this issue should contain a user story. The short story should be in the title, and potential implementation details should be described in the description. When moving it to Sprint-Backlog be sure to update the description with the implementation details you have decided on. Optionally you could create a todo-list in the description, and check off the tasks as you complete them.
 
 ## Branching
@@ -89,11 +96,14 @@ You should create a new issue in the Product Backlog, this issue should contain 
 You should always make changes on a branch (never make direct changes to the `master` branch). A new branch should be created for work on a new issue. The branch name should be the issue number followed by a short description of the issue. For example, if you are working on issue #1, you should create a branch named `1-implementing-new-feature`. This will ensure that the branch is automatically linked to that issue, and add some QOL improvements when creating merge requests.
 
 ### Creating a new branch
-This is a step by step guide on how to create a new branch. You first need to be on a branch in order to branch out from it (often just the `master` branch). Then you write the command `git checkout -b <branch-name>`. This will create a new branch with the name you specified, and automatically switch to that branch. You can now make changes to the code, and commit them to the branch. 
+
+This is a step by step guide on how to create a new branch. You first need to be on a branch in order to branch out from it (often just the `master` branch). Then you write the command `git checkout -b <branch-name>`. This will create a new branch with the name you specified, and automatically switch to that branch. You can now make changes to the code, and commit them to the branch.
 
 ### Updating a branch with content in `master`
+
 Before you create a merge request, you should make sure that your branch is up to date with the `master` branch. This is to ensure that there are no merge conflicts when you create the merge request. \
 The code block below assumes you start on your own branch and want to update it with main.
+
 ```
 (On your own branch)
 > git checkout master
@@ -119,19 +129,21 @@ In this repository you can approve your own merge request, and merge it into `ma
 
 When the review is done, you are ready to merge into `master`. Click the "Merge pull request" button, and then the "Confirm merge" button (pick the default option (not squash merge)). You have now merged your branch into `master`, and your changes are now live.
 
-
 ## Note
+
 Note: I have not used GitLab extensively, so I am not completely sure how the workflow is there. I wrote this DEVELOPER_GUIDE with GitHub in mind, but I assume the workflow is similar on GitLab. If there is any devitation from the GitHub workflow, please update this guide.
 
 ## Best practices
 
 ### Naming conventions ([link](https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html))
+
 - Class and interfaces names should be in `PascalCase`
 - Method names should be in `camelCase`
 - Variable names should be in `camelCase`
 - Constant names should be in `UPPER_CASE_WITH_UNDERSCORES`
 
 ### Other best practices
+
 - Always use `this` when referring to class variables (I believe this is automated with the settings.json file)
 - You should never use "[magic numbers](https://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)", instead create a constant variable and reference it instead, this makes the code clearer and easier to read.
 - If you find yourself nesting a lot of if-statements, you should consider using the [guard clause](https://codingbeautydev.com/blog/stop-using-nested-ifs/?expand_article=1) pattern (invert the if-statement and return early).

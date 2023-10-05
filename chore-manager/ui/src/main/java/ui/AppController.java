@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.Data.Chore;
-import core.Data.Person;
 import core.Data.Week;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import persistence.FileHandling.Storage;
+import javafx.stage.Stage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
@@ -28,6 +28,8 @@ public class AppController {
 
     @FXML
     private GridPane scene;
+
+    private Stage stage;
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
@@ -47,7 +49,7 @@ public class AppController {
      * the fxml file has been loaded.
      */
     @FXML
-    protected void initialize() {
+    public void initialize() {
 
         // Set top column that displays what each column means
         this.setTopColumn();
@@ -66,6 +68,15 @@ public class AppController {
     }
 
     /**
+     * Sets tha stage.
+     *
+     * @param stage The new stage to set to.
+     */
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    /**
      * Makes the DayView buttons run {@link #createChore} when clicked.
      */
     private void addDayActions() {
@@ -74,7 +85,8 @@ public class AppController {
             for (DayView day : days) {
                 day.getButton().setOnAction(e -> {
                     DayView target = (DayView) e.getTarget();
-                    this.createChore(target.getDay().getDate());
+                    this.switchToChoreCreation(target.getDay().getDate(),
+                            target.getDay().getDate());
                 });
             }
         }
@@ -85,7 +97,7 @@ public class AppController {
      */
     private void setTopColumn() {
         this.weekContainer.getChildren().add(this.topLabelContainer);
-        for (String info : WEEKDAYS) {
+        for (String info : this.WEEKDAYS) {
             Label label = new Label(info);
             label.getStyleClass().addAll("label", "weekLabelsColor", "header");
             this.topLabelContainer.getChildren().add(label);
@@ -114,21 +126,6 @@ public class AppController {
         });
     }
 
-    /**
-     * Creates a chore with the given date, and displays it.
-     *
-     * @param date The date of the chore.
-     */
-    public void createChore(LocalDate date) {
-        Chore chore = new Chore("Reminder", date, date, false, 10);
-        Person testPerson = Storage.getPersons().get(0);
-        testPerson.addChore(chore);
-        this.updateFxml();
-    }
-
-    /**
-     * Updates the fxml of all the weeks by running {@link WeekView#updateFxml}.
-     */
     public void updateFxml() {
         this.weeks.forEach(w -> w.updateFxml());
     }
@@ -149,6 +146,23 @@ public class AppController {
             this.weekContainer.getChildren().add(week.getFxml());
         }
         return weeks;
+    }
+
+    @FXML
+    private void switchToChoreCreation(LocalDate dateFrom, LocalDate dateTo) {
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
+            Scene choreCreationScene = new Scene(loader.load());
+            ChoreCreationController choreCreationController = loader.getController();
+            choreCreationController.passData(dateFrom, dateTo, this.stage, this.stage.getScene(),
+                    this);
+            choreCreationScene.getStylesheets()
+                    .add(this.getClass().getResource("Style.css").toExternalForm());
+
+            this.stage.setScene(choreCreationScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

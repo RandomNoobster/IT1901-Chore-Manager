@@ -16,6 +16,7 @@ public class Chore {
     private LocalDate timeTo;
     private boolean isWeekly;
     private int points;
+    private String color;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
@@ -25,13 +26,16 @@ public class Chore {
      * @param timeTo    The end date of the chore
      * @param isWeekly  Whether the chore is weekly or not
      * @param points    The points of the chore
+     * @param color     The color of the chore 
      */
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly, int points) {
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
+            int points, String color) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.isWeekly = isWeekly;
         this.points = points;
+        this.color = color;
     }
 
     /**
@@ -71,6 +75,15 @@ public class Chore {
     }
 
     /**
+     * Outputs the color of the chore.
+     *
+     * @return The color of the chore
+     */
+    public String getColor() {
+        return this.color;
+    }
+    
+    /**
      * Outputs the amount of points the chore is worth.
      *
      * @return The points of the chore
@@ -106,6 +119,7 @@ public class Chore {
         map.put("timeTo", this.timeTo.toString());
         map.put("isWeekly", this.isWeekly);
         map.put("points", this.points);
+        map.put("color", this.color);
 
         JSONObject json = new JSONObject(map);
         return json;

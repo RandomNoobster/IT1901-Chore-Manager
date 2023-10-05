@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" styleClass="whiteText" stylesheets="@Style.css" vgap="10.0"
+   xmlns="http://javafx.com/javafx/19"
+   xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ChoreCreationController">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox prefHeight="373.0" prefWidth="413.0">
+         <children>
+            <Label prefHeight="17.0" prefWidth="351.0" styleClass="menuHeader" stylesheets="@Style.css" text="Create chore" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label prefHeight="23.0" prefWidth="101.0" text="Name of chore">
+                     <styleClass>
+                        <String fx:value="whiteText" />
+                        <String fx:value="roundedBorderLeft" />
+                     </styleClass>
+                  </Label>
+                  <TextField fx:id="name">
+                     <styleClass>
+                        <String fx:value="textInput" />
+                        <String fx:value="roundedBorderRight" />
+                     </styleClass>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label stylesheets="@Style.css" text="Assign chore">
+                     <styleClass>
+                        <String fx:value="whiteText" />
+                        <String fx:value="roundedBorderLeft" />
+                     </styleClass>
+                  </Label>
+                  <ComboBox fx:id="personsMenu" prefWidth="150.0" stylesheets="@Style.css">
+                     <styleClass>
+                        <String fx:value="roundedBorderRight" />
+                        <String fx:value="whiteText" />
+                     </styleClass>
+                  </ComboBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Color">
+                     <styleClass>
+                        <String fx:value="whiteText" />
+                        <String fx:value="roundedBorderLeft" />
+                     </styleClass>
+                  </Label>
+                  <ColorPicker fx:id="colorPicker" stylesheets="@Style.css">
+                     <styleClass>
+                        <String fx:value="whiteText" />
+                        <String fx:value="roundedBorderRight" />
+                     </styleClass>
+                  </ColorPicker>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="pointsDisplay" text="Points: 0">
+                     <styleClass>
+                        <String fx:value="whiteText" />
+                        <String fx:value="roundedBorderLeft" />
+                     </styleClass>
+                  </Label>
+                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="roundedBorderRight" />
+               </children>
+            </HBox>
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create">
+               <styleClass>
+                  <String fx:value="header" />
+                  <String fx:value="button" />
+                  <String fx:value="hoverClass" />
+                  <String fx:value="roundedBorder" />
+               </styleClass>
+            </Button>
+         </children>
+         <styleClass>
+            <String fx:value="roundedBorder" />
+            <String fx:value="menuBackground" />
+         </styleClass>
+      </VBox>
+   </children>
+</GridPane>
