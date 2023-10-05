@@ -19,6 +19,7 @@ public class Storage {
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
     private HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+    private static Person user;
 
     private Storage() {
         this.initialize();
@@ -74,6 +75,14 @@ public class Storage {
         this.jsonConverter.writePersonsToJSON(this.persons);
     }
 
+    public static void setUser(Person person) {
+        user = person;
+    }
+
+    public static Person getUser() {
+        return user;
+    }
+
     public void deleteFileContent() {
         this.jsonConverter.deleteFileContent();
     }
@@ -117,8 +126,8 @@ public class Storage {
     }
 
     /**
-     * This a method to create a test file for the application. This should be called if you do not
-     * have any persons in the application. This can be considered test data.
+     * This is a method to create a test file for the application. This should be called if you do
+     * not have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
         Person person1 = new Person("Christian");

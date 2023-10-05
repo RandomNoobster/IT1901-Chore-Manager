@@ -11,9 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" styleClass="whiteText" stylesheets="@Style.css" vgap="10.0"
-   xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ChoreCreationController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -25,32 +23,30 @@
    <children>
       <VBox prefHeight="373.0" prefWidth="413.0">
          <children>
-            <Label prefHeight="17.0" prefWidth="351.0" styleClass="menuHeader" stylesheets="@Style.css" text="Login" />
+            <Label prefHeight="47.0" prefWidth="351.0" style="-fx-pref-height: 50;" styleClass="menuHeader" stylesheets="@Style.css" text="Login" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="23.0" prefWidth="101.0" text="Username">
                      <styleClass>
                         <String fx:value="whiteText" />
                         <String fx:value="roundedBorderLeft" />
-                     </styleClass>
-                  </Label>
-                  <TextField fx:id="userName">
+                     </styleClass></Label>
+                  <TextField fx:id="username">
                      <styleClass>
                         <String fx:value="textInput" />
                         <String fx:value="roundedBorderRight" />
-                     </styleClass>
-                  </TextField>
+                     </styleClass></TextField>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="pointsDisplay" text="Password">
+                  <Label text="Password">
                      <styleClass>
                         <String fx:value="whiteText" />
                         <String fx:value="roundedBorderLeft" />
                      </styleClass>
                   </Label>
-                  <PasswordField fx:id="password" stylesheets="@Style.css">
+                  <PasswordField fx:id="password">
                      <styleClass>
                         <String fx:value="roundedBorderRight" />
                         <String fx:value="textInput" />
@@ -60,7 +56,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="login1" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create user">
+                  <Button fx:id="create" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create user">
                      <styleClass>
                         <String fx:value="header" />
                         <String fx:value="hoverClass" />
@@ -69,7 +65,7 @@
                         <String fx:value="darkText" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="login" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Login">
+                  <Button fx:id="login" mnemonicParsing="false" onAction="#login" stylesheets="@Style.css" text="Login">
                      <styleClass>
                         <String fx:value="header" />
                         <String fx:value="button" />

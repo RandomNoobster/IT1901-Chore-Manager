@@ -7,16 +7,16 @@ import java.util.List;
 
 import core.Data.Week;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import ui.ViewClasses.DayView;
 import ui.ViewClasses.WeekView;
 
+/**
+ * The AppController class is the controller for the main view of the application.
+ */
 public class AppController {
 
     @FXML
@@ -25,23 +25,31 @@ public class AppController {
     @FXML
     private GridPane scene;
 
-    private Stage stage;
-
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
-    private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
+    private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
+                                        // current week)
     private final int NUM_WEEKS = 4; // Number of weeks to create
+    private final List<String> WEEKDAYS = Arrays.asList("Monday", "Tuesday", "Wednesday",
+            "Thursday", "Friday", "Saturday", "Sunday");
 
+    /**
+     * A constructor for the AppController class.
+     */
     public AppController() {
     }
 
+    /**
+     * Initializes the controller class. This method is automatically called after the fxml file has
+     * been loaded.
+     */
     @FXML
     public void initialize() {
 
         // Set top column that displays what each column means
         this.setTopColumn();
 
-        // Create weekview elements and add them to view
+        // Create WeekView elements and add them to view
         this.weeks = this.createWeeks();
 
         // Make buttons run function on click
@@ -54,11 +62,9 @@ public class AppController {
         this.updateFxml();
     }
 
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-    // Make buttons run function
+    /**
+     * Makes the DayView buttons run {@link #createChore} when clicked.
+     */
     private void addDayActions() {
         for (WeekView week : this.weeks) {
             List<DayView> days = week.getDayViews();
@@ -72,18 +78,21 @@ public class AppController {
         }
     }
 
-    // Set top column that displays what each column means
+    /**
+     * Sets the top column to the names of each weekday.
+     */
     private void setTopColumn() {
         this.weekContainer.getChildren().add(this.topLabelContainer);
-        for (String info : Arrays.asList("Week", "Monday", "Tuesday", "Wednesday", "Thursday",
-                "Friday", "Saturday", "Sunday")) {
+        for (String info : this.WEEKDAYS) {
             Label label = new Label(info);
             label.getStyleClass().addAll("label", "weekLabelsColor", "header");
             this.topLabelContainer.getChildren().add(label);
         }
     }
 
-    // Make app responsive
+    /**
+     * Makes the app responsive to changes in window size.
+     */
     private void handleScreenResizing() {
         this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
@@ -107,6 +116,11 @@ public class AppController {
         this.weeks.forEach(w -> w.updateFxml());
     }
 
+    /**
+     * Creates the WeekView elements and adds them to the view.
+     *
+     * @return A list of the WeekViews
+     */
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
         for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
@@ -122,19 +136,6 @@ public class AppController {
 
     @FXML
     private void switchToChoreCreation(LocalDate dateFrom, LocalDate dateTo) {
-        try {
-            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
-            Scene choreCreationScene = new Scene(loader.load());
-            ChoreCreationController choreCreationController = loader.getController();
-            choreCreationController.passData(dateFrom, dateTo, this.stage, this.stage.getScene(),
-                    this);
-            choreCreationScene.getStylesheets()
-                    .add(this.getClass().getResource("Style.css").toExternalForm());
-
-            this.stage.setScene(choreCreationScene);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        App.setChoreCreationScene("ChoreCreation", dateFrom, dateTo);
     }
-
 }

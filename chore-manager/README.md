@@ -1,9 +1,9 @@
 # Chore Manager
 ## Description
-Chore Manager is an application designed to help users manage their daily and weekly chores. The application allows users to create chores, assign chores to other users, and mark chores as completed. The applicaion also shows a calendar view with the daily and weekly chores for the current and coming weeks. A user gets points for completing a chore. The application also has a leaderboard that shows how many points each user has. The application also allows users to create collectives, which are groups of users that share chores.
+Chore Manager is an application designed to help users manage their daily and weekly chores. The application allows users to create chores, assign chores to other users, and mark chores as completed. The application also shows a calendar view with the daily and weekly chores for the current and coming weeks. A user gets points for completing a chore. The application also has a leaderboard that shows how many points each user has. The application also allows users to create collectives, which are groups of users that share chores.
 
 ### Login view
-The login view allows users to login to the application. The login view is the first view the user sees when starting the application. A user can login by entering their username and password. The login view also has a button for creating a new user. 
+The login view allows users to login to the application. The login view is the first view the user sees when starting the application. A user can login by entering their username and password. The login view also has a button for creating a new user.
 
 ### Create user view
 This view lets the user register an account by entering a username and password.
