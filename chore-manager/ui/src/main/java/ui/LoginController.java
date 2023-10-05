@@ -38,8 +38,9 @@ public class LoginController {
         String name = this.username.getText();
         String password = this.password.getText();
 
-        for (Person person : Storage.getPersons()) {
-            if (person.getPassword().getPassword().equals(password) && person.getName().equals(name)) {
+        for (Person person : Storage.getInstance().getPersonsList()) {
+            if (person.getPassword().getPassword().equals(password)
+                    && person.getName().equals(name)) {
                 Storage.setUser(person);
                 break;
             }

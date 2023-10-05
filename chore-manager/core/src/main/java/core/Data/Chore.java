@@ -18,7 +18,18 @@ public class Chore {
     private int points;
     private String color;
 
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly, int points, String color) {
+    /**
+     * A constructor for the Chore class that initializes the state of the object.
+     *
+     * @param choreName The name of the chore
+     * @param timeFrom  The start date of the chore
+     * @param timeTo    The end date of the chore
+     * @param isWeekly  Whether the chore is weekly or not
+     * @param points    The points of the chore
+     * @param color     The color of the chore 
+     */
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
+            int points, String color) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -27,30 +38,66 @@ public class Chore {
         this.color = color;
     }
 
+    /**
+     * Outputs the name of the chore.
+     *
+     * @return The name of the chore
+     */
     public String getName() {
         return this.choreName;
     }
 
+    /**
+     * Outputs the time the chore is due to start.
+     *
+     * @return The start date of the chore
+     */
     public LocalDate getTimeFrom() {
         return this.timeFrom;
     }
 
+    /**
+     * Outputs the time the chore is due to end.
+     *
+     * @return The end date of the chore
+     */
     public LocalDate getTimeTo() {
         return this.timeTo;
     }
 
+    /**
+     * Outputs a boolean value indicating whether the chore is weekly or not.
+     *
+     * @return Whether the chore is weekly or not
+     */
     public boolean getIsWeekly() {
         return this.isWeekly;
     }
 
+    /**
+     * Outputs the color of the chore.
+     *
+     * @return The color of the chore
+     */
     public String getColor() {
         return this.color;
     }
-
+    
+    /**
+     * Outputs the amount of points the chore is worth.
+     *
+     * @return The points of the chore
+     */
     public int getPoints() {
         return this.points;
     }
 
+    /**
+     * Set the amount of points the chore should be worth.
+     *
+     * @param points The amount of points the chore should be worth
+     * @throws IllegalArgumentException If points is negative
+     */
     public void setPoints(int points) {
         if (points < 0) {
             throw new IllegalArgumentException("Points cannot be negative");
@@ -58,6 +105,12 @@ public class Chore {
         this.points = points;
     }
 
+    /**
+     * Outputs a {@link JSONObject} representation of the chore's state. The
+     * object's variables will be turned into key/value pairs in the JSONObject.
+     *
+     * @return A {@link JSONObject} representation of the chore
+     */
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 

@@ -6,6 +6,7 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -13,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import persistence.FileHandling.Storage;
 import ui.ViewClasses.PersonMenuItem;
 
@@ -34,7 +36,7 @@ public class ChoreCreationController {
     private Label pointsDisplay;
 
     @FXML
-    private ComboBox personsMenu;
+    private ComboBox<PersonMenuItem> personsMenu;
 
     LocalDate dateFrom;
     LocalDate dateTo;
@@ -50,8 +52,7 @@ public class ChoreCreationController {
 
     @FXML
     protected void initialize() {
-
-        List<Person> persons = Storage.getPersons();
+        List<Person> persons = Storage.getInstance().getPersonsList();
 
         for (Person p : persons) {
             this.personsMenu.getItems().add(new PersonMenuItem(p));
@@ -66,13 +67,19 @@ public class ChoreCreationController {
         int green = (int) (selectedColor.getGreen() * 255);
         int blue = (int) (selectedColor.getBlue() * 255);
 
-        Person person = ((PersonMenuItem) this.personsMenu.getValue()).getPerson();
+        PersonMenuItem personMenuItem = (PersonMenuItem) this.personsMenu.getValue();
+        if (personMenuItem == null) {
+            return;
+        }
+        Person person = personMenuItem.getPerson();
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor);
         person.addChore(chore);
         App.switchScene("App");
+
+        Storage.getInstance().save();
     }
 
     @FXML

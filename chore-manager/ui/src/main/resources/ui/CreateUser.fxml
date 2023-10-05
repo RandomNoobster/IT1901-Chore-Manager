@@ -30,12 +30,14 @@
                      <styleClass>
                         <String fx:value="whiteText" />
                         <String fx:value="roundedBorderLeft" />
-                     </styleClass></Label>
+                     </styleClass>
+                  </Label>
                   <TextField fx:id="userName">
                      <styleClass>
                         <String fx:value="textInput" />
                         <String fx:value="roundedBorderRight" />
-                     </styleClass></TextField>
+                     </styleClass>
+                  </TextField>
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
@@ -52,7 +54,8 @@
                         <String fx:value="roundedBorderRight" />
                      </styleClass>
                   </TextField>
-               </children></HBox>
+               </children>
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label fx:id="pointsDisplay" text="Password">
@@ -75,7 +78,8 @@
                   <String fx:value="button" />
                   <String fx:value="hoverClass" />
                   <String fx:value="roundedBorder" />
-               </styleClass></Button>
+               </styleClass>
+            </Button>
          </children>
          <styleClass>
             <String fx:value="roundedBorder" />

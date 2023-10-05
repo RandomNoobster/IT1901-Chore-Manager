@@ -12,12 +12,18 @@ import javafx.stage.Stage;
 import persistence.FileHandling.Storage;
 
 /**
- * JavaFX App
+ * The App class has the logic to start the user interface of the project.
  */
 public class App extends Application {
 
     private static Scene scene;
 
+    /**
+     * The start method is called when the application is launched. It loads the FXML-file and sets
+     * the scene.
+     *
+     * @param stage The stage to be used for the application
+     */
     @Override
     public void start(Stage stage) throws IOException {
 
@@ -37,7 +43,7 @@ public class App extends Application {
         stage.show();
 
         stage.setOnCloseRequest(event -> {
-            Storage.save();
+            Storage.getInstance().save();
             System.exit(0);
         });
 
@@ -53,7 +59,8 @@ public class App extends Application {
         }
     }
 
-    public static void setChoreCreationScene(String fxmlName, LocalDate dateFrom, LocalDate dateTo) {
+    public static void setChoreCreationScene(String fxmlName, LocalDate dateFrom,
+            LocalDate dateTo) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlName + ".fxml"));
             Parent parent = fxmlLoader.load();

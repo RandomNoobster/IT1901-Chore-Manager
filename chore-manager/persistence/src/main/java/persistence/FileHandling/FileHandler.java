@@ -71,7 +71,8 @@ public class FileHandler {
      */
     public void writeToFile(String string, boolean append) {
         try (FileOutputStream fileWriter = new FileOutputStream(this.file, append)) {
-            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileWriter, StandardCharsets.UTF_8);
+            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileWriter,
+                    StandardCharsets.UTF_8);
             BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter);
             bufferedWriter.write(string);
             bufferedWriter.close();
@@ -140,7 +141,8 @@ public class FileHandler {
         }
 
         try (FileInputStream fileInputStream = new FileInputStream(this.file)) {
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream, StandardCharsets.UTF_8);
+            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,
+                    StandardCharsets.UTF_8);
             JSONArray jsonObject = (JSONArray) jsonParser.parse(inputStreamReader);
             return jsonObject;
         } catch (FileNotFoundException e) {
