@@ -74,4 +74,4 @@ A Checkstyle report will be generated during the first maven phase, `validate`, 
 mvn verify
 ```
 
-The `mvn verify` command will generate a Checkstyle report, Jacoco report and a Spotbugs report. The Checkstyle reports are located in [persistance](/chore-manager/persistance/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The Spotbugs reports are located in [persistance](/chore-manager/persistance/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).
+The `mvn verify` command will generate a Checkstyle report, Jacoco report and a Spotbugs report. The Checkstyle reports are located in [persistence](/chore-manager/persistence/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The Spotbugs reports are located in [persistence](/chore-manager/persistence/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).

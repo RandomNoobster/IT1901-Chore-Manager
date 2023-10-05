@@ -10,9 +10,8 @@ import core.Data.Chore;
 import core.Data.Person;
 
 /**
- * This class holds the information about the application's state.
- * It is used to store and retrieve data from the file system.
- * This is a singleton class.
+ * This class holds the information about the application's state. It is used to store and retrieve
+ * data from the file system. This is a singleton class.
  */
 public class Storage {
 
@@ -63,8 +62,9 @@ public class Storage {
         return this.filePath;
     }
 
-    /** Use with care. 
-     * This method will delete the current instance, since it is a singleton, this will affect all other classes using this singleton for information.
+    /**
+     * Use with care. This method will delete the current instance, since it is a singleton, this
+     * will affect all other classes using this singleton for information.
      */
     public static void deleteInstance() {
         instance = null;
@@ -117,9 +117,8 @@ public class Storage {
     }
 
     /**
-     * This a method to create a test file for the application.
-     * This should be called if you do not have any persons in the application.
-     * This can be considered test data.
+     * This a method to create a test file for the application. This should be called if you do not
+     * have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
         Person person1 = new Person("Christian");

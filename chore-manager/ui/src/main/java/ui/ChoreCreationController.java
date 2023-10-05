@@ -86,6 +86,8 @@ public class ChoreCreationController {
         person.addChore(chore);
         this.stage.setScene(this.oldScene);
         this.appController.updateFxml();
+
+        Storage.getInstance().save();
     }
 
     @FXML
