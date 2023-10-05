@@ -8,7 +8,7 @@ The overarching plan is essentually described in this graphic over the minimum v
 |:--:|
 |Minimum viable product| 
 
-So far we have just had time to create what we plan to have as the applications main view. Therefore we have not implemented any login functionality yet. This means that there is only one temporary user object which chores are assigned to. Creating custom chores from the UI is not implemented either, but the parameters and part of this functionality is already in place in the core module. Persistency has been imlemented using the json-simple module.
+So far we have just had time to create what we plan to have as the applications main view. Therefore we have not implemented any login functionality yet. This means that there is only one temporary user object which chores are assigned to. Creating custom chores from the UI is not implemented either, but the parameters and part of this functionality is already in place in the core module. Persistency has been imlemented using the JSON.simple module.
  
 |![Structure](/docs/release1/mainViewFxmlStructure.png)|
 |:--:|
