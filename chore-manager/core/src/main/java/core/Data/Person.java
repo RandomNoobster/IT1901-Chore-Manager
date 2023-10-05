@@ -9,14 +9,15 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * The Person class represents a person in the chore manager.
- * It stores information about the person's name and chores.
+ * The Person class represents a person in the chore manager. It stores information about the
+ * person's name and chores.
  */
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
     private UUID uuid;
     private String name;
     private List<Chore> chores = new ArrayList<>();
+    private Password password;
 
     /**
      * A constructor for the Person class that initializes the state of the object.
@@ -26,6 +27,8 @@ public class Person {
     public Person(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
+        this.password = new Password();
+
     }
 
     /**
@@ -38,6 +41,7 @@ public class Person {
         this.uuid = UUID.randomUUID();
         this.name = name;
         this.chores = new ArrayList<Chore>(chores);
+        this.password = new Password();
     }
 
     /**
@@ -51,6 +55,25 @@ public class Person {
         this.uuid = uuid;
         this.name = name;
         this.chores = new ArrayList<Chore>(chores);
+        this.password = new Password();
+    }
+
+    public Person(String name, Password password) {
+        this.name = name;
+        this.password = password;
+        this.uuid = UUID.randomUUID();
+        this.chores = new ArrayList<Chore>();
+    }
+
+    public Person(String name, UUID uuid, Password password, List<Chore> chores) {
+        this.uuid = uuid;
+        this.name = name;
+        this.chores = new ArrayList<Chore>(chores);
+        this.password = password;
+    }
+
+    public Password getPassword() {
+        return this.password;
     }
 
     /**
@@ -82,16 +105,14 @@ public class Person {
 
     /**
      * Removes a chore from the person.
-     *
-     * @param chore The chore to remove
      */
     public List<Chore> getChores() {
         return this.chores;
     }
 
     /**
-     * Outputs a {@link JSONObject} representing the person. Object variables are
-     * turned into key/value pairs.
+     * Outputs a {@link JSONObject} representing the person. Object variables are turned into
+     * key/value pairs.
      *
      * @return A {@link JSONObject} representing the person
      */
@@ -107,6 +128,7 @@ public class Person {
         }
 
         map.put("chores", choresJSON);
+        map.put("password", this.password.getPassword());
 
         return new JSONObject(map);
     }

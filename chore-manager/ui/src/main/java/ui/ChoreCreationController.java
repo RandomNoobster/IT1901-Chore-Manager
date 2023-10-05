@@ -40,21 +40,14 @@ public class ChoreCreationController {
 
     LocalDate dateFrom;
     LocalDate dateTo;
-    Scene oldScene;
-    Stage stage;
-    AppController appController;
 
     public ChoreCreationController() {
 
     }
 
-    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene,
-            AppController controller) {
+    public void passData(LocalDate dateFrom, LocalDate dateTo) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.oldScene = oldScene;
-        this.stage = stage;
-        this.appController = controller;
     }
 
     @FXML
@@ -84,8 +77,7 @@ public class ChoreCreationController {
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor);
         person.addChore(chore);
-        this.stage.setScene(this.oldScene);
-        this.appController.updateFxml();
+        App.switchScene("App");
 
         Storage.getInstance().save();
     }
