@@ -4,7 +4,7 @@ import core.Data.Person;
 
 public class PersonMenuItem {
 
-    Person person;
+    private Person person;
 
     public PersonMenuItem(Person person) {
         this.person = person;

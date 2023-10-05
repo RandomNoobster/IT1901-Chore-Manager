@@ -2,7 +2,7 @@ package core.Data;
 
 public class Password {
 
-    String password;
+    private String password;
 
     public Password() {
         this.password = "Password";
@@ -12,7 +12,7 @@ public class Password {
         this.password = password;
     }
 
-    public String getPassword() {
+    public String getPasswordString() {
         return this.password;
     }
 

@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import persistence.FileHandling.Storage;
 
@@ -16,7 +17,9 @@ import persistence.FileHandling.Storage;
  */
 public class App extends Application {
 
-    private static Scene scene;
+    // TODO: Possible rewrite into a SceneController class?
+    private static Scene scene = new Scene(new Pane()); // Cannot be null, will cause exception when
+                                                        // switching scenes
 
     /**
      * The start method is called when the application is launched. It loads the FXML-file and sets

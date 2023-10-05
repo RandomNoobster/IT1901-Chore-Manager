@@ -128,7 +128,7 @@ public class Person {
         }
 
         map.put("chores", choresJSON);
-        map.put("password", this.password.getPassword());
+        map.put("password", this.password.getPasswordString());
 
         return new JSONObject(map);
     }

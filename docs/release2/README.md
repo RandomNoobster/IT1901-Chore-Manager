@@ -48,3 +48,57 @@ The second iteration: We understood there was a lot of improvements that could b
 
 Third iteration (Current): By researching, we found that a singleton would prove to be best for our use case. This follows the singleton pattern, which is a well known design pattern and considered a best practice. This means that only one instance of the class can exist, and consequently all data is consistent across the whole application.
 This pattern massively reduced complexity, and allowed us to make the `Storage` class easy to use and understand.
+
+#### Data representation in JSON:
+This is the json representation of the stored data.
+It contains a list of Person objects, where every person has a field `chores` which has a list of Chore objects. 
+```json
+[
+    {
+        "name": "Sebastian",
+        "chores": [
+            {
+                "timeFrom": "2023-10-06",
+                "timeTo": "2023-10-06",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "abc",
+                "points": 0
+            }
+        ],
+        "uuid": "d50d293a-1c2f-403c-bf6c-d03e3a5d6d09"
+    },
+    {
+        "name": "Kristoffer",
+        "chores": [],
+        "uuid": "fc6f0f7e-27a3-401f-916d-69a19e6f50ea"
+    },
+    {
+        "name": "Christian",
+        "chores": [
+            {
+                "timeFrom": "2023-10-05",
+                "timeTo": "2023-10-05",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "Chore Test",
+                "points": 10
+            },
+            {
+                "timeFrom": "2023-10-05",
+                "timeTo": "2023-10-05",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "Chore Test 2",
+                "points": 10
+            }
+        ],
+        "uuid": "4ae82e25-a082-437d-ae2a-2e0d229137dd"
+    },
+    {
+        "name": "Lasse",
+        "chores": [],
+        "uuid": "00a62454-5997-42df-8986-641690135ac4"
+    }
+]
+```
