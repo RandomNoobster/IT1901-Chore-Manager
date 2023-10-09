@@ -104,7 +104,9 @@ public class Person {
     }
 
     /**
-     * Removes a chore from the person.
+     * Outputs a list of chores that the person is assigned to.
+     * 
+     * @return A list of chores that the person is assigned to
      */
     public List<Chore> getChores() {
         return this.chores;
