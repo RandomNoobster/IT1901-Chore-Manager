@@ -3,7 +3,7 @@ package core.Data;
 public class Password {
 
     private String password;
-    private Integer legalLength = 8;
+    private final Integer legalLength = 8;
 
     private boolean containsInteger = false;
     private boolean containsUppercase = false;
@@ -51,14 +51,13 @@ public class Password {
             this.isLegalLength = true;
         }
 
-        String integers = "0123456789";
         this.containsInteger = false;
         this.containsUppercase = false;
         this.containsLowerCase = false;
 
         for (int i = 0; i < this.getPasswordString().length(); i++) {
             char c = this.getPasswordString().charAt(i);
-            if (integers.contains(String.valueOf(c))) {
+            if (Character.isDigit(c)) {
                 this.containsInteger = true;
             } else if (Character.isUpperCase(c)) {
                 this.containsUppercase = true;

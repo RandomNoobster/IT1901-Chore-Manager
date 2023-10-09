@@ -24,6 +24,9 @@ public class CreateUserController {
     @FXML
     private Button createButton;
 
+    private final Integer allowedUsername = 3;
+    private final Integer allowedDisplayname = 3;
+
     public CreateUserController() {
 
     }
@@ -42,17 +45,14 @@ public class CreateUserController {
 
     private Boolean createAccount(String username, String displayname, Password password) {
 
-        Integer allowedUsername = 3;
-        Integer allowedDisplayname = 3;
-
-        if (username.length() < allowedUsername) {
+        if (username.length() < this.allowedUsername) {
             this.errorMsg("Username issue",
-                    "Username must be at least " + allowedUsername + " characters");
+                    "Username must be at least " + this.allowedUsername + " characters");
             return false;
         }
-        if (displayname.length() < allowedDisplayname) {
+        if (displayname.length() < this.allowedDisplayname) {
             this.errorMsg("Fullname issue",
-                    "Displayname must be at least " + allowedDisplayname + " characters");
+                    "Displayname must be at least " + this.allowedDisplayname + " characters");
             return false;
         }
 
