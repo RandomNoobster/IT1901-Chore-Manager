@@ -56,12 +56,11 @@ public class CreateUserController {
             return false;
         }
 
-        for (Person p : Storage.getInstance().getPersonsList()) {
-            if (p.getName().equals(username)) {
-                this.errorMsg("Username issue", "Username is not unique");
-                return false;
-            }
+        if (!Storage.getInstance().getPersons().containsKey(username)) {
+            this.errorMsg("Username issue", "Username is not unique");
+            return false;
         }
+
         if (!password.isLegal()) {
             this.errorMsg("Password issue", password.getFixMsg());
             return false;
