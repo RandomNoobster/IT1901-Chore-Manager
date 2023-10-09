@@ -16,8 +16,9 @@ import org.json.simple.JSONObject;
 public class Person {
     private UUID uuid;
     private String name;
-    private List<Chore> chores = new ArrayList<>();
+    private List<Chore> chores;
     private Password password;
+    private String displayName;
 
     /**
      * A constructor for the Person class that initializes the state of the object.
@@ -25,10 +26,7 @@ public class Person {
      * @param name The name of the person
      */
     public Person(String name) {
-        this.uuid = UUID.randomUUID();
-        this.name = name;
-        this.password = new Password();
-
+        this(name, UUID.randomUUID(), new Password(), new ArrayList<>(), name);
     }
 
     /**
@@ -38,10 +36,7 @@ public class Person {
      * @param chores The chores of the person
      */
     public Person(String name, List<Chore> chores) {
-        this.uuid = UUID.randomUUID();
-        this.name = name;
-        this.chores = new ArrayList<Chore>(chores);
-        this.password = new Password();
+        this(name, UUID.randomUUID(), new Password(), chores, name);
     }
 
     /**
@@ -52,28 +47,30 @@ public class Person {
      * @param chores The chores of the person
      */
     public Person(String name, UUID uuid, List<Chore> chores) {
-        this.uuid = uuid;
-        this.name = name;
-        this.chores = new ArrayList<Chore>(chores);
-        this.password = new Password();
+        this(name, uuid, new Password(), chores, name);
     }
 
-    public Person(String name, Password password) {
-        this.name = name;
-        this.password = password;
-        this.uuid = UUID.randomUUID();
-        this.chores = new ArrayList<Chore>();
+    // When making a brand new person
+    public Person(String name, Password password, String displayName) {
+        this(name, UUID.randomUUID(), password, new ArrayList<Chore>(), displayName);
     }
 
-    public Person(String name, UUID uuid, Password password, List<Chore> chores) {
+    // Load person
+    public Person(String name, UUID uuid, Password password, List<Chore> chores,
+            String displayName) {
         this.uuid = uuid;
         this.name = name;
+        this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
     }
 
     public Password getPassword() {
         return this.password;
+    }
+
+    public String displayName() {
+        return this.displayName;
     }
 
     /**
@@ -131,6 +128,7 @@ public class Person {
 
         map.put("chores", choresJSON);
         map.put("password", this.password.getPasswordString());
+        map.put("displayname", this.displayName);
 
         return new JSONObject(map);
     }

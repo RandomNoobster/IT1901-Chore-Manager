@@ -30,7 +30,7 @@ public class AppController {
     private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
                                         // current week)
     private final int NUM_WEEKS = 4; // Number of weeks to create
-    private final List<String> WEEKDAYS = Arrays.asList("Monday", "Tuesday", "Wednesday",
+    private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday", "Sunday");
 
     /**
