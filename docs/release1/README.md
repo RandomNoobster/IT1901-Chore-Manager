@@ -2,17 +2,17 @@
 ## Progress
 For this deliverable, we have implemented basic functionality of the application. The functionality fulfills the requirements stated in the [first user story](UserStory1.md). Thus, a lot of the core logic is in place, and we have a basic UI. 
 
-The overarching plan is essentually described in this graphic over the minimum viable product.
+The overarching plan is essentially described in this graphic over the minimum viable product.
 
 |![Structure](plan.jpg)|
 |:--:|
 |Minimum viable product| 
 
-So far we have just had time to create what we plan to have as the applications main view. Therefore we have not implemented any login functionality yet. This means that there is only one temporary user object which chores are assigned to. Creating custom chores from the UI is not implemented either, but the parameters and part of this functionality is already in place in the core module. Persistency has been imlemented using the JSON.simple module.
+So far we have just had time to create what we plan to have as the applications main view. Therefore we have not implemented any login functionality yet. This means that there is only one temporary user object which chores are assigned to. Creating custom chores from the UI is not implemented either, but the parameters and part of this functionality is already in place in the core module. Persistency has been implemented using the JSON.simple module.
  
 |![Structure](/docs/release1/mainViewFxmlStructure.png)|
 |:--:|
-|FXML strucutre for the main view| 
+|FXML structure for the main view| 
 
 ## How to use
 First you run the project as described [here](../../README.md).
