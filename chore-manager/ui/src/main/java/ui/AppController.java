@@ -63,7 +63,7 @@ public class AppController {
     }
 
     /**
-     * Makes the DayView buttons run {@link #createChore} when clicked.
+     * Makes the DayView buttons create a new chore when clicked.
      */
     private void addDayActions() {
         for (WeekView week : this.weeks) {

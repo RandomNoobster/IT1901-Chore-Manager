@@ -41,6 +41,10 @@ This class has the highest level of abstraction in the persistence module, and i
 
 In all classes that handles JSONArrays, we had to add `@SuppressWarnings("unchecked")`. This is because the JSONArray class is not generic, and is instead a raw type. This means that the compiler cannot check that the JSONArray is of the correct type, and will instead give a warning. We have chosen to suppress this warning, as we are sure that the JSONArray is of the correct type, and there is no way to parameterize it.
 
+|![Persistence class relationships](storageDiagram.png)|
+|:--:|
+|This PlantUML diagram is a class diagram of the classes in the Persistence module| 
+
 #### Progression of persistence implementation
 The above text explains the current implementation of persistence, but it has gone through many iterations before reaching this point.
 
