@@ -25,14 +25,14 @@ A description of the project can be found in [/chore-manager/README.md](/chore-m
 ## How to run
 First install the necessary dependencies in [chore-manager](/chore-manager/):
 
-```bash
+```shell
 cd chore-manager/
 mvn install 
 ```
 
 Then run the javafx run command in [chore-manager/ui](/chore-manager/ui/):
 
-```bash
+```shell
 cd chore-manager/ui/
 mvn javafx:run
 ```
@@ -40,13 +40,13 @@ mvn javafx:run
 ## How to view the javadocs
 First change directory to [chore-manager](/chore-manager/):
 
-```bash
+```shell
 cd chore-manager/
 ```
 
 Then run the maven javadoc command:
 
-```bash
+```shell
 mvn javadoc:aggregate
 ```
 
@@ -56,13 +56,13 @@ Then open the [/chore-manager/target/site/apidocs/index.html](/chore-manager/tar
 ## How to test
 First change directory to [chore-manager](/chore-manager/):
 
-```bash
+```shell
 cd chore-manager/
 ```
 
 Then run the maven test command:
 
-```bash
+```shell
 mvn test
 ```
 
@@ -70,7 +70,7 @@ A Jacoco report will then be generated in [chore-manager/jacocoAggregateReporter
 
 A Checkstyle report will be generated during the first maven phase, `validate`, meaning it will be generated if you run `mvn test`. If you want to generate a Spotbugs report as well, you can run the following command:
 
-```bash
+```shell
 mvn verify
 ```
 
