@@ -18,6 +18,7 @@ public class Person {
     private String name;
     private List<Chore> chores = new ArrayList<>();
     private Password password;
+    private String displayName;
 
     /**
      * A constructor for the Person class that initializes the state of the object.
@@ -27,6 +28,7 @@ public class Person {
     public Person(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
+        this.displayName = name;
         this.password = new Password();
 
     }
@@ -40,6 +42,7 @@ public class Person {
     public Person(String name, List<Chore> chores) {
         this.uuid = UUID.randomUUID();
         this.name = name;
+        this.displayName = name;
         this.chores = new ArrayList<Chore>(chores);
         this.password = new Password();
     }
@@ -54,26 +57,36 @@ public class Person {
     public Person(String name, UUID uuid, List<Chore> chores) {
         this.uuid = uuid;
         this.name = name;
+        this.displayName = name;
         this.chores = new ArrayList<Chore>(chores);
         this.password = new Password();
     }
 
-    public Person(String name, Password password) {
+    // When making a brand new person
+    public Person(String name, Password password, String displayName) {
         this.name = name;
+        this.displayName = displayName;
         this.password = password;
         this.uuid = UUID.randomUUID();
         this.chores = new ArrayList<Chore>();
     }
 
-    public Person(String name, UUID uuid, Password password, List<Chore> chores) {
+    // Load person
+    public Person(String name, UUID uuid, Password password, List<Chore> chores,
+            String displayName) {
         this.uuid = uuid;
         this.name = name;
+        this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
     }
 
     public Password getPassword() {
         return this.password;
+    }
+
+    public String displayName() {
+        return this.displayName;
     }
 
     /**
@@ -129,6 +142,7 @@ public class Person {
 
         map.put("chores", choresJSON);
         map.put("password", this.password.getPasswordString());
+        map.put("displayname", this.displayName);
 
         return new JSONObject(map);
     }

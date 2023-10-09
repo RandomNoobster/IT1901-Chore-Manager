@@ -48,8 +48,9 @@ public class JSONConverter extends FileHandler {
             UUID uuid = UUID.fromString((String) personJSON.get("uuid"));
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
             Password password = new Password((String) personJSON.get("password"));
+            String displayName = (String) personJSON.get("displayname");
 
-            Person person = new Person(name, uuid, password, chores);
+            Person person = new Person(name, uuid, password, chores, displayName);
             persons.put(uuid, person);
         }
 
