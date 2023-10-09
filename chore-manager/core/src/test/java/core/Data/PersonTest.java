@@ -52,9 +52,9 @@ public class PersonTest {
     }
 
     @Test
-    public void testUniqueID() {
+    public void testUniqueUsername() {
         Person person2 = new Person("Henry");
-        assertFalse(person2.getUUID().equals(this.person.getUUID()));
+        assertFalse(person2.getName().equals(this.person.getName()));
     }
 
 }

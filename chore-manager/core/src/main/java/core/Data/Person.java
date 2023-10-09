@@ -3,7 +3,6 @@ package core.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +13,6 @@ import org.json.simple.JSONObject;
  */
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
-    private UUID uuid;
     private String name;
     private List<Chore> chores;
     private Password password;
@@ -26,7 +24,7 @@ public class Person {
      * @param name The name of the person
      */
     public Person(String name) {
-        this(name, UUID.randomUUID(), new Password(), new ArrayList<>(), name);
+        this(name, new Password(), new ArrayList<>(), name);
     }
 
     /**
@@ -36,29 +34,16 @@ public class Person {
      * @param chores The chores of the person
      */
     public Person(String name, List<Chore> chores) {
-        this(name, UUID.randomUUID(), new Password(), chores, name);
-    }
-
-    /**
-     * A constructor for the Person class that initializes the state of the object.
-     *
-     * @param name   The name of the person
-     * @param uuid   The UUID of the person
-     * @param chores The chores of the person
-     */
-    public Person(String name, UUID uuid, List<Chore> chores) {
-        this(name, uuid, new Password(), chores, name);
+        this(name, new Password(), chores, name);
     }
 
     // When making a brand new person
     public Person(String name, Password password, String displayName) {
-        this(name, UUID.randomUUID(), password, new ArrayList<Chore>(), displayName);
+        this(name, password, new ArrayList<Chore>(), displayName);
     }
 
     // Load person
-    public Person(String name, UUID uuid, Password password, List<Chore> chores,
-            String displayName) {
-        this.uuid = uuid;
+    public Person(String name, Password password, List<Chore> chores, String displayName) {
         this.name = name;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
@@ -80,15 +65,6 @@ public class Person {
      */
     public String getName() {
         return this.name;
-    }
-
-    /**
-     * Outputs the UUID of the person.
-     *
-     * @return The UUID of the person
-     */
-    public UUID getUUID() {
-        return this.uuid;
     }
 
     /**
@@ -118,7 +94,6 @@ public class Person {
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("uuid", this.uuid.toString());
         map.put("name", this.name);
 
         JSONArray choresJSON = new JSONArray();
@@ -134,16 +109,17 @@ public class Person {
     }
 
     /**
-     * Outputs a boolean indicating wether or not the objects have the same UUID.
+     * Outputs a boolean indicating wether or not the objects have the same username (since this is
+     * unique).
      *
-     * @return If the UUIDs are equal
+     * @return If the usernames are equal
      */
     @Override
     public boolean equals(Object arg0) {
         if (!(arg0 instanceof Person)) {
             return false;
         }
-        return this.uuid.equals(((Person) arg0).getUUID());
+        return this.name.equals(((Person) arg0).getName());
     }
 
     @Override

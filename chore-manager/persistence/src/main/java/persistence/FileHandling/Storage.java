@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import core.Data.Chore;
 import core.Data.Person;
@@ -18,7 +17,7 @@ public class Storage {
     private static Storage instance = null;
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
-    private HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+    private HashMap<String, Person> persons = new HashMap<String, Person>();
     private static Person user;
 
     private Storage() {
@@ -87,8 +86,8 @@ public class Storage {
         this.jsonConverter.deleteFileContent();
     }
 
-    public HashMap<UUID, Person> getPersons() {
-        return new HashMap<UUID, Person>(this.persons);
+    public HashMap<String, Person> getPersons() {
+        return new HashMap<String, Person>(this.persons);
     }
 
     public List<Person> getPersonsList() {
@@ -96,11 +95,11 @@ public class Storage {
     }
 
     public void addPerson(Person person) {
-        this.persons.put(person.getUUID(), person);
+        this.persons.put(person.getName(), person);
     }
 
     public void removePerson(Person person) {
-        this.persons.remove(person.getUUID());
+        this.persons.remove(person.getName());
     }
 
     public List<Chore> getChoresList() {
@@ -117,8 +116,8 @@ public class Storage {
             return;
         }
 
-        if (this.persons.containsKey(assignedPerson.getUUID())) {
-            Person person = this.persons.get(assignedPerson.getUUID());
+        if (this.persons.containsKey(assignedPerson.getName())) {
+            Person person = this.persons.get(assignedPerson.getName());
             person.addChore(chore);
         } else {
             System.out.println("Person does not exist");
@@ -139,11 +138,11 @@ public class Storage {
                 "#FFFFFF");
         person1.addChore(chore);
 
-        HashMap<UUID, Person> persons = new HashMap<>();
-        persons.put(person1.getUUID(), person1);
-        persons.put(person2.getUUID(), person2);
-        persons.put(person3.getUUID(), person3);
-        persons.put(person4.getUUID(), person4);
+        HashMap<String, Person> persons = new HashMap<>();
+        persons.put(person1.getName(), person1);
+        persons.put(person2.getName(), person2);
+        persons.put(person3.getName(), person3);
+        persons.put(person4.getName(), person4);
         this.persons = persons;
         this.save();
     }

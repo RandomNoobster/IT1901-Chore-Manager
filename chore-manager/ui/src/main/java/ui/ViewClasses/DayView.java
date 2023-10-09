@@ -19,8 +19,8 @@ import javafx.scene.paint.Color;
 import persistence.FileHandling.Storage;
 
 /**
- * The DayView class represents a day in the calendar. It extends Button because
- * it should be clickable.
+ * The DayView class represents a day in the calendar. It extends Button because it should be
+ * clickable.
  */
 public class DayView extends Button implements ViewInterface {
 
@@ -42,7 +42,7 @@ public class DayView extends Button implements ViewInterface {
         this.container.getStyleClass().add("dayContainer");
         this.vBoxContainer.getStyleClass().add("list-item-container");
         this.getStyleClass().addAll("header", "button", "hoverClass");
-
+        this.setPrefWidth(110);
         this.scrollContainer.setContent(this.vBoxContainer);
 
         // Saving classes

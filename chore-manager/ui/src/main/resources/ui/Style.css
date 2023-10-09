@@ -73,7 +73,7 @@
 .button {
     -fx-pref-height: 30px;
     -fx-min-height: 30px;
-    -fx-pref-width: 110px;
+    /*-fx-pref-width: 110px;*/
     -fx-text-fill: derive(-textWhite, 0%);
 }
 

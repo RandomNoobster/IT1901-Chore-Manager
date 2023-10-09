@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -23,7 +22,7 @@ public class JSONConverter extends FileHandler {
         super(fileName);
     }
 
-    public void writePersonsToJSON(HashMap<UUID, Person> persons) {
+    public void writePersonsToJSON(HashMap<String, Person> persons) {
         JSONArray personsJSON = new JSONArray();
         for (Person person : persons.values()) {
             personsJSON.add(person.encodeToJSON());
@@ -33,8 +32,8 @@ public class JSONConverter extends FileHandler {
 
     // This assumes that the write file was used
     // TODO: Make it so it checks for formatting errors
-    public HashMap<UUID, Person> getPersons() {
-        HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+    public HashMap<String, Person> getPersons() {
+        HashMap<String, Person> persons = new HashMap<String, Person>();
         JSONArray personsJSON = this.readJSONFile();
 
         if (personsJSON == null) {
@@ -45,13 +44,12 @@ public class JSONConverter extends FileHandler {
             JSONObject personJSON = (JSONObject) personObject;
 
             String name = (String) personJSON.get("name");
-            UUID uuid = UUID.fromString((String) personJSON.get("uuid"));
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
             Password password = new Password((String) personJSON.get("password"));
             String displayName = (String) personJSON.get("displayname");
 
-            Person person = new Person(name, uuid, password, chores, displayName);
-            persons.put(uuid, person);
+            Person person = new Person(name, password, chores, displayName);
+            persons.put(name, person);
         }
 
         return persons;
