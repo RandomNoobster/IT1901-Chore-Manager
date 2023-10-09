@@ -2,10 +2,14 @@
 We have continued to hold the two-hours meeting every week. However the two, two-hour meetings turned into four-hour meetings after the lectures stopped. These meetings are where we have done the big majority of the work. The first meetings after deliverbal 1 were spent adressing the feedback from the first deliverable. After that we have spent the meetings working on the issues we have created for the project. 
 
 # Issues
-According to the feedback from the first deliverable and the requirements for the second deliverable we have created issues in the same manner as for deliv
+According to the feedback from the first deliverable and the requirements for the second deliverable we have created issues in the same manner as for deliverable 1. We have created issues for all the requirements for the second deliverable. We have also created issues for the feedback from the first deliverable. 
 
 # Branching
+Although branching didnt become a requirement untill this second deliverable, we have been using branching since the beginning of the project. We have continued to use the same branching strategy as described in the first deliverable. This means that we have a master branch which is the main branch of the project. All issues are branced into their own branch to minimize conflicts and securing that the master branch is always working. When an issue is finished and the code has been reviewed, the branch is merged into the master branch. We have used a strict naming convention for the branches. The name of the branch is the issue number followed by a short description of the issue. This makes it easy to see which issue a branch is related to.
 
 # Milestones
+We have created milestones for the project. The milestones are used to group issues together. We have created milestones for the different deliverables and for the feedback from the first deliverable. This makes it easy to see which issues are related to which deliverable.
+
 
 # Pear-Programming
+We have also implemented pear-programming in our workflow for some of the issues. This has been done by working together in pairs on the same computer. This has been done for issues where we have felt that it would be easier to work together on the same computer. Especially when working with different scenes and how the view should look like for the user. 
