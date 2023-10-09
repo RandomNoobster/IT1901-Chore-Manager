@@ -110,9 +110,7 @@
                         <artifactId>umldoclet</artifactId>
                         <version>2.1.0</version>
                     </docletArtifact>
-                    <additionalOptions>
-                        <!--<additionalOption>...</additionalOption>-->
-                    </additionalOptions>
+                    <show>private</show>
                 </configuration>
             </plugin>
             <plugin>
