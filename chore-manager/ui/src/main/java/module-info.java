@@ -6,4 +6,6 @@ module main.ui {
     requires json.simple;
 
     opens ui to javafx.graphics, javafx.fxml;
+
+    exports ui;
 }
