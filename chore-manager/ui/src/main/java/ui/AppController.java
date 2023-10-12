@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.Data.Week;
+import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ui.ViewClasses.DayView;
-import ui.ViewClasses.WeekView;
+import ui.viewClasses.DayView;
+import ui.viewClasses.WeekView;
 
 /**
  * The AppController class is the controller for the main view of the application.

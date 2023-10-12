@@ -3,8 +3,8 @@ package ui;
 import java.time.LocalDate;
 import java.util.List;
 
-import core.Data.Chore;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -13,9 +13,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import persistence.FileHandling.Storage;
-import ui.ViewClasses.PersonMenuItem;
+import persistence.fileHandling.Storage;
+import ui.viewClasses.PersonMenuItem;
 
+/**
+ * This is the controller for the chore creation view.
+ */
 public class ChoreCreationController {
 
     @FXML
@@ -43,11 +46,21 @@ public class ChoreCreationController {
 
     }
 
+    /**
+     * This method is called when the view is loaded. It passes the date range of a chore.
+     *
+     * @param dateFrom The date from which the chore is valid
+     * @param dateTo   The date to which the chore is valid
+     */
     public void passData(LocalDate dateFrom, LocalDate dateTo) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
     }
 
+    /**
+     * This method is called when the view is loaded. It initializes the persons menu with all the
+     * people.
+     */
     @FXML
     protected void initialize() {
         List<Person> persons = Storage.getInstance().getPersonsList();
@@ -57,6 +70,10 @@ public class ChoreCreationController {
         }
     }
 
+    /**
+     * This method is called when the create button is pressed. It creates a new chore with the
+     * given parameters. The view is then switched back to the main view.
+     */
     public void createChore() {
         String choreName = this.name.getText();
         Integer points = (int) this.points.getValue();
@@ -80,6 +97,9 @@ public class ChoreCreationController {
         App.switchScene("App");
     }
 
+    /**
+     * This method is called when the points slider is changed. It updates the points display.
+     */
     @FXML
     public void pointsChanged() {
         this.pointsDisplay.setText("Points: " + (int) this.points.getValue());

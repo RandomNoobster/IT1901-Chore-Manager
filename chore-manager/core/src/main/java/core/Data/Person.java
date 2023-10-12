@@ -1,4 +1,4 @@
-package core.Data;
+package core.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,12 +50,26 @@ public class Person {
         this(name, uuid, new Password(), chores, name);
     }
 
-    // When making a brand new person
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
+     * @param name        The unique name of the person
+     * @param password    The password of the person
+     * @param displayName The display name of the person
+     */
     public Person(String name, Password password, String displayName) {
         this(name, UUID.randomUUID(), password, new ArrayList<Chore>(), displayName);
     }
 
-    // Load person
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
+     * @param name        The unique name of the person
+     * @param uuid        The UUID of the person
+     * @param password    The password of the person
+     * @param chores      The chores of the person
+     * @param displayName The display name of the person
+     */
     public Person(String name, UUID uuid, Password password, List<Chore> chores,
             String displayName) {
         this.uuid = uuid;
@@ -65,10 +79,20 @@ public class Person {
         this.password = password;
     }
 
+    /**
+     * Outputs the password of the person.
+     *
+     * @return The password of the person
+     */
     public Password getPassword() {
         return this.password;
     }
 
+    /**
+     * Outputs the display name of the person.
+     *
+     * @return The display name of the person
+     */
     public String displayName() {
         return this.displayName;
     }
@@ -102,7 +126,7 @@ public class Person {
 
     /**
      * Outputs a list of chores that the person is assigned to.
-     * 
+     *
      * @return A list of chores that the person is assigned to
      */
     public List<Chore> getChores() {

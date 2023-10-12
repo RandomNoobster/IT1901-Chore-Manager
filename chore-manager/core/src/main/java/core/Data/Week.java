@@ -1,4 +1,4 @@
-package core.Data;
+package core.data;
 
 import java.time.LocalDate;
 import java.time.temporal.TemporalField;
@@ -8,8 +8,7 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * The Week class contains logic for a week. It stores information about the
- * days in the week.
+ * The Week class contains logic for a week. It stores information about the days in the week.
  */
 public class Week {
 

@@ -10,7 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
 /**
  * The App class has the logic to start the user interface of the project.
@@ -18,8 +18,8 @@ import persistence.FileHandling.Storage;
 public class App extends Application {
 
     // TODO: Possible rewrite into a SceneController class?
-    private static Scene scene = new Scene(new Pane()); // Cannot be null, will cause exception when
-                                                        // switching scenes
+    // Cannot be null, will cause exception when switching scenes
+    private static Scene scene = new Scene(new Pane());
 
     /**
      * The start method is called when the application is launched. It loads the FXML-file and sets
@@ -52,6 +52,11 @@ public class App extends Application {
 
     }
 
+    /**
+     * This method is called when the user wants to switch to another scene.
+     *
+     * @param fxmlName The name of the FXML-file to be loaded
+     */
     public static void switchScene(String fxmlName) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlName + ".fxml"));
@@ -62,6 +67,13 @@ public class App extends Application {
         }
     }
 
+    /**
+     * This method is called when the user wants to switch to another scene.
+     *
+     * @param fxmlName The name of the FXML-file to be loaded
+     * @param dateFrom The start date of the chore
+     * @param dateTo   The end date of the chore
+     */
     public static void setChoreCreationScene(String fxmlName, LocalDate dateFrom,
             LocalDate dateTo) {
         try {

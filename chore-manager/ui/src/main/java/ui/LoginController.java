@@ -1,14 +1,17 @@
 package ui;
 
-import core.Data.Person;
+import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
+/**
+ * This is the controller for the login view.
+ */
 public class LoginController {
 
     @FXML
@@ -32,6 +35,10 @@ public class LoginController {
 
     }
 
+    /**
+     * This method is called when the login button is pressed. If the user exists and the login
+     * information is correct, the active user is set to this user.
+     */
     @FXML
     public void login() {
 

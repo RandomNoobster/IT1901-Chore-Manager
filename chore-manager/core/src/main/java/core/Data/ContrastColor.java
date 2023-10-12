@@ -1,7 +1,14 @@
-package core.Data;
+package core.data;
 
+/**
+ * This class is used to determine whether the text color should be black or white
+ * based on the background color.
+ */
 public class ContrastColor {
 
+    /**
+     * Returns true if the text color should be black, false if it should be white.
+     */
     public static Boolean blackText(String hex) {
 
         String hexColor = hex.replace("#", "");

@@ -1,4 +1,4 @@
-package persistence.FileHandling;
+package persistence.fileHandling;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -15,8 +15,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.Data.Chore;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.Person;
 
 public class JSONConverterTest {
 

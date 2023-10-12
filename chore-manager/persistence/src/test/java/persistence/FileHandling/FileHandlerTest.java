@@ -1,4 +1,4 @@
-package persistence.FileHandling;
+package persistence.fileHandling;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -101,7 +101,8 @@ public class FileHandlerTest {
         assertEquals(0, this.fileHandler.getFile().length());
 
         this.fileHandler.writeToFile("abc");
-        assertEquals(null, this.fileHandler.readJSONFile()); // Catches ParseException and returns null
+        assertEquals(null, this.fileHandler.readJSONFile()); // Catches ParseException and returns
+                                                             // null
     }
 
     @Test

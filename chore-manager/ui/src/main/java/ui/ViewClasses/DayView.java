@@ -1,14 +1,14 @@
-package ui.ViewClasses;
+package ui.viewClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.Data.Chore;
-import core.Data.ContrastColor;
-import core.Data.Day;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.ContrastColor;
+import core.data.Day;
+import core.data.Person;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,11 +16,11 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
 /**
- * The DayView class represents a day in the calendar. It extends Button because
- * it should be clickable.
+ * The DayView class represents a day in the calendar. It extends Button because it should be
+ * clickable.
  */
 public class DayView extends Button implements ViewInterface {
 

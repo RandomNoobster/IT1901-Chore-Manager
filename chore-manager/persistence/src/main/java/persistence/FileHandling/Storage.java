@@ -1,4 +1,4 @@
-package persistence.FileHandling;
+package persistence.fileHandling;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import core.Data.Chore;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.Person;
 
 /**
  * This class holds the information about the application's state. It is used to store and retrieve
@@ -30,6 +30,10 @@ public class Storage {
         this.initialize();
     }
 
+    /**
+     * This method is used to initialize the storage. It will create a new file if it does not
+     * exist.
+     */
     public void initialize() {
         this.jsonConverter = new JSONConverter(this.filePath);
         if (this.jsonConverter.getCreatedNewFile() || this.jsonConverter.getPersons().isEmpty()) {
@@ -39,6 +43,10 @@ public class Storage {
         this.persons = this.jsonConverter.getPersons();
     }
 
+    /**
+     * This method is used to get the instance of the storage. If the instance does not exist, it
+     * creates a new one.
+     */
     public static Storage getInstance() {
         if (instance == null) {
             instance = new Storage();
@@ -46,6 +54,10 @@ public class Storage {
         return instance;
     }
 
+    /**
+     * This method is used to get the instance of the storage at a certain path. If the instance
+     * does not exist, a new one is made.
+     */
     public static Storage getInstance(String filePath) {
         if (instance == null) {
             instance = new Storage(filePath);
@@ -59,6 +71,11 @@ public class Storage {
         return instance;
     }
 
+    /**
+     * This method is used to get the file path of the storage.
+     *
+     * @return The file path of the storage.
+     */
     public String getFilePath() {
         return this.filePath;
     }
@@ -71,38 +88,75 @@ public class Storage {
         instance = null;
     }
 
+    /**
+     * This method is used to save the persons to the file system.
+     */
     public void save() {
         this.jsonConverter.writePersonsToJSON(this.persons);
     }
 
+    /**
+     * This method is used to set the active user of the application.
+     */
     public static void setUser(Person person) {
         user = person;
     }
 
+    /**
+     * This method is used to get the active user of the application.
+     */
     public static Person getUser() {
         return user;
     }
 
+    /**
+     * This method is used to delete the content of the file.
+     */
     public void deleteFileContent() {
         this.jsonConverter.deleteFileContent();
     }
 
+    /**
+     * This method is used to get the persons from the file system.
+     *
+     * @return A {@link HashMap} of persons and their unique keys.
+     */
     public HashMap<UUID, Person> getPersons() {
         return new HashMap<UUID, Person>(this.persons);
     }
 
+    /**
+     * This method is used to get the persons from the file system.
+     *
+     * @return A {@link List} of persons.
+     */
     public List<Person> getPersonsList() {
         return new ArrayList<Person>(this.persons.values());
     }
 
+    /**
+     * This methods adds a person to the file system.
+     *
+     * @param person The person to add.
+     */
     public void addPerson(Person person) {
         this.persons.put(person.getUUID(), person);
     }
 
+    /**
+     * This method is used to remove a person from the file system.
+     *
+     * @param person The person to remove
+     */
     public void removePerson(Person person) {
         this.persons.remove(person.getUUID());
     }
 
+    /**
+     * This method gets a list of all chores belonging to any user.
+     *
+     * @return All chores.
+     */
     public List<Chore> getChoresList() {
         List<Chore> chores = new ArrayList<Chore>();
         for (Person person : this.persons.values()) {
@@ -111,6 +165,12 @@ public class Storage {
         return chores;
     }
 
+    /**
+     * This method adds a chore to a person.
+     *
+     * @param chore          The chore to add.
+     * @param assignedPerson The person to add the chore to.
+     */
     public void addChore(Chore chore, Person assignedPerson) {
         if (assignedPerson == null) {
             System.out.println("Person is null, cannot add chore");
@@ -148,6 +208,11 @@ public class Storage {
         this.save();
     }
 
+    /**
+     * This method is used to delete the storage file.
+     *
+     * @return True if the file was deleted, false otherwise.
+     */
     public boolean deleteFile() {
         boolean deleted = this.jsonConverter.deleteFile();
         deleteInstance();

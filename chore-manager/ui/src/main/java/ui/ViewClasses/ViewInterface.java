@@ -1,4 +1,4 @@
-package ui.ViewClasses;
+package ui.viewClasses;
 
 import javafx.scene.Node;
 
