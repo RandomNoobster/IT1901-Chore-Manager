@@ -48,7 +48,7 @@
                         <String fx:value="roundedBorderLeft" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="displayname">
+                  <TextField fx:id="displayName">
                      <styleClass>
                         <String fx:value="textInput" />
                         <String fx:value="roundedBorderRight" />

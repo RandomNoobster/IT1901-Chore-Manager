@@ -81,6 +81,3 @@ To remind her to chop down a tree before Christmas, Lisa added a chore for that 
 - Specify how many points a chore is worth in the chore-creation-menu
 - Receive said amount of points when having done a chore
 	- The points will add up, and everyone in the group should be able to see the "scoreboard".
-
-
-![](test.svg)

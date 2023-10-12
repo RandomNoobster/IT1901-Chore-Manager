@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import core.data.Chore;
 import core.data.Person;
@@ -18,7 +17,7 @@ public class Storage {
     private static Storage instance = null;
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
-    private HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+    private HashMap<String, Person> persons = new HashMap<String, Person>();
     private static Person user;
 
     private Storage() {
@@ -121,8 +120,8 @@ public class Storage {
      *
      * @return A {@link HashMap} of persons and their unique keys.
      */
-    public HashMap<UUID, Person> getPersons() {
-        return new HashMap<UUID, Person>(this.persons);
+    public HashMap<String, Person> getPersons() {
+        return new HashMap<String, Person>(this.persons);
     }
 
     /**
@@ -138,9 +137,15 @@ public class Storage {
      * This methods adds a person to the file system.
      *
      * @param person The person to add.
+     * @return True if the person was added, false if they are already added.
      */
-    public void addPerson(Person person) {
-        this.persons.put(person.getUUID(), person);
+    public boolean addPerson(Person person) {
+
+        if (this.persons.containsKey(person.getUsername()))
+            return false;
+
+        this.persons.put(person.getUsername(), person);
+        return true;
     }
 
     /**
@@ -149,7 +154,7 @@ public class Storage {
      * @param person The person to remove
      */
     public void removePerson(Person person) {
-        this.persons.remove(person.getUUID());
+        this.persons.remove(person.getUsername());
     }
 
     /**
@@ -177,8 +182,8 @@ public class Storage {
             return;
         }
 
-        if (this.persons.containsKey(assignedPerson.getUUID())) {
-            Person person = this.persons.get(assignedPerson.getUUID());
+        if (this.persons.containsKey(assignedPerson.getUsername())) {
+            Person person = this.persons.get(assignedPerson.getUsername());
             person.addChore(chore);
         } else {
             System.out.println("Person does not exist");
@@ -199,11 +204,11 @@ public class Storage {
                 "#FFFFFF");
         person1.addChore(chore);
 
-        HashMap<UUID, Person> persons = new HashMap<>();
-        persons.put(person1.getUUID(), person1);
-        persons.put(person2.getUUID(), person2);
-        persons.put(person3.getUUID(), person3);
-        persons.put(person4.getUUID(), person4);
+        HashMap<String, Person> persons = new HashMap<>();
+        persons.put(person1.getUsername(), person1);
+        persons.put(person2.getUsername(), person2);
+        persons.put(person3.getUsername(), person3);
+        persons.put(person4.getUsername(), person4);
         this.persons = persons;
         this.save();
     }

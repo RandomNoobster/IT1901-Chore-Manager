@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,19 +45,19 @@ public class JSONConverterTest {
     public void writeAndReadToJSONTest() {
         Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
-        Person person = new Person("name", chores);
-        HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
-        persons.put(person.getUUID(), person);
+        Person person = new Person("username", chores);
+        HashMap<String, Person> persons = new HashMap<String, Person>();
+        persons.put(person.getUsername(), person);
 
         this.jsonConverter.writePersonsToJSON(persons);
         assertTrue(this.jsonConverter.getFile().length() > 0);
 
-        HashMap<UUID, Person> personsFromJSON = this.jsonConverter.getPersons();
-        assertTrue(personsFromJSON.containsKey(person.getUUID()));
-        assertEquals(person, personsFromJSON.get(person.getUUID()));
+        HashMap<String, Person> personsFromJSON = this.jsonConverter.getPersons();
+        assertTrue(personsFromJSON.containsKey(person.getUsername()));
+        assertEquals(person, personsFromJSON.get(person.getUsername()));
 
         assertEquals(person.getChores().get(0).encodeToJSON(),
-                personsFromJSON.get(person.getUUID()).getChores().get(0).encodeToJSON());
+                personsFromJSON.get(person.getUsername()).getChores().get(0).encodeToJSON());
     }
 
 }

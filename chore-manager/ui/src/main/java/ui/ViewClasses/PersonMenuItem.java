@@ -31,7 +31,7 @@ public class PersonMenuItem {
      */
     @Override
     public String toString() {
-        return this.getPerson().getName();
+        return this.getPerson().getUsername();
     }
 
 }
