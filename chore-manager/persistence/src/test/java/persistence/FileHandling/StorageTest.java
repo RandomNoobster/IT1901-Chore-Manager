@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,17 +20,33 @@ import core.Data.Person;
 
 public class StorageTest {
 
+    /**
+     * We use this.storage to reference the storage instance for testing. If we instead use
+     * Storage.getInstance() and delete that instance, if we are not careful we could delete the
+     * instance that is used in the main application
+     */
     private Storage storage;
-    private final String fileName = "chore-manager-storage-test.json";
-    private final String fileName2 = "chore-manager-storage-test-new.json";
+    private static final String fileName = "chore-manager-storage-test.json";
+    private static final String fileName2 = "chore-manager-storage-test-new.json";
 
     private <T> boolean compareTwoLists(Collection<T> list1, Collection<T> list2) {
         return list1.containsAll(list2) && list2.containsAll(list1);
     }
 
+    /**
+     * If for some reason a previous test failed to delete the file, we have an extra check to
+     * ensure that this test run independently of previous test runs (by deleting all files we will
+     * use in this test)
+     */
+    @BeforeAll
+    public static void resetAllFiles() {
+        Storage.getInstance(fileName).deleteFile();
+        Storage.getInstance(fileName2).deleteFile();
+    }
+
     @BeforeEach
     public void populateStorage() {
-        this.storage = Storage.getInstance(this.fileName);
+        this.storage = Storage.getInstance(fileName);
     }
 
     @AfterEach
@@ -39,7 +56,7 @@ public class StorageTest {
 
     @Test
     public void testGetInstance() {
-        Storage storage2 = Storage.getInstance(this.fileName);
+        Storage storage2 = Storage.getInstance(fileName);
         Storage storage3 = Storage.getInstance();
         assertEquals(this.storage, storage2);
         assertEquals(this.storage, storage3);
@@ -60,7 +77,7 @@ public class StorageTest {
         this.storage.save();
 
         Storage.deleteInstance();
-        Storage newStorage = Storage.getInstance(this.fileName);
+        Storage newStorage = Storage.getInstance(fileName);
         HashMap<UUID, Person> newPersons = newStorage.getPersons();
         assertEquals(localPersons, newPersons);
     }
@@ -68,8 +85,9 @@ public class StorageTest {
     @Test
     public void testDeleteInstance() {
         Storage.deleteInstance();
-        Storage storage2 = Storage.getInstance(this.fileName2);
+        Storage storage2 = Storage.getInstance(fileName2);
         assertNotEquals(this.storage, storage2);
+        this.storage = storage2; // To delete the file with @AfterEach
     }
 
     @Test
