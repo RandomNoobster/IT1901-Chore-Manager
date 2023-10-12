@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import core.Data.Week;
 import javafx.fxml.FXML;
@@ -60,6 +63,17 @@ public class AppController {
 
         // Update view
         this.updateFxml();
+
+        // Temporary solution to update width and height
+        ScheduledExecutorService runCommandDelayed = Executors.newScheduledThreadPool(1);
+        runCommandDelayed.submit(() -> {
+        });
+        runCommandDelayed.schedule(() -> {
+            this.resizeWidth(this.scene.getWidth());
+            this.resizeHeight(this.scene.getHeight());
+        }, 100, TimeUnit.MILLISECONDS);
+        runCommandDelayed.shutdown();
+
     }
 
     /**
@@ -96,20 +110,28 @@ public class AppController {
     private void handleScreenResizing() {
         this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
-            this.weekContainer.setPrefWidth(width);
-            this.weeks.forEach(w -> w.updateWidth(width));
-            this.topLabelContainer.setPrefWidth(width);
-            this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+            this.resizeWidth(width);
 
         });
 
         this.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
             double height = newValue.doubleValue();
-            double topLabelHeight = 30;
-
-            this.weekContainer.setPrefHeight(height);
-            this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight) / this.NUM_WEEKS));
+            this.resizeHeight(height);
         });
+    }
+
+    private void resizeWidth(double width) {
+        this.weekContainer.setPrefWidth(width);
+        this.weeks.forEach(w -> w.updateWidth(width));
+        this.topLabelContainer.setPrefWidth(width);
+        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+    }
+
+    private void resizeHeight(double height) {
+        double topLabelHeight = 30;
+
+        this.weekContainer.setPrefHeight(height);
+        this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight) / this.NUM_WEEKS));
     }
 
     public void updateFxml() {
