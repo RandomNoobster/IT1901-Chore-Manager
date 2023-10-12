@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -68,17 +67,17 @@ public class StorageTest {
 
     @Test
     public void testSave() {
-        HashMap<UUID, Person> localPersons = this.storage.getPersons();
-        UUID randomId = UUID.randomUUID();
-        Person newPerson = new Person("test", randomId, new ArrayList<>());
-        localPersons.put(randomId, newPerson);
+        HashMap<String, Person> localPersons = this.storage.getPersons();
+        String username = "Peter";
+        Person newPerson = new Person("Peter", new ArrayList<>());
+        localPersons.put(username, newPerson);
 
         this.storage.addPerson(newPerson);
         this.storage.save();
 
         Storage.deleteInstance();
         Storage newStorage = Storage.getInstance(fileName);
-        HashMap<UUID, Person> newPersons = newStorage.getPersons();
+        HashMap<String, Person> newPersons = newStorage.getPersons();
         assertEquals(localPersons, newPersons);
     }
 
@@ -92,8 +91,8 @@ public class StorageTest {
 
     @Test
     public void testDeleteFileContent() {
-        this.storage.addPerson(new Person("test", UUID.randomUUID(), new ArrayList<>()));
-        HashMap<UUID, Person> localPersons = this.storage.getPersons();
+        this.storage.addPerson(new Person("Peter", new ArrayList<>()));
+        HashMap<String, Person> localPersons = this.storage.getPersons();
 
         this.storage.deleteFileContent();
         this.storage.initialize();
@@ -102,11 +101,11 @@ public class StorageTest {
 
     @Test
     public void testGetPersons() {
-        HashMap<UUID, Person> localPersons = this.storage.getPersons();
-        UUID randomId = UUID.randomUUID();
-        Person newPerson = new Person("test", randomId, new ArrayList<>());
+        HashMap<String, Person> localPersons = this.storage.getPersons();
+        String username = "Peter";
+        Person newPerson = new Person(username, new ArrayList<>());
 
-        localPersons.put(randomId, newPerson);
+        localPersons.put(username, newPerson);
         this.storage.addPerson(newPerson);
 
         assertEquals(localPersons, this.storage.getPersons());

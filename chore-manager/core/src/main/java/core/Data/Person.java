@@ -3,7 +3,6 @@ package core.Data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,8 +13,7 @@ import org.json.simple.JSONObject;
  */
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
-    private UUID uuid;
-    private String name;
+    private String username;
     private List<Chore> chores;
     private Password password;
     private String displayName;
@@ -23,43 +21,30 @@ public class Person {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param name The name of the person
+     * @param username The username of the person
      */
-    public Person(String name) {
-        this(name, UUID.randomUUID(), new Password(), new ArrayList<>(), name);
+    public Person(String username) {
+        this(username, new Password(), new ArrayList<>(), username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param name   The name of the person
-     * @param chores The chores of the person
+     * @param username The username of the person
+     * @param chores   The chores of the person
      */
-    public Person(String name, List<Chore> chores) {
-        this(name, UUID.randomUUID(), new Password(), chores, name);
-    }
-
-    /**
-     * A constructor for the Person class that initializes the state of the object.
-     *
-     * @param name   The name of the person
-     * @param uuid   The UUID of the person
-     * @param chores The chores of the person
-     */
-    public Person(String name, UUID uuid, List<Chore> chores) {
-        this(name, uuid, new Password(), chores, name);
+    public Person(String username, List<Chore> chores) {
+        this(username, new Password(), chores, username);
     }
 
     // When making a brand new person
-    public Person(String name, Password password, String displayName) {
-        this(name, UUID.randomUUID(), password, new ArrayList<Chore>(), displayName);
+    public Person(String username, Password password, String displayName) {
+        this(username, password, new ArrayList<Chore>(), displayName);
     }
 
     // Load person
-    public Person(String name, UUID uuid, Password password, List<Chore> chores,
-            String displayName) {
-        this.uuid = uuid;
-        this.name = name;
+    public Person(String username, Password password, List<Chore> chores, String displayName) {
+        this.username = username;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
@@ -69,7 +54,7 @@ public class Person {
         return this.password;
     }
 
-    public String displayName() {
+    public String getDisplayName() {
         return this.displayName;
     }
 
@@ -78,17 +63,8 @@ public class Person {
      *
      * @return The name of the person
      */
-    public String getName() {
-        return this.name;
-    }
-
-    /**
-     * Outputs the UUID of the person.
-     *
-     * @return The UUID of the person
-     */
-    public UUID getUUID() {
-        return this.uuid;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
@@ -118,8 +94,7 @@ public class Person {
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("uuid", this.uuid.toString());
-        map.put("name", this.name);
+        map.put("username", this.username);
 
         JSONArray choresJSON = new JSONArray();
         for (Chore chore : this.chores) {
@@ -128,26 +103,27 @@ public class Person {
 
         map.put("chores", choresJSON);
         map.put("password", this.password.getPasswordString());
-        map.put("displayname", this.displayName);
+        map.put("displayName", this.displayName);
 
         return new JSONObject(map);
     }
 
     /**
-     * Outputs a boolean indicating wether or not the objects have the same UUID.
+     * Outputs a boolean indicating wether or not the objects have the same username (since this is
+     * unique).
      *
-     * @return If the UUIDs are equal
+     * @return If the usernames are equal
      */
     @Override
     public boolean equals(Object arg0) {
         if (!(arg0 instanceof Person)) {
             return false;
         }
-        return this.uuid.equals(((Person) arg0).getUUID());
+        return this.username.equals(((Person) arg0).getUsername());
     }
 
     @Override
     public String toString() {
-        return this.getName();
+        return this.getUsername();
     }
 }
