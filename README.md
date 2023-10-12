@@ -1,3 +1,13 @@
+# Chore Manager
+
+[<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="15" /> Open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2316/gr2316?new)
+## How to use Eclipse Che
+First ensure you have logged into [Eclipse Che Dashboard](https://che.stud.ntnu.no/dashboard/#/workspaces) with your NTNU account.
+Then make sure you have a linked access token between GitLab and Eclipse Che. If you do not, you can watch this [video](https://ntnu.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?pid=1bcdc898-00f3-4a03-9e44-b08f00fd818d) from George. 
+
+Now you can open Eclipse Che with the link above. Then you must follow the steps in "How to run" to get the application running. Remember to install the recommended extensions. To view the UI, you must open the endpoint `6080-tcp-desktop-ui` located in the bottom left corner of VSCode. Do that by copying the URL by clicking the copy button and pasting it in a new tab.
+![eclipse-che-endpoint image](/img/eclipse-che-endpoint.png)
+
 # About the project
 ## Project structure
 The project is located in [/chore-manager/](/chore-manager/). The project follows the Model-View-Controller (MVC) principle, where the model is located in the [core module](/chore-manager/core/) and the view and controller are located in the [ui module](/chore-manager/ui/). There is also a [persistence module](/chore-manager/persistence) that handles reading and writing to a json file for storage. Documentation and user stories are located in [docs](/docs/).
@@ -36,6 +46,8 @@ Then run the javafx run command in [chore-manager/ui](/chore-manager/ui/):
 cd chore-manager/ui/
 mvn javafx:run
 ```
+
+You will be presented with a login page. Please create a user in the application by clicking the "Create user" button. Then you can log in with the user you just created.
 
 ## How to view the javadocs
 First change directory to [chore-manager](/chore-manager/):
