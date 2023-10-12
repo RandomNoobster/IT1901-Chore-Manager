@@ -1,12 +1,14 @@
 # Deliverable 2
 
-## Progress
-
 TODO: Updates to the UI.
 
 TODO: New unit tests.
 
-Checkstyle was implemented, and we used the Google coding conventions from [Google Java Style](https://google.github.io/styleguide/javaguide.html) as a template. We made some small changes. One change being that we doubled the indentation size from 2 to 4. The reason for this is that we are all more used to an indentation size of 4, and that we find the code to be easier to read with the larger indentation. We also increased the allowed abbreviation length from 0 to 4. This is to allow uppercase sequences like "JSON" and "UUID" in method and variable names. Again, this is because we think it improves readability and code clarity. We also changed the import order to match [RedHat's](https://marketplace.visualstudio.com/items?itemName=redhat.java) default setting. The regular expression that matches variable names also had to be changed in order to allow UPPERCASE_WITH_UNDERSCORES for constants.
+## Checkstyle
+
+Checkstyle was implemented, and we used the Google coding conventions from [Google Java Style](https://google.github.io/styleguide/javaguide.html) as a template. We made some small changes. One change being that we doubled the indentation size from 2 to 4. The reason for this is that we are all more used to an indentation size of 4, and that we find the code to be easier to read with the larger indentation. We also increased the allowed abbreviation length from 0 to 4. This is to allow uppercase sequences like "JSON" and "UUID" in method and variable names. Again, this is because we think it improves readability and code clarity. We also tried to change the import order check to fit with [RedHat's](https://marketplace.visualstudio.com/items?itemName=redhat.java) default setting. After spending hours trying to get it to work, we decided to just get rid of the rule altogether. Our time is better spent on other things. The code formatter already sorts the imports whenever we save the file, so as long as everyone does that, it shouldn't be a problem. The regular expression that matches variable names also had to be changed in order to allow UPPERCASE_WITH_UNDERSCORES for final variables.
+
+## Javadocs and UML diagrams
 
 Javadoc comments were added to most of the code. This will make it easier for everyone to understand what each class and method does. PlantUML diagrams were added to the javadocs through the [UMLDoclet](https://github.com/talsma-ict/umldoclet) plugin. The diagrams are generated from the javadoc comments in the code. See [this file](/README.md) for how to view the javadocs and the diagrams.
 
@@ -39,6 +41,10 @@ This class has the highest level of abstraction in the persistence module, and i
 
 In all classes that handles JSONArrays, we had to add `@SuppressWarnings("unchecked")`. This is because the JSONArray class is not generic, and is instead a raw type. This means that the compiler cannot check that the JSONArray is of the correct type, and will instead give a warning. We have chosen to suppress this warning, as we are sure that the JSONArray is of the correct type, and there is no way to parameterize it.
 
+|![Persistence class relationships](storageDiagram.png)|
+|:--:|
+|This PlantUML diagram is a class diagram of the classes in the Persistence module| 
+
 #### Progression of persistence implementation
 The above text explains the current implementation of persistence, but it has gone through many iterations before reaching this point.
 
@@ -48,3 +54,57 @@ The second iteration: We understood there was a lot of improvements that could b
 
 Third iteration (Current): By researching, we found that a singleton would prove to be best for our use case. This follows the singleton pattern, which is a well known design pattern and considered a best practice. This means that only one instance of the class can exist, and consequently all data is consistent across the whole application.
 This pattern massively reduced complexity, and allowed us to make the `Storage` class easy to use and understand.
+
+#### Data representation in JSON:
+This is the json representation of the stored data.
+It contains a list of Person objects, where every person has a field `chores` which has a list of Chore objects. 
+```json
+[
+    {
+        "name": "Sebastian",
+        "chores": [
+            {
+                "timeFrom": "2023-10-06",
+                "timeTo": "2023-10-06",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "abc",
+                "points": 0
+            }
+        ],
+        "uuid": "d50d293a-1c2f-403c-bf6c-d03e3a5d6d09"
+    },
+    {
+        "name": "Kristoffer",
+        "chores": [],
+        "uuid": "fc6f0f7e-27a3-401f-916d-69a19e6f50ea"
+    },
+    {
+        "name": "Christian",
+        "chores": [
+            {
+                "timeFrom": "2023-10-05",
+                "timeTo": "2023-10-05",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "Chore Test",
+                "points": 10
+            },
+            {
+                "timeFrom": "2023-10-05",
+                "timeTo": "2023-10-05",
+                "color": "#FFFFFF",
+                "isWeekly": false,
+                "choreName": "Chore Test 2",
+                "points": 10
+            }
+        ],
+        "uuid": "4ae82e25-a082-437d-ae2a-2e0d229137dd"
+    },
+    {
+        "name": "Lasse",
+        "chores": [],
+        "uuid": "00a62454-5997-42df-8986-641690135ac4"
+    }
+]
+```

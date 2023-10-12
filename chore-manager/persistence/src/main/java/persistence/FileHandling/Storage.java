@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 import core.Data.Chore;
 import core.Data.Person;
@@ -18,7 +17,8 @@ public class Storage {
     private static Storage instance = null;
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
-    private HashMap<UUID, Person> persons = new HashMap<UUID, Person>();
+    private HashMap<String, Person> persons = new HashMap<String, Person>();
+    private static Person user;
 
     private Storage() {
         this.initialize();
@@ -74,24 +74,37 @@ public class Storage {
         this.jsonConverter.writePersonsToJSON(this.persons);
     }
 
+    public static void setUser(Person person) {
+        user = person;
+    }
+
+    public static Person getUser() {
+        return user;
+    }
+
     public void deleteFileContent() {
         this.jsonConverter.deleteFileContent();
     }
 
-    public HashMap<UUID, Person> getPersons() {
-        return new HashMap<UUID, Person>(this.persons);
+    public HashMap<String, Person> getPersons() {
+        return new HashMap<String, Person>(this.persons);
     }
 
     public List<Person> getPersonsList() {
         return new ArrayList<Person>(this.persons.values());
     }
 
-    public void addPerson(Person person) {
-        this.persons.put(person.getUUID(), person);
+    public boolean addPerson(Person person) {
+
+        if (this.persons.containsKey(person.getUsername()))
+            return false;
+
+        this.persons.put(person.getUsername(), person);
+        return true;
     }
 
     public void removePerson(Person person) {
-        this.persons.remove(person.getUUID());
+        this.persons.remove(person.getUsername());
     }
 
     public List<Chore> getChoresList() {
@@ -108,8 +121,8 @@ public class Storage {
             return;
         }
 
-        if (this.persons.containsKey(assignedPerson.getUUID())) {
-            Person person = this.persons.get(assignedPerson.getUUID());
+        if (this.persons.containsKey(assignedPerson.getUsername())) {
+            Person person = this.persons.get(assignedPerson.getUsername());
             person.addChore(chore);
         } else {
             System.out.println("Person does not exist");
@@ -117,8 +130,8 @@ public class Storage {
     }
 
     /**
-     * This is a method to create a test file for the application. This should be called if you do not
-     * have any persons in the application. This can be considered test data.
+     * This is a method to create a test file for the application. This should be called if you do
+     * not have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
         Person person1 = new Person("Christian");
@@ -130,11 +143,11 @@ public class Storage {
                 "#FFFFFF");
         person1.addChore(chore);
 
-        HashMap<UUID, Person> persons = new HashMap<>();
-        persons.put(person1.getUUID(), person1);
-        persons.put(person2.getUUID(), person2);
-        persons.put(person3.getUUID(), person3);
-        persons.put(person4.getUUID(), person4);
+        HashMap<String, Person> persons = new HashMap<>();
+        persons.put(person1.getUsername(), person1);
+        persons.put(person2.getUsername(), person2);
+        persons.put(person3.getUsername(), person3);
+        persons.put(person4.getUsername(), person4);
         this.persons = persons;
         this.save();
     }

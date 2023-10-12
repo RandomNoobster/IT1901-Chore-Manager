@@ -11,9 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" styleClass="whiteText" stylesheets="@Style.css" vgap="10.0"
-   xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ChoreCreationController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.CreateUserController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -34,7 +32,7 @@
                         <String fx:value="roundedBorderLeft" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="userName">
+                  <TextField fx:id="username">
                      <styleClass>
                         <String fx:value="textInput" />
                         <String fx:value="roundedBorderRight" />
@@ -44,13 +42,13 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label stylesheets="@Style.css" text="Full name">
+                  <Label stylesheets="@Style.css" text="Displayname">
                      <styleClass>
                         <String fx:value="whiteText" />
                         <String fx:value="roundedBorderLeft" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="fullName">
+                  <TextField fx:id="displayName">
                      <styleClass>
                         <String fx:value="textInput" />
                         <String fx:value="roundedBorderRight" />
@@ -74,7 +72,7 @@
                   </PasswordField>
                </children>
             </HBox>
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create">
+            <Button fx:id="createButton" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create">
                <styleClass>
                   <String fx:value="header" />
                   <String fx:value="button" />

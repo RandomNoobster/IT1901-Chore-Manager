@@ -73,7 +73,7 @@
 .button {
     -fx-pref-height: 30px;
     -fx-min-height: 30px;
-    -fx-pref-width: 110px;
+    /*-fx-pref-width: 110px;*/
     -fx-text-fill: derive(-textWhite, 0%);
 }
 
@@ -96,14 +96,6 @@
 
 .list-item-container {
     -fx-spacing: 5px;
-}
-
-.list-item {
-    -fx-background-radius: 5px;
-    -fx-background-color:  derive(-textWhite, 0%); 
-    -fx-pref-width: 90px;
-
-
 }
 
 .weekNumberContainer {
@@ -205,4 +197,16 @@
 
 .darkText {
     -fx-text-fill: derive(-buttonColor, 0%);
+}
+
+.list-assignee {
+    -fx-font-size: 9px;
+    -fx-pref-height: 10px;
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-underline: true;
+}
+
+.list-item {
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-padding: 0px;
 }

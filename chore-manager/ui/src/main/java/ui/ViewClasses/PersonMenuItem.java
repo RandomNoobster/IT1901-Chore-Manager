@@ -4,7 +4,7 @@ import core.Data.Person;
 
 public class PersonMenuItem {
 
-    Person person;
+    private Person person;
 
     public PersonMenuItem(Person person) {
         this.person = person;
@@ -17,7 +17,7 @@ public class PersonMenuItem {
 
     @Override
     public String toString() {
-        return this.getPerson().getName();
+        return this.getPerson().getUsername();
     }
 
 }

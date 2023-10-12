@@ -6,7 +6,6 @@ import java.util.List;
 import core.Data.Chore;
 import core.Data.Person;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -14,7 +13,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import persistence.FileHandling.Storage;
 import ui.ViewClasses.PersonMenuItem;
 
@@ -38,31 +36,24 @@ public class ChoreCreationController {
     @FXML
     private ComboBox<PersonMenuItem> personsMenu;
 
-    LocalDate dateFrom;
-    LocalDate dateTo;
-    Scene oldScene;
-    Stage stage;
-    AppController appController;
+    private LocalDate dateFrom = LocalDate.MIN;
+    private LocalDate dateTo = LocalDate.MIN;
 
     public ChoreCreationController() {
 
     }
 
-    public void passData(LocalDate dateFrom, LocalDate dateTo, Stage stage, Scene oldScene,
-            AppController controller) {
+    public void passData(LocalDate dateFrom, LocalDate dateTo) {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
-        this.oldScene = oldScene;
-        this.stage = stage;
-        this.appController = controller;
     }
 
     @FXML
     protected void initialize() {
         List<Person> persons = Storage.getInstance().getPersonsList();
 
-        for (Person p : persons) {
-            this.personsMenu.getItems().add(new PersonMenuItem(p));
+        for (Person person : persons) {
+            this.personsMenu.getItems().add(new PersonMenuItem(person));
         }
     }
 
@@ -83,11 +74,10 @@ public class ChoreCreationController {
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor);
-        person.addChore(chore);
-        this.stage.setScene(this.oldScene);
-        this.appController.updateFxml();
+        Storage.getInstance().addChore(chore, person);
 
         Storage.getInstance().save();
+        App.switchScene("App");
     }
 
     @FXML
