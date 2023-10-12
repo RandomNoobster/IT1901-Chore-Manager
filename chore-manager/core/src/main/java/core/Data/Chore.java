@@ -1,4 +1,4 @@
-package core.Data;
+package core.data;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -6,8 +6,8 @@ import java.util.HashMap;
 import org.json.simple.JSONObject;
 
 /**
- * The Chore class represents a task that can be assigned to a user.
- * It stores information about the chore's name, schedule, and points.
+ * The Chore class represents a task that can be assigned to a user. It stores information about the
+ * chore's name, schedule, and points.
  */
 public class Chore {
 
@@ -26,7 +26,7 @@ public class Chore {
      * @param timeTo    The end date of the chore
      * @param isWeekly  Whether the chore is weekly or not
      * @param points    The points of the chore
-     * @param color     The color of the chore 
+     * @param color     The color of the chore
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color) {
@@ -82,7 +82,7 @@ public class Chore {
     public String getColor() {
         return this.color;
     }
-    
+
     /**
      * Outputs the amount of points the chore is worth.
      *
@@ -106,8 +106,8 @@ public class Chore {
     }
 
     /**
-     * Outputs a {@link JSONObject} representation of the chore's state. The
-     * object's variables will be turned into key/value pairs in the JSONObject.
+     * Outputs a {@link JSONObject} representation of the chore's state. The object's variables will
+     * be turned into key/value pairs in the JSONObject.
      *
      * @return A {@link JSONObject} representation of the chore
      */

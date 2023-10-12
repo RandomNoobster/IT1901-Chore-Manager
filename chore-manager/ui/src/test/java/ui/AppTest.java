@@ -9,12 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import core.Data.Person;
+import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
 /**
  * TestFX App test

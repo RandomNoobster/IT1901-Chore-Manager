@@ -1,16 +1,26 @@
-package ui.ViewClasses;
+package ui.viewClasses;
 
-import core.Data.ContrastColor;
+import core.data.ContrastColor;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+/**
+ * The ChoreView class represents a chore in the calendar.
+ */
 public class ChoreView implements ViewInterface {
     private VBox container = new VBox();
     private Label assignee;
     private Label chore;
 
+    /**
+     * Constructor for ChoreView.
+     *
+     * @param assignee The person assigned to the chore.
+     * @param chore    The chore.
+     * @param color    The color of the chore.
+     */
     public ChoreView(String assignee, String chore, String color) {
 
         this.assignee = new Label(assignee + ":");

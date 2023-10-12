@@ -13,7 +13,7 @@ These features combined into the completion of our first user story: **"Lisa’s
 
 ### Acceptance criteria for deliverable 2
 
-Complete **"Fading plants"** and **"Jealousy, jealousy"**.
+Complete ["Fading plants"](../../UserStory.md) and ["Jealousy, jealousy"](../../UserStory.md).
 
 **A user should be able to:**
 - Choose 
@@ -30,7 +30,7 @@ Complete **"Fading plants"** and **"Jealousy, jealousy"**.
 
 ### How far we got
 
-We completed both **"Fading plants"** and **"Jealousy, jealousy"**. We also added an additional feaure from **"Scoreboard"**: that a user should be able to define how many points a task is worth. The reason for only developing this part of **"Scoreboard"** so far, is that the addition of a point-amount-input in the chore-creation-menu was a minor task that could easily be done, as the chore-creation-menu had already been done.
+We completed both ["Fading plants"](../../UserStory.md) and ["Jealousy, jealousy"](../../UserStory.md). We also added an additional feaure from ["Scoreboard"](../../UserStory.md): that a user should be able to define how many points a task is worth. The reason for only developing this part of **"Scoreboard"** so far, is that the addition of a point-amount-input in the chore-creation-menu was a minor task that could easily be done, as the chore-creation-menu had already been done.
 
 By implementing these user-stories, the amount of pages with corresponding controllers have quadrupled, as we now have pages for:
  - Logging in
@@ -54,14 +54,44 @@ By implementing these user-stories, the amount of pages with corresponding contr
 |:--:|
 |Create chore| 
 
-
-
-
-TODO: New unit tests.
-
 ## Checkstyle
 
-Checkstyle was implemented, and we used the Google coding conventions from [Google Java Style](https://google.github.io/styleguide/javaguide.html) as a template. We made some small changes. One change being that we doubled the indentation size from 2 to 4. The reason for this is that we are all more used to an indentation size of 4, and that we find the code to be easier to read with the larger indentation. We also increased the allowed abbreviation length from 0 to 4. This is to allow uppercase sequences like "JSON" and "UUID" in method and variable names. Again, this is because we think it improves readability and code clarity. We also tried to change the import order check to fit with [RedHat's](https://marketplace.visualstudio.com/items?itemName=redhat.java) default setting. After spending hours trying to get it to work, we decided to just get rid of the rule altogether. Our time is better spent on other things. The code formatter already sorts the imports whenever we save the file, so as long as everyone does that, it shouldn't be a problem. The regular expression that matches variable names also had to be changed in order to allow UPPERCASE_WITH_UNDERSCORES for final variables.
+Checkstyle was implemented, and we used the Google coding conventions from [Google Java Style](https://google.github.io/styleguide/javaguide.html) as a template. We made some small changes.
+
+### Changes to the Google coding conventions
+#### Indentation:
+One change being that we doubled the indentation size from 2 to 4. The reason for this is that we are all more used to an indentation size of 4, and that we find the code to be easier to read with the larger indentation.
+
+#### Abbreviations:
+We also increased the allowed abbreviation length from 0 to 4. This is to allow uppercase sequences like "JSON" and "UUID" in method and variable names. Again, this is because we think it improves readability and code clarity.
+
+#### Import order:
+We also tried to change the import order check to fit with [RedHat's](https://marketplace.visualstudio.com/items?itemName=redhat.java) default setting. After spending hours trying to get it to work, we decided to just get rid of the rule altogether. Our time is better spent on other things. The code formatter already sorts the imports whenever we save the file, so as long as everyone does that, it shouldn't be a problem.
+
+#### Line length:
+The formatter also handles line length, and splits lines if they cross a certain length threshold. A problem we encountered was that the formatter does not count the indentation as part of the line length, whilst Checkstyle does. Due to this we decided to increase the allowed line length in Checkstyle to compensate for indentation.
+
+#### Variable names:
+The regular expression that matches variable names also had to be changed in order to allow UPPERCASE_WITH_UNDERSCORES for final variables.
+
+#### Brackets:
+We decided to get rid of the requirement for curly brackets in IF-statements, since short statements have improved readability without superfluous brackets. For example:
+```java
+if (!this.containsInteger)
+    returnString += " - contain an integer.\n";
+```
+Instead of:
+```java
+if (!this.containsInteger) {
+    returnString += " - contain an integer.\n";
+}
+```
+
+
+## Spotbugs
+
+Spotbugs was also implemented. See the [README.md](/README.md) for how and when it runs. 
+
 
 ## Javadocs and UML diagrams
 
@@ -80,7 +110,7 @@ In addition it is a well known library, which means it is well documented and ha
 
 ### Structure progression
 
-We have three classes for handling persistence, [FileHandler](/chore-manager/persistence/src/main/java/persistence/FileHandling/FileHandler.java), [JSONConverter](/chore-manager/persistence/src/main/java/persistence/FileHandling/JSONConverter.java) and [Storage](/chore-manager/persistence/src/main/java/persistence/FileHandling/Storage.java). Each of these classes serve a different purpose.
+We have three classes for handling persistence, [FileHandler](/chore-manager/persistence/src/main/java/persistence/fileHandling/FileHandler.java), [JSONConverter](/chore-manager/persistence/src/main/java/persistence/fileHandling/JSONConverter.java) and [Storage](/chore-manager/persistence/src/main/java/persistence/fileHandling/Storage.java). Each of these classes serve a different purpose.
 
 #### FileHandler: 
 This class handles the reading and writing directly to the file. This class uses InputStreams and OutputStreams to be able to read and write. It reads data from the file, then converts it to JSON and returns it. It can also take JSON data and convert it to a string, to then write it to the file.

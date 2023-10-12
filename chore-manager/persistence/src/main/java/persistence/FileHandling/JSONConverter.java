@@ -1,4 +1,4 @@
-package persistence.FileHandling;
+package persistence.fileHandling;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,9 +8,9 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import core.Data.Chore;
-import core.Data.Password;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.Password;
+import core.data.Person;
 
 /**
  * This class contains methods for converting JSON to objects and vice versa.
@@ -22,6 +22,11 @@ public class JSONConverter extends FileHandler {
         super(fileName);
     }
 
+    /**
+     * This method is used to write a list of persons to a JSON file.
+     *
+     * @param persons A HashMap of persons.
+     */
     public void writePersonsToJSON(HashMap<String, Person> persons) {
         JSONArray personsJSON = new JSONArray();
         for (Person person : persons.values()) {
@@ -30,8 +35,11 @@ public class JSONConverter extends FileHandler {
         this.writeToFile(personsJSON);
     }
 
-    // This assumes that the write file was used
     // TODO: Make it so it checks for formatting errors
+    /**
+     * This method converts the stored JSON data into Java objects. This method assumes that
+     * {@link #writePersonsToJSON} has already been run.
+     */
     public HashMap<String, Person> getPersons() {
         HashMap<String, Person> persons = new HashMap<String, Person>();
         JSONArray personsJSON = this.readJSONFile();
@@ -55,6 +63,12 @@ public class JSONConverter extends FileHandler {
         return persons;
     }
 
+    /**
+     * This method is used to read a list of chores from a {@link JSONArray}.
+     *
+     * @param choreJSON A list of chores.
+     * @return A list of chores.
+     */
     public List<Chore> getChoresListFromPerson(JSONArray choreJSON) {
         List<Chore> chores = new ArrayList<>();
         for (Object chore : choreJSON) {

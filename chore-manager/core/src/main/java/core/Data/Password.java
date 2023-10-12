@@ -1,8 +1,11 @@
-package core.Data;
+package core.data;
 
+/**
+ * The Password class includes logic for handling passwords and determining if they are legal.
+ */
 public class Password {
 
-    private String password;
+    private String password = "";
     private final Integer legalLength = 8;
 
     private boolean containsInteger = false;
@@ -25,6 +28,11 @@ public class Password {
                 && this.isLegalLength;
     }
 
+    /**
+     * Returns a string containing the requirements for a legal password.
+     *
+     * @return A string containing the requirements for a legal password.
+     */
     public String getFixMsg() {
         String returnString = "Password must:\n";
 
@@ -44,6 +52,9 @@ public class Password {
         return this.password;
     }
 
+    /**
+     * Updates the flags according to the password string.
+     */
     public void updateFlags() {
         if (this.getPasswordString().length() < this.legalLength) {
             this.isLegalLength = false;

@@ -1,11 +1,11 @@
-package ui.ViewClasses;
+package ui.viewClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.Data.Day;
-import core.Data.Week;
+import core.data.Day;
+import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;

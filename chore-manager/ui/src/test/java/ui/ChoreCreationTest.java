@@ -13,15 +13,15 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.Data.Chore;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
 public class ChoreCreationTest extends ApplicationTest {
 

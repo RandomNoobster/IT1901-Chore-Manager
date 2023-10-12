@@ -1,20 +1,22 @@
-package ui.ViewClasses;
+package ui.viewClasses;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.Data.Chore;
-import core.Data.Day;
-import core.Data.Person;
+import core.data.Chore;
+import core.data.ContrastColor;
+import core.data.Day;
+import core.data.Person;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import persistence.FileHandling.Storage;
+import javafx.scene.paint.Color;
+import persistence.fileHandling.Storage;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -40,7 +42,7 @@ public class DayView extends Button implements ViewInterface {
         this.container.getStyleClass().add("dayContainer");
         this.vBoxContainer.getStyleClass().add("list-item-container");
         this.getStyleClass().addAll("header", "button", "hoverClass");
-        this.setPrefWidth(110);
+
         this.scrollContainer.setContent(this.vBoxContainer);
 
         // Saving classes
@@ -101,14 +103,23 @@ public class DayView extends Button implements ViewInterface {
     public void updateFxml() {
         this.vBoxContainer.getChildren().clear();
 
-        List<VBox> labels = new ArrayList<>();
+        List<Label> labels = new ArrayList<>();
 
         for (Person person : Storage.getInstance().getPersonsList()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
-                    ChoreView choreView = new ChoreView(person.getDisplayName(), chore.getName(),
-                            chore.getColor());
-                    labels.add(choreView.getContainer());
+                    Label choreLabel = new Label(chore.getName());
+                    choreLabel.getStyleClass().add("list-item");
+
+                    if (ContrastColor.blackText(chore.getColor())) {
+                        choreLabel.setTextFill(Color.WHITE);
+                    } else {
+                        choreLabel.setTextFill(Color.BLACK);
+                    }
+
+                    choreLabel.setStyle("-fx-background-color: " + chore.getColor() + ";");
+
+                    labels.add(choreLabel);
 
                 }
             }
