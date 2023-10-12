@@ -23,7 +23,7 @@ public class StorageTest {
     /**
      * We use this.storage to reference the storage instance for testing. If we instead use
      * Storage.getInstance() and delete that instance, if we are not careful we could delete the
-     * instance that is used in the main application
+     * instance that is used in the main application.
      */
     private Storage storage;
     private static final String fileName = "chore-manager-storage-test.json";
@@ -36,7 +36,7 @@ public class StorageTest {
     /**
      * If for some reason a previous test failed to delete the file, we have an extra check to
      * ensure that this test run independently of previous test runs (by deleting all files we will
-     * use in this test)
+     * use in this test).
      */
     @BeforeAll
     public static void resetAllFiles() {
