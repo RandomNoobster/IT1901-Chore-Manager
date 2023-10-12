@@ -94,12 +94,17 @@ public class Storage {
         return new ArrayList<Person>(this.persons.values());
     }
 
-    public void addPerson(Person person) {
-        this.persons.put(person.getName(), person);
+    public boolean addPerson(Person person) {
+
+        if (this.persons.containsKey(person.getUsername()))
+            return false;
+
+        this.persons.put(person.getUsername(), person);
+        return true;
     }
 
     public void removePerson(Person person) {
-        this.persons.remove(person.getName());
+        this.persons.remove(person.getUsername());
     }
 
     public List<Chore> getChoresList() {
@@ -116,8 +121,8 @@ public class Storage {
             return;
         }
 
-        if (this.persons.containsKey(assignedPerson.getName())) {
-            Person person = this.persons.get(assignedPerson.getName());
+        if (this.persons.containsKey(assignedPerson.getUsername())) {
+            Person person = this.persons.get(assignedPerson.getUsername());
             person.addChore(chore);
         } else {
             System.out.println("Person does not exist");
@@ -139,10 +144,10 @@ public class Storage {
         person1.addChore(chore);
 
         HashMap<String, Person> persons = new HashMap<>();
-        persons.put(person1.getName(), person1);
-        persons.put(person2.getName(), person2);
-        persons.put(person3.getName(), person3);
-        persons.put(person4.getName(), person4);
+        persons.put(person1.getUsername(), person1);
+        persons.put(person2.getUsername(), person2);
+        persons.put(person3.getUsername(), person3);
+        persons.put(person4.getUsername(), person4);
         this.persons = persons;
         this.save();
     }

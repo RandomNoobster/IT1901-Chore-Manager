@@ -94,7 +94,6 @@ public class WeekView implements ViewInterface {
      * @param newWidth The new width of the week
      */
     public void updateWidth(double newWidth) {
-        System.out.println(newWidth);
         this.container.setPrefWidth(newWidth);
         this.weekNumberLabel.setPrefWidth(newWidth / this.COLUMN_COUNT);
 

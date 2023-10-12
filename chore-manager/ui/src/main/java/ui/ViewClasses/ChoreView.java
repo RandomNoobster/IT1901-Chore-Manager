@@ -8,15 +8,15 @@ import javafx.scene.paint.Color;
 
 public class ChoreView implements ViewInterface {
     private VBox container = new VBox();
-    private Label assagnee;
+    private Label assignee;
     private Label chore;
 
-    public ChoreView(String assagnee, String chore, String color) {
+    public ChoreView(String assignee, String chore, String color) {
 
-        this.assagnee = new Label(assagnee + ":");
-        this.assagnee.getStyleClass().clear();
+        this.assignee = new Label(assignee + ":");
+        this.assignee.getStyleClass().clear();
 
-        this.assagnee.getStyleClass().add("list-assagnee");
+        this.assignee.getStyleClass().add("list-assignee");
 
         this.chore = new Label(chore);
         if (ContrastColor.blackText(color)) {
@@ -27,7 +27,7 @@ public class ChoreView implements ViewInterface {
         this.chore.setStyle("-fx-background-color: " + color + ";");
 
         this.container.getStyleClass().add("list-item");
-        this.container.getChildren().addAll(this.assagnee, this.chore);
+        this.container.getChildren().addAll(this.assignee, this.chore);
 
     }
 

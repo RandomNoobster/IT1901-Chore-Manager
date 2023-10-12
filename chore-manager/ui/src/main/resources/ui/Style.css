@@ -199,7 +199,7 @@
     -fx-text-fill: derive(-buttonColor, 0%);
 }
 
-.list-assagnee {
+.list-assignee {
     -fx-font-size: 9px;
     -fx-pref-height: 10px;
     -fx-background-color: derive(-textWhite, 0%);

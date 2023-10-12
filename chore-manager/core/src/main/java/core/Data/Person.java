@@ -13,7 +13,7 @@ import org.json.simple.JSONObject;
  */
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
-    private String name;
+    private String username;
     private List<Chore> chores;
     private Password password;
     private String displayName;
@@ -21,30 +21,30 @@ public class Person {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param name The name of the person
+     * @param username The username of the person
      */
-    public Person(String name) {
-        this(name, new Password(), new ArrayList<>(), name);
+    public Person(String username) {
+        this(username, new Password(), new ArrayList<>(), username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param name   The name of the person
-     * @param chores The chores of the person
+     * @param username The username of the person
+     * @param chores   The chores of the person
      */
-    public Person(String name, List<Chore> chores) {
-        this(name, new Password(), chores, name);
+    public Person(String username, List<Chore> chores) {
+        this(username, new Password(), chores, username);
     }
 
     // When making a brand new person
-    public Person(String name, Password password, String displayName) {
-        this(name, password, new ArrayList<Chore>(), displayName);
+    public Person(String username, Password password, String displayName) {
+        this(username, password, new ArrayList<Chore>(), displayName);
     }
 
     // Load person
-    public Person(String name, Password password, List<Chore> chores, String displayName) {
-        this.name = name;
+    public Person(String username, Password password, List<Chore> chores, String displayName) {
+        this.username = username;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
@@ -63,8 +63,8 @@ public class Person {
      *
      * @return The name of the person
      */
-    public String getName() {
-        return this.name;
+    public String getUsername() {
+        return this.username;
     }
 
     /**
@@ -94,7 +94,7 @@ public class Person {
     public JSONObject encodeToJSON() {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("name", this.name);
+        map.put("username", this.username);
 
         JSONArray choresJSON = new JSONArray();
         for (Chore chore : this.chores) {
@@ -103,7 +103,7 @@ public class Person {
 
         map.put("chores", choresJSON);
         map.put("password", this.password.getPasswordString());
-        map.put("displayname", this.displayName);
+        map.put("displayName", this.displayName);
 
         return new JSONObject(map);
     }
@@ -119,11 +119,11 @@ public class Person {
         if (!(arg0 instanceof Person)) {
             return false;
         }
-        return this.name.equals(((Person) arg0).getName());
+        return this.username.equals(((Person) arg0).getUsername());
     }
 
     @Override
     public String toString() {
-        return this.getName();
+        return this.getUsername();
     }
 }

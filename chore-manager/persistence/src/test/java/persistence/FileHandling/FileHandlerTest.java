@@ -80,7 +80,7 @@ public class FileHandlerTest {
         assertEquals(0, this.fileHandler.getFile().length());
 
         HashMap<String, String> map = new HashMap<String, String>();
-        map.put("name", "testName");
+        map.put("username", "testName");
         JSONObject jsonObject = new JSONObject(map);
         JSONArray jsonArray = new JSONArray();
         jsonArray.add(jsonObject);
@@ -101,7 +101,8 @@ public class FileHandlerTest {
         assertEquals(0, this.fileHandler.getFile().length());
 
         this.fileHandler.writeToFile("abc");
-        assertEquals(null, this.fileHandler.readJSONFile()); // Catches ParseException and returns null
+        assertEquals(null, this.fileHandler.readJSONFile()); // Catches ParseException and returns
+                                                             // null
     }
 
     @Test

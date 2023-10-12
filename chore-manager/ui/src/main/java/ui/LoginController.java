@@ -35,12 +35,12 @@ public class LoginController {
     @FXML
     public void login() {
 
-        String name = this.username.getText();
+        String username = this.username.getText();
         String password = this.password.getText();
 
         for (Person person : Storage.getInstance().getPersonsList()) {
             if (person.getPassword().getPasswordString().equals(password)
-                    && person.getName().equals(name)) {
+                    && person.getUsername().equals(username)) {
                 Storage.setUser(person);
                 break;
             }

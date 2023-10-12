@@ -16,7 +16,7 @@ public class CreateUserController {
     private TextField username;
 
     @FXML
-    private TextField displayname;
+    private TextField displayName;
 
     @FXML
     private PasswordField password;
@@ -43,21 +43,16 @@ public class CreateUserController {
         alert.show();
     }
 
-    private Boolean createAccount(String username, String displayname, Password password) {
+    private Boolean createAccount(String username, String displayName, Password password) {
 
         if (username.length() < this.allowedUsername) {
             this.errorMsg("Username issue",
                     "Username must be at least " + this.allowedUsername + " characters");
             return false;
         }
-        if (displayname.length() < this.allowedDisplayname) {
+        if (displayName.length() < this.allowedDisplayname) {
             this.errorMsg("Fullname issue",
                     "Displayname must be at least " + this.allowedDisplayname + " characters");
-            return false;
-        }
-
-        if (Storage.getInstance().getPersons().containsKey(username)) {
-            this.errorMsg("Username issue", "Username is not unique");
             return false;
         }
 
@@ -66,18 +61,23 @@ public class CreateUserController {
             return false;
         }
 
-        Person newUser = new Person(username, password, displayname);
-        Storage.getInstance().addPerson(newUser);
+        Person newUser = new Person(username, password, displayName);
+
+        if (Storage.getInstance().addPerson(newUser)) {
+            this.errorMsg("Username issue", "Username is not unique");
+            return false;
+        }
+
         return true;
     }
 
     @FXML
     public void create() {
         String username = this.username.getText();
-        String displayname = this.displayname.getText();
+        String displayName = this.displayName.getText();
         Password password = new Password(this.password.getText());
 
-        if (this.createAccount(username, displayname, password)) {
+        if (this.createAccount(username, displayName, password)) {
             App.switchScene("Login");
 
         }

@@ -1,6 +1,5 @@
 package core.Data;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -34,7 +33,7 @@ public class PersonTest {
 
     @Test
     public void testGetName() {
-        assertEquals("John", this.person.getName());
+        assertEquals("John", this.person.getUsername());
     }
 
     @Test

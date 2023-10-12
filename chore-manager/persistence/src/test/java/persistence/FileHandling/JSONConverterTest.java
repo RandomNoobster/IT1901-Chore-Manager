@@ -45,19 +45,19 @@ public class JSONConverterTest {
     public void writeAndReadToJSONTest() {
         Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
-        Person person = new Person("name", chores);
+        Person person = new Person("username", chores);
         HashMap<String, Person> persons = new HashMap<String, Person>();
-        persons.put(person.getName(), person);
+        persons.put(person.getUsername(), person);
 
         this.jsonConverter.writePersonsToJSON(persons);
         assertTrue(this.jsonConverter.getFile().length() > 0);
 
         HashMap<String, Person> personsFromJSON = this.jsonConverter.getPersons();
-        assertTrue(personsFromJSON.containsKey(person.getName()));
-        assertEquals(person, personsFromJSON.get(person.getName()));
+        assertTrue(personsFromJSON.containsKey(person.getUsername()));
+        assertEquals(person, personsFromJSON.get(person.getUsername()));
 
         assertEquals(person.getChores().get(0).encodeToJSON(),
-                personsFromJSON.get(person.getName()).getChores().get(0).encodeToJSON());
+                personsFromJSON.get(person.getUsername()).getChores().get(0).encodeToJSON());
     }
 
 }

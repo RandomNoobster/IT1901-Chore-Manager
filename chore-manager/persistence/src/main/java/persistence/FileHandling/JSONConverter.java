@@ -43,13 +43,13 @@ public class JSONConverter extends FileHandler {
         for (Object personObject : personsJSON) {
             JSONObject personJSON = (JSONObject) personObject;
 
-            String name = (String) personJSON.get("name");
+            String username = (String) personJSON.get("username");
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
             Password password = new Password((String) personJSON.get("password"));
-            String displayName = (String) personJSON.get("displayname");
+            String displayName = (String) personJSON.get("displayName");
 
-            Person person = new Person(name, password, chores, displayName);
-            persons.put(name, person);
+            Person person = new Person(username, password, chores, displayName);
+            persons.put(username, person);
         }
 
         return persons;
