@@ -71,7 +71,7 @@ public class AppController {
         runCommandDelayed.schedule(() -> {
             this.resizeWidth(this.scene.getWidth());
             this.resizeHeight(this.scene.getHeight());
-        }, 100, TimeUnit.MILLISECONDS);
+        }, 1000, TimeUnit.MILLISECONDS);
         runCommandDelayed.shutdown();
 
     }

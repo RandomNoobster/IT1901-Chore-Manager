@@ -23,9 +23,11 @@ After a couple of weeks, the variety of tasks start to overwhelm Lisa. Was she s
 
 ### Requirements:
 **Users should be able to**
-- When a chore is created, a new scene/menu should pop up where you can choose 
+- Choose 
 	- Name
 	- When the task should be done
+	- Color of the task
+  in a chore-creation menu when creating a task
   
 
 ## “Do(n't) put off until tomorrow what you can do today” ― Benjamin Franklin
@@ -48,9 +50,9 @@ As Lisa starts to gain more structure in her life, her roomies look at her with 
 **Users should be able to**
 - Create an account by choosing a username and password. This should be done when opening the application the first time.
 - Be able to log into their account when the application is opened.
-- Be able to log out of their account
-- Assign chores to themselves, as well to other users. This should be done in the chore-creation menu. If the user does not specify a person, it should be set to everyone by default
-- Add a label to each chore in the view that states who the task is assigned to
+- Be able to log out of their account.
+- Assign chores to themselves, as well to other users. This should be done in the chore-creation menu.
+- Add a label to each chore in the view that states who the task is assigned to.
 
 
 ## Popularity contest
@@ -63,14 +65,14 @@ More and more people around the campus are starting to notice how clean Lisa and
 ### Requirements:
 **Users should be able to**
 - Create a group. Each group has its own calendar view, where the groups members can view their tasks.
-- The group should have a unique code, that can be passed around to roommates so that they can join the group when they first sign up
+- The group should have a unique code, that can be passed around to roommates so that they can join the group when they first sign up.
 
 ## Chopping down Christmas tree in july?
 To remind her to chop down a tree before Christmas, Lisa added a chore for that exact occasion, but she accidentally made it recurring. Now its july, and every monday she wakes up in horror to a chore named "Chop chop time" in her calendar. Therefore she wants to be able to delete both recurring, and non-recurring tasks to stop this madness from lasting any longer.
 
 ### Requirements:
 **Users should be able to**
-- Delete nonrecurring and recurring tasks
+- Delete nonrecurring and recurring tasks.
 
 
 ## Scoreboard

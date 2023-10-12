@@ -66,7 +66,7 @@ public class CreateUserController {
 
         Person newUser = new Person(username, password, displayName);
 
-        if (Storage.getInstance().addPerson(newUser)) {
+        if (!Storage.getInstance().addPerson(newUser)) {
             this.errorMsg("Username issue", "Username is not unique");
             return false;
         }

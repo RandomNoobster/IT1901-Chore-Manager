@@ -147,6 +147,7 @@ Note: I have not used GitLab extensively, so I am not completely sure how the wo
 - Always use `this` when referring to class variables (I believe this is automated with the settings.json file)
 - You should never use "[magic numbers](https://stackoverflow.com/questions/47882/what-is-a-magic-number-and-why-is-it-bad)", instead create a constant variable and reference it instead, this makes the code clearer and easier to read.
 - If you find yourself nesting a lot of if-statements, you should consider using the [guard clause](https://codingbeautydev.com/blog/stop-using-nested-ifs/?expand_article=1) pattern (invert the if-statement and return early).
+- Single-responsibility principle: A class should only have one responsibility/purpose. If a class has multiple responsibilities, it should be split into multiple classes.
 - You should create Javadoc comments for each class, where you explain it's use and functionality.
 ![really important meme](/img/really-important-image.png)
 
