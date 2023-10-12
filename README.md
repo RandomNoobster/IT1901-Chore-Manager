@@ -1,7 +1,7 @@
-[Open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2316/gr2316?new)
+[<img src="https://eclipse.dev/che/docs/_/img/icon-eclipse-che.svg" width="15" /> Open in Eclipse Che](https://che.stud.ntnu.no/#https://gitlab.stud.idi.ntnu.no/it1901/groups-2023/gr2316/gr2316?new)
 ## How to use Eclipse Che
 
-First you must open Eclipse Che with the link above. Then you must follow the steps in "How to run" to get the application running. To view the UI, you must open the endpoint `6080-tcp-desktop-ui` located in the bottom left corner of VSCode. Do that by copying the URL by clicking the copy button and pasting it in a new tab.
+First you must open Eclipse Che with the link above. Then you must follow the steps in "How to run" to get the application running. Remember to install the recommended extensions. To view the UI, you must open the endpoint `6080-tcp-desktop-ui` located in the bottom left corner of VSCode. Do that by copying the URL by clicking the copy button and pasting it in a new tab.
 ![eclipse-che-endpoint image](/img/eclipse-che-endpoint.png)
 
 # About the project
