@@ -10,6 +10,8 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import core.data.Chore;
+
 public class ChoreTest {
     Chore chore;
     LocalDate timeFrom;

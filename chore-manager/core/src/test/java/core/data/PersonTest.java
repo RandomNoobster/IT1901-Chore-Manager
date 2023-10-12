@@ -9,6 +9,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import core.data.Chore;
+import core.data.Person;
+
 public class PersonTest {
     Person person;
 
