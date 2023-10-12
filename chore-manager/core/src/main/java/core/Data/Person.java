@@ -54,7 +54,7 @@ public class Person {
         return this.password;
     }
 
-    public String displayName() {
+    public String getDisplayName() {
         return this.displayName;
     }
 

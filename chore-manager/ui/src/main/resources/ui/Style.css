@@ -98,14 +98,6 @@
     -fx-spacing: 5px;
 }
 
-.list-item {
-    -fx-background-radius: 5px;
-    -fx-background-color:  derive(-textWhite, 0%); 
-    -fx-pref-width: 90px;
-
-
-}
-
 .weekNumberContainer {
     -fx-pref-height: 100px;
     -fx-min-height: 90px;
@@ -205,4 +197,16 @@
 
 .darkText {
     -fx-text-fill: derive(-buttonColor, 0%);
+}
+
+.list-assagnee {
+    -fx-font-size: 9px;
+    -fx-pref-height: 10px;
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-underline: true;
+}
+
+.list-item {
+    -fx-background-color: derive(-textWhite, 0%);
+    -fx-padding: 0px;
 }

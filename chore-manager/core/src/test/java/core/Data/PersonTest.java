@@ -51,10 +51,4 @@ public class PersonTest {
         assertEquals(chore2, this.person.getChores().get(1));
     }
 
-    @Test
-    public void testUniqueUsername() {
-        Person person2 = new Person("Henry");
-        assertFalse(person2.getName().equals(this.person.getName()));
-    }
-
 }

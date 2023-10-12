@@ -56,7 +56,7 @@ public class CreateUserController {
             return false;
         }
 
-        if (!Storage.getInstance().getPersons().containsKey(username)) {
+        if (Storage.getInstance().getPersons().containsKey(username)) {
             this.errorMsg("Username issue", "Username is not unique");
             return false;
         }
