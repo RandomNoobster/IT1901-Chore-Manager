@@ -12,4 +12,4 @@ We have created milestones for the project. The milestones are used to group iss
 
 
 # Pear-Programming
-We have also implemented pear-programming in our workflow for some of the issues. This has been done by working together in pairs on the same computer. This has been done for issues where we have felt that it would be easier to work together on the same computer. Especially when working with different scenes and how the view should look like for the user. 
+We have also implemented some pear-programming in our workflow for some of the issues. This has been done by working together in pairs on the same computer. This has been done for issues where we have felt that it would be easier to work together on the same computer. Especially when working with different scenes and how the view should look like for the user. 
