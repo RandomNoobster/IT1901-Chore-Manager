@@ -1,15 +1,18 @@
 package ui;
 
-import core.Data.Password;
-import core.Data.Person;
+import core.data.Password;
+import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import persistence.FileHandling.Storage;
+import persistence.fileHandling.Storage;
 
+/**
+ * This is the controller for the create user view.
+ */
 public class CreateUserController {
 
     @FXML
@@ -71,6 +74,10 @@ public class CreateUserController {
         return true;
     }
 
+    /**
+     * This method is called when the create button is pressed. The view then changes to the Create
+     * User view.
+     */
     @FXML
     public void create() {
         String username = this.username.getText();

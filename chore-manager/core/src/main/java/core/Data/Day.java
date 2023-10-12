@@ -1,10 +1,9 @@
-package core.Data;
+package core.data;
 
 import java.time.LocalDate;
 
 /**
- * The Day class represents a day in the year.
- * It stores information about the date.
+ * The Day class represents a day in the year. It stores information about the date.
  */
 public class Day {
 

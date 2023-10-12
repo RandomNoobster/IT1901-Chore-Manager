@@ -1,4 +1,4 @@
-package persistence.FileHandling;
+package persistence.fileHandling;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -18,8 +18,12 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 /**
- * <p>Creates a FileHandler for a specific file</p>
- * <p>If the file does not exist, it will be created</p>
+ * <p>
+ * Creates a FileHandler for a specific file.
+ * </p>
+ * <p>
+ * If the file does not exist, it will be created.
+ * </p>
  */
 public class FileHandler {
 
@@ -27,15 +31,21 @@ public class FileHandler {
     private boolean createdNewFile;
 
     /**
-     * <p>Creates a FileHandler for a specific file</p>
-     * <p>If the file does not exist, it will be created</p>
-     * @param fileName The name of the file in home folder to read from
+     * <p>
+     * Creates a FileHandler for a specific file.
+     * </p>
+     * <p>
+     * If the file does not exist, it will be created.
+     * </p>
+     *
+     * @param fileName The name of the file in home folder to read from.
      */
     public FileHandler(String fileName) {
         Path path = Paths.get(System.getProperty("user.home"), fileName);
         this.file = path.toFile();
         try {
-            this.createdNewFile = this.file.createNewFile(); // Creates a new file if it does not exist, else does nothing
+            this.createdNewFile = this.file.createNewFile(); // Creates a new file if it does not
+                                                             // exist, else does nothing
         } catch (IOException e) {
             System.out.println("Error creating file");
         }
@@ -50,7 +60,7 @@ public class FileHandler {
     }
 
     /**
-     * Removes all content in the file associated with this object
+     * Removes all content in the file associated with this object.
      */
     public void deleteFileContent() {
         try {
@@ -61,12 +71,16 @@ public class FileHandler {
     }
 
     /**
-     * Writes to the file associated with this object
-     * <p>Convert to string:</p>
+     * Writes to the file associated with this object.
+     * <p>
+     * Convert to string:
+     * </p>
+     * 
      * <pre>
      * JSONObject.toJSONString()
      * JSONArray.toJSONString()
      * </pre>
+     *
      * @param string The string to append to the file
      */
     public void writeToFile(String string, boolean append) {
@@ -84,59 +98,58 @@ public class FileHandler {
     }
 
     /**
-     * Writes to the file associated with this object
-     * Note: This will overwrite the file
+     * Writes to the file associated with this object Note: This will overwrite the file.
      */
     public void writeToFile(String string) {
         this.writeToFile(string, false);
     }
 
-    // Commented out for the moment, since it is very rare that we will write a single object to a file instead of an array of objects
-    /**
-     * Writes to the file associated with this object
-     * Note: This will overwrite the file
-     */
+    // Commented out for the moment, since it is very rare that we will write a single object to a
+    // file instead of an array of objects
+    // /**
+    //  * Writes to the file associated with this object Note: This will overwrite the file.
+    //  */
     // public void writeToFile(JSONObject jsonObject) {
-    //     this.writeToFile(jsonObject.toJSONString());
+    // this.writeToFile(jsonObject.toJSONString());
     // }
 
     /**
-     * Writes to the file associated with this object
-     * Note: This will overwrite the file
+     * Writes to the file associated with this object Note: This will overwrite the file.
      */
     public void writeToFile(JSONArray jsonArray) {
         this.writeToFile(jsonArray.toJSONString());
     }
 
     /**
-     * Appends to the file associated with this object
+     * Appends to the file associated with this object.
      */
     public void appendToFile(String string) {
         this.writeToFile(string, true);
     }
 
-    /**
-     * Appends to the file associated with this object
-     */
+    // /**
+    //  * Appends to the file associated with this object.
+    //  */
     // public void appendToFile(JSONObject jsonObject) {
-    //     this.writeToFile(jsonObject.toJSONString(), true);
+    // this.writeToFile(jsonObject.toJSONString(), true);
     // }
 
     /**
-     * Appends to the file associated with this object
+     * Appends to the file associated with this object.
      */
     public void appendToFile(JSONArray jsonArray) {
         this.writeToFile(jsonArray.toJSONString(), true);
     }
 
-    /** 
-     * Reads the file associated with this object
+    /**
+     * Reads the file associated with this object.
+     *
      * @return The JSONObject read from the file
      */
     public JSONArray readJSONFile() {
         JSONParser jsonParser = new JSONParser();
         if (this.file.length() == 0) {
-            System.out.println("File is empty, consider using the Storage.fillFileWithTestData();");
+            System.out.println("File is empty, consider using the Storage.fillFileWithTestdata();");
             return new JSONArray();
         }
 
@@ -156,8 +169,9 @@ public class FileHandler {
     }
 
     /**
-     * NOTE: Deletes the file completely
-     * @return True if the file was deleted, false otherwise
+     * NOTE: Deletes the file completely.
+     *
+     * @return True if the file was deleted, false otherwise.
      */
     public boolean deleteFile() {
         return this.file.delete();

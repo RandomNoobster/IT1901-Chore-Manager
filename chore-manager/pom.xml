@@ -104,6 +104,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <doclint>all,-missing</doclint>
                     <doclet>nl.talsmasoftware.umldoclet.UMLDoclet</doclet>
                     <docletArtifact>
                         <groupId>nl.talsmasoftware</groupId>
