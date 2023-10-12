@@ -1,6 +1,61 @@
 # Deliverable 2
 
-TODO: Updates to the UI.
+## Application progress
+
+**For deliverable 1, we made it so that a user can:**
+- Add a chore 
+- Specify the specific date and week a chore should be executed.
+- View the whole month with chores on specific dates in specific weeks (UI).
+- Saving the chore.
+
+These features combined into the completion of our first user story: **"Lisa’s mid-mid-life crisis"**
+
+
+### Acceptance criteria for deliverable 2
+
+Complete **"Fading plants"** and **"Jealousy, jealousy"**.
+
+**A user should be able to:**
+- Choose 
+	- Name
+	- When the task should be done
+    - Color of the task
+
+  in a chore-creation menu when creating a task (from **"Fading plants"**)
+- Create an account by choosing a username and password. This should be done when opening the application the first time (from **"Jealousy, jealousy"**)
+- Be able to log into their account when the application is opened (from **"Jealousy, jealousy"**)
+- Be able to log out of their account (from **"Jealousy, jealousy"**)
+- Assign chores to themselves, as well to other users. This should be done in the chore-creation menu (from **"Jealousy, jealousy"**)
+- Add a label to each chore in the view that states who the task is assigned to (from **"Jealousy, jealousy"**)
+
+### How far we got
+
+We completed both **"Fading plants"** and **"Jealousy, jealousy"**. We also added an additional feaure from **"Scoreboard"**: that a user should be able to define how many points a task is worth. The reason for only developing this part of **"Scoreboard"** so far, is that the addition of a point-amount-input in the chore-creation-menu was a minor task that could easily be done, as the chore-creation-menu had already been done.
+
+By implementing these user-stories, the amount of pages with corresponding controllers have quadrupled, as we now have pages for:
+ - Logging in
+ - Creating users
+ - The calendar
+ - Creating chores
+
+|![Logging in](Login.png)|
+|:--:|
+|Logging in| 
+
+|![Create user](CreateUser.png)|
+|:--:|
+|Create user| 
+
+|![Calendar](Calendar.png)|
+|:--:|
+|Calendar| 
+
+|![Create Chore](Login.png)|
+|:--:|
+|Create chore| 
+
+
+
 
 TODO: New unit tests.
 
