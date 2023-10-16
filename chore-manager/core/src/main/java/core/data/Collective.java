@@ -2,7 +2,9 @@ package core.data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,9 +15,15 @@ import org.json.simple.JSONObject;
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Collective {
 
+    /**
+     * To avoid duplicate join codes without having to know about the persistence module.
+     */
+    private static HashSet<String> joinCodes = new HashSet<String>();
     private String joinCode;
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
+
+    private static final int maxJoinCode = 1000000; // Exclusive
 
     public Collective(String name) {
         this(name, generateJoinCode());
@@ -36,10 +44,24 @@ public class Collective {
         this.name = name;
         this.joinCode = joinCode;
         this.persons = persons;
+
+        joinCodes.add(joinCode);
+    }
+
+    private static boolean isUniqueJoinCode(String joinCode) {
+        return !joinCode.contains(joinCode);
     }
 
     private static String generateJoinCode() {
-        return "1234";
+        if (joinCodes.size() >= maxJoinCode) {
+            throw new IllegalStateException("All join codes have been used");
+        }
+        String joinCode = "";
+        do {
+            int randomJoinCode = new Random().nextInt(maxJoinCode);
+            joinCode = String.format("%06d", randomJoinCode);
+        } while (!isUniqueJoinCode(joinCode));
+        return joinCode;
     }
 
     public String getJoinCode() {
@@ -75,7 +97,6 @@ public class Collective {
      * @return True if the person was added, false if they are already added.
      */
     public boolean addPerson(Person person) {
-
         if (this.persons.containsKey(person.getUsername()))
             return false;
 
