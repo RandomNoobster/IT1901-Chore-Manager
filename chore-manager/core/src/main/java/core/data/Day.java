@@ -49,4 +49,14 @@ public class Day {
         return this.date.equals(((Day) arg0).getDate());
     }
 
+    /**
+     * Outputs the hashCode of the date.
+     *
+     * @return The hashCode of the date
+     */
+    @Override
+    public int hashCode() {
+        return this.date.hashCode();
+    }
+
 }

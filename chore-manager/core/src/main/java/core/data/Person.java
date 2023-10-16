@@ -21,6 +21,16 @@ public class Person {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
+     * @param person The person to copy
+     */
+    public Person(Person person) {
+        this(person.getUsername(), person.getPassword(), person.getChores(),
+                person.getDisplayName());
+    }
+
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
      * @param username The username of the person
      */
     public Person(String username) {
@@ -37,11 +47,10 @@ public class Person {
         this(username, new Password(), chores, username);
     }
 
-
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username        The unique name of the person
+     * @param username    The unique name of the person
      * @param password    The password of the person
      * @param displayName The display name of the person
      */
@@ -52,7 +61,7 @@ public class Person {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username        The unique name of the person
+     * @param username    The unique name of the person
      * @param password    The password of the person
      * @param chores      The chores of the person
      * @param displayName The display name of the person
@@ -106,7 +115,7 @@ public class Person {
      * @return A list of chores that the person is assigned to
      */
     public List<Chore> getChores() {
-        return this.chores;
+        return new ArrayList<>(this.chores);
     }
 
     /**
@@ -144,6 +153,11 @@ public class Person {
             return false;
         }
         return this.username.equals(((Person) arg0).getUsername());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.username.hashCode();
     }
 
     @Override
