@@ -28,6 +28,10 @@ public class Person {
         this(username, new Password(), new ArrayList<>(), username);
     }
 
+    public Person(String username, Collective collective) {
+        this(username, new Password(), new ArrayList<>(), username, collective);
+    }
+
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
@@ -58,10 +62,25 @@ public class Person {
      * @param displayName The display name of the person
      */
     public Person(String username, Password password, List<Chore> chores, String displayName) {
+        this(username, password, chores, displayName, null);
+    }
+
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
+     * @param username    The unique name of the person
+     * @param password    The password of the person
+     * @param chores      The chores of the person
+     * @param displayName The display name of the person
+     * @param collective  The collective that the person is a part of
+     */
+    public Person(String username, Password password, List<Chore> chores, String displayName,
+            Collective collective) {
         this.username = username;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
+        this.collective = collective;
     }
 
     /**

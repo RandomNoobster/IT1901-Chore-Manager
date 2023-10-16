@@ -1,6 +1,7 @@
 package core.data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -15,13 +16,15 @@ import org.json.simple.JSONObject;
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Collective {
 
+    private static final int maxJoinCode = 999999; // Inclusive
+    public static final String EMPTY_COLLECTIVE_JOIN_CODE = "0"
+            .repeat(String.valueOf(maxJoinCode).length());
     /**
      * To avoid duplicate join codes without having to know about the persistence module.
      */
-    private static HashSet<String> joinCodes = new HashSet<String>();
-    private static final int maxJoinCode = 999999;
-    public static final String EMPTY_COLLECTIVE_JOIN_CODE = String
-            .format("%0" + String.valueOf(maxJoinCode).length() + "d");
+    private static HashSet<String> joinCodes = new HashSet<String>(
+            Arrays.asList(EMPTY_COLLECTIVE_JOIN_CODE));
+
     private String joinCode;
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
@@ -56,7 +59,7 @@ public class Collective {
      * @return True if the join code is unique, false otherwise
      */
     private static boolean isUniqueJoinCode(String joinCode) {
-        return !joinCode.contains(joinCode) && !joinCode.equals(EMPTY_COLLECTIVE_JOIN_CODE);
+        return !joinCodes.contains(joinCode);
     }
 
     private static String generateJoinCode() {

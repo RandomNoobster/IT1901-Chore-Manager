@@ -37,7 +37,6 @@ public class Storage {
         this.jsonConverter = new JSONConverter(this.filePath);
         if (this.jsonConverter.getCreatedNewFile()
                 || this.jsonConverter.getCollectives().isEmpty()) {
-            System.out.println("Created new file");
             this.fillFileWithTestData();
         }
         this.collectives = this.jsonConverter.getCollectives();
@@ -151,16 +150,19 @@ public class Storage {
     }
 
     /**
-     * This method adds a person to a collective.
+     * This method adds a unique person to a collective.
      *
      * @param person             The person to add
      * @param joinCodeCollective The join code of the collective to add the person to
      * @return True if the person was added, false otherwise
      */
     public boolean addPerson(Person person, String joinCodeCollective) {
-        if (!this.collectives.containsKey(joinCodeCollective)) {
+        if (!this.collectives.containsKey(joinCodeCollective))
             return false;
-        }
+
+        if (this.getAllPersons().containsKey(person.getUsername()))
+            return false;
+
         Collective collective = this.collectives.get(joinCodeCollective);
         return collective.addPerson(person);
     }
@@ -170,13 +172,11 @@ public class Storage {
      * not have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
-        HashMap<String, Collective> collectives = new HashMap<>();
         Collective emptyCollective = new Collective("Empty Collective",
                 Collective.EMPTY_COLLECTIVE_JOIN_CODE);
         Collective collective = new Collective("The Almighty Collective");
-
-        collectives.put(collective.getJoinCode(), collective);
-        collectives.put(emptyCollective.getJoinCode(), emptyCollective);
+        this.collectives.put(collective.getJoinCode(), collective);
+        this.collectives.put(emptyCollective.getJoinCode(), emptyCollective);
 
         Person person1 = new Person("Christian");
         Person person2 = new Person("Sebastian");

@@ -57,7 +57,12 @@ public class JSONConverter extends FileHandler {
                     .getPersonsFromCollective((JSONArray) collectiveJSON.get("persons"));
 
             Collective collective = new Collective(name, joinCode, persons);
-            collectives.put(name, collective);
+            collectives.put(joinCode, collective);
+
+            // Backfill persons with correct collective
+            for (Person person : persons.values()) {
+                person.setCollective(collective);
+            }
         }
 
         return collectives;
