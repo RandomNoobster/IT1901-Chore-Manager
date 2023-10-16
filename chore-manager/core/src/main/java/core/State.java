@@ -1,7 +1,5 @@
 package core;
 
-import java.util.HashMap;
-
 import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
@@ -80,9 +78,8 @@ public class State {
             return;
         }
 
-        HashMap<String, Person> persons = this.currentCollective.getPersons();
-        if (persons.containsKey(assignedPerson.getUsername())) {
-            Person person = persons.get(assignedPerson.getUsername());
+        if (this.currentCollective.hasPerson(assignedPerson)) {
+            Person person = this.currentCollective.getPersons().get(assignedPerson.getUsername());
             person.addChore(chore);
         } else {
             System.out.println("Person does not exist");

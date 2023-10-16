@@ -116,7 +116,20 @@ public class Storage {
      *
      * @return A {@link List} of all persons.
      */
-    public List<Person> getAllPersons() {
+    public HashMap<String, Person> getAllPersons() {
+        HashMap<String, Person> persons = new HashMap<String, Person>();
+        for (Collective collective : this.collectives.values()) {
+            persons.putAll(new HashMap<String, Person>(collective.getPersons()));
+        }
+        return persons;
+    }
+
+    /**
+     * This method is used to get all persons from the file system.
+     *
+     * @return A {@link List} of all persons.
+     */
+    public List<Person> getAllPersonsList() {
         List<Person> persons = new ArrayList<Person>();
         for (Collective collective : this.collectives.values()) {
             persons.addAll(new ArrayList<Person>(collective.getPersons().values()));
@@ -131,10 +144,25 @@ public class Storage {
      */
     public List<Chore> getAllChores() {
         List<Chore> chores = new ArrayList<Chore>();
-        for (Person person : this.getAllPersons()) {
+        for (Person person : this.getAllPersonsList()) {
             chores.addAll(new ArrayList<Chore>(person.getChores()));
         }
         return chores;
+    }
+
+    /**
+     * This method adds a person to a collective.
+     *
+     * @param person             The person to add
+     * @param joinCodeCollective The join code of the collective to add the person to
+     * @return True if the person was added, false otherwise
+     */
+    public boolean addPerson(Person person, String joinCodeCollective) {
+        if (!this.collectives.containsKey(joinCodeCollective)) {
+            return false;
+        }
+        Collective collective = this.collectives.get(joinCodeCollective);
+        return collective.addPerson(person);
     }
 
     /**
@@ -143,7 +171,9 @@ public class Storage {
      */
     public void fillFileWithTestData() {
         HashMap<String, Collective> collectives = new HashMap<>();
+
         Collective collective = new Collective("The Almighty Collective");
+
         collectives.put(collective.getJoinCode(), collective);
 
         Person person1 = new Person("Christian");
