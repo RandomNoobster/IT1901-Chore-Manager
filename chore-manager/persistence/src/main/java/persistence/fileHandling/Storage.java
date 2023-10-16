@@ -35,18 +35,19 @@ public class Storage {
      */
     public void initialize() {
         this.jsonConverter = new JSONConverter(this.filePath);
-        if (this.jsonConverter.getCreatedNewFile() || this.jsonConverter.getPersons().isEmpty()) {
+        if (this.jsonConverter.getCreatedNewFile()
+                || this.jsonConverter.getCollectives().isEmpty()) {
             System.out.println("Created new file");
             this.fillFileWithTestData();
         }
-        this.persons = this.jsonConverter.getPersons();
+        this.collectives = this.jsonConverter.getCollectives();
     }
 
     /**
      * This method is used to get the instance of the storage. If the instance does not exist, it
      * creates a new one.
      */
-    public static Storage getInstance() {
+    public static synchronized Storage getInstance() {
         if (instance == null) {
             instance = new Storage();
         }
@@ -91,7 +92,7 @@ public class Storage {
      * This method is used to save the persons to the file system.
      */
     public void save() {
-        this.jsonConverter.writePersonsToJSON(this.persons);
+        this.jsonConverter.writeCollectiveToJSON(this.collectives);
     }
 
     /**
@@ -170,32 +171,34 @@ public class Storage {
     // return chores;
     // }
 
-    /**
-     * This method adds a chore to a person.
-     *
-     * @param chore          The chore to add.
-     * @param assignedPerson The person to add the chore to.
-     */
-    public void addChore(Chore chore, Person assignedPerson) {
-        if (assignedPerson == null) {
-            System.out.println("Person is null, cannot add chore");
-            return;
-        }
+    // /**
+    // * This method adds a chore to a person.
+    // *
+    // * @param chore The chore to add.
+    // * @param assignedPerson The person to add the chore to.
+    // */
+    // public void addChore(Chore chore, Person assignedPerson) {
+    // if (assignedPerson == null) {
+    // System.out.println("Person is null, cannot add chore");
+    // return;
+    // }
 
-        if (this.persons.containsKey(assignedPerson.getUsername())) {
-            Person person = this.persons.get(assignedPerson.getUsername());
-            person.addChore(chore);
-        } else {
-            System.out.println("Person does not exist");
-        }
-    }
+    // if (this.persons.containsKey(assignedPerson.getUsername())) {
+    // Person person = this.persons.get(assignedPerson.getUsername());
+    // person.addChore(chore);
+    // } else {
+    // System.out.println("Person does not exist");
+    // }
+    // }
 
     /**
      * This is a method to create a test file for the application. This should be called if you do
      * not have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
+        HashMap<String, Collective> collectives = new HashMap<>();
         Collective collective = new Collective("The Almighty Collective");
+        collectives.put(collective.getJoinCode(), collective);
 
         Person person1 = new Person("Christian");
         Person person2 = new Person("Sebastian");
@@ -206,12 +209,11 @@ public class Storage {
                 "#FFFFFF");
         person1.addChore(chore);
 
-        HashMap<String, Collective> collectives = new HashMap<>();
-        persons.put(person1.getUsername(), person1);
-        persons.put(person2.getUsername(), person2);
-        persons.put(person3.getUsername(), person3);
-        persons.put(person4.getUsername(), person4);
-        this.persons = persons;
+        collective.addPerson(person1);
+        collective.addPerson(person2);
+        collective.addPerson(person3);
+        collective.addPerson(person4);
+
         this.save();
     }
 

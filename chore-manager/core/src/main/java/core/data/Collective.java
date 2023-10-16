@@ -18,12 +18,36 @@ public class Collective {
     private HashMap<String, Person> persons = new HashMap<String, Person>();
 
     public Collective(String name) {
+        this(name, generateJoinCode());
+    }
+
+    public Collective(String name, String joinCode) {
+        this(name, joinCode, new HashMap<String, Person>());
+    }
+
+    /**
+     * Constructs a new Collective object with the given name, join code, and persons.
+     *
+     * @param name     The name of the collective.
+     * @param joinCode The join code of the collective.
+     * @param persons  The persons in the collective.
+     */
+    public Collective(String name, String joinCode, HashMap<String, Person> persons) {
         this.name = name;
-        this.joinCode = generateJoinCode();
+        this.joinCode = joinCode;
+        this.persons = persons;
     }
 
     private static String generateJoinCode() {
         return "1234";
+    }
+
+    public String getJoinCode() {
+        return this.joinCode;
+    }
+
+    public String getName() {
+        return this.name;
     }
 
     /**

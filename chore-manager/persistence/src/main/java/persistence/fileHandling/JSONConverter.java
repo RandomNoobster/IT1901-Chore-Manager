@@ -38,15 +38,39 @@ public class JSONConverter extends FileHandler {
 
     /**
      * This method converts the stored JSON data into Java objects. This method assumes that
-     * {@link #writePersonsToJSON} has already been run.
+     * {@link #writeCollectiveToJSON} has already been run.
      */
-    public HashMap<String, Person> getPersons() {
-        HashMap<String, Person> persons = new HashMap<String, Person>();
-        JSONArray personsJSON = this.readJSONFile();
+    public HashMap<String, Collective> getCollectives() {
+        HashMap<String, Collective> collectives = new HashMap<String, Collective>();
+        JSONArray collectivesJSON = this.readJSONFile();
 
-        if (personsJSON == null) {
-            return persons;
+        if (collectivesJSON == null) {
+            return collectives;
         }
+
+        for (Object collectiveObject : collectivesJSON) {
+            JSONObject collectiveJSON = (JSONObject) collectiveObject;
+
+            String name = (String) collectiveJSON.get("name");
+            String joinCode = (String) collectiveJSON.get("joinCode");
+            HashMap<String, Person> persons = this
+                    .getPersonsFromCollective((JSONArray) collectiveJSON.get("persons"));
+
+            Collective collective = new Collective(name, joinCode, persons);
+            collectives.put(name, collective);
+        }
+
+        return collectives;
+    }
+
+    /**
+     * This method is used to read a hashmap of persons from a {@link JSONArray}.
+     *
+     * @param personsJSON A JSONArray of JSONObjects of Person .
+     * @return A HashMap of persons.
+     */
+    public HashMap<String, Person> getPersonsFromCollective(JSONArray personsJSON) {
+        HashMap<String, Person> persons = new HashMap<String, Person>();
 
         for (Object personObject : personsJSON) {
             JSONObject personJSON = (JSONObject) personObject;
