@@ -98,14 +98,14 @@ public class Storage {
      * This method is used to set the active user of the application.
      */
     public static void setUser(Person person) {
-        user = new Person(person);
+        user = person;
     }
 
     /**
      * This method is used to get the active user of the application.
      */
     public static Person getUser() {
-        return new Person(user);
+        return user;
     }
 
     /**
