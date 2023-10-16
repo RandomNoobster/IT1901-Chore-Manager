@@ -4,11 +4,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.io.IOException;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 
+import core.State;
+import core.data.Collective;
 import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,11 +28,26 @@ public class AppTest extends ApplicationTest {
     private Parent root;
     private AppController controller;
     private static final String filePath = "chore-manager-data-ui-test.json";
-    private final Person testPerson = new Person("Test");
+    private final static Collective testCollective = new Collective("Test Collective");
+    private final static Person testPerson = new Person("Test", testCollective);
 
     // Set environment to testing
     static {
         Storage.getInstance(filePath);
+    }
+
+    private static void setup() {
+        Storage.deleteInstance();
+        Storage.getInstance(filePath);
+        Storage.getInstance().addCollective(testCollective);
+        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+
+        State.getInstance().setLoggedInUser(testPerson);
+    }
+
+    @BeforeAll
+    public static void setupAll() {
+        setup();
     }
 
     @Override
@@ -50,14 +69,19 @@ public class AppTest extends ApplicationTest {
 
     @BeforeEach
     public void setupItems() {
-        Storage.deleteInstance();
-        Storage.getInstance(filePath);
-        Storage.getInstance().addPerson(this.testPerson);
+        setup();
     }
 
     @AfterEach
     public void clearItems() {
         Storage.getInstance().deleteFile();
+    }
+
+    @AfterAll
+    public static void deleteFile() {
+        if (Storage.getInstance().getFilePath().equals(filePath)) {
+            Storage.getInstance().deleteFile();
+        }
     }
 
     public Parent getRootNode() {

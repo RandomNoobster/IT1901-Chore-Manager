@@ -64,7 +64,7 @@ public class ChoreCreationController {
      */
     @FXML
     protected void initialize() {
-        List<Person> persons = Storage.getInstance().getAllPersonsList();
+        List<Person> persons = State.getInstance().getCurrentCollective().getPersonsList();
 
         for (Person person : persons) {
             this.personsMenu.getItems().add(new PersonMenuItem(person));

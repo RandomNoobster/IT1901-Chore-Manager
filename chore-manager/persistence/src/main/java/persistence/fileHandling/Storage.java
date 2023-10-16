@@ -111,6 +111,21 @@ public class Storage {
     }
 
     /**
+     * Adds a new collective to the storage.
+     *
+     * @param collective The collective to add.
+     * @return True if the collective was added successfully, false if a collective with the same
+     *         join code already exists.
+     */
+    public boolean addCollective(Collective collective) {
+        if (this.collectives.containsKey(collective.getJoinCode()))
+            return false;
+
+        this.collectives.put(collective.getJoinCode(), collective);
+        return true;
+    }
+
+    /**
      * This method is used to get all persons from the file system.
      *
      * @return A {@link List} of all persons.
