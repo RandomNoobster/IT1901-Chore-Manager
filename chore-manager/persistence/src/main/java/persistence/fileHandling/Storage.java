@@ -18,7 +18,7 @@ public class Storage {
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
-    private static Person user;
+    private static Person user = null;
 
     private Storage() {
         this.initialize();
@@ -98,7 +98,7 @@ public class Storage {
      * This method is used to set the active user of the application.
      */
     public static void setUser(Person person) {
-        user = person;
+        user = new Person(person);
     }
 
     /**
