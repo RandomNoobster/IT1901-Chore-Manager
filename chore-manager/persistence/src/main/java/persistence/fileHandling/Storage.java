@@ -1,11 +1,10 @@
 package persistence.fileHandling;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Person;
 
 /**
@@ -17,7 +16,8 @@ public class Storage {
     private static Storage instance = null;
     private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
-    private HashMap<String, Person> persons = new HashMap<String, Person>();
+    // private HashMap<String, Person> persons = new HashMap<String, Person>();
+    private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
     private static Person user;
 
     private Storage() {
@@ -115,60 +115,60 @@ public class Storage {
         this.jsonConverter.deleteFileContent();
     }
 
-    /**
-     * This method is used to get the persons from the file system.
-     *
-     * @return A {@link HashMap} of persons and their unique keys.
-     */
-    public HashMap<String, Person> getPersons() {
-        return new HashMap<String, Person>(this.persons);
-    }
+    // /**
+    // * This method is used to get the persons from the file system.
+    // *
+    // * @return A {@link HashMap} of persons and their unique keys.
+    // */
+    // public HashMap<String, Person> getPersons() {
+    // return new HashMap<String, Person>(this.persons);
+    // }
 
-    /**
-     * This method is used to get the persons from the file system.
-     *
-     * @return A {@link List} of persons.
-     */
-    public List<Person> getPersonsList() {
-        return new ArrayList<Person>(this.persons.values());
-    }
+    // /**
+    // * This method is used to get the persons from the file system.
+    // *
+    // * @return A {@link List} of persons.
+    // */
+    // public List<Person> getPersonsList() {
+    // return new ArrayList<Person>(this.persons.values());
+    // }
 
-    /**
-     * This methods adds a person to the file system.
-     *
-     * @param person The person to add.
-     * @return True if the person was added, false if they are already added.
-     */
-    public boolean addPerson(Person person) {
+    // /**
+    // * This methods adds a person to the file system.
+    // *
+    // * @param person The person to add.
+    // * @return True if the person was added, false if they are already added.
+    // */
+    // public boolean addPerson(Person person) {
 
-        if (this.persons.containsKey(person.getUsername()))
-            return false;
+    // if (this.persons.containsKey(person.getUsername()))
+    // return false;
 
-        this.persons.put(person.getUsername(), person);
-        return true;
-    }
+    // this.persons.put(person.getUsername(), person);
+    // return true;
+    // }
 
-    /**
-     * This method is used to remove a person from the file system.
-     *
-     * @param person The person to remove
-     */
-    public void removePerson(Person person) {
-        this.persons.remove(person.getUsername());
-    }
+    // /**
+    // * This method is used to remove a person from the file system.
+    // *
+    // * @param person The person to remove
+    // */
+    // public void removePerson(Person person) {
+    // this.persons.remove(person.getUsername());
+    // }
 
-    /**
-     * This method gets a list of all chores belonging to any user.
-     *
-     * @return All chores.
-     */
-    public List<Chore> getChoresList() {
-        List<Chore> chores = new ArrayList<Chore>();
-        for (Person person : this.persons.values()) {
-            chores.addAll(new ArrayList<Chore>(person.getChores()));
-        }
-        return chores;
-    }
+    // /**
+    // * This method gets a list of all chores belonging to any user.
+    // *
+    // * @return All chores.
+    // */
+    // public List<Chore> getChoresList() {
+    // List<Chore> chores = new ArrayList<Chore>();
+    // for (Person person : this.persons.values()) {
+    // chores.addAll(new ArrayList<Chore>(person.getChores()));
+    // }
+    // return chores;
+    // }
 
     /**
      * This method adds a chore to a person.
@@ -195,6 +195,8 @@ public class Storage {
      * not have any persons in the application. This can be considered test data.
      */
     public void fillFileWithTestData() {
+        Collective collective = new Collective("The Almighty Collective");
+
         Person person1 = new Person("Christian");
         Person person2 = new Person("Sebastian");
         Person person3 = new Person("Kristoffer");
@@ -204,7 +206,7 @@ public class Storage {
                 "#FFFFFF");
         person1.addChore(chore);
 
-        HashMap<String, Person> persons = new HashMap<>();
+        HashMap<String, Collective> collectives = new HashMap<>();
         persons.put(person1.getUsername(), person1);
         persons.put(person2.getUsername(), person2);
         persons.put(person3.getUsername(), person3);

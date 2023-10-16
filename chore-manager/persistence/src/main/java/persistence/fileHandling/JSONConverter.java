@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 
@@ -23,19 +24,18 @@ public class JSONConverter extends FileHandler {
     }
 
     /**
-     * This method is used to write a list of persons to a JSON file.
+     * This method is used to write a list of collectives to a JSON file.
      *
-     * @param persons A HashMap of persons.
+     * @param collectives A HashMap of persons.
      */
-    public void writePersonsToJSON(HashMap<String, Person> persons) {
-        JSONArray personsJSON = new JSONArray();
-        for (Person person : persons.values()) {
-            personsJSON.add(person.encodeToJSON());
+    public void writeCollectiveToJSON(HashMap<String, Collective> collectives) {
+        JSONArray collectivesJSON = new JSONArray();
+        for (Collective collective : collectives.values()) {
+            collectivesJSON.add(collective.encodeToJSON());
         }
-        this.writeToFile(personsJSON);
+        this.writeToFile(collectivesJSON);
     }
 
-    // TODO: Make it so it checks for formatting errors
     /**
      * This method converts the stored JSON data into Java objects. This method assumes that
      * {@link #writePersonsToJSON} has already been run.
