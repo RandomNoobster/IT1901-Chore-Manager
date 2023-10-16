@@ -105,7 +105,7 @@ public class Storage {
      * This method is used to get the active user of the application.
      */
     public static Person getUser() {
-        return user;
+        return new Person(user);
     }
 
     /**
