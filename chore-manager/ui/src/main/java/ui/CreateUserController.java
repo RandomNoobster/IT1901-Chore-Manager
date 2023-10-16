@@ -1,5 +1,6 @@
 package ui;
 
+import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 import javafx.fxml.FXML;
@@ -66,7 +67,8 @@ public class CreateUserController {
 
         Person newUser = new Person(username, password, displayName);
 
-        if (!Storage.getInstance().addPerson(newUser)) {
+        // TODO: Change Collective join code here
+        if (!Storage.getInstance().addPerson(newUser, Collective.EMPTY_COLLECTIVE_JOIN_CODE)) {
             this.errorMsg("Username issue", "Username is not unique");
             return false;
         }

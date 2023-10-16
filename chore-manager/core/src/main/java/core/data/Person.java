@@ -125,6 +125,11 @@ public class Person {
         this.collective = collective;
     }
 
+    public boolean isInEmptyCollective() {
+        return this.collective == null
+                || this.collective.getJoinCode().equals(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+    }
+
     /**
      * Outputs a {@link JSONObject} representing the person. Object variables are turned into
      * key/value pairs.

@@ -171,10 +171,12 @@ public class Storage {
      */
     public void fillFileWithTestData() {
         HashMap<String, Collective> collectives = new HashMap<>();
-
+        Collective emptyCollective = new Collective("Empty Collective",
+                Collective.EMPTY_COLLECTIVE_JOIN_CODE);
         Collective collective = new Collective("The Almighty Collective");
 
         collectives.put(collective.getJoinCode(), collective);
+        collectives.put(emptyCollective.getJoinCode(), emptyCollective);
 
         Person person1 = new Person("Christian");
         Person person2 = new Person("Sebastian");

@@ -19,11 +19,12 @@ public class Collective {
      * To avoid duplicate join codes without having to know about the persistence module.
      */
     private static HashSet<String> joinCodes = new HashSet<String>();
+    private static final int maxJoinCode = 999999;
+    public static final String EMPTY_COLLECTIVE_JOIN_CODE = String
+            .format("%0" + String.valueOf(maxJoinCode).length() + "d");
     private String joinCode;
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
-
-    private static final int maxJoinCode = 1000000; // Exclusive
 
     public Collective(String name) {
         this(name, generateJoinCode());
@@ -48,8 +49,14 @@ public class Collective {
         joinCodes.add(joinCode);
     }
 
+    /**
+     * String is unique and not 0000000, as it is reserved for empty collective.
+     *
+     * @param joinCode The join code to check
+     * @return True if the join code is unique, false otherwise
+     */
     private static boolean isUniqueJoinCode(String joinCode) {
-        return !joinCode.contains(joinCode);
+        return !joinCode.contains(joinCode) && !joinCode.equals(EMPTY_COLLECTIVE_JOIN_CODE);
     }
 
     private static String generateJoinCode() {
@@ -58,7 +65,8 @@ public class Collective {
         }
         String joinCode = "";
         do {
-            int randomJoinCode = new Random().nextInt(maxJoinCode);
+            // 1 - 999999 (inclusive), 000000 is reserved
+            int randomJoinCode = new Random().nextInt(maxJoinCode) + 1; // 1 - 999999
             joinCode = String.format("%06d", randomJoinCode);
         } while (!isUniqueJoinCode(joinCode));
         return joinCode;
@@ -91,13 +99,23 @@ public class Collective {
     }
 
     /**
+     * Checks if a person is in this collective.
+     *
+     * @param person The person to check
+     * @return True if the person is in this collective, false otherwise
+     */
+    public boolean hasPerson(Person person) {
+        return this.persons.containsKey(person.getUsername());
+    }
+
+    /**
      * This methods adds a person to the file system.
      *
      * @param person The person to add.
      * @return True if the person was added, false if they are already added.
      */
     public boolean addPerson(Person person) {
-        if (this.persons.containsKey(person.getUsername()))
+        if (this.hasPerson(person))
             return false;
 
         this.persons.put(person.getUsername(), person);

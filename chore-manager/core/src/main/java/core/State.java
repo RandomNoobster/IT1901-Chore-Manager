@@ -5,17 +5,15 @@ import core.data.Collective;
 import core.data.Person;
 
 /**
- * <p>
  * The State class represents the current state of the application. This handles information about
  * the logged in user and the current collective. This is a singleton, and should be retrieved using
  * getInstance().
- * </p>
- * <ul>
+ * <p>
  * To summarize the difference between State and Storage:
- * <li>State is used to store information about the current collective</li>
- * <li>Storage is used to store information about all collectives and the general state of the
- * application</li>
- * </ul>
+ * </p>
+ * State is used to store information about the current collective. <br>
+ * Storage is used to store information about all collectives and the general state of the
+ * application.
  */
 public class State {
 
