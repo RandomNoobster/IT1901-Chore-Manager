@@ -7,13 +7,16 @@ import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
+import core.State;
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,20 +29,34 @@ import persistence.fileHandling.Storage;
 public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
-    private ChoreCreationController controller;
     private static final String filePath = "chore-manager-data-ui-test.json";
-    private final Person testPerson = new Person("Test");
+    private final static Collective testCollective = new Collective("Test Collective");
+    private final static Person testPerson = new Person("Test", testCollective);
 
     // Set environment to testing
     static {
+        Storage.deleteInstance();
         Storage.getInstance(filePath);
+    }
+
+    private static void setup() {
+        Storage.deleteInstance();
+        Storage.getInstance(filePath);
+        Storage.getInstance().addCollective(testCollective);
+        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+
+        State.getInstance().setLoggedInUser(testPerson);
+    }
+
+    @BeforeAll
+    public static void setupAll() {
+        setup();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
         this.root = fxmlLoader.load();
-        this.controller = fxmlLoader.getController();
 
         // CSS
         Scene scene = new Scene(this.root);
@@ -54,9 +71,7 @@ public class ChoreCreationTest extends ApplicationTest {
 
     @BeforeEach
     public void setupItems() {
-        Storage.deleteInstance();
-        Storage.getInstance(filePath);
-        Storage.getInstance().addPerson(this.testPerson);
+        setup();
     }
 
     @AfterEach
@@ -79,7 +94,7 @@ public class ChoreCreationTest extends ApplicationTest {
 
     @Test
     public void testCreateChore() {
-        List<Chore> savedChores = Storage.getInstance().getChoresList();
+        List<Chore> savedChores = Storage.getInstance().getAllChores();
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
@@ -94,6 +109,6 @@ public class ChoreCreationTest extends ApplicationTest {
         this.click("Create");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(savedChores.size() + 1 == Storage.getInstance().getChoresList().size());
+        assertTrue(savedChores.size() + 1 == Storage.getInstance().getAllChores().size());
     }
 }

@@ -9,29 +9,28 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Chore;
-import core.data.Person;
-
 public class PersonTest {
-    Person person;
+    private Person person;
+    private Collective collective;
 
     @BeforeEach
     public void polulatePerson() {
-        this.person = new Person("John");
+        this.collective = new Collective("Test Collective");
+        this.person = new Person("John", this.collective);
+        this.collective.addPerson(this.person);
     }
 
     @Test
     public void testConstructor() {
         // Test that the constructor does not throw an exception
-        assertDoesNotThrow(() -> new Person("John"));
+        assertDoesNotThrow(() -> new Person("John", this.collective));
 
         // Test that the constructor properly adds chores
         List<Chore> chores = new ArrayList<Chore>();
         Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF");
         chores.add(chore);
-        assertDoesNotThrow(() -> new Person("John", chores));
-        assertEquals(chore, new Person("John", chores).getChores().get(0));
-
+        assertDoesNotThrow(() -> new Person("John", this.collective, chores));
+        assertEquals(chore, new Person("John", this.collective, chores).getChores().get(0));
     }
 
     @Test

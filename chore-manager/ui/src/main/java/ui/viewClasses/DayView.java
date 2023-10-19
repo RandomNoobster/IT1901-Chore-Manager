@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import core.State;
 import core.data.Chore;
 import core.data.Day;
 import core.data.Person;
@@ -14,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import persistence.fileHandling.Storage;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -103,7 +103,7 @@ public class DayView extends Button implements ViewInterface {
 
         List<VBox> labels = new ArrayList<>();
 
-        for (Person person : Storage.getInstance().getPersonsList()) {
+        for (Person person : State.getInstance().getCurrentCollective().getPersonsList()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
 

@@ -3,6 +3,7 @@ module main.ui {
     requires main.persistence;
     requires javafx.controls;
     requires javafx.fxml;
+    requires transitive javafx.graphics;
     requires json.simple;
     
     requires transitive javafx.graphics;
