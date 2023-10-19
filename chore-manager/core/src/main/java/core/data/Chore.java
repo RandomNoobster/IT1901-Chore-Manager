@@ -17,6 +17,8 @@ public class Chore {
     private boolean isWeekly;
     private int points;
     private String color;
+    private boolean checked;
+    private int daysIncompleted;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
@@ -30,12 +32,19 @@ public class Chore {
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color) {
+        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0);
+    }
+
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
+            int points, String color, boolean checked, int daysIncompleted) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
         this.isWeekly = isWeekly;
         this.points = points;
         this.color = color;
+        this.checked = checked;
+        this.daysIncompleted = daysIncompleted;
     }
 
     /**
@@ -53,7 +62,7 @@ public class Chore {
      * @return The start date of the chore
      */
     public LocalDate getTimeFrom() {
-        return this.timeFrom;
+        return this.timeFrom.plusDays(this.daysIncompleted);
     }
 
     /**
@@ -62,7 +71,25 @@ public class Chore {
      * @return The end date of the chore
      */
     public LocalDate getTimeTo() {
-        return this.timeTo;
+        return this.timeTo.plusDays(this.daysIncompleted);
+    }
+
+    /**
+     * Outputs if a chore is checked/done or not
+     *
+     * @return The end date of the chore
+     */
+    public Boolean getChecked() {
+        return this.checked;
+    }
+
+    /**
+     * Outputs how many days the chore is past the due date.
+     *
+     * @return The end date of the chore
+     */
+    public Integer getDaysIncompleted() {
+        return this.daysIncompleted;
     }
 
     /**
@@ -120,6 +147,8 @@ public class Chore {
         map.put("isWeekly", this.isWeekly);
         map.put("points", this.points);
         map.put("color", this.color);
+        map.put("checked", this.checked);
+        map.put("daysIncompleted", this.daysIncompleted);
 
         JSONObject json = new JSONObject(map);
         return json;

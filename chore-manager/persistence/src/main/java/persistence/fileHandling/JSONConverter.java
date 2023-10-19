@@ -109,8 +109,11 @@ public class JSONConverter extends FileHandler {
             boolean isWeekly = (boolean) choreObject.get("isWeekly");
             int points = ((Long) choreObject.get("points")).intValue();
             String color = (String) choreObject.get("color");
+            Boolean checked = (Boolean) choreObject.get("checked");
+            int daysIncompleted = ((Long) choreObject.get("daysIncompleted")).intValue();
 
-            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color);
+            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color,
+                    checked, daysIncompleted);
             chores.add(newChore);
         }
 
