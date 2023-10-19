@@ -1,0 +1,38 @@
+variables:
+  MAVEN_OPTS: -Dmaven.repo.local=.m2/repository
+
+image: maven:latest
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
+stages:
+    - build
+    - test
+
+
+cache:
+  paths:
+    - .m2/repository
+    - target
+
+build_job:
+  stage: build
+  tags:
+    - docker 
+
+  script: 
+    - echo "Maven compile started"
+    - "cd chore-manager"
+    - "mvn compile"
+
+test_job:
+  stage: test
+  tags:
+    - docker 
+
+  script: 
+    - echo "Maven test started"
+    - "cd chore-manager"
+    - "mvn test"
