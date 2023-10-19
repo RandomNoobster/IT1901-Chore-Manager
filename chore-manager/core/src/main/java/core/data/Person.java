@@ -22,60 +22,47 @@ public class Person {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username The username of the person
+     * @param username   The username of the person
+     * @param collective The collective that the person is a part of
      */
-    public Person(String username) {
-        this(username, new Password(), new ArrayList<>(), username);
-    }
-
     public Person(String username, Collective collective) {
-        this(username, new Password(), new ArrayList<>(), username, collective);
+        this(username, collective, new Password(), new ArrayList<>(), username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username The username of the person
-     * @param chores   The chores of the person
+     * @param username   The username of the person
+     * @param chores     The chores of the person
+     * @param collective The collective that the person is a part of
      */
-    public Person(String username, List<Chore> chores) {
-        this(username, new Password(), chores, username);
+    public Person(String username, Collective collective, List<Chore> chores) {
+        this(username, collective, new Password(), chores, username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
      * @param username    The unique name of the person
-     * @param password    The password of the person
-     * @param displayName The display name of the person
-     */
-    public Person(String username, Password password, String displayName) {
-        this(username, password, new ArrayList<Chore>(), displayName);
-    }
-
-    /**
-     * A constructor for the Person class that initializes the state of the object.
-     *
-     * @param username    The unique name of the person
-     * @param password    The password of the person
-     * @param chores      The chores of the person
-     * @param displayName The display name of the person
-     */
-    public Person(String username, Password password, List<Chore> chores, String displayName) {
-        this(username, password, chores, displayName, null);
-    }
-
-    /**
-     * A constructor for the Person class that initializes the state of the object.
-     *
-     * @param username    The unique name of the person
-     * @param password    The password of the person
-     * @param chores      The chores of the person
-     * @param displayName The display name of the person
      * @param collective  The collective that the person is a part of
+     * @param password    The password of the person
+     * @param displayName The display name of the person
      */
-    public Person(String username, Password password, List<Chore> chores, String displayName,
-            Collective collective) {
+    public Person(String username, Collective collective, Password password, String displayName) {
+        this(username, collective, password, new ArrayList<Chore>(), displayName);
+    }
+
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
+     * @param username    The unique name of the person
+     * @param collective  The collective that the person is a part of
+     * @param password    The password of the person
+     * @param chores      The chores of the person
+     * @param displayName The display name of the person
+     */
+    public Person(String username, Collective collective, Password password, List<Chore> chores,
+            String displayName) {
         this.username = username;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);

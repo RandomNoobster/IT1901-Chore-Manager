@@ -111,6 +111,15 @@ public class Storage {
     }
 
     /**
+     * This method is used to get the empty collective.
+     *
+     * @return The empty collective.
+     */
+    public Collective getEmptyCollective() {
+        return this.collectives.get(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+    }
+
+    /**
      * Adds a new collective to the storage.
      *
      * @param collective The collective to add.
@@ -193,10 +202,10 @@ public class Storage {
         this.collectives.put(collective.getJoinCode(), collective);
         this.collectives.put(emptyCollective.getJoinCode(), emptyCollective);
 
-        Person person1 = new Person("Christian");
-        Person person2 = new Person("Sebastian");
-        Person person3 = new Person("Kristoffer");
-        Person person4 = new Person("Lasse");
+        Person person1 = new Person("Christian", emptyCollective);
+        Person person2 = new Person("Sebastian", emptyCollective);
+        Person person3 = new Person("Kristoffer", emptyCollective);
+        Person person4 = new Person("Lasse", emptyCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
                 "#FFFFFF");

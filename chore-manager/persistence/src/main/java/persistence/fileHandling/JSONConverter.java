@@ -85,7 +85,7 @@ public class JSONConverter extends FileHandler {
             Password password = new Password((String) personJSON.get("password"));
             String displayName = (String) personJSON.get("displayName");
 
-            Person person = new Person(username, password, chores, displayName);
+            Person person = new Person(username, null, password, chores, displayName);
             persons.put(username, person);
         }
 
