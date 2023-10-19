@@ -27,12 +27,22 @@ build_job:
     - "cd chore-manager"
     - "mvn compile"
 
-test_job:
+test_core:
   stage: test
   tags:
     - docker 
 
   script: 
     - echo "Maven test started"
-    - "cd chore-manager"
+    - "cd chore-manager/core"
+    - "mvn test"
+
+test_persistence:
+  stage: test
+  tags:
+    - docker 
+
+  script: 
+    - echo "Maven test started"
+    - "cd chore-manager/persistence"
     - "mvn test"
