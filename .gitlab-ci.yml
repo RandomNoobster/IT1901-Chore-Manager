@@ -8,7 +8,7 @@ workflow:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 stages:
-    - build
+#    - build
     - test
 
 
@@ -17,38 +17,54 @@ cache:
     - .m2/repository
     - target
 
-build_job:
-  stage: build
-  tags:
-    - docker 
-
-  script: 
-    - echo "Maven compile started"
-    - "cd chore-manager"
-    - "mvn install -DskipTests"
-
-test_core:
+test_core_persistence:
   stage: test
   tags:
-    - docker 
+    - docker
 
   script: 
-    - echo "Maven test started"
+    - echo "Maven test for core started"
     - "cd chore-manager/core"
     - "mvn compile"
     - "mvn test"
-  dependencies:
-    - build_job
 
-test_persistence:
-  stage: test
-  tags:
-    - docker 
-
-  script: 
-    - echo "Maven test started"
-    - "cd chore-manager/persistence"
+    - "cd ../persistence"
     - "mvn compile"
     - "mvn test"
-  dependencies:
-    - build_job
+  
+
+#build_job:
+#  stage: build
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven compile started"
+#    - "cd chore-manager"
+#    - "mvn install -DskipTests"
+
+#test_core:
+#  stage: test
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven test started"
+#    - "cd chore-manager/core"
+#    - "mvn compile"
+#    - "mvn test"
+#  dependencies:
+#    - build_job
+
+#test_persistence:
+#  stage: test
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven test started"
+#    - "cd chore-manager/persistence"
+#    - "mvn compile"
+#    - "mvn test"
+#  dependencies:
+#    - build_job
