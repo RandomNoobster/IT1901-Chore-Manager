@@ -17,15 +17,15 @@ cache:
     - .m2/repository
     - target
 
-#build_job:
-#  stage: build
-#  tags:
-#    - docker 
-#
-#  script: 
-#    - echo "Maven compile started"
-#    - "cd chore-manager"
-#    - "mvn install -DskipTests"
+build_job:
+  stage: build
+  tags:
+    - docker 
+
+  script: 
+    - echo "Maven compile started"
+    - "cd chore-manager"
+    - "mvn install -DskipTests"
 
 test_core:
   stage: test
@@ -37,6 +37,8 @@ test_core:
     - "cd chore-manager/core"
     - "mvn compile"
     - "mvn test"
+  dependencies:
+    - build_job
 
 test_persistence:
   stage: test
@@ -48,3 +50,5 @@ test_persistence:
     - "cd chore-manager/persistence"
     - "mvn compile"
     - "mvn test"
+  dependencies:
+    - build_job
