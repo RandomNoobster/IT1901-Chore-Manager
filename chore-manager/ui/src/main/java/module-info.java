@@ -4,6 +4,8 @@ module main.ui {
     requires javafx.controls;
     requires javafx.fxml;
     requires json.simple;
+    
+    requires transitive javafx.graphics;
 
     opens ui to javafx.graphics, javafx.fxml;
 
