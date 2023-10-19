@@ -56,7 +56,7 @@ public class TestUtilities {
 
     /**
      * Waits for a node that matches the given predicate and is the nth node visited.
-     * 
+     *
      * @param nodePredicate The predicate to test the node with.
      * @param nthVisited    Which node to return, starting from 1 (example nthVisited=2 returns the
      *                      second visited node)
@@ -83,7 +83,7 @@ public class TestUtilities {
     /**
      * Example usage, this gets all labels with the text "Reminder":
      * {@code List<Node> nodesWithRemainderLabel = TestUtilities.waitForAllNodes((node -> node instanceof Label && ((Label) node).getText().equals("Reminder")));}
-     * 
+     *
      * @param nodePredicate The predicate to test the node with. It will return the node if the
      *                      predicate returns true.
      * @return A list of nodes that match the predicate

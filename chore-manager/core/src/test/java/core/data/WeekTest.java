@@ -11,9 +11,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Day;
-import core.data.Week;
-
 public class WeekTest {
 
     private Week week;

@@ -10,15 +10,13 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Chore;
-
 public class ChoreTest {
-    Chore chore;
-    LocalDate timeFrom;
-    LocalDate timeTo;
-    String choreName;
-    boolean isWeekly;
-    int points;
+    private Chore chore;
+    private LocalDate timeFrom;
+    private LocalDate timeTo;
+    private String choreName;
+    private boolean isWeekly;
+    private int points;
 
     @BeforeEach
     public void populateChore() {

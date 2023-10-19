@@ -1,5 +1,8 @@
 package ui;
 
+import java.util.HashMap;
+
+import core.State;
 import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -35,6 +38,13 @@ public class LoginController {
 
     }
 
+    private void showAlertWarning(String title, String message) {
+        Alert alert = new Alert(AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(message);
+        alert.show();
+    }
+
     /**
      * This method is called when the login button is pressed. If the user exists and the login
      * information is correct, the active user is set to this user.
@@ -45,25 +55,15 @@ public class LoginController {
         String username = this.username.getText();
         String password = this.password.getText();
 
-        for (Person person : Storage.getInstance().getPersonsList()) {
-            if (person.getPassword().getPasswordString().equals(password)
-                    && person.getUsername().equals(username)) {
-                Storage.setUser(person);
-                break;
-            }
+        HashMap<String, Person> allPersons = Storage.getInstance().getAllPersons();
+        if (!allPersons.containsKey(username)
+                || !allPersons.get(username).getPassword().getPasswordString().equals(password)) {
+            this.showAlertWarning("Unknown user", "Wrong username or password!");
+            return;
         }
 
-        if (Storage.getUser() == null) {
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle("Unknown user");
-            alert.setHeaderText("Wrong username or password!");
-
-            alert.show();
-
-        } else {
-            App.switchScene("App");
-        }
-
+        State.getInstance().setLoggedInUser(allPersons.get(username));
+        App.switchScene("App");
     }
 
     @FXML
