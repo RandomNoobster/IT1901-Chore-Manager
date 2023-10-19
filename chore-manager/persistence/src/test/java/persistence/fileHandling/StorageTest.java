@@ -4,18 +4,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Chore;
-import core.data.Person;
+import core.data.Collective;
 
 public class StorageTest {
 
@@ -28,8 +24,17 @@ public class StorageTest {
     private static final String fileName = "chore-manager-storage-test.json";
     private static final String fileName2 = "chore-manager-storage-test-new.json";
 
-    private <T> boolean compareTwoLists(Collection<T> list1, Collection<T> list2) {
-        return list1.containsAll(list2) && list2.containsAll(list1);
+    // Instead of overwriting @equals, we just compare the unique keys
+    private boolean compareTwoHashCollectives(HashMap<String, Collective> collective1,
+            HashMap<String, Collective> collective2) {
+        if (collective1.size() != collective2.size())
+            return false;
+
+        for (Collective collective : collective1.values()) {
+            if (!collective2.containsKey(collective.getJoinCode()))
+                return false;
+        }
+        return true;
     }
 
     /**
@@ -67,18 +72,17 @@ public class StorageTest {
 
     @Test
     public void testSave() {
-        HashMap<String, Person> localPersons = this.storage.getPersons();
-        String username = "Peter";
-        Person newPerson = new Person("Peter", new ArrayList<>());
-        localPersons.put(username, newPerson);
+        HashMap<String, Collective> localCollectives = this.storage.getCollectives();
+        Collective newCollective = new Collective("Test");
+        localCollectives.put(newCollective.getJoinCode(), newCollective);
 
-        this.storage.addPerson(newPerson);
+        this.storage.addCollective(newCollective);
         this.storage.save();
 
         Storage.deleteInstance();
         Storage newStorage = Storage.getInstance(fileName);
-        HashMap<String, Person> newPersons = newStorage.getPersons();
-        assertEquals(localPersons, newPersons);
+        HashMap<String, Collective> newCollectives = newStorage.getCollectives();
+        assertTrue(this.compareTwoHashCollectives(localCollectives, newCollectives));
     }
 
     @Test
@@ -91,55 +95,33 @@ public class StorageTest {
 
     @Test
     public void testDeleteFileContent() {
-        this.storage.addPerson(new Person("Peter", new ArrayList<>()));
-        HashMap<String, Person> localPersons = this.storage.getPersons();
+        Collective newCollective = new Collective("Test");
+        this.storage.addCollective(newCollective);
+        HashMap<String, Collective> localCollectives = this.storage.getCollectives();
 
         this.storage.deleteFileContent();
         this.storage.initialize();
-        assertNotEquals(localPersons, this.storage.getPersons());
+        assertNotEquals(localCollectives, this.storage.getCollectives());
     }
 
     @Test
-    public void testGetPersons() {
-        HashMap<String, Person> localPersons = this.storage.getPersons();
-        String username = "Peter";
-        Person newPerson = new Person(username, new ArrayList<>());
+    public void testGetCollectives() {
+        HashMap<String, Collective> localCollectives = this.storage.getCollectives();
+        Collective newCollective = new Collective("Test");
 
-        localPersons.put(username, newPerson);
-        this.storage.addPerson(newPerson);
+        localCollectives.put(newCollective.getJoinCode(), newCollective);
+        this.storage.addCollective(newCollective);
 
-        assertEquals(localPersons, this.storage.getPersons());
-        assertTrue(this.compareTwoLists(localPersons.values(), this.storage.getPersonsList()));
+        assertTrue(this.compareTwoHashCollectives(localCollectives, this.storage.getCollectives()));
     }
 
     @Test
-    public void testRemovePersons() {
-        List<Person> localPersons = this.storage.getPersonsList();
-        Person person = localPersons.get(0);
+    public void testRemoveCollective() {
+        HashMap<String, Collective> localCollectives = this.storage.getCollectives();
+        Collective collective = localCollectives.values().iterator().next();
 
-        localPersons.remove(person);
-        this.storage.removePerson(person);
-
-        assertTrue(this.compareTwoLists(localPersons, this.storage.getPersonsList()));
+        localCollectives.remove(collective.getJoinCode());
+        this.storage.removeCollective(collective);
+        assertTrue(this.compareTwoHashCollectives(localCollectives, this.storage.getCollectives()));
     }
-
-    @Test
-    public void testAddChore() {
-        // Person does exist
-        List<Person> localPersons = this.storage.getPersonsList();
-        Person person = localPersons.get(0);
-        int choreSize = person.getChores().size();
-
-        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF");
-        this.storage.addChore(chore, person);
-        assertEquals(choreSize + 1, person.getChores().size());
-
-        // Person does not exist
-        int totalChoreSize = this.storage.getPersonsList().stream()
-                .mapToInt(p -> p.getChores().size()).sum();
-        this.storage.addChore(person.getChores().get(0), null);
-        assertEquals(totalChoreSize,
-                this.storage.getPersonsList().stream().mapToInt(p -> p.getChores().size()).sum());
-    }
-
 }
