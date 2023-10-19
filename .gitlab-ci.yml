@@ -17,6 +17,8 @@ cache:
     - .m2/repository
     - target
 
+# Run all tests in same job, because each job runs in a seperate environment,
+# and then we would need to install the same dependencies multiple times
 test_core_persistence:
   stage: test
   tags:
@@ -24,12 +26,13 @@ test_core_persistence:
 
   script: 
     - echo "Maven test for core started"
-    - "cd chore-manager/core"
-    - "mvn compile"
+    - "cd chore-manager"
+    - "mvn install -DskipTests"
+    
+    - "cd core"
     - "mvn test"
 
     - "cd ../persistence"
-    - "mvn compile"
     - "mvn test"
   
 
