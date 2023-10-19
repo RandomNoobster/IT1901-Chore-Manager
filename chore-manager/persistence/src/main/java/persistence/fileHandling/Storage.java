@@ -135,6 +135,16 @@ public class Storage {
     }
 
     /**
+     * Removes a collective from the storage.
+     *
+     * @param collective The collective to remove.
+     * @return True if the collective was removed successfully
+     */
+    public boolean removeCollective(Collective collective) {
+        return this.collectives.remove(collective.getJoinCode()) != null;
+    }
+
+    /**
      * This method is used to get all persons from the file system.
      *
      * @return A {@link List} of all persons.

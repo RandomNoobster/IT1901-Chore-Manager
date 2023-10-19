@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Person;
 
 public class JSONConverterTest {
@@ -22,6 +24,10 @@ public class JSONConverterTest {
     private JSONConverter jsonConverter;
     private final String fileName = "chore-manager-test-jsonconverter.json";
     private final LocalDate date = LocalDate.of(2020, 1, 1);
+
+    private <T> boolean compareTwoLists(Collection<T> list1, Collection<T> list2) {
+        return list1.containsAll(list2) && list2.containsAll(list1);
+    }
 
     @BeforeEach
     public void populateJSONConverter() {
@@ -45,19 +51,23 @@ public class JSONConverterTest {
     public void writeAndReadToJSONTest() {
         Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
-        Person person = new Person("username", chores);
-        HashMap<String, Person> persons = new HashMap<String, Person>();
-        persons.put(person.getUsername(), person);
+        Collective collective = new Collective("test");
+        Person person = new Person("username", collective, chores);
+        collective.addPerson(person);
+        HashMap<String, Collective> collectives = new HashMap<String, Collective>();
+        collectives.put(collective.getJoinCode(), collective);
 
-        this.jsonConverter.writePersonsToJSON(persons);
+        this.jsonConverter.writeCollectiveToJSON(collectives);
         assertTrue(this.jsonConverter.getFile().length() > 0);
 
-        HashMap<String, Person> personsFromJSON = this.jsonConverter.getPersons();
-        assertTrue(personsFromJSON.containsKey(person.getUsername()));
-        assertEquals(person, personsFromJSON.get(person.getUsername()));
+        HashMap<String, Collective> collectivesFromJSON = this.jsonConverter.getCollectives();
+        assertTrue(collectivesFromJSON.containsKey(collective.getJoinCode()));
+        assertTrue(this.compareTwoLists(collective.getPersonsList(),
+                collectivesFromJSON.get(collective.getJoinCode()).getPersonsList()));
 
         assertEquals(person.getChores().get(0).encodeToJSON(),
-                personsFromJSON.get(person.getUsername()).getChores().get(0).encodeToJSON());
+                collectivesFromJSON.get(collective.getJoinCode()).getPersons()
+                        .get(person.getUsername()).getChores().get(0).encodeToJSON());
     }
 
 }
