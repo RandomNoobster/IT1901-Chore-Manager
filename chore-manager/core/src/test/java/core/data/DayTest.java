@@ -8,11 +8,9 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Day;
-
 public class DayTest {
-    Day day;
-    LocalDate date;
+    private Day day;
+    private LocalDate date;
 
     @BeforeEach
     public void populateDay() {

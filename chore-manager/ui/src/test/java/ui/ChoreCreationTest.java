@@ -29,7 +29,6 @@ import persistence.fileHandling.Storage;
 public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
-    private ChoreCreationController controller;
     private static final String filePath = "chore-manager-data-ui-test.json";
     private final static Collective testCollective = new Collective("Test Collective");
     private final static Person testPerson = new Person("Test", testCollective);
@@ -58,7 +57,6 @@ public class ChoreCreationTest extends ApplicationTest {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
         this.root = fxmlLoader.load();
-        this.controller = fxmlLoader.getController();
 
         // CSS
         Scene scene = new Scene(this.root);
