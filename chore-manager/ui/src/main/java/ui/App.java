@@ -32,7 +32,7 @@ public class App extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Login.fxml"));
         Parent parent = fxmlLoader.load();
-        scene = new Scene(parent);
+        setScene(parent);
         scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
 
         // To be replaced
@@ -50,6 +50,10 @@ public class App extends Application {
             System.exit(0);
         });
 
+    }
+
+    public static void setScene(Parent parent) {
+        scene = new Scene(parent);
     }
 
     /**

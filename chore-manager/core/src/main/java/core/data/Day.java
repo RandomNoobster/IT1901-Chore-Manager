@@ -18,6 +18,10 @@ public class Day {
         this.date = date;
     }
 
+    public Day(Day day) {
+        this.date = day.date;
+    }
+
     /**
      * Outputs the date of the day.
      *

@@ -43,11 +43,11 @@ public class ChoreView implements ViewInterface {
 
     @Override
     public Node getFxml() {
-        return this.container;
+        return new VBox(this.container);
     }
 
     public VBox getContainer() {
-        return this.container;
+        return new VBox(this.container);
     }
 
 }

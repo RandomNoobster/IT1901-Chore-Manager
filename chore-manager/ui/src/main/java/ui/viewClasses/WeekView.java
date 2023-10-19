@@ -68,7 +68,7 @@ public class WeekView implements ViewInterface {
      * @return A list of the DayViews in the week
      */
     public List<DayView> getDayViews() {
-        return this.dayViews;
+        return new ArrayList<>(this.dayViews);
     }
 
     /**
@@ -78,7 +78,7 @@ public class WeekView implements ViewInterface {
      */
     @Override
     public HBox getFxml() {
-        return this.container;
+        return new HBox(this.container);
     }
 
     /**
