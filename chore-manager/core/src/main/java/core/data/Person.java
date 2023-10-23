@@ -75,7 +75,7 @@ public class Person {
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
-        this.collective = collective;
+        this.collective = new Collective(collective);
     }
 
     /**
@@ -129,14 +129,14 @@ public class Person {
      * @return The collective that the person is a part of
      */
     public Collective getCollective() {
-        return this.collective;
+        return new Collective(this.collective);
     }
 
     /**
      * Sets the collective that the person is a part of.
      */
     public void setCollective(Collective collective) {
-        this.collective = collective;
+        this.collective = new Collective(collective);
     }
 
     public boolean isInEmptyCollective() {
