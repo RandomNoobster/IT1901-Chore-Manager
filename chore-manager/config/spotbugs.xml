@@ -28,4 +28,11 @@
         </And>
     </Or>
 </Match>
+<Match>
+    <Class name="ui.viewClasses.DayView"/>
+    
+    <Method name="getFxml"/>
+
+    <Bug pattern="EI_EXPOSE_REP"/>
+</Match>
 </FindBugsFilter>

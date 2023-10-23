@@ -115,6 +115,10 @@ public class Person {
         this.chores.add(chore);
     }
 
+    public void deleteChore(Chore chore) {
+        this.chores.remove(chore);
+    }
+
     /**
      * Outputs a list of chores that the person is assigned to.
      *

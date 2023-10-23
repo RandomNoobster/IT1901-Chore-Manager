@@ -1,5 +1,5 @@
 module main.ui {
-    requires main.core;
+    requires transitive main.core;
     requires main.persistence;
     requires javafx.controls;
     requires javafx.fxml;

@@ -1,10 +1,14 @@
 package ui.viewClasses;
 
+import core.data.Chore;
 import core.data.ContrastColor;
+import core.data.Person;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import ui.App;
 
 /**
  * The ChoreView class represents a chore in the calendar.
@@ -12,32 +16,41 @@ import javafx.scene.paint.Color;
 public class ChoreView implements ViewInterface {
     private VBox container = new VBox();
     private Label assignee;
-    private Label chore;
+    private Button choreDisplay;
+    private Chore chore;
+    private Person person;
 
     /**
      * Constructor for ChoreView.
      *
-     * @param assignee The person assigned to the chore.
-     * @param chore    The chore.
-     * @param color    The color of the chore.
+     * 
+     * @param chore  The chore.
+     * @param person The assignee
      */
-    public ChoreView(String assignee, String chore, String color) {
-
-        this.assignee = new Label(assignee + ":");
+    public ChoreView(Chore chore, Person person) {
+        this.person = person;
+        this.chore = chore;
+        this.assignee = new Label(person.getDisplayName() + ":");
         this.assignee.getStyleClass().clear();
 
         this.assignee.getStyleClass().add("list-assignee");
 
-        this.chore = new Label(chore);
-        if (ContrastColor.blackText(color)) {
-            this.chore.setTextFill(Color.WHITE);
+        this.choreDisplay = new Button();
+        this.choreDisplay.setText(chore.getName());
+
+        this.choreDisplay.setOnAction(e -> {
+            App.setChorePopupScene(this.chore, this.person);
+
+        });
+        if (ContrastColor.blackText(chore.getColor())) {
+            this.choreDisplay.setTextFill(Color.WHITE);
         } else {
-            this.chore.setTextFill(Color.BLACK);
+            this.choreDisplay.setTextFill(Color.BLACK);
         }
-        this.chore.setStyle("-fx-background-color: " + color + ";");
+        this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 
         this.container.getStyleClass().add("list-item");
-        this.container.getChildren().addAll(this.assignee, this.chore);
+        this.container.getChildren().addAll(this.assignee, this.choreDisplay);
 
     }
 

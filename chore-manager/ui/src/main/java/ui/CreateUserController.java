@@ -94,4 +94,9 @@ public class CreateUserController {
 
     }
 
+    @FXML
+    public void toLogin() {
+        App.switchScene("Login");
+    }
+
 }

@@ -218,7 +218,7 @@ public class Storage {
         Person person4 = new Person("Lasse", emptyCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF");
+                "#FFFFFF", person1.getUsername());
         person1.addChore(chore);
 
         collective.addPerson(person1);
