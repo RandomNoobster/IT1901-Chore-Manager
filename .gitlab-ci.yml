@@ -1,5 +1,7 @@
 variables:
-  MAVEN_OPTS: -Dmaven.repo.local=~/m2/repository
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  CACHE_KEY: $CI_COMMIT_REF_SLUG
 
 image: maven:latest
 
@@ -11,11 +13,13 @@ stages:
 #    - build
     - test
 
-
 cache:
+  key: $CACHE_KEY
   paths:
-    - ~/m2/repository
-    - target
+   - .m2/repository
+   - .sbt
+   - target
+    
 
 # Run all tests in same job, because each job runs in a seperate environment,
 # and then we would need to install the same dependencies multiple times
