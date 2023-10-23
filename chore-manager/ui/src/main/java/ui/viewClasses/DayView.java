@@ -83,7 +83,7 @@ public class DayView extends Button implements ViewInterface {
      */
     @Override
     public Node getFxml() {
-        return new VBox(this.container);
+        return this.container;
     }
 
     /**
