@@ -18,6 +18,10 @@ public class Day {
         this.date = date;
     }
 
+    public Day(Day day) {
+        this.date = day.date;
+    }
+
     /**
      * Outputs the date of the day.
      *
@@ -47,6 +51,16 @@ public class Day {
             return false;
         }
         return this.date.equals(((Day) arg0).getDate());
+    }
+
+    /**
+     * Outputs the hashCode of the date.
+     *
+     * @return The hashCode of the date
+     */
+    @Override
+    public int hashCode() {
+        return this.date.hashCode();
     }
 
 }
