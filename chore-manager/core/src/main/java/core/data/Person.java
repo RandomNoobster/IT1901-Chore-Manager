@@ -54,6 +54,7 @@ public class Person {
      * A constructor for the Person class that initializes the state of the object.
      *
      * @param username    The unique name of the person
+     * @param collective  The collective that the person is a part of
      * @param password    The password of the person
      * @param displayName The display name of the person
      */
