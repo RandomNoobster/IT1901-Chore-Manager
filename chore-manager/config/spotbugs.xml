@@ -3,9 +3,29 @@
 <Match>
     <!-- The getInstance method has to return the internal state due to the Storage object being a singleton. -->
     <Class name="persistence.fileHandling.Storage"/>
+    <Method name="getInstance"/>
+    <Bug pattern="MS_EXPOSE_REP"/>
+</Match>
+<Match>
+    <!-- The State object is supposed to share object references with Storage, and therefore it has to expose internal state by returning internal objects and storing mutable objects into internal fields. -->
+    <Class name="core.State"/>
     <Or>
-        <Method name="getInstance"/>
+        <Bug pattern="EI_EXPOSE_REP"/>
+        <Bug pattern="EI_EXPOSE_REP2"/>
+        <Bug pattern="MS_EXPOSE_REP"/>
     </Or>
-    <Bug code="MS"/>
+</Match>
+<Match>
+    <!-- Due to the current collective being referenced by both State and Storage, new instances would not be appropriate. -->
+    <Class name="core.data.Person"/>
+    <Or>
+        <And>
+            <Method name="getCollectiveReference"/>
+            <Bug pattern="EI_EXPOSE_REP"/>
+        </And>
+        <And>
+            <Bug pattern="EI_EXPOSE_REP2"/>
+        </And>
+    </Or>
 </Match>
 </FindBugsFilter>
