@@ -75,7 +75,7 @@ public class Person {
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
-        this.collective = new Collective(collective);
+        this.collective = collective;
     }
 
     /**
@@ -130,6 +130,15 @@ public class Person {
      */
     public Collective getCollective() {
         return new Collective(this.collective);
+    }
+
+    /**
+     * Outputs a reference to the internal collective object.
+     *
+     * @return The internal collective object
+     */
+    public Collective getCollectiveReference() {
+        return this.collective;
     }
 
     /**
