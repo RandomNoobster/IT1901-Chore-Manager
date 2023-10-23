@@ -1,0 +1,77 @@
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  MAVEN_CLI_OPTS: "--batch-mode --errors --fail-at-end --show-version"
+  CACHE_KEY: $CI_COMMIT_REF_SLUG
+
+image: maven:latest
+
+workflow:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
+stages:
+#    - build
+    - test
+
+cache:
+  key: $CACHE_KEY
+  paths:
+   - .m2/repository
+   - .sbt
+   - target
+    
+
+# Run all tests in same job, because each job runs in a seperate environment,
+# and then we would need to install the same dependencies multiple times
+test_core_persistence:
+  stage: test
+  tags:
+    - docker
+
+  script: 
+    - echo "Maven test for core started"
+    - "cd chore-manager"
+    - "mvn install -DskipTests"
+    
+    - "cd core"
+    - "mvn test"
+
+    - "cd ../persistence"
+    - "mvn test"
+  
+
+#build_job:
+#  stage: build
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven compile started"
+#    - "cd chore-manager"
+#    - "mvn install -DskipTests"
+
+#test_core:
+#  stage: test
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven test started"
+#    - "cd chore-manager/core"
+#    - "mvn compile"
+#    - "mvn test"
+#  dependencies:
+#    - build_job
+
+#test_persistence:
+#  stage: test
+#  tags:
+#    - docker 
+#
+#  script: 
+#    - echo "Maven test started"
+#    - "cd chore-manager/persistence"
+#    - "mvn compile"
+#    - "mvn test"
+#  dependencies:
+#    - build_job
