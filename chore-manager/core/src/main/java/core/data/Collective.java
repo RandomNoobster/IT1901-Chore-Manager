@@ -19,6 +19,7 @@ public class Collective {
     private static final int maxJoinCode = 999999; // Inclusive
     public static final String EMPTY_COLLECTIVE_JOIN_CODE = "0"
             .repeat(String.valueOf(maxJoinCode).length());
+    public static Random random = new Random();
     /**
      * To avoid duplicate join codes without having to know about the persistence module.
      */
@@ -29,6 +30,10 @@ public class Collective {
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
 
+    public Collective(Collective collective) {
+        this(collective.getName(), collective.getJoinCode(), collective.getPersons());
+    }
+    
     public Collective(String name) {
         this(name, generateJoinCode());
     }
@@ -47,7 +52,7 @@ public class Collective {
     public Collective(String name, String joinCode, HashMap<String, Person> persons) {
         this.name = name;
         this.joinCode = joinCode;
-        this.persons = persons;
+        this.persons = new HashMap<>(persons);
 
         joinCodes.add(joinCode);
     }
@@ -69,7 +74,7 @@ public class Collective {
         String joinCode = "";
         do {
             // 1 - 999999 (inclusive), 000000 is reserved
-            int randomJoinCode = new Random().nextInt(maxJoinCode) + 1; // 1 - 999999
+            int randomJoinCode = random.nextInt(maxJoinCode) + 1; // 1 - 999999
             joinCode = String.format("%06d", randomJoinCode);
         } while (!isUniqueJoinCode(joinCode));
         return joinCode;
