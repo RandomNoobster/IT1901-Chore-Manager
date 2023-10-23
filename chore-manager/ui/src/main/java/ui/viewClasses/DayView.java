@@ -107,8 +107,7 @@ public class DayView extends Button implements ViewInterface {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
 
-                    ChoreView choreView = new ChoreView(person.getDisplayName(), chore.getName(),
-                            chore.getColor());
+                    ChoreView choreView = new ChoreView(chore, person);
                     labels.add(choreView.getContainer());
                 }
             }

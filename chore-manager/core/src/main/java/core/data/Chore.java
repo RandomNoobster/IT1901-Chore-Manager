@@ -19,6 +19,7 @@ public class Chore {
     private String color;
     private boolean checked;
     private int daysIncompleted;
+    private String creator;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
@@ -29,14 +30,29 @@ public class Chore {
      * @param isWeekly  Whether the chore is weekly or not
      * @param points    The points of the chore
      * @param color     The color of the chore
+     * @param creator   The creator of the chore
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color) {
-        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0);
+            int points, String color, String creator) {
+        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator);
     }
 
+    /**
+     * A constructor for the Chore class that initializes the state of the object.
+     *
+     * @param choreName       The name of the chore
+     * @param timeFrom        The start date of the chore
+     * @param timeTo          The end date of the chore
+     * @param isWeekly        Whether the chore is weekly or not
+     * @param points          The points of the chore
+     * @param color           The color of the chore
+     * @param checked         Wheter a chore is done or not
+     * @param daysIncompleted How many days since the chores due date
+     * @param creator         The creator of the chore
+     */
+
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, boolean checked, int daysIncompleted) {
+            int points, String color, boolean checked, int daysIncompleted, String creator) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -45,6 +61,7 @@ public class Chore {
         this.color = color;
         this.checked = checked;
         this.daysIncompleted = daysIncompleted;
+        this.creator = creator;
     }
 
     /**
@@ -77,16 +94,20 @@ public class Chore {
     /**
      * Outputs if a chore is checked/done or not
      *
-     * @return The end date of the chore
+     * @return Chores checked status
      */
     public Boolean getChecked() {
         return this.checked;
     }
 
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     /**
      * Outputs how many days the chore is past the due date.
      *
-     * @return The end date of the chore
+     * @return Days chore has been incompleted past due date
      */
     public Integer getDaysIncompleted() {
         return this.daysIncompleted;
@@ -99,6 +120,15 @@ public class Chore {
      */
     public boolean getIsWeekly() {
         return this.isWeekly;
+    }
+
+    /**
+     * Outputs the creator of the chores username
+     *
+     * @return The creator of the chores username
+     */
+    public String getCreator() {
+        return this.creator;
     }
 
     /**
@@ -149,6 +179,7 @@ public class Chore {
         map.put("color", this.color);
         map.put("checked", this.checked);
         map.put("daysIncompleted", this.daysIncompleted);
+        map.put("creator", this.creator);
 
         JSONObject json = new JSONObject(map);
         return json;
