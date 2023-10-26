@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,14 @@ public class WeekTest {
     private final LocalDate date = LocalDate.of(2023, 9, 21);
     private final LocalDate startDate = LocalDate.of(2023, 9, 18);
     private static int WEEK_LENGTH = 7;
+
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+    }
 
     @BeforeEach
     public void populateWeek() {

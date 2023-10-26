@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +18,14 @@ public class ChoreTest {
     private String choreName;
     private boolean isWeekly;
     private int points;
+
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+    }
 
     @BeforeEach
     public void populateChore() {
