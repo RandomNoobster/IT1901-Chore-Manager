@@ -40,25 +40,6 @@
     <build>
         <!-- Some plugins cannot be in pluginManagement -->
         <plugins>
-            
-            <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.7.3.6</version>
-                <configuration>
-                    <xmlOutput>false</xmlOutput>
-                    <htmlOutput>true</htmlOutput>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>spotbugs-check</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>spotbugs</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -84,6 +65,24 @@
         <!-- Plugins that go in the pluginManagement -->
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>4.7.3.6</version>
+                    <configuration>
+                        <xmlOutput>false</xmlOutput>
+                        <htmlOutput>true</htmlOutput>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotbugs-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>spotbugs</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-checkstyle-plugin</artifactId>
