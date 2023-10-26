@@ -45,8 +45,6 @@ public class AppTest extends ApplicationTest {
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 
         State.getInstance().setLoggedInUser(testPerson);
-        System.out.println(State.getInstance().getLoggedInUser().getUsername());
-        System.out.println(Storage.getInstance().getFilePath());
     }
 
     @Override
