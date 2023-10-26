@@ -32,15 +32,18 @@ public class LoginTest extends ApplicationTest {
     private final static Collective testCollective = new Collective("Test Collective");
     private final static Person testPerson = new Person("Test", testCollective);
 
-    // Set environment to testing
-    static {
-        Storage.deleteInstance();
-        Storage.getInstance(filePath);
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+        Storage.getInstance().deleteFile();
+        setup();
     }
 
     private static void setup() {
         Storage.deleteInstance();
-        Storage.getInstance(filePath);
         Storage.getInstance().addCollective(testCollective);
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 
