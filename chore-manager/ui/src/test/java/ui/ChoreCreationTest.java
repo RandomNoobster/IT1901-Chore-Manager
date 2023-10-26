@@ -5,7 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,28 +28,25 @@ import persistence.fileHandling.Storage;
 public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
-    private static final String filePath = "chore-manager-data-ui-test.json";
     private final static Collective testCollective = new Collective("Test Collective");
     private final static Person testPerson = new Person("Test", testCollective);
 
-    // Set environment to testing
-    static {
-        Storage.deleteInstance();
-        Storage.getInstance(filePath);
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+        Storage.getInstance().deleteFile();
+        setup();
     }
 
     private static void setup() {
         Storage.deleteInstance();
-        Storage.getInstance(filePath);
         Storage.getInstance().addCollective(testCollective);
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 
         State.getInstance().setLoggedInUser(testPerson);
-    }
-
-    @BeforeAll
-    public static void setupAll() {
-        setup();
     }
 
     @Override
@@ -76,14 +72,7 @@ public class ChoreCreationTest extends ApplicationTest {
 
     @AfterEach
     public void clearItems() {
-        Storage.getInstance().deleteFileContent();
-    }
-
-    @AfterAll
-    public static void deleteFile() {
-        if (Storage.getInstance().getFilePath().equals(filePath)) {
-            Storage.getInstance().deleteFile();
-        }
+        Storage.getInstance().deleteFile();
     }
 
     private void click(String... labels) {
