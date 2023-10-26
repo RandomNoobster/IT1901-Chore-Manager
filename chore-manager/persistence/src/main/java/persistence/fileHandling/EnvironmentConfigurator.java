@@ -14,7 +14,7 @@ public class EnvironmentConfigurator {
     /**
      * This method adds a property to the properties object. If the value is null, it will not be
      * added. Properties extends HashMaps, and therefore do not allow null values
-     * 
+     *
      * @param key   The key of the property
      * @param value The value of the property
      */

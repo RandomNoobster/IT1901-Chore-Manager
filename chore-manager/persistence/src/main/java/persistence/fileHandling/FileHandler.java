@@ -104,15 +104,6 @@ public class FileHandler {
         this.writeToFile(string, false);
     }
 
-    // Commented out for the moment, since it is very rare that we will write a single object to a
-    // file instead of an array of objects
-    // /**
-    //  * Writes to the file associated with this object Note: This will overwrite the file.
-    //  */
-    // public void writeToFile(JSONObject jsonObject) {
-    // this.writeToFile(jsonObject.toJSONString());
-    // }
-
     /**
      * Writes to the file associated with this object Note: This will overwrite the file.
      */
@@ -126,13 +117,6 @@ public class FileHandler {
     public void appendToFile(String string) {
         this.writeToFile(string, true);
     }
-
-    // /**
-    //  * Appends to the file associated with this object.
-    //  */
-    // public void appendToFile(JSONObject jsonObject) {
-    // this.writeToFile(jsonObject.toJSONString(), true);
-    // }
 
     /**
      * Appends to the file associated with this object.
@@ -149,7 +133,8 @@ public class FileHandler {
     public JSONArray readJSONFile() {
         JSONParser jsonParser = new JSONParser();
         if (this.file.length() == 0) {
-            System.out.println("File is empty, consider using the Storage.fillFileWithTestdata();");
+            System.out.println(
+                    "File is empty, consider using the Storage.fillFileWithDefaultData();");
             return new JSONArray();
         }
 

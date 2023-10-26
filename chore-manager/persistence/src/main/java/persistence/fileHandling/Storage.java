@@ -15,16 +15,14 @@ import core.data.Person;
  */
 public class Storage {
 
-    private static final String DEFAULT_SAVE_PATH = "chore-manager-data.json";
-
-    private String filePath = DEFAULT_SAVE_PATH;
     private static Storage instance = null;
+    private String filePath;
     private JSONConverter jsonConverter;
     private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
     private Storage() {
         EnvironmentConfigurator environmentConfigurator = new EnvironmentConfigurator();
-        System.out.println(environmentConfigurator.getSaveFilePath());
+        this.filePath = environmentConfigurator.getSaveFilePath();
         this.initialize();
     }
 
