@@ -150,7 +150,7 @@ public class Person {
      * Sets the collective that the person is a part of.
      */
     public void setCollective(Collective collective) {
-        this.collective = new Collective(collective);
+        this.collective = collective;
     }
 
     public boolean isInEmptyCollective() {
