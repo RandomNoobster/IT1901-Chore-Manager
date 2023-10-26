@@ -15,12 +15,14 @@ import core.data.Person;
  */
 public class Storage {
 
-    private static Storage instance = null;
-    private String filePath = "chore-manager-data.json";
+    private static volatile Storage instance = null;
+    private String filePath;
     private JSONConverter jsonConverter;
     private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
     private Storage() {
+        EnvironmentConfigurator environmentConfigurator = new EnvironmentConfigurator();
+        this.filePath = environmentConfigurator.getSaveFilePath();
         this.initialize();
     }
 
@@ -37,14 +39,14 @@ public class Storage {
         this.jsonConverter = new JSONConverter(this.filePath);
         if (this.jsonConverter.getCreatedNewFile()
                 || this.jsonConverter.getCollectives().isEmpty()) {
-            this.fillFileWithTestData();
+            this.fillFileWithDefaultData();
         }
         this.collectives = this.jsonConverter.getCollectives();
     }
 
     /**
      * This method is used to get the instance of the storage. If the instance does not exist, it
-     * creates a new one.
+     * creates a new one. This method creates a Storage on the default save path.
      */
     public static synchronized Storage getInstance() {
         if (instance == null) {
@@ -54,19 +56,14 @@ public class Storage {
     }
 
     /**
-     * This method is used to get the instance of the storage at a certain path. If the instance
-     * does not exist, a new one is made.
+     * This method is used to set a new instance of Storage with the specified filePath. This
+     * overrides the current instance.
+     *
+     * @param filePath The file path of the file to read from.
+     * @return The new instance of Storage.
      */
-    public static Storage getInstance(String filePath) {
-        if (instance == null) {
-            instance = new Storage(filePath);
-        }
-
-        if (!instance.filePath.equals(filePath)) {
-            System.out.println("\033[0;31m"
-                    + "NOTE: Storage instance already exists, will not create a new one with the specified path"
-                    + "\033[0m");
-        }
+    public static synchronized Storage setInstance(String filePath) {
+        instance = new Storage(filePath);
         return instance;
     }
 
@@ -202,10 +199,10 @@ public class Storage {
     }
 
     /**
-     * This is a method to create a test file for the application. This should be called if you do
-     * not have any persons in the application. This can be considered test data.
+     * This is a method to create a file for the application with default data. This should be
+     * called if you do not have any persons in the application.
      */
-    public void fillFileWithTestData() {
+    public void fillFileWithDefaultData() {
         Collective emptyCollective = new Collective("Empty Collective",
                 Collective.EMPTY_COLLECTIVE_JOIN_CODE);
         Collective collective = new Collective("The Almighty Collective");
@@ -218,7 +215,7 @@ public class Storage {
         Person person4 = new Person("Lasse", emptyCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF");
+                "#FFFFFF", person1.getUsername());
         person1.addChore(chore);
 
         collective.addPerson(person1);

@@ -11,6 +11,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <skipTests>false</skipTests>
+        <spotbugs.excludeFilterFile>config/spotbugs.xml</spotbugs.excludeFilterFile>
     </properties>
 
     <dependencyManagement>
@@ -82,13 +83,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs</artifactId>
-                        <version>4.7.3</version>
-                    </dependency>
-                </dependencies>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

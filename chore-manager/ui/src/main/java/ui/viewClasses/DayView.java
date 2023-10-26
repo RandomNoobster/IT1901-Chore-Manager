@@ -44,17 +44,17 @@ public class DayView extends Button implements ViewInterface {
         this.scrollContainer.setContent(this.vBoxContainer);
 
         // Saving classes
-        this.day = day;
+        this.day = new Day(day);
 
         this.updateFxml();
 
         // If date = today, assign special class
-        if (day.getDate().isEqual(LocalDate.now())) {
+        if (this.day.getDate().isEqual(LocalDate.now())) {
             this.container.getStyleClass().add("thisDay");
         }
 
         // If date before today, make button a label instead
-        if (day.getDate().isBefore(LocalDate.now())) {
+        if (this.day.getDate().isBefore(LocalDate.now())) {
             this.pastDate = new Label();
             this.pastDate.getStyleClass().add("label");
             this.container.getChildren().add(this.pastDate);
@@ -73,7 +73,7 @@ public class DayView extends Button implements ViewInterface {
      * @return The day that the DayView represents
      */
     public Day getDay() {
-        return this.day;
+        return new Day(this.day);
     }
 
     /**
@@ -107,8 +107,7 @@ public class DayView extends Button implements ViewInterface {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
 
-                    ChoreView choreView = new ChoreView(person.getDisplayName(), chore.getName(),
-                            chore.getColor());
+                    ChoreView choreView = new ChoreView(chore, person);
                     labels.add(choreView.getContainer());
                 }
             }

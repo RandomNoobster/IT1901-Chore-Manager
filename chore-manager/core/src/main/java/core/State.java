@@ -52,7 +52,7 @@ public class State {
      */
     public void setLoggedInUser(Person user) {
         this.loggedInUser = user;
-        this.currentCollective = user.getCollective();
+        this.currentCollective = user.getCollectiveReference();
     }
 
     /**

@@ -30,9 +30,9 @@ public class AppController {
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
-    private final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
+    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
                                         // current week)
-    private final int NUM_WEEKS = 4; // Number of weeks to create
+    private static final int NUM_WEEKS = 4; // Number of weeks to create
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday", "Sunday");
 
@@ -145,7 +145,7 @@ public class AppController {
      */
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
-        for (int i = this.SHIFT_WEEKS; i < this.NUM_WEEKS + this.SHIFT_WEEKS; i++) {
+        for (int i = SHIFT_WEEKS; i < NUM_WEEKS + SHIFT_WEEKS; i++) {
             weeks.add(new WeekView(new Week(LocalDate.now().plusDays(i * Week.WEEK_LENGTH))));
         }
 

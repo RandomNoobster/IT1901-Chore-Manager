@@ -15,14 +15,7 @@ import core.data.Collective;
 
 public class StorageTest {
 
-    /**
-     * We use this.storage to reference the storage instance for testing. If we instead use
-     * Storage.getInstance() and delete that instance, if we are not careful we could delete the
-     * instance that is used in the main application.
-     */
     private Storage storage;
-    private static final String fileName = "chore-manager-storage-test.json";
-    private static final String fileName2 = "chore-manager-storage-test-new.json";
 
     // Instead of overwriting @equals, we just compare the unique keys
     private boolean compareTwoHashCollectives(HashMap<String, Collective> collective1,
@@ -38,19 +31,17 @@ public class StorageTest {
     }
 
     /**
-     * If for some reason a previous test failed to delete the file, we have an extra check to
-     * ensure that this test run independently of previous test runs (by deleting all files we will
-     * use in this test).
+     * Sets the current environment to test
      */
     @BeforeAll
-    public static void resetAllFiles() {
-        Storage.getInstance(fileName).deleteFile();
-        Storage.getInstance(fileName2).deleteFile();
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+        Storage.getInstance().deleteFile();
     }
 
     @BeforeEach
-    public void populateStorage() {
-        this.storage = Storage.getInstance(fileName);
+    public void setStorage() {
+        this.storage = Storage.getInstance();
     }
 
     @AfterEach
@@ -60,14 +51,12 @@ public class StorageTest {
 
     @Test
     public void testGetInstance() {
-        Storage storage2 = Storage.getInstance(fileName);
-        Storage storage3 = Storage.getInstance();
+        Storage storage2 = Storage.getInstance();
         assertEquals(this.storage, storage2);
-        assertEquals(this.storage, storage3);
 
-        // Should not create a new instance
-        Storage storage4 = Storage.getInstance("chore-manager-another-file-path.json");
-        assertEquals(this.storage, storage4);
+        // Should create a new instance
+        Storage storage3 = Storage.setInstance("chore-manager-another-file-path.json");
+        assertNotEquals(this.storage, storage3);
     }
 
     @Test
@@ -79,18 +68,9 @@ public class StorageTest {
         this.storage.addCollective(newCollective);
         this.storage.save();
 
-        Storage.deleteInstance();
-        Storage newStorage = Storage.getInstance(fileName);
+        Storage newStorage = Storage.getInstance();
         HashMap<String, Collective> newCollectives = newStorage.getCollectives();
         assertTrue(this.compareTwoHashCollectives(localCollectives, newCollectives));
-    }
-
-    @Test
-    public void testDeleteInstance() {
-        Storage.deleteInstance();
-        Storage storage2 = Storage.getInstance(fileName2);
-        assertNotEquals(this.storage, storage2);
-        this.storage = storage2; // To delete the file with @AfterEach
     }
 
     @Test
