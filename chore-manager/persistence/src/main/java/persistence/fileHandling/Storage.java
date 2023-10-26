@@ -16,7 +16,7 @@ import core.data.Person;
 public class Storage {
 
     private static volatile Storage instance = null;
-    private String filePath = "chore-manager-data.json";
+    private String filePath;
     private JSONConverter jsonConverter;
     private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
