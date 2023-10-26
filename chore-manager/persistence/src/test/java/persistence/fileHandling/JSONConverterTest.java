@@ -59,7 +59,7 @@ public class JSONConverterTest {
 
     @Test
     public void writeAndReadToJSONTest() {
-        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF");
+        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF", "creator");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Collective collective = new Collective("test");
         Person person = new Person("username", collective, chores);

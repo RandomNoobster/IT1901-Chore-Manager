@@ -91,7 +91,8 @@ public class ChoreCreationController {
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
-        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor);
+        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
+                State.getInstance().getLoggedInUser().getUsername());
         State.getInstance().addChore(chore, person);
 
         Storage.getInstance().save();
@@ -104,6 +105,11 @@ public class ChoreCreationController {
     @FXML
     public void pointsChanged() {
         this.pointsDisplay.setText("Points: " + (int) this.points.getValue());
+    }
+
+    @FXML
+    public void toMain() {
+        App.switchScene("App");
     }
 
 }

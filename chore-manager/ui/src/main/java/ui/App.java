@@ -3,6 +3,8 @@ package ui;
 import java.io.IOException;
 import java.time.LocalDate;
 
+import core.data.Chore;
+import core.data.Person;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,7 +34,7 @@ public class App extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Login.fxml"));
         Parent parent = fxmlLoader.load();
-        scene = new Scene(parent);
+        setScene(parent);
         scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
 
         // To be replaced
@@ -50,6 +52,10 @@ public class App extends Application {
             System.exit(0);
         });
 
+    }
+
+    public static void setScene(Parent parent) {
+        scene = new Scene(parent);
     }
 
     /**
@@ -82,6 +88,21 @@ public class App extends Application {
 
             ChoreCreationController controller = fxmlLoader.getController();
             controller.passData(dateFrom, dateTo);
+
+            scene.setRoot(parent);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    public static void setChorePopupScene(Chore chore, Person assignee) {
+        try {
+            System.out.println(chore);
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ChorePopup.fxml"));
+            Parent parent = fxmlLoader.load();
+
+            ChorePopupController controller = fxmlLoader.getController();
+            controller.passData(chore, assignee);
 
             scene.setRoot(parent);
         } catch (IOException e) {

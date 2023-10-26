@@ -15,8 +15,8 @@ import core.data.Person;
  */
 public class Storage {
 
-    private static Storage instance = null;
-    private String filePath;
+    private static volatile Storage instance = null;
+    private String filePath = "chore-manager-data.json";
     private JSONConverter jsonConverter;
     private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
@@ -215,7 +215,7 @@ public class Storage {
         Person person4 = new Person("Lasse", emptyCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF");
+                "#FFFFFF", person1.getUsername());
         person1.addChore(chore);
 
         collective.addPerson(person1);

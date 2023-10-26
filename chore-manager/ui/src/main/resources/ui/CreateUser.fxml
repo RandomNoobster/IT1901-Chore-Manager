@@ -72,14 +72,26 @@
                   </PasswordField>
                </children>
             </HBox>
-            <Button fx:id="createButton" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create">
-               <styleClass>
-                  <String fx:value="header" />
-                  <String fx:value="button" />
-                  <String fx:value="hoverClass" />
-                  <String fx:value="roundedBorder" />
-               </styleClass>
-            </Button>
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="columnDistance">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#toLogin" stylesheets="@Style.css" text="Go back">
+                     <styleClass>
+                        <String fx:value="header" />
+                        <String fx:value="hoverClass" />
+                        <String fx:value="roundedBorder" />
+                        <String fx:value="staticButton" />
+                     </styleClass>
+                  </Button>
+                  <Button fx:id="createButton1" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create">
+                     <styleClass>
+                        <String fx:value="header" />
+                        <String fx:value="hoverClass" />
+                        <String fx:value="roundedBorder" />
+                        <String fx:value="staticButton" />
+                     </styleClass>
+                  </Button>
+               </children>
+            </HBox>
          </children>
          <styleClass>
             <String fx:value="roundedBorder" />

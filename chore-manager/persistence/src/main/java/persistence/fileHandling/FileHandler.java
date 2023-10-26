@@ -5,10 +5,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,8 +64,8 @@ public class FileHandler {
      */
     public void deleteFileContent() {
         try {
-            new PrintWriter(this.file).close();
-        } catch (FileNotFoundException e) {
+            new FileWriter(this.file, StandardCharsets.UTF_8).close();
+        } catch (IOException e) {
             System.out.println("File not found");
         }
     }
