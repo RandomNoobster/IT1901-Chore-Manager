@@ -101,7 +101,7 @@ public class AppController {
         this.weekContainer.getChildren().add(this.topLabelContainer);
         for (String info : this.WEEKDAYS) {
             Label label = new Label(info);
-            label.getStyleClass().addAll("label", "weekLabelsColor", "header");
+            label.getStyleClass().addAll("static-basic-shape", "background-yellow", "bold");
             this.topLabelContainer.getChildren().add(label);
         }
     }

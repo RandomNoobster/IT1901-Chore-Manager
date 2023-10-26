@@ -25,19 +25,21 @@
    <children>
       <VBox prefHeight="373.0" prefWidth="413.0">
          <children>
-            <Label prefHeight="17.0" prefWidth="351.0" styleClass="menuHeader" stylesheets="@Style.css" text="Create chore" />
+            <Label prefHeight="17.0" prefWidth="351.0" styleClass="static-menu-header" stylesheets="@Style.css" text="Create chore" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="23.0" prefWidth="101.0" text="Name of chore">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
                   <TextField fx:id="name">
                      <styleClass>
-                        <String fx:value="textInput" />
-                        <String fx:value="roundedBorderRight" />
+                        <String fx:value="input-text" />
+                        <String fx:value="border-rounded-right" />
                      </styleClass>
                   </TextField>
                </children>
@@ -46,14 +48,16 @@
                <children>
                   <Label stylesheets="@Style.css" text="Assign chore">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
                   <ComboBox fx:id="personsMenu" prefWidth="150.0" stylesheets="@Style.css">
                      <styleClass>
-                        <String fx:value="roundedBorderRight" />
-                        <String fx:value="whiteText" />
+                        <String fx:value="border-rounded-right" />
+                        <String fx:value="white-text" />
                      </styleClass>
                   </ComboBox>
                </children>
@@ -62,14 +66,18 @@
                <children>
                   <Label text="Color">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
                   <ColorPicker fx:id="colorPicker" stylesheets="@Style.css">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderRight" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-right" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
                      </styleClass>
                   </ColorPicker>
                </children>
@@ -78,37 +86,46 @@
                <children>
                   <Label fx:id="pointsDisplay" text="Points: 0">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="roundedBorderRight" />
+                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="border-rounded-right" />
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="rowDistance">
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-row">
                <children>
                   <Button mnemonicParsing="false" onAction="#toMain" stylesheets="@Style.css" text="Go back">
                      <styleClass>
-                        <String fx:value="header" />
-                        <String fx:value="hoverClass" />
-                        <String fx:value="roundedBorder" />
-                        <String fx:value="staticButton" />
+                        <String fx:value="bold" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="border-rounded" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="white-text" />
                      </styleClass>
                   </Button>
                   <Button fx:id="createButton1" mnemonicParsing="false" onAction="#createChore" stylesheets="@Style.css" text="Create">
                      <styleClass>
-                        <String fx:value="header" />
-                        <String fx:value="hoverClass" />
-                        <String fx:value="roundedBorder" />
-                        <String fx:value="staticButton" />
+                        <String fx:value="bold" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-green" />                        <String fx:value="border-rounded" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="white-text" />
+                        <String fx:value="on-hover-background-green" />
                      </styleClass>
                   </Button>
                </children>
             </HBox>
          </children>
          <styleClass>
-            <String fx:value="roundedBorder" />
-            <String fx:value="menuBackground" />
+            <String fx:value="border-rounded" />
+            <String fx:value="static-menu" />
+            <String fx:value="background-gray" />
          </styleClass>
       </VBox>
    </children>

@@ -10,7 +10,7 @@
 
 <!-- Main page shall be login -->
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" styleClass="white-text" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.AppController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -22,23 +22,31 @@
    <children>
       <VBox prefHeight="481.0" prefWidth="844.0">
          <children>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="columnDistance">
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-column">
                <children>
                   <Button mnemonicParsing="false" onAction="#toLogin" text="Log out">
                      <styleClass>
-                        <String fx:value="staticButton" />
-                        <String fx:value="header" />
-                        <String fx:value="roundedBorder" />
-                        <String fx:value="hoverClass" />
-                        <String fx:value="redButton" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="bold" />
+                        <String fx:value="border-rounded" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-blue" />                        
+                        <String fx:value="on-hover-background-red" />
+                        <String fx:value="background-red" />
+                        <String fx:value="white-text" />
+
                      </styleClass>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#toLeaderboard" text="Leaderboard">
                      <styleClass>
-                        <String fx:value="hoverClass" />
-                        <String fx:value="staticButton" />
-                        <String fx:value="header" />
-                        <String fx:value="roundedBorder" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="bold" />
+                        <String fx:value="border-rounded" />
+                        <String fx:value="white-text" />
                      </styleClass>
                   </Button>
                </children>

@@ -42,9 +42,9 @@ public class ChoreView implements ViewInterface {
 
         });
         if (ContrastColor.blackText(chore.getColor())) {
-            this.choreDisplay.getStyleClass().add("whiteText");
+            this.choreDisplay.getStyleClass().add("white-text");
         } else {
-            this.choreDisplay.getStyleClass().add("blackText");
+            this.choreDisplay.getStyleClass().add("black-text");
         }
 
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");

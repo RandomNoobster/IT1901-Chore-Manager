@@ -23,18 +23,20 @@
    <children>
       <VBox prefHeight="373.0" prefWidth="413.0">
          <children>
-            <Label prefHeight="47.0" prefWidth="351.0" style="-fx-pref-height: 50;" styleClass="menuHeader" stylesheets="@Style.css" text="Login" />
+            <Label prefHeight="47.0" prefWidth="351.0" style="-fx-pref-height: 50;" styleClass="static-menu-header" stylesheets="@Style.css" text="Login" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <Label prefHeight="23.0" prefWidth="101.0" text="Username">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="background-blue" />
                      </styleClass></Label>
                   <TextField fx:id="username">
                      <styleClass>
-                        <String fx:value="textInput" />
-                        <String fx:value="roundedBorderRight" />
+                        <String fx:value="input-text" />
+                        <String fx:value="border-rounded-right" />
                      </styleClass></TextField>
                </children>
             </HBox>
@@ -42,44 +44,48 @@
                <children>
                   <Label text="Password">
                      <styleClass>
-                        <String fx:value="whiteText" />
-                        <String fx:value="roundedBorderLeft" />
+                        <String fx:value="white-text" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
                      </styleClass>
                   </Label>
                   <PasswordField fx:id="password">
                      <styleClass>
-                        <String fx:value="roundedBorderRight" />
-                        <String fx:value="textInput" />
+                        <String fx:value="border-rounded-right" />
+                        <String fx:value="input-text" />
                      </styleClass>
                   </PasswordField>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="columnDistance">
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-column">
                <children>
                   <Button fx:id="create" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create user">
                      <styleClass>
-                        <String fx:value="header" />
-                        <String fx:value="hoverClass" />
-                        <String fx:value="roundedBorder" />
-                        <String fx:value="noBackground" />
-                        <String fx:value="darkText" />
-                        <String fx:value="staticButton" />
+                        <String fx:value="bold" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="background-none" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="blue-text" />
                      </styleClass>
                   </Button>
                   <Button fx:id="login" mnemonicParsing="false" onAction="#login" stylesheets="@Style.css" text="Login">
                      <styleClass>
-                        <String fx:value="header" />
-                        <String fx:value="hoverClass" />
-                        <String fx:value="roundedBorder" />
-                        <String fx:value="staticButton" />
+                        <String fx:value="bold" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-blue" />                        <String fx:value="border-rounded" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="white-text" />
                      </styleClass>
                   </Button>
                </children>
             </HBox>
          </children>
          <styleClass>
-            <String fx:value="roundedBorder" />
-            <String fx:value="menuBackground" />
+            <String fx:value="border-rounded" />
+            <String fx:value="static-menu" />
+            <String fx:value="background-gray" />
          </styleClass>
       </VBox>
    </children>
