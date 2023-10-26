@@ -44,13 +44,13 @@ public class StorageTest {
      */
     @BeforeAll
     public static void resetAllFiles() {
-        Storage.getInstance(fileName).deleteFile();
-        Storage.getInstance(fileName2).deleteFile();
+        Storage.setInstance(fileName).deleteFile();
+        Storage.setInstance(fileName2).deleteFile();
     }
 
     @BeforeEach
     public void populateStorage() {
-        this.storage = Storage.getInstance(fileName);
+        this.storage = Storage.setInstance(fileName);
     }
 
     @AfterEach
@@ -60,14 +60,12 @@ public class StorageTest {
 
     @Test
     public void testGetInstance() {
-        Storage storage2 = Storage.getInstance(fileName);
-        Storage storage3 = Storage.getInstance();
+        Storage storage2 = Storage.getInstance();
         assertEquals(this.storage, storage2);
-        assertEquals(this.storage, storage3);
 
         // Should not create a new instance
-        Storage storage4 = Storage.getInstance("chore-manager-another-file-path.json");
-        assertEquals(this.storage, storage4);
+        Storage storage3 = Storage.setInstance("chore-manager-another-file-path.json");
+        assertNotEquals(this.storage, storage3);
     }
 
     @Test
@@ -79,16 +77,14 @@ public class StorageTest {
         this.storage.addCollective(newCollective);
         this.storage.save();
 
-        Storage.deleteInstance();
-        Storage newStorage = Storage.getInstance(fileName);
+        Storage newStorage = Storage.setInstance(fileName);
         HashMap<String, Collective> newCollectives = newStorage.getCollectives();
         assertTrue(this.compareTwoHashCollectives(localCollectives, newCollectives));
     }
 
     @Test
     public void testDeleteInstance() {
-        Storage.deleteInstance();
-        Storage storage2 = Storage.getInstance(fileName2);
+        Storage storage2 = Storage.setInstance(fileName2);
         assertNotEquals(this.storage, storage2);
         this.storage = storage2; // To delete the file with @AfterEach
     }

@@ -36,12 +36,12 @@ public class ChoreCreationTest extends ApplicationTest {
     // Set environment to testing
     static {
         Storage.deleteInstance();
-        Storage.getInstance(filePath);
+        Storage.setInstance(filePath);
     }
 
     private static void setup() {
         Storage.deleteInstance();
-        Storage.getInstance(filePath);
+        Storage.setInstance(filePath);
         Storage.getInstance().addCollective(testCollective);
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 

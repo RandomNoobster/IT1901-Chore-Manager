@@ -29,6 +29,7 @@ public class JSONConverterTest {
         return list1.containsAll(list2) && list2.containsAll(list1);
     }
 
+    // Low-level classes below Storage, needs to have test filenames defined
     @BeforeEach
     public void populateJSONConverter() {
         this.jsonConverter = new JSONConverter(this.fileName);

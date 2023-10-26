@@ -33,12 +33,12 @@ public class AppTest extends ApplicationTest {
 
     // Set environment to testing
     static {
-        Storage.getInstance(filePath);
+        Storage.setInstance(filePath);
     }
 
     private static void setup() {
         Storage.deleteInstance();
-        Storage.getInstance(filePath);
+        Storage.setInstance(filePath);
         Storage.getInstance().addCollective(testCollective);
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 
@@ -80,6 +80,7 @@ public class AppTest extends ApplicationTest {
     @AfterAll
     public static void deleteFile() {
         if (Storage.getInstance().getFilePath().equals(filePath)) {
+            System.out.println(Storage.getInstance().getFilePath());
             Storage.getInstance().deleteFile();
         }
     }
