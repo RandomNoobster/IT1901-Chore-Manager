@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Test that Chores have the expected behaviour.
+ */
 public class ChoreTest {
     private Chore chore;
     private LocalDate timeFrom;
@@ -18,6 +21,9 @@ public class ChoreTest {
     private boolean isWeekly;
     private int points;
 
+    /**
+     * Before each test, create a new Chore with some sample values.
+     */
     @BeforeEach
     public void populateChore() {
         this.timeFrom = LocalDate.of(2021, 1, 1);
@@ -29,18 +35,27 @@ public class ChoreTest {
                 this.points, "#FFFFFF", "Creator");
     }
 
+    /**
+     * Test that the constructor can construct a new object without throwing any errors.
+     */
     @Test
     public void testConstructor() {
         assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10,
                 "#FFFFFF", "Creator"));
     }
 
+    /**
+     * Test that {@link Chore#getName} doesn't throw any errors and returns the expected value.
+     */
     @Test
     public void testGetName() {
         assertDoesNotThrow(() -> this.chore.getName());
         assertTrue(this.choreName.equals(this.chore.getName()));
     }
 
+    /**
+     * Test that {@link Chore#getTimeFrom} doesn't throw any errors and returns the expected value.
+     */
     @Test
     public void testGetTimeFrom() {
         assertDoesNotThrow(() -> this.chore.getTimeFrom());
