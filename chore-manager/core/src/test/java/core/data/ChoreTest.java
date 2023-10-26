@@ -20,6 +20,10 @@ public class ChoreTest {
     private String choreName;
     private boolean isWeekly;
     private int points;
+    private String color;
+    private boolean checked;
+    private int daysIncompleted;
+    private String creator;
 
     /**
      * Before each test, create a new Chore with some sample values.
@@ -31,8 +35,12 @@ public class ChoreTest {
         this.choreName = "Vaske";
         this.isWeekly = false;
         this.points = 10;
+        this.color = "#FFFFFF";
+        this.checked = false;
+        this.daysIncompleted = 0;
+        this.creator = "Creator";
         this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly,
-                this.points, "#FFFFFF", "Creator");
+                this.points, this.color, this.checked, this.daysIncompleted, this.creator);
     }
 
     /**
@@ -95,12 +103,45 @@ public class ChoreTest {
     @Test
     public void testSetPoints() {
         // Test that the points are set correctly for positive values
-        int setPoints = 1;
+        final int setPoints = 1;
         assertDoesNotThrow(() -> this.chore.setPoints(setPoints));
         assertEquals(setPoints, this.chore.getPoints());
 
         // Test for negative values
         assertThrows(IllegalArgumentException.class, () -> this.chore.setPoints(-1));
+    }
+
+    /**
+     * Test that {@link Chore#getChecked and @link Chore#setChecked} doesn't throw any errors and
+     * works as expected.
+     */
+    @Test
+    public void testChecked() {
+        assertDoesNotThrow(() -> this.chore.getChecked());
+        assertEquals(this.checked, this.chore.getChecked());
+
+        assertDoesNotThrow(() -> this.chore.setChecked(true));
+        assertEquals(true, this.chore.getChecked());
+
+        assertDoesNotThrow(() -> this.chore.setChecked(false));
+        assertEquals(false, this.chore.getChecked());
+    }
+
+    /**
+     * Test that {@link Chore#getDaysIncompleted()} does not throw any errors.
+     */
+    @Test
+    public void testGetDaysIncompleted() {
+        assertDoesNotThrow(() -> this.chore.getDaysIncompleted());
+    }
+
+    /**
+     * Test that {@link Chore#getCreator} doesn't throw any errors and returns the expected value.
+     */
+    @Test
+    public void testGetCreator() {
+        assertDoesNotThrow(() -> this.chore.getCreator());
+        assertEquals(this.creator, this.chore.getCreator());
     }
 
     /**
