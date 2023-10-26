@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -27,6 +28,14 @@ public class JSONConverterTest {
 
     private <T> boolean compareTwoLists(Collection<T> list1, Collection<T> list2) {
         return list1.containsAll(list2) && list2.containsAll(list1);
+    }
+
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
     }
 
     // Low-level classes below Storage, needs to have test filenames defined

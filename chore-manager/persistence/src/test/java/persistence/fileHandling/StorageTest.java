@@ -31,12 +31,10 @@ public class StorageTest {
     }
 
     /**
-     * If for some reason a previous test failed to delete the file, we have an extra check to
-     * ensure that this test run independently of previous test runs (by deleting all files we will
-     * use in this test).
+     * Sets the current environment to test
      */
     @BeforeAll
-    public static void setupTestEnvironment() {
+    public static void setTestEnvironment() {
         System.setProperty("env", "test");
         Storage.getInstance().deleteFile();
     }

@@ -31,8 +31,11 @@ public class ChoreCreationTest extends ApplicationTest {
     private final static Collective testCollective = new Collective("Test Collective");
     private final static Person testPerson = new Person("Test", testCollective);
 
+    /**
+     * Sets the current environment to test
+     */
     @BeforeAll
-    public static void setupTestEnvironment() {
+    public static void setTestEnvironment() {
         System.setProperty("env", "test");
         Storage.getInstance().deleteFile();
         setup();
