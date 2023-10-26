@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Test that Chores have the expected behaviour.
+ * Test that Chores have the expected behavior.
  */
 public class ChoreTest {
     private Chore chore;
@@ -62,24 +62,36 @@ public class ChoreTest {
         assertTrue(this.timeFrom.equals(this.chore.getTimeFrom()));
     }
 
+    /**
+     * Test that {@link Chore#getTimeTo} doesn't throw any errors and returns the expected value.
+     */
     @Test
     public void testGetTimeTo() {
         assertDoesNotThrow(() -> this.chore.getTimeTo());
         assertTrue(this.timeTo.equals(this.chore.getTimeTo()));
     }
 
+    /**
+     * Test that {@link Chore#getIsWeekly} doesn't throw any errors and returns the expected value.
+     */
     @Test
     public void testGetIsWeekly() {
         assertDoesNotThrow(() -> this.chore.getIsWeekly());
         assertEquals(this.isWeekly, this.chore.getIsWeekly());
     }
 
+    /**
+     * Test that {@link Chore#getPoints} doesn't throw any errors and returns the expected value.
+     */
     @Test
     public void testGetPoints() {
         assertDoesNotThrow(() -> this.chore.getPoints());
         assertEquals(this.points, this.chore.getPoints());
     }
 
+    /**
+     * Test that {@link Chore#setPoints} doesn't throw any errors and sets the value correctly.
+     */
     @Test
     public void testSetPoints() {
         // Test that the points are set correctly for positive values
@@ -91,6 +103,9 @@ public class ChoreTest {
         assertThrows(IllegalArgumentException.class, () -> this.chore.setPoints(-1));
     }
 
+    /**
+     * Test that {@link Chore#encodeToJSON} doesn't throw any errors.
+     */
     @Test
     public void testEncodeToJSON() {
         assertDoesNotThrow(() -> this.chore.encodeToJSON());
