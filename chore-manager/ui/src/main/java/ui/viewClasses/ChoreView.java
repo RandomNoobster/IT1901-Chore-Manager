@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import ui.App;
 
 /**
@@ -43,13 +42,13 @@ public class ChoreView implements ViewInterface {
 
         });
         if (ContrastColor.blackText(chore.getColor())) {
-            this.choreDisplay.setTextFill(Color.WHITE);
+            this.choreDisplay.getStyleClass().add("whiteText");
         } else {
-            this.choreDisplay.setTextFill(Color.BLACK);
+            this.choreDisplay.getStyleClass().add("blackText");
         }
+
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 
-        this.container.getStyleClass().add("list-item");
         this.container.getChildren().addAll(this.assignee, this.choreDisplay);
 
     }

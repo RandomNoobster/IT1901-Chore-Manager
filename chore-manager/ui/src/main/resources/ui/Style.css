@@ -17,10 +17,12 @@
 
     -menuBackground: #F1F3F4;
 
-    -menuHeader: #DBDDE1;
+    -menuHeader: #669EF6;
 
     
     -redColor: #FF0000;
+    -redColorHover: #c60b0b;
+
 
     -checked: #81C995;
 
@@ -138,7 +140,6 @@
 
 .whiteText .label {
     -fx-text-fill: derive(-textWhite, 0%);
-
 }
 
 .roundedBorder {
@@ -196,10 +197,6 @@
 
 }
 
-.noBackground {
-    -fx-background-color: none;
-}
-
 .darkText {
     -fx-text-fill: derive(-buttonColor, 0%);
 }
@@ -229,9 +226,6 @@
     -fx-pref-width: 110px;
 }
 
-.redButton {
-    -fx-background-color: derive(-redColor, 0%);
-}
 
 .invisibleLabel .label {
     -fx-opacity: 0;
@@ -261,4 +255,30 @@
 .check-box:selected .mark {
 
 	-fx-background-color: white;
+}
+
+
+.blackText {
+    -fx-text-fill: derive(-textBlack, 0%);
+}
+
+.blackText .label {
+    -fx-text-fill: derive(-textBlack, 0%);
+}
+
+
+.noBackground {
+    -fx-background-color: none;
+}
+
+.noBackground:hover {
+    -fx-background-color: none;
+}
+
+.redButton {
+    -fx-background-color: derive(-redColor, 0%);
+}
+
+.redButton:hover {
+    -fx-background-color: derive(-redColorHover, 0%);
 }

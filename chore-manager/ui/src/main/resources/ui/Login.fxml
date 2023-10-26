@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -54,7 +54,7 @@
                   </PasswordField>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" styleClass="columnDistance">
                <children>
                   <Button fx:id="create" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create user">
                      <styleClass>
@@ -63,14 +63,15 @@
                         <String fx:value="roundedBorder" />
                         <String fx:value="noBackground" />
                         <String fx:value="darkText" />
+                        <String fx:value="staticButton" />
                      </styleClass>
                   </Button>
                   <Button fx:id="login" mnemonicParsing="false" onAction="#login" stylesheets="@Style.css" text="Login">
                      <styleClass>
                         <String fx:value="header" />
-                        <String fx:value="button" />
                         <String fx:value="hoverClass" />
                         <String fx:value="roundedBorder" />
+                        <String fx:value="staticButton" />
                      </styleClass>
                   </Button>
                </children>

@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -30,8 +31,9 @@ public class AppController {
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
-    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
-                                        // current week)
+    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks
+                                               // before
+    // current week)
     private static final int NUM_WEEKS = 4; // Number of weeks to create
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday", "Sunday");
@@ -159,5 +161,16 @@ public class AppController {
     @FXML
     private void switchToChoreCreation(LocalDate dateFrom, LocalDate dateTo) {
         App.setChoreCreationScene("ChoreCreation", dateFrom, dateTo);
+    }
+
+    @FXML
+    public void toLeaderboard() {
+        App.switchScene("Leaderboard");
+    }
+
+    @FXML
+    public void toLogin() {
+        State.getInstance().logOutUser();
+        App.switchScene("Login");
     }
 }
