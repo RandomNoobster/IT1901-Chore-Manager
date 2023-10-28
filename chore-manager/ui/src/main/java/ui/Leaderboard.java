@@ -21,7 +21,6 @@ public class Leaderboard {
 
     @FXML
     public void initialize() {
-        System.out.println("test");
         this.displayLeaderboard();
     }
 
