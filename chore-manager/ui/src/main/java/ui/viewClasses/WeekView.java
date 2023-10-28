@@ -33,16 +33,17 @@ public class WeekView implements ViewInterface {
 
         // Add week label to VBox
         this.weekNumberLabel = new Label(week.getWeekNumber().toString());
-        this.weekNumberLabel.getStyleClass().addAll("weekNumberContainer", "header");
+        this.weekNumberLabel.getStyleClass().addAll("dynamic-week-number", "background-blue",
+                "bold");
 
         this.container.getChildren().add(this.weekNumberLabel);
 
         // Assign special class to week if week is current week
-        this.container.getStyleClass().add("weekContainer");
+        this.container.getStyleClass().add("week-container");
         if (week.containsDay(LocalDate.now())) {
-            this.container.getStyleClass().add("thisWeek");
+            this.container.getStyleClass().add("this-week");
         } else {
-            this.container.getStyleClass().add("pastWeek");
+            this.container.getStyleClass().add("past-week");
         }
 
         // Add day containers to VBox

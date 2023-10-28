@@ -56,6 +56,14 @@ public class State {
     }
 
     /**
+     * This method sets user and collective to null.
+     */
+    public void logOutUser() {
+        this.loggedInUser = null;
+        this.currentCollective = null;
+    }
+
+    /**
      * This method is used to get the current collective.
      *
      * @return The current collective.
