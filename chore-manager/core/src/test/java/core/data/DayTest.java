@@ -5,14 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Day;
-
 public class DayTest {
-    Day day;
-    LocalDate date;
+    private Day day;
+    private LocalDate date;
+
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+    }
 
     @BeforeEach
     public void populateDay() {

@@ -7,18 +7,25 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDate;
 
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import core.data.Chore;
-
 public class ChoreTest {
-    Chore chore;
-    LocalDate timeFrom;
-    LocalDate timeTo;
-    String choreName;
-    boolean isWeekly;
-    int points;
+    private Chore chore;
+    private LocalDate timeFrom;
+    private LocalDate timeTo;
+    private String choreName;
+    private boolean isWeekly;
+    private int points;
+
+    /**
+     * Sets the current environment to test
+     */
+    @BeforeAll
+    public static void setTestEnvironment() {
+        System.setProperty("env", "test");
+    }
 
     @BeforeEach
     public void populateChore() {
@@ -28,13 +35,13 @@ public class ChoreTest {
         this.isWeekly = false;
         this.points = 10;
         this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly,
-                this.points, "#FFFFFF");
+                this.points, "#FFFFFF", "Creator");
     }
 
     @Test
     public void testConstructor() {
-        assertDoesNotThrow(
-                () -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10, "#FFFFFF"));
+        assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10,
+                "#FFFFFF", "Creator"));
     }
 
     @Test

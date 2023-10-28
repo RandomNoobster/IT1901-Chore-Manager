@@ -2,16 +2,16 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.ChorePopupController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -23,59 +23,45 @@
    <children>
       <VBox prefHeight="373.0" prefWidth="413.0">
          <children>
-            <Label prefHeight="47.0" prefWidth="351.0" style="-fx-pref-height: 50;" styleClass="static-menu-header" stylesheets="@Style.css" text="Login" />
+            <Label fx:id="choreName" prefHeight="17.0" prefWidth="351.0" styleClass="static-menu-header" stylesheets="@Style.css" text="Chore Name" />
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="23.0" prefWidth="101.0" text="Username">
+                  <Label prefWidth="0.0" text="Status:">
                      <styleClass>
                         <String fx:value="white-text" />
                         <String fx:value="border-rounded-left" />
-                        <String fx:value="static-basic-shape" />
                         <String fx:value="background-blue" />
-                     </styleClass></Label>
-                  <TextField fx:id="username">
-                     <styleClass>
-                        <String fx:value="input-text" />
-                        <String fx:value="border-rounded-right" />
-                     </styleClass></TextField>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label text="Password">
-                     <styleClass>
-                        <String fx:value="white-text" />
                         <String fx:value="static-basic-shape" />
-                        <String fx:value="border-rounded-left" />
-                        <String fx:value="background-blue" />
                      </styleClass>
                   </Label>
-                  <PasswordField fx:id="password">
-                     <styleClass>
-                        <String fx:value="border-rounded-right" />
-                        <String fx:value="input-text" />
-                     </styleClass>
-                  </PasswordField>
+                  <CheckBox fx:id="checkbox" mnemonicParsing="false" onAction="#updateChecked" styleClass="border-rounded-right" />
                </children>
             </HBox>
+            <Text fx:id="assigneeText" strokeType="OUTSIDE" strokeWidth="0.0" text="Assignee: Person" />
+            <Text fx:id="deadline" strokeType="OUTSIDE" strokeWidth="0.0" text="Deadline: 03/10" />
+            <Text fx:id="points" strokeType="OUTSIDE" strokeWidth="0.0" text="Points: 0" />
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-column">
                <children>
-                  <Button fx:id="create" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create user">
-                     <styleClass>
-                        <String fx:value="bold" />
-                        <String fx:value="on-hover-underline" />
-                        <String fx:value="background-none" />
-                        <String fx:value="static-basic-shape" />
-                        <String fx:value="blue-text" />
-                     </styleClass>
-                  </Button>
-                  <Button fx:id="login" mnemonicParsing="false" onAction="#login" stylesheets="@Style.css" text="Login">
+                  <Button mnemonicParsing="false" onAction="#toMain" stylesheets="@Style.css" text="Go back">
                      <styleClass>
                         <String fx:value="bold" />
                         <String fx:value="on-hover-underline" />
                         <String fx:value="on-hover-background-blue" />
                         <String fx:value="background-blue" />                        <String fx:value="border-rounded" />
                         <String fx:value="static-basic-shape" />
+                        <String fx:value="white-text" />
+                     </styleClass>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#delete" stylesheets="@Style.css" text="Delete chore">
+                     <styleClass>
+                        <String fx:value="bold" />
+                        <String fx:value="on-hover-underline" />
+                        <String fx:value="on-hover-background-blue" />
+                        <String fx:value="background-blue" />                        
+                        <String fx:value="border-rounded" />
+                        <String fx:value="static-basic-shape" />
+                        <String fx:value="on-hover-background-red" />
+                        <String fx:value="background-red" />
                         <String fx:value="white-text" />
                      </styleClass>
                   </Button>
@@ -86,6 +72,7 @@
             <String fx:value="border-rounded" />
             <String fx:value="static-menu" />
             <String fx:value="background-gray" />
+            <String fx:value="distance-row" />
          </styleClass>
       </VBox>
    </children>

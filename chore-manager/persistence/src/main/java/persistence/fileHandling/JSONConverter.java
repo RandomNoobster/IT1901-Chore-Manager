@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 
@@ -23,30 +24,58 @@ public class JSONConverter extends FileHandler {
     }
 
     /**
-     * This method is used to write a list of persons to a JSON file.
+     * This method is used to write a list of collectives to a JSON file.
      *
-     * @param persons A HashMap of persons.
+     * @param collectives A HashMap of persons.
      */
-    public void writePersonsToJSON(HashMap<String, Person> persons) {
-        JSONArray personsJSON = new JSONArray();
-        for (Person person : persons.values()) {
-            personsJSON.add(person.encodeToJSON());
+    public void writeCollectiveToJSON(HashMap<String, Collective> collectives) {
+        JSONArray collectivesJSON = new JSONArray();
+        for (Collective collective : collectives.values()) {
+            collectivesJSON.add(collective.encodeToJSON());
         }
-        this.writeToFile(personsJSON);
+        this.writeToFile(collectivesJSON);
     }
 
-    // TODO: Make it so it checks for formatting errors
     /**
      * This method converts the stored JSON data into Java objects. This method assumes that
-     * {@link #writePersonsToJSON} has already been run.
+     * {@link #writeCollectiveToJSON} has already been run.
      */
-    public HashMap<String, Person> getPersons() {
-        HashMap<String, Person> persons = new HashMap<String, Person>();
-        JSONArray personsJSON = this.readJSONFile();
+    public HashMap<String, Collective> getCollectives() {
+        HashMap<String, Collective> collectives = new HashMap<String, Collective>();
+        JSONArray collectivesJSON = this.readJSONFile();
 
-        if (personsJSON == null) {
-            return persons;
+        if (collectivesJSON == null) {
+            return collectives;
         }
+
+        for (Object collectiveObject : collectivesJSON) {
+            JSONObject collectiveJSON = (JSONObject) collectiveObject;
+
+            String name = (String) collectiveJSON.get("name");
+            String joinCode = (String) collectiveJSON.get("joinCode");
+            HashMap<String, Person> persons = this
+                    .getPersonsFromCollective((JSONArray) collectiveJSON.get("persons"));
+
+            Collective collective = new Collective(name, joinCode, persons);
+            collectives.put(joinCode, collective);
+
+            // Backfill persons with correct collective
+            for (Person person : persons.values()) {
+                person.setCollective(collective);
+            }
+        }
+
+        return collectives;
+    }
+
+    /**
+     * This method is used to read a hashmap of persons from a {@link JSONArray}.
+     *
+     * @param personsJSON A JSONArray of JSONObjects of Person .
+     * @return A HashMap of persons.
+     */
+    public HashMap<String, Person> getPersonsFromCollective(JSONArray personsJSON) {
+        HashMap<String, Person> persons = new HashMap<String, Person>();
 
         for (Object personObject : personsJSON) {
             JSONObject personJSON = (JSONObject) personObject;
@@ -56,7 +85,7 @@ public class JSONConverter extends FileHandler {
             Password password = new Password((String) personJSON.get("password"));
             String displayName = (String) personJSON.get("displayName");
 
-            Person person = new Person(username, password, chores, displayName);
+            Person person = new Person(username, null, password, chores, displayName);
             persons.put(username, person);
         }
 
@@ -80,8 +109,12 @@ public class JSONConverter extends FileHandler {
             boolean isWeekly = (boolean) choreObject.get("isWeekly");
             int points = ((Long) choreObject.get("points")).intValue();
             String color = (String) choreObject.get("color");
+            Boolean checked = (Boolean) choreObject.get("checked");
+            int daysIncompleted = ((Long) choreObject.get("daysIncompleted")).intValue();
+            String creator = (String) choreObject.get("creator");
 
-            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color);
+            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color,
+                    checked, daysIncompleted, creator);
             chores.add(newChore);
         }
 

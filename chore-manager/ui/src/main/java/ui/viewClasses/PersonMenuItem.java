@@ -15,7 +15,7 @@ public class PersonMenuItem {
      * @param person The person to be displayed
      */
     public PersonMenuItem(Person person) {
-        this.person = person;
+        this.person = new Person(person);
 
     }
 
@@ -23,7 +23,7 @@ public class PersonMenuItem {
      * Returns the person that is displayed.
      */
     public Person getPerson() {
-        return this.person;
+        return new Person(this.person);
     }
 
     /** 

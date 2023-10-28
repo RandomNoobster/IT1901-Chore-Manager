@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import core.data.Chore;
+import core.data.Collective;
 import core.data.Person;
 
 /**
@@ -14,13 +15,14 @@ import core.data.Person;
  */
 public class Storage {
 
-    private static Storage instance = null;
-    private String filePath = "chore-manager-data.json";
+    private static volatile Storage instance = null;
+    private String filePath;
     private JSONConverter jsonConverter;
-    private HashMap<String, Person> persons = new HashMap<String, Person>();
-    private static Person user;
+    private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
     private Storage() {
+        EnvironmentConfigurator environmentConfigurator = new EnvironmentConfigurator();
+        this.filePath = environmentConfigurator.getSaveFilePath();
         this.initialize();
     }
 
@@ -35,18 +37,18 @@ public class Storage {
      */
     public void initialize() {
         this.jsonConverter = new JSONConverter(this.filePath);
-        if (this.jsonConverter.getCreatedNewFile() || this.jsonConverter.getPersons().isEmpty()) {
-            System.out.println("Created new file");
-            this.fillFileWithTestData();
+        if (this.jsonConverter.getCreatedNewFile()
+                || this.jsonConverter.getCollectives().isEmpty()) {
+            this.fillFileWithDefaultData();
         }
-        this.persons = this.jsonConverter.getPersons();
+        this.collectives = this.jsonConverter.getCollectives();
     }
 
     /**
      * This method is used to get the instance of the storage. If the instance does not exist, it
-     * creates a new one.
+     * creates a new one. This method creates a Storage on the default save path.
      */
-    public static Storage getInstance() {
+    public static synchronized Storage getInstance() {
         if (instance == null) {
             instance = new Storage();
         }
@@ -54,19 +56,14 @@ public class Storage {
     }
 
     /**
-     * This method is used to get the instance of the storage at a certain path. If the instance
-     * does not exist, a new one is made.
+     * This method is used to set a new instance of Storage with the specified filePath. This
+     * overrides the current instance.
+     *
+     * @param filePath The file path of the file to read from.
+     * @return The new instance of Storage.
      */
-    public static Storage getInstance(String filePath) {
-        if (instance == null) {
-            instance = new Storage(filePath);
-        }
-
-        if (!instance.filePath.equals(filePath)) {
-            System.out.println("\033[0;31m"
-                    + "NOTE: Storage instance already exists, will not create a new one with the specified path"
-                    + "\033[0m");
-        }
+    public static synchronized Storage setInstance(String filePath) {
+        instance = new Storage(filePath);
         return instance;
     }
 
@@ -91,21 +88,7 @@ public class Storage {
      * This method is used to save the persons to the file system.
      */
     public void save() {
-        this.jsonConverter.writePersonsToJSON(this.persons);
-    }
-
-    /**
-     * This method is used to set the active user of the application.
-     */
-    public static void setUser(Person person) {
-        user = person;
-    }
-
-    /**
-     * This method is used to get the active user of the application.
-     */
-    public static Person getUser() {
-        return user;
+        this.jsonConverter.writeCollectiveToJSON(this.collectives);
     }
 
     /**
@@ -116,100 +99,130 @@ public class Storage {
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get the collectives from the file system.
      *
-     * @return A {@link HashMap} of persons and their unique keys.
+     * @return A {@link HashMap} of collectives and their unique keys.
      */
-    public HashMap<String, Person> getPersons() {
-        return new HashMap<String, Person>(this.persons);
+    public HashMap<String, Collective> getCollectives() {
+        return new HashMap<String, Collective>(this.collectives);
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get the empty collective.
      *
-     * @return A {@link List} of persons.
+     * @return The empty collective.
      */
-    public List<Person> getPersonsList() {
-        return new ArrayList<Person>(this.persons.values());
+    public Collective getEmptyCollective() {
+        return this.collectives.get(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
     }
 
     /**
-     * This methods adds a person to the file system.
+     * Adds a new collective to the storage.
      *
-     * @param person The person to add.
-     * @return True if the person was added, false if they are already added.
+     * @param collective The collective to add.
+     * @return True if the collective was added successfully, false if a collective with the same
+     *         join code already exists.
      */
-    public boolean addPerson(Person person) {
-
-        if (this.persons.containsKey(person.getUsername()))
+    public boolean addCollective(Collective collective) {
+        if (this.collectives.containsKey(collective.getJoinCode()))
             return false;
 
-        this.persons.put(person.getUsername(), person);
+        this.collectives.put(collective.getJoinCode(), collective);
         return true;
     }
 
     /**
-     * This method is used to remove a person from the file system.
+     * Removes a collective from the storage.
      *
-     * @param person The person to remove
+     * @param collective The collective to remove.
+     * @return True if the collective was removed successfully
      */
-    public void removePerson(Person person) {
-        this.persons.remove(person.getUsername());
+    public boolean removeCollective(Collective collective) {
+        return this.collectives.remove(collective.getJoinCode()) != null;
     }
 
     /**
-     * This method gets a list of all chores belonging to any user.
+     * This method is used to get all persons from the file system.
      *
-     * @return All chores.
+     * @return A {@link List} of all persons.
      */
-    public List<Chore> getChoresList() {
+    public HashMap<String, Person> getAllPersons() {
+        HashMap<String, Person> persons = new HashMap<String, Person>();
+        for (Collective collective : this.collectives.values()) {
+            persons.putAll(new HashMap<String, Person>(collective.getPersons()));
+        }
+        return persons;
+    }
+
+    /**
+     * This method is used to get all persons from the file system.
+     *
+     * @return A {@link List} of all persons.
+     */
+    public List<Person> getAllPersonsList() {
+        List<Person> persons = new ArrayList<Person>();
+        for (Collective collective : this.collectives.values()) {
+            persons.addAll(new ArrayList<Person>(collective.getPersons().values()));
+        }
+        return persons;
+    }
+
+    /**
+     * This method is used to get all chores from the file system.
+     *
+     * @return A {@link List} of all chores.
+     */
+    public List<Chore> getAllChores() {
         List<Chore> chores = new ArrayList<Chore>();
-        for (Person person : this.persons.values()) {
+        for (Person person : this.getAllPersonsList()) {
             chores.addAll(new ArrayList<Chore>(person.getChores()));
         }
         return chores;
     }
 
     /**
-     * This method adds a chore to a person.
+     * This method adds a unique person to a collective.
      *
-     * @param chore          The chore to add.
-     * @param assignedPerson The person to add the chore to.
+     * @param person             The person to add
+     * @param joinCodeCollective The join code of the collective to add the person to
+     * @return True if the person was added, false otherwise
      */
-    public void addChore(Chore chore, Person assignedPerson) {
-        if (assignedPerson == null) {
-            System.out.println("Person is null, cannot add chore");
-            return;
-        }
+    public boolean addPerson(Person person, String joinCodeCollective) {
+        if (!this.collectives.containsKey(joinCodeCollective))
+            return false;
 
-        if (this.persons.containsKey(assignedPerson.getUsername())) {
-            Person person = this.persons.get(assignedPerson.getUsername());
-            person.addChore(chore);
-        } else {
-            System.out.println("Person does not exist");
-        }
+        if (this.getAllPersons().containsKey(person.getUsername()))
+            return false;
+
+        Collective collective = this.collectives.get(joinCodeCollective);
+        return collective.addPerson(person);
     }
 
     /**
-     * This is a method to create a test file for the application. This should be called if you do
-     * not have any persons in the application. This can be considered test data.
+     * This is a method to create a file for the application with default data. This should be
+     * called if you do not have any persons in the application.
      */
-    public void fillFileWithTestData() {
-        Person person1 = new Person("Christian");
-        Person person2 = new Person("Sebastian");
-        Person person3 = new Person("Kristoffer");
-        Person person4 = new Person("Lasse");
+    public void fillFileWithDefaultData() {
+        Collective emptyCollective = new Collective("Empty Collective",
+                Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+        Collective collective = new Collective("The Almighty Collective");
+        this.collectives.put(collective.getJoinCode(), collective);
+        this.collectives.put(emptyCollective.getJoinCode(), emptyCollective);
+
+        Person person1 = new Person("Christian", emptyCollective);
+        Person person2 = new Person("Sebastian", emptyCollective);
+        Person person3 = new Person("Kristoffer", emptyCollective);
+        Person person4 = new Person("Lasse", emptyCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF");
+                "#FFFFFF", person1.getUsername());
         person1.addChore(chore);
 
-        HashMap<String, Person> persons = new HashMap<>();
-        persons.put(person1.getUsername(), person1);
-        persons.put(person2.getUsername(), person2);
-        persons.put(person3.getUsername(), person3);
-        persons.put(person4.getUsername(), person4);
-        this.persons = persons;
+        collective.addPerson(person1);
+        collective.addPerson(person2);
+        collective.addPerson(person3);
+        collective.addPerson(person4);
+
         this.save();
     }
 

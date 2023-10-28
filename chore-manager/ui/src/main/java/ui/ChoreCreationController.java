@@ -3,6 +3,7 @@ package ui;
 import java.time.LocalDate;
 import java.util.List;
 
+import core.State;
 import core.data.Chore;
 import core.data.Person;
 import javafx.fxml.FXML;
@@ -63,7 +64,7 @@ public class ChoreCreationController {
      */
     @FXML
     protected void initialize() {
-        List<Person> persons = Storage.getInstance().getPersonsList();
+        List<Person> persons = State.getInstance().getCurrentCollective().getPersonsList();
 
         for (Person person : persons) {
             this.personsMenu.getItems().add(new PersonMenuItem(person));
@@ -90,8 +91,9 @@ public class ChoreCreationController {
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
-        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor);
-        Storage.getInstance().addChore(chore, person);
+        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
+                State.getInstance().getLoggedInUser().getUsername());
+        State.getInstance().addChore(chore, person);
 
         Storage.getInstance().save();
         App.switchScene("App");
@@ -103,6 +105,11 @@ public class ChoreCreationController {
     @FXML
     public void pointsChanged() {
         this.pointsDisplay.setText("Points: " + (int) this.points.getValue());
+    }
+
+    @FXML
+    public void toMain() {
+        App.switchScene("App");
     }
 
 }

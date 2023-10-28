@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import core.State;
 import core.data.Chore;
 import core.data.Day;
 import core.data.Person;
@@ -14,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import persistence.fileHandling.Storage;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -37,26 +37,26 @@ public class DayView extends Button implements ViewInterface {
         super();
 
         // Add CSS
-        this.container.getStyleClass().add("dayContainer");
-        this.vBoxContainer.getStyleClass().add("list-item-container");
-        this.getStyleClass().addAll("header", "button", "hoverClass");
+        this.container.getStyleClass().add("day-container");
+        this.getStyleClass().addAll("bold", "static-basic-shape", "on-hover-underline",
+                "on-hover-background-blue", "background-blue", "white-text");
         this.setPrefWidth(110);
         this.scrollContainer.setContent(this.vBoxContainer);
 
         // Saving classes
-        this.day = day;
+        this.day = new Day(day);
 
         this.updateFxml();
 
         // If date = today, assign special class
-        if (day.getDate().isEqual(LocalDate.now())) {
-            this.container.getStyleClass().add("thisDay");
+        if (this.day.getDate().isEqual(LocalDate.now())) {
+            this.container.getStyleClass().add("this-day");
         }
 
         // If date before today, make button a label instead
-        if (day.getDate().isBefore(LocalDate.now())) {
+        if (this.day.getDate().isBefore(LocalDate.now())) {
             this.pastDate = new Label();
-            this.pastDate.getStyleClass().add("label");
+            this.pastDate.getStyleClass().addAll("static-basic-shape", "background-blue");
             this.container.getChildren().add(this.pastDate);
         } else {
             super.setText("Add");
@@ -73,7 +73,7 @@ public class DayView extends Button implements ViewInterface {
      * @return The day that the DayView represents
      */
     public Day getDay() {
-        return this.day;
+        return new Day(this.day);
     }
 
     /**
@@ -103,12 +103,11 @@ public class DayView extends Button implements ViewInterface {
 
         List<VBox> labels = new ArrayList<>();
 
-        for (Person person : Storage.getInstance().getPersonsList()) {
+        for (Person person : State.getInstance().getCurrentCollective().getPersonsList()) {
             for (Chore chore : person.getChores()) {
                 if (chore.getTimeFrom().equals(this.getDay().getDate())) {
 
-                    ChoreView choreView = new ChoreView(person.getDisplayName(), chore.getName(),
-                            chore.getColor());
+                    ChoreView choreView = new ChoreView(chore, person);
                     labels.add(choreView.getContainer());
                 }
             }

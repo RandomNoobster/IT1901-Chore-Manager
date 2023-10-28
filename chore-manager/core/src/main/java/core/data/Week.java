@@ -12,7 +12,7 @@ import java.util.Locale;
  */
 public class Week {
 
-    public static int WEEK_LENGTH = 7;
+    public static final int WEEK_LENGTH = 7;
 
     private LocalDate startDate;
     private List<Day> days = new ArrayList<>();
