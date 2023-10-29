@@ -276,3 +276,15 @@
     -fx-max-height: 19px;
  	-fx-shape: "M0,24 4,28 14,18 24,28 28,24 18,14 28,4 24,0 14,10 4,0 0,4 10,14";
 }
+
+
+.border-blue {
+    -fx-border-color: derive(-buttonColor, 0%);
+    -fx-border-width: 2px;
+}
+
+.align-left {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5px;
+
+}

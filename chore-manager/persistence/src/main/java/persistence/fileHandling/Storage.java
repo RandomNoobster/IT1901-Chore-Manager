@@ -108,6 +108,19 @@ public class Storage {
     }
 
     /**
+     * This method is used to get the collectives from the file system.
+     *
+     * @param Joincode to collective (if a collective with that joincode exists)
+     * 
+     * @return Collective with code
+     */
+    public Collective getCollective(String joinCode) {
+        System.out.println(joinCode);
+        System.out.println(this.collectives.getOrDefault(joinCode, null));
+        return this.collectives.getOrDefault(joinCode, null);
+    }
+
+    /**
      * This method is used to get the empty collective.
      *
      * @return The empty collective.

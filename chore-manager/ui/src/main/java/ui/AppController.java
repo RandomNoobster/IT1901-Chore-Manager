@@ -11,10 +11,14 @@ import java.util.concurrent.TimeUnit;
 import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import ui.viewClasses.DayView;
 import ui.viewClasses.WeekView;
 
@@ -28,6 +32,12 @@ public class AppController {
 
     @FXML
     private GridPane scene;
+
+    @FXML
+    private Button code;
+
+    @FXML
+    private Text collectiveName;
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
@@ -50,6 +60,9 @@ public class AppController {
      */
     @FXML
     public void initialize() {
+
+        this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
+        this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
 
         // Set top column that displays what each column means
         this.setTopColumn();
@@ -172,5 +185,13 @@ public class AppController {
     public void toLogin() {
         State.getInstance().logOutUser();
         App.switchScene("Login");
+    }
+
+    @FXML
+    public void copyCode() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(State.getInstance().getCurrentCollective().getJoinCode());
+        clipboard.setContent(content);
     }
 }

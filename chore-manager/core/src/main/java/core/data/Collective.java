@@ -29,17 +29,26 @@ public class Collective {
     private String joinCode;
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
-    
+
     public Collective(Collective collective) {
         this(collective.getName(), collective.getJoinCode(), collective.getPersons());
     }
-    
+
     public Collective(String name) {
         this(name, generateJoinCode());
     }
 
     public Collective(String name, String joinCode) {
         this(name, joinCode, new HashMap<String, Person>());
+    }
+
+    /**
+     * Check if collective is the standard collective you get added to when creating a new user
+     * 
+     * @return true if this is the standard collective
+     */
+    public boolean isStandardCollective() {
+        return this.joinCode.equals(EMPTY_COLLECTIVE_JOIN_CODE);
     }
 
     /**
