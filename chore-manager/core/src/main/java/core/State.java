@@ -56,8 +56,7 @@ public class State {
     }
 
     public void setCurrentCollective(Collective collective) {
-        this.currentCollective = new Collective(collective);
-        this.loggedInUser.setCollective(this.currentCollective);
+        this.currentCollective = collective;
     }
 
     /**

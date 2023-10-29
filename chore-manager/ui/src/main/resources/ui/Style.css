@@ -73,9 +73,8 @@
 
 
 .static-basic-shape {
-    -fx-pref-height: 30px;
     -fx-min-height: 30px;
-    -fx-pref-width: 110px;
+    -fx-min-width: 110px;
 }
 
 
@@ -165,7 +164,7 @@
     -fx-font-size: 9px;
     -fx-pref-height: 10px;
     -fx-background-color: derive(-textWhite, 0%);
-    -fx-underline: true;
+    -fx-background-radius: 5px 5px 0 0;
 }
 
 .list-item {
@@ -283,8 +282,22 @@
     -fx-border-width: 2px;
 }
 
+.overdue {
+    -fx-border-color: derive(-redColor, 0%);
+    -fx-border-width: 2px;
+    -fx-underline: true;
+}
+
 .align-left {
     -fx-alignment: center-left;
     -fx-padding: 0 0 0 5px;
 
+}
+
+.padding-small {
+    -fx-padding: 3px;
+}
+
+.padding-medium {
+    -fx-padding: 7px;
 }

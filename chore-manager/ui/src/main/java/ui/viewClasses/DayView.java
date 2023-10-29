@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import ui.App;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -36,11 +37,14 @@ public class DayView extends Button implements ViewInterface {
     public DayView(Day day) {
         super();
 
+        // Go to chorecreation when button is pressed
+        this.setOnAction(
+                e -> App.setChoreCreationScene("ChoreCreation", day.getDate(), day.getDate()));
+
         // Add CSS
         this.container.getStyleClass().add("day-container");
         this.getStyleClass().addAll("bold", "static-basic-shape", "on-hover-underline",
                 "on-hover-background-blue", "background-blue", "white-text");
-        this.setPrefWidth(110);
         this.scrollContainer.setContent(this.vBoxContainer);
 
         // Saving classes
@@ -100,6 +104,7 @@ public class DayView extends Button implements ViewInterface {
      */
     public void updateFxml() {
         this.vBoxContainer.getChildren().clear();
+        this.vBoxContainer.getStyleClass().add("distance-row");
 
         List<VBox> labels = new ArrayList<>();
 
@@ -123,12 +128,15 @@ public class DayView extends Button implements ViewInterface {
      */
     public void updateWidth(double newWidth) {
         if (this.pastDate != null) {
+            this.pastDate.setMinWidth(newWidth);
             this.pastDate.setPrefWidth(newWidth);
 
         }
         for (Node node : Arrays.asList(this, this.container, this.scrollContainer,
                 this.vBoxContainer)) {
+            ((Region) node).setMinWidth(newWidth);
             ((Region) node).setPrefWidth(newWidth);
+
         }
     }
 
