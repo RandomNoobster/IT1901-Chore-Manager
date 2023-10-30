@@ -55,6 +55,7 @@
                         <id>jacoco-report</id>
                         <phase>test</phase>
                         <goals>
+                            <goal>report</goal>
                             <goal>report-aggregate</goal>
                         </goals>
                     </execution>
@@ -137,8 +138,6 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.11.0</version>
-                    <configuration>
-                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
