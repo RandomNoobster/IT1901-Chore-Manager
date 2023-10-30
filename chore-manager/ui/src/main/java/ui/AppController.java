@@ -1,5 +1,6 @@
 package ui;
 
+import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,12 +19,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import persistence.fileHandling.EnvironmentConfigurator;
+import ui.dataAccessLayer.DataAccess;
+import ui.dataAccessLayer.RemoteDataAccess;
 import ui.viewClasses.WeekView;
 
 /**
  * The AppController class is the controller for the main view of the application.
  */
 public class AppController {
+
+    private DataAccess dataAccess;
 
     @FXML
     private VBox weekContainer;
@@ -56,11 +62,31 @@ public class AppController {
     }
 
     /**
+     * Sets the data access layer for the controller.
+     */
+    private void setDataAccess() {
+        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        System.out.println(apiBaseEndpoint);
+        if (apiBaseEndpoint != null) {
+            this.dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+        } else {
+            // Use direct data access here
+            throw new RuntimeException("Could not find API base endpoint");
+        }
+    }
+
+    /**
      * Initializes the controller class. This method is automatically called after the fxml file has
      * been loaded.
      */
     @FXML
     public void initialize() {
+        // Set data access layer
+        this.setDataAccess();
+        this.dataAccess.getCollectives();
+        System.out.println(this.dataAccess.getCollectives());
+        System.out.println(this.dataAccess.getCollectives().size());
 
         this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
         this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
