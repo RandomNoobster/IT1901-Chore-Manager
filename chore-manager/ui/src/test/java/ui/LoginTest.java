@@ -93,8 +93,6 @@ public class LoginTest extends ApplicationTest {
      */
     @Test
     public void testLogin() {
-        List<Chore> savedChores = Storage.getInstance().getAllChores();
-
         TextField name = this.lookup("#username").query();
         this.interact(() -> {
             name.setText(testPerson.getUsername());
@@ -120,5 +118,14 @@ public class LoginTest extends ApplicationTest {
 
         WaitForAsyncUtils.waitForFxEvents();
         assertFalse(State.getInstance().getLoggedInUser().getUsername().equals("Kristoffer"));
+    }
+
+    @Test
+    public void testCreateButton() {
+        this.clickOn("#create");
+
+        WaitForAsyncUtils.waitForFxEvents();
+        Scene scene = this.root.getScene();
+        
     }
 }

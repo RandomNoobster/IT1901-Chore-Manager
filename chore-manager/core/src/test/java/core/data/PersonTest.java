@@ -107,9 +107,20 @@ public class PersonTest {
         assertFalse(this.person.isInEmptyCollective());
 
         Person person2 = new Person("John",
-                new Collective("Test Collective", Collective.EMPTY_COLLECTIVE_JOIN_CODE));
+                new Collective("Test Collective", Collective.LIMBO_COLLECTIVE_JOIN_CODE));
         assertDoesNotThrow(() -> person2.isInEmptyCollective());
         assertTrue(person2.isInEmptyCollective());
 
+        Person person3 = new Person("Jimmy", null);
+        assertDoesNotThrow(() -> person3.isInEmptyCollective());
+        assertTrue(person3.isInEmptyCollective());
+    }
+
+    /**
+     * Test that {@link Person#toString()} works without throwing exceptions.
+     */
+    @Test
+    public void testToString() {
+        assertDoesNotThrow(() -> this.person.toString());
     }
 }
