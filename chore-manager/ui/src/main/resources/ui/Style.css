@@ -58,12 +58,9 @@
 }
 
 .day-container {
-    -fx-pref-width: 110px;
     -fx-alignment: TOP_CENTER;
-    -fx-border-color: derive(-textWhite, 0%); 
-    -fx-border-width: 2px; 
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
+    -fx-border-width: 0 0 2px 0; /* Adjust the border width as needed */
+    -fx-border-color: derive(-textWhite, 0%);
 }
 
 .bold {
@@ -77,6 +74,9 @@
     -fx-min-width: 110px;
 }
 
+.dynamic-basic-shape {
+    -fx-min-height: 30px;
+}
 
 
 .dynamic-week-number {

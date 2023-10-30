@@ -8,6 +8,8 @@ import java.util.List;
 import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.Clipboard;
@@ -175,5 +177,10 @@ public class AppController {
         ClipboardContent content = new ClipboardContent();
         content.putString(State.getInstance().getCurrentCollective().getJoinCode());
         clipboard.setContent(content);
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Code copied");
+        alert.setHeaderText("Copied collective-code to clipboard");
+        alert.show();
     }
 }

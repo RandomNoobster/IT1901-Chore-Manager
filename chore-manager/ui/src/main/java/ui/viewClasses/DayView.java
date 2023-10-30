@@ -43,7 +43,7 @@ public class DayView extends Button implements ViewInterface {
 
         // Add CSS
         this.container.getStyleClass().add("day-container");
-        this.getStyleClass().addAll("bold", "static-basic-shape", "on-hover-underline",
+        this.getStyleClass().addAll("bold", "dynamic-basic-shape", "on-hover-underline",
                 "on-hover-background-blue", "background-blue", "white-text");
         this.scrollContainer.setContent(this.vBoxContainer);
 
@@ -60,7 +60,7 @@ public class DayView extends Button implements ViewInterface {
         // If date before today, make button a label instead
         if (this.day.getDate().isBefore(LocalDate.now())) {
             this.pastDate = new Label();
-            this.pastDate.getStyleClass().addAll("static-basic-shape", "background-blue");
+            this.pastDate.getStyleClass().addAll("dynamic-basic-shape", "background-blue");
             this.container.getChildren().add(this.pastDate);
         } else {
             super.setText("Add");
