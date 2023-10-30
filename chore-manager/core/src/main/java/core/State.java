@@ -50,11 +50,25 @@ public class State {
      *
      * @param user The user to set as the logged in user.
      */
-    public void setLoggedInUser(Person user) {
+    public void logIn(Person user, Collective collective) {
         this.loggedInUser = user;
-        this.currentCollective = user.getCollectiveReference();
+        this.currentCollective = collective;
     }
 
+    /**
+     * This method is used to set the logged in user.
+     *
+     * @param user The user to set as the logged in user.
+     */
+    public void setCurrentUser(Person user) {
+        this.loggedInUser = user;
+    }
+
+    /**
+     * This method is used to set the current collective.
+     *
+     * @param collective The collective to set as the current collective.
+     */
     public void setCurrentCollective(Collective collective) {
         this.currentCollective = collective;
     }

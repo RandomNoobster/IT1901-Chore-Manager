@@ -3,6 +3,7 @@ package ui;
 import java.util.HashMap;
 
 import core.State;
+import core.data.Collective;
 import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -61,7 +62,9 @@ public class LoginController {
             return;
         }
 
-        State.getInstance().setLoggedInUser(allPersons.get(username));
+        Person user = allPersons.get(username);
+        Collective collective = Storage.getInstance().getCollective(user.getCollectiveJoinCode());
+        State.getInstance().logIn(user, collective);
 
         if (State.getInstance().getCurrentCollective().isLimboCollective()) {
             App.switchScene("JoinCollective");

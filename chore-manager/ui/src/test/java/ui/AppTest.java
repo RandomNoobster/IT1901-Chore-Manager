@@ -27,7 +27,7 @@ public class AppTest extends ApplicationTest {
     private Parent root;
     private AppController controller;
     private final static Collective testCollective = new Collective("Test Collective");
-    private final static Person testPerson = new Person("Test", testCollective);
+    private final static Person testPerson = new Person("Test", testCollective.getJoinCode());
 
     /**
      * Sets the current environment to test
@@ -43,9 +43,9 @@ public class AppTest extends ApplicationTest {
     private static void setup() {
         Storage.deleteInstance();
         Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+        Storage.getInstance().addPerson(testPerson, testPerson.getCollectiveJoinCode());
 
-        State.getInstance().setLoggedInUser(testPerson);
+        State.getInstance().logIn(testPerson, testCollective);
     }
 
     @Override

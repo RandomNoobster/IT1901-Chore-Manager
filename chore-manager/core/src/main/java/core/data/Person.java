@@ -17,7 +17,7 @@ public class Person {
     private List<Chore> chores;
     private Password password;
     private String displayName;
-    private Collective collective;
+    private String collectiveJoinCode;
 
     /**
      * A constructor for the Person class that initializes the state of the object.
@@ -25,41 +25,42 @@ public class Person {
      * @param person The person to copy
      */
     public Person(Person person) {
-        this(person.getUsername(), person.getCollective(), person.getPassword(), person.getChores(),
-                person.getDisplayName());
+        this(person.getUsername(), person.getCollectiveJoinCode(), person.getPassword(),
+                person.getChores(), person.getDisplayName());
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username   The username of the person
-     * @param collective The collective that the person is a part of
+     * @param username           The username of the person
+     * @param collectiveJoinCode The collective that the person is a part of
      */
-    public Person(String username, Collective collective) {
-        this(username, collective, new Password(), new ArrayList<>(), username);
+    public Person(String username, String collectiveJoinCode) {
+        this(username, collectiveJoinCode, new Password(), new ArrayList<>(), username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username   The username of the person
-     * @param chores     The chores of the person
-     * @param collective The collective that the person is a part of
+     * @param username           The username of the person
+     * @param chores             The chores of the person
+     * @param collectiveJoinCode The collective that the person is a part of
      */
-    public Person(String username, Collective collective, List<Chore> chores) {
-        this(username, collective, new Password(), chores, username);
+    public Person(String username, String collectiveJoinCode, List<Chore> chores) {
+        this(username, collectiveJoinCode, new Password(), chores, username);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username    The unique name of the person
-     * @param collective  The collective that the person is a part of
-     * @param password    The password of the person
-     * @param displayName The display name of the person
+     * @param username           The unique name of the person
+     * @param collectiveJoinCode The collective that the person is a part of
+     * @param password           The password of the person
+     * @param displayName        The display name of the person
      */
-    public Person(String username, Collective collective, Password password, String displayName) {
-        this(username, collective, password, new ArrayList<Chore>(), displayName);
+    public Person(String username, String collectiveJoinCode, Password password,
+            String displayName) {
+        this(username, collectiveJoinCode, password, new ArrayList<Chore>(), displayName);
     }
 
     /**
@@ -70,13 +71,13 @@ public class Person {
      * @param chores      The chores of the person
      * @param displayName The display name of the person
      */
-    public Person(String username, Collective collective, Password password, List<Chore> chores,
+    public Person(String username, String collectiveJoinCode, Password password, List<Chore> chores,
             String displayName) {
         this.username = username;
         this.displayName = displayName;
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
-        this.collective = collective;
+        this.collectiveJoinCode = collectiveJoinCode;
     }
 
     /**
@@ -133,29 +134,20 @@ public class Person {
      *
      * @return The collective that the person is a part of
      */
-    public Collective getCollective() {
-        return new Collective(this.collective);
-    }
-
-    /**
-     * Outputs a reference to the internal collective object.
-     *
-     * @return The internal collective object
-     */
-    public Collective getCollectiveReference() {
-        return this.collective;
+    public String getCollectiveJoinCode() {
+        return this.collectiveJoinCode;
     }
 
     /**
      * Sets the collective that the person is a part of.
      */
-    public void setCollective(Collective collective) {
-        this.collective = new Collective(collective);
+    public void setCollective(String collectiveJoinCode) {
+        this.collectiveJoinCode = collectiveJoinCode;
     }
 
     public boolean isInEmptyCollective() {
-        return this.collective == null
-                || this.collective.getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+        return this.collectiveJoinCode == null
+                || this.collectiveJoinCode.equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**

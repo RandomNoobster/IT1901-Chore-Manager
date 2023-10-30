@@ -29,7 +29,7 @@ public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
     private final static Collective testCollective = new Collective("Test Collective");
-    private final static Person testPerson = new Person("Test", testCollective);
+    private final static Person testPerson = new Person("Test", testCollective.getJoinCode());
 
     /**
      * Sets the current environment to test
@@ -45,9 +45,9 @@ public class ChoreCreationTest extends ApplicationTest {
     private static void setup() {
         Storage.deleteInstance();
         Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+        Storage.getInstance().addPerson(testPerson, testCollective.getJoinCode());
 
-        State.getInstance().setLoggedInUser(testPerson);
+        State.getInstance().logIn(testPerson, testCollective);
     }
 
     @Override

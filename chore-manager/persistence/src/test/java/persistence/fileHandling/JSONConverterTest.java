@@ -62,7 +62,7 @@ public class JSONConverterTest {
         Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF", "creator");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Collective collective = new Collective("test");
-        Person person = new Person("username", collective, chores);
+        Person person = new Person("username", collective.getJoinCode(), chores);
         collective.addPerson(person);
         HashMap<String, Collective> collectives = new HashMap<String, Collective>();
         collectives.put(collective.getJoinCode(), collective);

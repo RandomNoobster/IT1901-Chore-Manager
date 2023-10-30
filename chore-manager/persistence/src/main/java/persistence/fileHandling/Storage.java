@@ -110,7 +110,7 @@ public class Storage {
     /**
      * This method is used to get the collectives from the file system.
      *
-     * @param Joincode to collective (if a collective with that joincode exists)
+     * @param joinCode to collective (if a collective with that joincode exists)
      * 
      * @return Collective with code
      */
@@ -220,10 +220,10 @@ public class Storage {
         this.collectives.put(collective.getJoinCode(), collective);
         this.collectives.put(limboCollective.getJoinCode(), limboCollective);
 
-        Person person1 = new Person("Christian", limboCollective);
-        Person person2 = new Person("Sebastian", limboCollective);
-        Person person3 = new Person("Kristoffer", limboCollective);
-        Person person4 = new Person("Lasse", limboCollective);
+        Person person1 = new Person("Christian", limboCollective.getJoinCode());
+        Person person2 = new Person("Sebastian", limboCollective.getJoinCode());
+        Person person3 = new Person("Kristoffer", limboCollective.getJoinCode());
+        Person person4 = new Person("Lasse", limboCollective.getJoinCode());
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
                 "#FFFFFF", person1.getUsername());
