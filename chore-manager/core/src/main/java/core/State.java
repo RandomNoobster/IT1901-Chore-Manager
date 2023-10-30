@@ -55,6 +55,10 @@ public class State {
         this.currentCollective = user.getCollectiveReference();
     }
 
+    public void setCurrentCollective(Collective collective) {
+        this.currentCollective = collective;
+    }
+
     /**
      * This method sets user and collective to null.
      */

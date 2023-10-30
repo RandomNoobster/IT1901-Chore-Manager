@@ -32,8 +32,6 @@ public class ChoreView implements ViewInterface {
         this.assignee = new Label(person.getDisplayName() + ":");
         this.assignee.getStyleClass().clear();
 
-        this.assignee.getStyleClass().add("list-assignee");
-
         this.choreDisplay = new Button();
         this.choreDisplay.setText(chore.getName());
 
@@ -46,6 +44,9 @@ public class ChoreView implements ViewInterface {
         } else {
             this.choreDisplay.getStyleClass().add("black-text");
         }
+        this.choreDisplay.getStyleClass().addAll("padding-medium", "border-rounded",
+                "on-hover-underline");
+        this.assignee.getStyleClass().addAll("list-assignee", "padding-small");
 
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 

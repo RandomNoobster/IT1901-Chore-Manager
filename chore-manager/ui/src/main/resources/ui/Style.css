@@ -58,12 +58,9 @@
 }
 
 .day-container {
-    -fx-pref-width: 110px;
     -fx-alignment: TOP_CENTER;
-    -fx-border-color: derive(-textWhite, 0%); 
-    -fx-border-width: 2px; 
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
+    -fx-border-width: 0 0 2px 0; /* Adjust the border width as needed */
+    -fx-border-color: derive(-textWhite, 0%);
 }
 
 .bold {
@@ -73,11 +70,13 @@
 
 
 .static-basic-shape {
-    -fx-pref-height: 30px;
     -fx-min-height: 30px;
-    -fx-pref-width: 110px;
+    -fx-min-width: 110px;
 }
 
+.dynamic-basic-shape {
+    -fx-min-height: 30px;
+}
 
 
 .dynamic-week-number {
@@ -165,7 +164,7 @@
     -fx-font-size: 9px;
     -fx-pref-height: 10px;
     -fx-background-color: derive(-textWhite, 0%);
-    -fx-underline: true;
+    -fx-background-radius: 5px 5px 0 0;
 }
 
 .list-item {
@@ -275,4 +274,30 @@
     -fx-min-height: 19px; 
     -fx-max-height: 19px;
  	-fx-shape: "M0,24 4,28 14,18 24,28 28,24 18,14 28,4 24,0 14,10 4,0 0,4 10,14";
+}
+
+
+.border-blue {
+    -fx-border-color: derive(-buttonColor, 0%);
+    -fx-border-width: 2px;
+}
+
+.overdue {
+    -fx-border-color: derive(-redColor, 0%);
+    -fx-border-width: 2px;
+    -fx-underline: true;
+}
+
+.align-left {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5px;
+
+}
+
+.padding-small {
+    -fx-padding: 3px;
+}
+
+.padding-medium {
+    -fx-padding: 7px;
 }

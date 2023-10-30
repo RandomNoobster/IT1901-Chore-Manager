@@ -108,12 +108,23 @@ public class Storage {
     }
 
     /**
-     * This method is used to get the empty collective.
+     * This method is used to get the collectives from the file system.
      *
-     * @return The empty collective.
+     * @param Joincode to collective (if a collective with that joincode exists)
+     * 
+     * @return Collective with code
+     */
+    public Collective getCollective(String joinCode) {
+        return this.collectives.getOrDefault(joinCode, null);
+    }
+
+    /**
+     * This method is used to get the limbo collective.
+     *
+     * @return The limbo collective.
      */
     public Collective getEmptyCollective() {
-        return this.collectives.get(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+        return this.collectives.get(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**
@@ -203,16 +214,16 @@ public class Storage {
      * called if you do not have any persons in the application.
      */
     public void fillFileWithDefaultData() {
-        Collective emptyCollective = new Collective("Empty Collective",
-                Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+        Collective limboCollective = new Collective("Empty Collective",
+                Collective.LIMBO_COLLECTIVE_JOIN_CODE);
         Collective collective = new Collective("The Almighty Collective");
         this.collectives.put(collective.getJoinCode(), collective);
-        this.collectives.put(emptyCollective.getJoinCode(), emptyCollective);
+        this.collectives.put(limboCollective.getJoinCode(), limboCollective);
 
-        Person person1 = new Person("Christian", emptyCollective);
-        Person person2 = new Person("Sebastian", emptyCollective);
-        Person person3 = new Person("Kristoffer", emptyCollective);
-        Person person4 = new Person("Lasse", emptyCollective);
+        Person person1 = new Person("Christian", limboCollective);
+        Person person2 = new Person("Sebastian", limboCollective);
+        Person person3 = new Person("Kristoffer", limboCollective);
+        Person person4 = new Person("Lasse", limboCollective);
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
                 "#FFFFFF", person1.getUsername());

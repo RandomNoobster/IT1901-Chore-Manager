@@ -36,7 +36,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="name">
+                  <TextField fx:id="name" promptText="chorename">
                      <styleClass>
                         <String fx:value="input-text" />
                         <String fx:value="border-rounded-right" />
@@ -84,7 +84,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="pointsDisplay" text="Points: 0">
+                  <Label fx:id="pointsDisplay" text="Points: 50">
                      <styleClass>
                         <String fx:value="white-text" />
                         <String fx:value="border-rounded-left" />
@@ -92,7 +92,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="border-rounded-right" />
+                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="border-rounded-right" value="50.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-row">

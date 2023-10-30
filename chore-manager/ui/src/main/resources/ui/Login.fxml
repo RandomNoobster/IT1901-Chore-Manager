@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
+<GridPane fx:id="scene" alignment="CENTER" hgap="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="854.0" stylesheets="@Style.css" vgap="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.LoginController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -33,7 +33,7 @@
                         <String fx:value="static-basic-shape" />
                         <String fx:value="background-blue" />
                      </styleClass></Label>
-                  <TextField fx:id="username">
+                  <TextField fx:id="username" promptText="username">
                      <styleClass>
                         <String fx:value="input-text" />
                         <String fx:value="border-rounded-right" />
@@ -50,7 +50,7 @@
                         <String fx:value="background-blue" />
                      </styleClass>
                   </Label>
-                  <PasswordField fx:id="password">
+                  <PasswordField fx:id="password" promptText="password">
                      <styleClass>
                         <String fx:value="border-rounded-right" />
                         <String fx:value="input-text" />

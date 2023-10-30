@@ -17,29 +17,38 @@ import org.json.simple.JSONObject;
 public class Collective {
 
     private static final int maxJoinCode = 999999; // Inclusive
-    public static final String EMPTY_COLLECTIVE_JOIN_CODE = "0"
+    public static final String LIMBO_COLLECTIVE_JOIN_CODE = "0"
             .repeat(String.valueOf(maxJoinCode).length());
     public static final Random random = new Random();
     /**
      * To avoid duplicate join codes without having to know about the persistence module.
      */
     private static HashSet<String> joinCodes = new HashSet<String>(
-            Arrays.asList(EMPTY_COLLECTIVE_JOIN_CODE));
+            Arrays.asList(LIMBO_COLLECTIVE_JOIN_CODE));
 
     private String joinCode;
     private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
-    
+
     public Collective(Collective collective) {
         this(collective.getName(), collective.getJoinCode(), collective.getPersons());
     }
-    
+
     public Collective(String name) {
         this(name, generateJoinCode());
     }
 
     public Collective(String name, String joinCode) {
         this(name, joinCode, new HashMap<String, Person>());
+    }
+
+    /**
+     * Check if collective is the limbo collective you get added to when creating a new user
+     * 
+     * @return true if this is the limbo collective
+     */
+    public boolean isLimboCollective() {
+        return this.joinCode.equals(LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**
@@ -58,7 +67,7 @@ public class Collective {
     }
 
     /**
-     * String is unique and not 0000000, as it is reserved for empty collective.
+     * String is unique and not 0000000, as it is reserved for limbo collective.
      *
      * @param joinCode The join code to check
      * @return True if the join code is unique, false otherwise

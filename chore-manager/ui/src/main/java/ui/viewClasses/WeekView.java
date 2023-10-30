@@ -95,7 +95,10 @@ public class WeekView implements ViewInterface {
      * @param newWidth The new width of the week
      */
     public void updateWidth(double newWidth) {
+        this.container.setMinWidth(newWidth);
         this.container.setPrefWidth(newWidth);
+
+        this.weekNumberLabel.setMinWidth(newWidth / this.COLUMN_COUNT);
         this.weekNumberLabel.setPrefWidth(newWidth / this.COLUMN_COUNT);
 
         for (DayView day : this.getDayViews()) {
@@ -109,8 +112,8 @@ public class WeekView implements ViewInterface {
      * @param newHeight The new height of the week
      */
     public void updateHeight(double newHeight) {
-        this.container.setPrefHeight(newHeight);
-        this.weekNumberLabel.setPrefHeight(newHeight);
+        this.container.setMinHeight(newHeight);
+        this.weekNumberLabel.setMinHeight(newHeight);
     }
 
 }

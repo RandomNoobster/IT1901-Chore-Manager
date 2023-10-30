@@ -34,7 +34,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="username">
+                  <TextField fx:id="username" promptText="username">
                      <styleClass>
                         <String fx:value="input-text" />
                         <String fx:value="border-rounded-right" />
@@ -52,7 +52,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <TextField fx:id="displayName">
+                  <TextField fx:id="displayName" promptText="displayname">
                      <styleClass>
                         <String fx:value="input-text" />
                         <String fx:value="border-rounded-right" />
@@ -70,7 +70,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <PasswordField fx:id="password" stylesheets="@Style.css">
+                  <PasswordField fx:id="password" promptText="password" stylesheets="@Style.css">
                      <styleClass>
                         <String fx:value="border-rounded-right" />
                         <String fx:value="input-text" />
