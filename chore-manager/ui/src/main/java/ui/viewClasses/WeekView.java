@@ -33,16 +33,17 @@ public class WeekView implements ViewInterface {
 
         // Add week label to VBox
         this.weekNumberLabel = new Label(week.getWeekNumber().toString());
-        this.weekNumberLabel.getStyleClass().addAll("weekNumberContainer", "header");
+        this.weekNumberLabel.getStyleClass().addAll("dynamic-week-number", "background-blue",
+                "bold");
 
         this.container.getChildren().add(this.weekNumberLabel);
 
         // Assign special class to week if week is current week
-        this.container.getStyleClass().add("weekContainer");
+        this.container.getStyleClass().add("week-container");
         if (week.containsDay(LocalDate.now())) {
-            this.container.getStyleClass().add("thisWeek");
+            this.container.getStyleClass().add("this-week");
         } else {
-            this.container.getStyleClass().add("pastWeek");
+            this.container.getStyleClass().add("past-week");
         }
 
         // Add day containers to VBox
@@ -94,7 +95,10 @@ public class WeekView implements ViewInterface {
      * @param newWidth The new width of the week
      */
     public void updateWidth(double newWidth) {
+        this.container.setMinWidth(newWidth);
         this.container.setPrefWidth(newWidth);
+
+        this.weekNumberLabel.setMinWidth(newWidth / this.COLUMN_COUNT);
         this.weekNumberLabel.setPrefWidth(newWidth / this.COLUMN_COUNT);
 
         for (DayView day : this.getDayViews()) {
@@ -108,8 +112,8 @@ public class WeekView implements ViewInterface {
      * @param newHeight The new height of the week
      */
     public void updateHeight(double newHeight) {
-        this.container.setPrefHeight(newHeight);
-        this.weekNumberLabel.setPrefHeight(newHeight);
+        this.container.setMinHeight(newHeight);
+        this.weekNumberLabel.setMinHeight(newHeight);
     }
 
 }

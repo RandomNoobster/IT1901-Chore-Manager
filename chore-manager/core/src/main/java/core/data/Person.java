@@ -8,8 +8,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
- * The Person class represents a person in the chore manager. It stores
- * information about the person's name and chores.
+ * The Person class represents a person in the chore manager. It stores information about the
+ * person's name and chores.
  */
 @SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
@@ -155,12 +155,11 @@ public class Person {
 
     public boolean isInEmptyCollective() {
         return this.collective == null
-                || this.collective.getJoinCode().equals(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+                || this.collective.getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**
-     * Outputs a {@link JSONObject} representing the person. Object variables are
-     * turned into
+     * Outputs a {@link JSONObject} representing the person. Object variables are turned into
      * key/value pairs.
      *
      * @return A {@link JSONObject} representing the person
@@ -183,8 +182,7 @@ public class Person {
     }
 
     /**
-     * Outputs a boolean indicating wether or not the objects have the same username
-     * (since this is
+     * Outputs a boolean indicating wether or not the objects have the same username (since this is
      * unique).
      *
      * @return If the usernames are equal

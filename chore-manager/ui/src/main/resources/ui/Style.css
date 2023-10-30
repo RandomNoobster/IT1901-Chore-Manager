@@ -17,17 +17,19 @@
 
     -menuBackground: #F1F3F4;
 
-    -menuHeader: #DBDDE1;
+    -menuHeader: #669EF6;
 
     
     -redColor: #FF0000;
+    -redColorHover: #c60b0b;
+
 
     -checked: #81C995;
 
 }
 
 * {
-    -fx-border-radius: 0px; /* Border radius */
+    -fx-border-radius: 0px;
     -fx-background-radius: 0px;
     -fx-alignment: center;
     -fx-background-color: none;
@@ -35,84 +37,51 @@
     -fx-margin: 0px;
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
     -fx-font-size: 12px;
-    /*
-    -fx-text-fill: derive(-textWhite, 0%); 
-    */
     -fx-hbar-policy: never;
     -fx-vbar-policy: never;
-    
 }
 
-.thisWeek {
+.this-week {
     -fx-background-color: derive(-thisWeekColor, 0%); 
 }
 
-.thisDay {
+.this-day {
     -fx-background-color: derive(-todayColor, 0%); 
 }
 
-.pastWeek {
+.past-week {
     -fx-background-color: derive(-pastWeekColor, 0%); 
 }
 
-
-.weekContainer {
+.week-container {
     -fx-pref-height: 90px;
 }
 
-.dayContainer {
-    -fx-pref-width: 110px;
+.day-container {
     -fx-alignment: TOP_CENTER;
-    -fx-border-color: derive(-textWhite, 0%); 
-    -fx-border-width: 2px; 
-    -fx-background-radius: 5px;
-    -fx-border-radius: 5px;
+    -fx-border-width: 0 0 2px 0; /* Adjust the border width as needed */
+    -fx-border-color: derive(-textWhite, 0%);
 }
 
-.header {
+.bold {
     -fx-font-size: 15px;
     -fx-font-weight: bold;
-
 }
 
-.button {
-    -fx-pref-height: 30px;
+
+.static-basic-shape {
     -fx-min-height: 30px;
-    /*-fx-pref-width: 110px;*/
-    -fx-text-fill: derive(-textWhite, 0%);
+    -fx-min-width: 110px;
 }
 
-.label {
-    -fx-background-color: derive(-buttonColor, 0%); 
-    -fx-pref-height: 30px;
+.dynamic-basic-shape {
     -fx-min-height: 30px;
-    -fx-pref-width: 110px;
 }
 
-.hoverClass {
-    -fx-background-color: derive(-buttonColor, 0%); 
-    -fx-underline: false;
-}
 
-.hoverClass:hover {
-    -fx-background-color: derive(-buttonHover, 0%); 
-    -fx-underline: true;
-}
-
-.list-item-container {
-    -fx-spacing: 5px;
-}
-
-.weekNumberContainer {
+.dynamic-week-number {
     -fx-pref-height: 100px;
-    -fx-min-height: 90px;
-    -fx-background-color: derive(-buttonColor, 0%); 
     -fx-pref-width: 60px;
-
-}
-
-.weekLabelsColor {
-    -fx-background-color: derive(-weekLabels, 0%); 
 }
 
 .slider .thumb {
@@ -132,41 +101,40 @@
     -fx-border: 2px;
 }
 
-.whiteText {
+.white-text {
     -fx-text-fill: derive(-textWhite, 0%);
 }
 
-.whiteText .label {
+.white-text .label {
     -fx-text-fill: derive(-textWhite, 0%);
-
 }
 
-.roundedBorder {
+.border-rounded {
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
 }
 
-.roundedBorderRight, .combo-box {
+.border-rounded-right, .combo-box {
     -fx-border-radius: 0 5px 5px 0;
     -fx-background-radius: 0 5px 5px 0;
 }
 
-.roundedBorderLeft {
+.border-rounded-left {
     -fx-border-radius: 5px 0 0 5px;
     -fx-background-radius: 5px 0 0 5px;
 }
 
-.roundedBorderLeft .label {
+.border-rounded-left .label {
     -fx-border-radius: 5px 0 0 5px;
     -fx-background-radius: 5px 0 0 5px;
 }
 
-.roundedBorderRight .label {
+.border-rounded-right .label {
     -fx-border-radius: 0 5px 5px 0;
     -fx-background-radius: 0 5px 5px 0;
 }
 
-.textInput, .combo-box {
+.input-text, .combo-box {
     -fx-background-color: derive(-textWhite, 0%); 
     -fx-pref-height: 30px;
     -fx-min-height: 30px;
@@ -175,16 +143,16 @@
     -fx-border: 2px;
 }
 
-.menuBackground {
-    -fx-background-color: derive(-menuBackground, 0%);
+.static-menu {
     -fx-padding: 20px;
 }
 
-.menuHeader {
+.static-menu-header {
     -fx-text-fill: derive(-menuHeader, 0%);
     -fx-font-size: 25px;
     -fx-background-color: none;
     -fx-pref-width: 200px;
+    -fx-pref-height: 30px;
 }
 
 .combo-box .list-cell {
@@ -192,23 +160,11 @@
     -fx-text-fill: derive(-textBlack, 0%);
 }
 
-.combo-box .arrow-button {
-
-}
-
-.noBackground {
-    -fx-background-color: none;
-}
-
-.darkText {
-    -fx-text-fill: derive(-buttonColor, 0%);
-}
-
 .list-assignee {
     -fx-font-size: 9px;
     -fx-pref-height: 10px;
     -fx-background-color: derive(-textWhite, 0%);
-    -fx-underline: true;
+    -fx-background-radius: 5px 5px 0 0;
 }
 
 .list-item {
@@ -217,24 +173,78 @@
 }
 
 
-.rowDistance {
+.distance-row {
     -fx-spacing: 10px;
 }
 
-.columnDistance {
+.distance-column {
     -fx-spacing: 10px;
 }
 
-.staticButton {
+.static-button {
     -fx-pref-width: 110px;
 }
 
-.redButton {
+.invisible-label .label {
+    -fx-opacity: 0;
+}
+
+
+
+.background-none {
+    -fx-background-color: none;
+}
+
+.background-gray {
+    -fx-background-color: derive(-menuBackground, 0%);
+}
+.background-yellow {
+    -fx-background-color: derive(-weekLabels, 0%); 
+}
+
+.background-blue {
+    -fx-background-color: derive(-buttonColor, 0%);
+}
+
+.background-red {
     -fx-background-color: derive(-redColor, 0%);
 }
 
-.invisibleLabel .label {
-    -fx-opacity: 0;
+.background-green {
+    -fx-background-color: derive(-checked, 0%);
+
+}
+
+.on-hover-background-blue:hover {
+    -fx-background-color: derive(-buttonHover, 0%);
+}
+.on-hover-background-red:hover {
+    -fx-background-color: derive(-redColorHover, 0%);
+}
+
+.on-hover-background-green:hover {
+    -fx-background-color: derive(-checked, 10%);
+}
+
+.on-hover-underline {
+    -fx-underline: false;
+}
+
+.on-hover-underline:hover {
+    -fx-underline: true;
+}
+
+.blue-text {
+    -fx-text-fill: derive(-buttonColor, 0%);
+}
+
+
+.black-text {
+    -fx-text-fill: derive(-textBlack, 0%);
+}
+
+.black-text .label {
+    -fx-text-fill: derive(-textBlack, 0%);
 }
 
 
@@ -242,23 +252,52 @@
 	-fx-background-color: derive(-redColor, 0%);
 	-fx-border-color: derive(-redColor, 0%);
     -fx-border-width: 5px;
-
+    
 }
 
 .check-box:selected .box {
     -fx-background-color: derive(-checked, 0%);
     -fx-border-color: derive(-checked, 0%);
+}
+
+
+
+.check-box:selected .mark {
+ 	-fx-shape: "M0,17 12,28 28,6 24,2 11,20 4,13"
 
 }
 
 .check-box .mark {
+    -fx-background-color: white;
     -fx-min-width: 19px;
     -fx-max-width: 19px;
     -fx-min-height: 19px; 
     -fx-max-height: 19px;
- 	-fx-shape: "M1.73,12.91 8.1,19.28 22.79,4.59 22.79,1.59 8.1,16.28 1.73,9.91";
+ 	-fx-shape: "M0,24 4,28 14,18 24,28 28,24 18,14 28,4 24,0 14,10 4,0 0,4 10,14";
 }
-.check-box:selected .mark {
 
-	-fx-background-color: white;
+
+.border-blue {
+    -fx-border-color: derive(-buttonColor, 0%);
+    -fx-border-width: 2px;
+}
+
+.overdue {
+    -fx-border-color: derive(-redColor, 0%);
+    -fx-border-width: 2px;
+    -fx-underline: true;
+}
+
+.align-left {
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 5px;
+
+}
+
+.padding-small {
+    -fx-padding: 3px;
+}
+
+.padding-medium {
+    -fx-padding: 7px;
 }

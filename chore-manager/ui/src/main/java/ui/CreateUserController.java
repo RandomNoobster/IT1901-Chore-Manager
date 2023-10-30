@@ -1,5 +1,6 @@
 package ui;
 
+import core.State;
 import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
@@ -15,7 +16,6 @@ import persistence.fileHandling.Storage;
  * This is the controller for the create user view.
  */
 public class CreateUserController {
-
     @FXML
     private TextField username;
 
@@ -66,10 +66,10 @@ public class CreateUserController {
         }
 
         // TODO: Change Collective join code here
-        Collective emptyCollective = Storage.getInstance().getEmptyCollective();
-        Person newUser = new Person(username, emptyCollective, password, displayName);
+        Collective limboCollective = Storage.getInstance().getEmptyCollective();
+        Person newUser = new Person(username, limboCollective, password, displayName);
 
-        if (!Storage.getInstance().addPerson(newUser, emptyCollective.getJoinCode())) {
+        if (!Storage.getInstance().addPerson(newUser, limboCollective.getJoinCode())) {
             this.errorMsg("Username issue", "Username is not unique");
             return false;
         }
@@ -88,8 +88,15 @@ public class CreateUserController {
         Password password = new Password(this.password.getText());
 
         if (this.createAccount(username, displayName, password)) {
-            App.switchScene("Login");
 
+            State.getInstance()
+                    .setLoggedInUser(Storage.getInstance().getAllPersons().get(username));
+
+            if (State.getInstance().getCurrentCollective().isLimboCollective()) {
+                App.switchScene("JoinCollective");
+            } else {
+                App.switchScene("App");
+            }
         }
 
     }
