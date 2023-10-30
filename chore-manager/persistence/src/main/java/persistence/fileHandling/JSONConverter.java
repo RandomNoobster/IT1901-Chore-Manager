@@ -79,8 +79,9 @@ public class JSONConverter extends FileHandler {
             List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
             Password password = new Password((String) personJSON.get("password"));
             String displayName = (String) personJSON.get("displayName");
+            String collectiveJoinCode = (String) personJSON.get("collectiveJoinCode");
 
-            Person person = new Person(username, null, password, chores, displayName);
+            Person person = new Person(username, collectiveJoinCode, password, chores, displayName);
             persons.put(username, person);
         }
 

@@ -67,7 +67,7 @@ public class AppController {
     private void setDataAccess() {
         EnvironmentConfigurator configurator = new EnvironmentConfigurator();
         URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
-        System.out.println(apiBaseEndpoint);
+
         if (apiBaseEndpoint != null) {
             this.dataAccess = new RemoteDataAccess(apiBaseEndpoint);
         } else {
@@ -85,8 +85,7 @@ public class AppController {
         // Set data access layer
         this.setDataAccess();
         this.dataAccess.getCollectives();
-        System.out.println(this.dataAccess.getCollectives());
-        System.out.println(this.dataAccess.getCollectives().size());
+        // System.out.println("Collectives: " + this.dataAccess.getCollectives());
 
         this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
         this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());

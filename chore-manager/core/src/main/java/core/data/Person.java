@@ -169,6 +169,7 @@ public class Person {
         map.put("chores", choresJSON);
         map.put("password", this.password.getPasswordString());
         map.put("displayName", this.displayName);
+        map.put("collectiveJoinCode", this.collectiveJoinCode);
 
         return new JSONObject(map);
     }

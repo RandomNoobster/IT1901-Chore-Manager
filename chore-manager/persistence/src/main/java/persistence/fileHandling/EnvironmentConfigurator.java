@@ -72,10 +72,10 @@ public class EnvironmentConfigurator {
         Dotenv dotenv = Dotenv.configure().directory(rootModuleDirectory).filename(envFileName)
                 .load();
         final String SAVE_FILE_PATH = dotenv.get("SAVE_FILE_PATH");
-        final String BASE_API_ENDPOINT = dotenv.get("BASE_API_ENDPOINT");
+        final String API_BASE_ENDPOINT = dotenv.get("API_BASE_ENDPOINT");
 
         this.addProperty("SAVE_FILE_PATH", SAVE_FILE_PATH);
-        this.addProperty("BASE_API_ENDPOINT", BASE_API_ENDPOINT);
+        this.addProperty("API_BASE_ENDPOINT", API_BASE_ENDPOINT);
     }
 
     /**
@@ -92,9 +92,12 @@ public class EnvironmentConfigurator {
      *
      * @return The base API endpoint
      */
-    public URI getBaseAPIEndpoint() {
-        final String BASE_API_ENDPOINT = this.properties.getProperty("BASE_API_ENDPOINT", null);
-        URI uri = URI.create(BASE_API_ENDPOINT);
+    public URI getAPIBaseEndpoint() {
+        final String API_BASE_ENDPOINT = this.properties.getProperty("API_BASE_ENDPOINT", null);
+        if (API_BASE_ENDPOINT == null)
+            return null;
+
+        URI uri = URI.create(API_BASE_ENDPOINT);
         return uri;
     }
 

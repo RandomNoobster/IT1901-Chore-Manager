@@ -5,6 +5,7 @@ module main.ui {
     requires javafx.fxml;
     requires transitive javafx.graphics;
     requires json.simple;
+    requires java.net.http;
 
     opens ui to javafx.graphics, javafx.fxml;
 

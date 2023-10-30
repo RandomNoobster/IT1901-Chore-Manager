@@ -220,10 +220,10 @@ public class Storage {
         this.collectives.put(collective.getJoinCode(), collective);
         this.collectives.put(limboCollective.getJoinCode(), limboCollective);
 
-        Person person1 = new Person("Christian", limboCollective.getJoinCode());
-        Person person2 = new Person("Sebastian", limboCollective.getJoinCode());
-        Person person3 = new Person("Kristoffer", limboCollective.getJoinCode());
-        Person person4 = new Person("Lasse", limboCollective.getJoinCode());
+        Person person1 = new Person("Christian", collective.getJoinCode());
+        Person person2 = new Person("Sebastian", collective.getJoinCode());
+        Person person3 = new Person("Kristoffer", collective.getJoinCode());
+        Person person4 = new Person("Lasse", collective.getJoinCode());
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
                 "#FFFFFF", person1.getUsername());
