@@ -1,6 +1,5 @@
 package ui;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
@@ -19,16 +18,17 @@ import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import persistence.fileHandling.Storage;
 
-public class LoginTest extends ApplicationTest {
+public class ChorePopupTest extends ApplicationTest {
     private Parent root;
     private static final String filePath = "chore-manager-data-ui-test.json";
-    private final static Collective testCollective = new Collective("Test Collective");
-    private final static Person testPerson = new Person("Test", testCollective);
+    private final static Collective testCollective = new Collective("Test Collective",
+            Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+    private final static Person testPerson = new Person("Test", null);
 
     /**
      * Sets the current environment to test
@@ -43,7 +43,6 @@ public class LoginTest extends ApplicationTest {
     private static void setup() {
         Storage.deleteInstance();
         Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
 
         State.getInstance().setLoggedInUser(testPerson);
     }
@@ -55,7 +54,7 @@ public class LoginTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("ChorePopup.fxml"));
         this.root = fxmlLoader.load();
 
         // CSS
@@ -86,36 +85,23 @@ public class LoginTest extends ApplicationTest {
         }
     }
 
-    /**
-     * Test that the user gets logged in if they enter the correct credentials
-     */
     @Test
-    public void testLogin() {
-        TextField name = this.lookup("#username").query();
-        this.interact(() -> {
-            name.setText(testPerson.getUsername());
-        });
+    public void testCheck() {
+        CheckBox checkBox = this.lookup("#checkbox").query();
+        this.clickOn(checkBox);
 
-        PasswordField pwd = this.lookup("#password").query();
-        this.interact(() -> {
-            pwd.setText("1234Password213");
-        });
-
-        this.clickOn("#login");
+        this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(State.getInstance().getLoggedInUser().getUsername().equals(testPerson.getUsername()));
+        assertTrue(
+                State.getInstance().getCurrentCollective().getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE));
     }
 
-    /**
-     * Test that the user does not get logged in if they do not enter username or
-     * password.
-     */
     @Test
-    public void testBlankFields() {
-        this.clickOn("#login");
+    public void testBlankField() {
+        this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertFalse(State.getInstance().getLoggedInUser().getUsername().equals("Kristoffer"));
+        assertTrue(State.getInstance().getCurrentCollective() == null);
     }
 }
