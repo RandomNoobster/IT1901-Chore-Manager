@@ -12,8 +12,7 @@ import ui.App;
 /**
  * The ChoreView class represents a chore in the calendar.
  */
-public class ChoreView implements ViewInterface {
-    private VBox container = new VBox();
+public class ChoreView extends VBox implements ViewInterface {
     private Label assignee;
     private Button choreDisplay;
     private Chore chore;
@@ -22,7 +21,6 @@ public class ChoreView implements ViewInterface {
     /**
      * Constructor for ChoreView.
      *
-     * 
      * @param chore  The chore.
      * @param person The assignee
      */
@@ -50,17 +48,57 @@ public class ChoreView implements ViewInterface {
 
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 
-        this.container.getChildren().addAll(this.assignee, this.choreDisplay);
+        this.getChildren().addAll(this.assignee, this.choreDisplay);
+    }
+
+    /**
+     * Constructor for ChoreView.
+     *
+     * @param chore  The chore.
+     * @param person The assignee
+     */
+    public ChoreView(Chore chore, Person person, Boolean weekChore) {
+        this.person = person;
+        this.chore = chore;
+
+        this.choreDisplay = new Button();
+        this.choreDisplay.setText(person.getDisplayName() + ": " + chore.getName());
+
+        this.choreDisplay.setOnAction(e -> {
+            App.setChorePopupScene(this.chore, this.person);
+
+        });
+        if (ContrastColor.blackText(chore.getColor())) {
+            this.choreDisplay.getStyleClass().add("white-text");
+        } else {
+            this.choreDisplay.getStyleClass().add("black-text");
+        }
+
+        this.choreDisplay.getStyleClass().addAll("padding-medium", "border-rounded",
+                "on-hover-underline");
+
+        this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
+
+        this.getChildren().add(this.choreDisplay);
+    }
+
+    public void updateWidth(double newWidth) {
+        double accountForPadding = 15;
+        this.setPrefWidth(newWidth);
+        this.setMinWidth(newWidth);
+
+        this.choreDisplay.setMinWidth(newWidth - accountForPadding);
+        this.choreDisplay.setPrefWidth(newWidth - accountForPadding);
 
     }
 
     @Override
     public Node getFxml() {
-        return new VBox(this.container);
+        return new VBox(this);
     }
 
     public VBox getContainer() {
-        return new VBox(this.container);
+        return new VBox(this);
     }
 
 }
