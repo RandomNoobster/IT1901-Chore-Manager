@@ -146,7 +146,7 @@ public class Person {
 
     public boolean isInEmptyCollective() {
         return this.collective == null
-                || this.collective.getJoinCode().equals(Collective.EMPTY_COLLECTIVE_JOIN_CODE);
+                || this.collective.getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**

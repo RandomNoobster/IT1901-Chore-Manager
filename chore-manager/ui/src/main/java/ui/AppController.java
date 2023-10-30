@@ -4,17 +4,20 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
+import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ui.viewClasses.DayView;
+import javafx.scene.text.Text;
 import ui.viewClasses.WeekView;
 
 /**
@@ -26,12 +29,22 @@ public class AppController {
     private VBox weekContainer;
 
     @FXML
-    private GridPane scene;
+    private VBox subScene;
+
+    @FXML
+    private GridPane mainGrid;
+
+    @FXML
+    private Button code;
+
+    @FXML
+    private Text collectiveName;
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
-    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before
-                                        // current week)
+    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks
+                                               // before
+    // current week)
     private static final int NUM_WEEKS = 4; // Number of weeks to create
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday", "Sunday");
@@ -49,47 +62,20 @@ public class AppController {
     @FXML
     public void initialize() {
 
+        this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
+        this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
+
         // Set top column that displays what each column means
         this.setTopColumn();
 
         // Create WeekView elements and add them to view
         this.weeks = this.createWeeks();
 
-        // Make buttons run function on click
-        this.addDayActions();
-
         // Make app responsive
         this.handleScreenResizing();
 
         // Update view
         this.updateFxml();
-
-        // Temporary solution to update width and height
-        ScheduledExecutorService runCommandDelayed = Executors.newScheduledThreadPool(1);
-        runCommandDelayed.submit(() -> {
-        });
-        runCommandDelayed.schedule(() -> {
-            this.resizeWidth(this.scene.getWidth());
-            this.resizeHeight(this.scene.getHeight());
-        }, 1000, TimeUnit.MILLISECONDS);
-        runCommandDelayed.shutdown();
-
-    }
-
-    /**
-     * Makes the DayView buttons create a new chore when clicked.
-     */
-    private void addDayActions() {
-        for (WeekView week : this.weeks) {
-            List<DayView> days = week.getDayViews();
-            for (DayView day : days) {
-                day.getButton().setOnAction(e -> {
-                    DayView target = (DayView) e.getTarget();
-                    this.switchToChoreCreation(target.getDay().getDate(),
-                            target.getDay().getDate());
-                });
-            }
-        }
     }
 
     /**
@@ -99,7 +85,7 @@ public class AppController {
         this.weekContainer.getChildren().add(this.topLabelContainer);
         for (String info : this.WEEKDAYS) {
             Label label = new Label(info);
-            label.getStyleClass().addAll("label", "weekLabelsColor", "header");
+            label.getStyleClass().addAll("static-basic-shape", "background-yellow", "bold");
             this.topLabelContainer.getChildren().add(label);
         }
     }
@@ -108,30 +94,48 @@ public class AppController {
      * Makes the app responsive to changes in window size.
      */
     private void handleScreenResizing() {
-        this.scene.widthProperty().addListener((observable, oldValue, newValue) -> {
+        this.mainGrid.widthProperty().addListener((observable, oldValue, newValue) -> {
             double width = newValue.doubleValue();
             this.resizeWidth(width);
 
         });
 
-        this.scene.heightProperty().addListener((observable, oldValue, newValue) -> {
+        this.mainGrid.heightProperty().addListener((observable, oldValue, newValue) -> {
             double height = newValue.doubleValue();
             this.resizeHeight(height);
         });
     }
 
     private void resizeWidth(double width) {
+        this.subScene.setMinWidth(width);
+        this.subScene.setPrefWidth(width);
+
+        this.weekContainer.setMinWidth(width);
         this.weekContainer.setPrefWidth(width);
-        this.weeks.forEach(w -> w.updateWidth(width));
+
+        this.topLabelContainer.setMinWidth(width);
         this.topLabelContainer.setPrefWidth(width);
+
+        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setMinWidth(width / 8));
         this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+
+        this.weeks.forEach(w -> w.updateWidth(width));
+
     }
 
     private void resizeHeight(double height) {
         double topLabelHeight = 30;
+        double topToolbar = 50;
 
-        this.weekContainer.setPrefHeight(height);
-        this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight) / this.NUM_WEEKS));
+        this.subScene.setMinHeight(height);
+        this.subScene.setPrefHeight(height);
+
+        this.weekContainer.setMinHeight(height - topToolbar);
+        this.weekContainer.setPrefHeight(height - topToolbar);
+
+        this.weeks.forEach(
+                w -> w.updateHeight((height - topLabelHeight - topToolbar) / this.NUM_WEEKS));
+
     }
 
     public void updateFxml() {
@@ -157,7 +161,26 @@ public class AppController {
     }
 
     @FXML
-    private void switchToChoreCreation(LocalDate dateFrom, LocalDate dateTo) {
-        App.setChoreCreationScene("ChoreCreation", dateFrom, dateTo);
+    public void toLeaderboard() {
+        App.switchScene("Leaderboard");
+    }
+
+    @FXML
+    public void toLogin() {
+        State.getInstance().logOutUser();
+        App.switchScene("Login");
+    }
+
+    @FXML
+    public void copyCode() {
+        Clipboard clipboard = Clipboard.getSystemClipboard();
+        ClipboardContent content = new ClipboardContent();
+        content.putString(State.getInstance().getCurrentCollective().getJoinCode());
+        clipboard.setContent(content);
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Code copied");
+        alert.setHeaderText("Copied collective-code to clipboard");
+        alert.show();
     }
 }

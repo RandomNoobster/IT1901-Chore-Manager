@@ -51,7 +51,6 @@ public class LoginController {
      */
     @FXML
     public void login() {
-
         String username = this.username.getText();
         String password = this.password.getText();
 
@@ -63,7 +62,12 @@ public class LoginController {
         }
 
         State.getInstance().setLoggedInUser(allPersons.get(username));
-        App.switchScene("App");
+
+        if (State.getInstance().getCurrentCollective().isLimboCollective()) {
+            App.switchScene("JoinCollective");
+        } else {
+            App.switchScene("App");
+        }
     }
 
     @FXML

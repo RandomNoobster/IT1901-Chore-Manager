@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import ui.App;
 
 /**
@@ -33,8 +32,6 @@ public class ChoreView implements ViewInterface {
         this.assignee = new Label(person.getDisplayName() + ":");
         this.assignee.getStyleClass().clear();
 
-        this.assignee.getStyleClass().add("list-assignee");
-
         this.choreDisplay = new Button();
         this.choreDisplay.setText(chore.getName());
 
@@ -43,13 +40,16 @@ public class ChoreView implements ViewInterface {
 
         });
         if (ContrastColor.blackText(chore.getColor())) {
-            this.choreDisplay.setTextFill(Color.WHITE);
+            this.choreDisplay.getStyleClass().add("white-text");
         } else {
-            this.choreDisplay.setTextFill(Color.BLACK);
+            this.choreDisplay.getStyleClass().add("black-text");
         }
+        this.choreDisplay.getStyleClass().addAll("padding-medium", "border-rounded",
+                "on-hover-underline");
+        this.assignee.getStyleClass().addAll("list-assignee", "padding-small");
+
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 
-        this.container.getStyleClass().add("list-item");
         this.container.getChildren().addAll(this.assignee, this.choreDisplay);
 
     }
