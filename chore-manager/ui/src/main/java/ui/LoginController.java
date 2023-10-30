@@ -63,7 +63,7 @@ public class LoginController {
 
         State.getInstance().setLoggedInUser(allPersons.get(username));
 
-        if (State.getInstance().getCurrentCollective().isStandardCollective()) {
+        if (State.getInstance().getCurrentCollective().isLimboCollective()) {
             App.switchScene("JoinCollective");
         } else {
             App.switchScene("App");

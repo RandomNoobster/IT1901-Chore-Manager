@@ -66,10 +66,10 @@ public class CreateUserController {
         }
 
         // TODO: Change Collective join code here
-        Collective emptyCollective = Storage.getInstance().getEmptyCollective();
-        Person newUser = new Person(username, emptyCollective, password, displayName);
+        Collective limboCollective = Storage.getInstance().getEmptyCollective();
+        Person newUser = new Person(username, limboCollective, password, displayName);
 
-        if (!Storage.getInstance().addPerson(newUser, emptyCollective.getJoinCode())) {
+        if (!Storage.getInstance().addPerson(newUser, limboCollective.getJoinCode())) {
             this.errorMsg("Username issue", "Username is not unique");
             return false;
         }
@@ -92,7 +92,7 @@ public class CreateUserController {
             State.getInstance()
                     .setLoggedInUser(Storage.getInstance().getAllPersons().get(username));
 
-            if (State.getInstance().getCurrentCollective().isStandardCollective()) {
+            if (State.getInstance().getCurrentCollective().isLimboCollective()) {
                 App.switchScene("JoinCollective");
             } else {
                 App.switchScene("App");
