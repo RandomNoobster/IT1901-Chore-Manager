@@ -16,7 +16,6 @@ import persistence.fileHandling.Storage;
  * This is the controller for the create user view.
  */
 public class CreateUserController {
-
     @FXML
     private TextField username;
 
