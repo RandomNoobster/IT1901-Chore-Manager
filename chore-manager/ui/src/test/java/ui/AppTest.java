@@ -35,6 +35,7 @@ public class AppTest extends ApplicationTest {
     @BeforeAll
     public static void setTestEnvironment() {
         System.setProperty("env", "test");
+        Storage.deleteInstance();
         Storage.getInstance().deleteFile();
         setup();
     }

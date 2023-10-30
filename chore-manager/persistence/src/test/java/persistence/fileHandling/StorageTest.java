@@ -36,6 +36,7 @@ public class StorageTest {
     @BeforeAll
     public static void setTestEnvironment() {
         System.setProperty("env", "test");
+        Storage.deleteInstance();
         Storage.getInstance().deleteFile();
     }
 
@@ -57,6 +58,7 @@ public class StorageTest {
         // Should create a new instance
         Storage storage3 = Storage.setInstance("chore-manager-another-file-path.json");
         assertNotEquals(this.storage, storage3);
+        storage3.deleteFile();
     }
 
     @Test
