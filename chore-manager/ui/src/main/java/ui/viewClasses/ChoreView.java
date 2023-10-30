@@ -1,5 +1,7 @@
 package ui.viewClasses;
 
+import java.time.LocalDate;
+
 import core.data.Chore;
 import core.data.ContrastColor;
 import core.data.Person;
@@ -25,30 +27,7 @@ public class ChoreView extends VBox implements ViewInterface {
      * @param person The assignee
      */
     public ChoreView(Chore chore, Person person) {
-        this.person = person;
-        this.chore = chore;
-        this.assignee = new Label(person.getDisplayName() + ":");
-        this.assignee.getStyleClass().clear();
-
-        this.choreDisplay = new Button();
-        this.choreDisplay.setText(chore.getName());
-
-        this.choreDisplay.setOnAction(e -> {
-            App.setChorePopupScene(this.chore, this.person);
-
-        });
-        if (ContrastColor.blackText(chore.getColor())) {
-            this.choreDisplay.getStyleClass().add("white-text");
-        } else {
-            this.choreDisplay.getStyleClass().add("black-text");
-        }
-        this.choreDisplay.getStyleClass().addAll("padding-medium", "border-rounded",
-                "on-hover-underline");
-        this.assignee.getStyleClass().addAll("list-assignee", "padding-small");
-
-        this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
-
-        this.getChildren().addAll(this.assignee, this.choreDisplay);
+        this(chore, person, false);
     }
 
     /**
@@ -62,7 +41,6 @@ public class ChoreView extends VBox implements ViewInterface {
         this.chore = chore;
 
         this.choreDisplay = new Button();
-        this.choreDisplay.setText(person.getDisplayName() + ": " + chore.getName());
 
         this.choreDisplay.setOnAction(e -> {
             App.setChorePopupScene(this.chore, this.person);
@@ -79,7 +57,25 @@ public class ChoreView extends VBox implements ViewInterface {
 
         this.choreDisplay.setStyle("-fx-background-color: " + chore.getColor() + ";");
 
+        if (!weekChore) {
+            this.assignee = new Label(person.getDisplayName() + ":");
+            this.assignee.getStyleClass().clear();
+            this.assignee.getStyleClass().addAll("list-assignee", "padding-small", "black-text");
+            this.getChildren().add(this.assignee);
+            this.choreDisplay.setText(chore.getName());
+        } else {
+            this.choreDisplay.setText(person.getDisplayName() + ": " + chore.getName());
+
+        }
         this.getChildren().add(this.choreDisplay);
+
+        if (chore.getChecked()) {
+            this.choreDisplay.getStyleClass().add("checked");
+        } else if (chore.getTimeTo().isBefore(LocalDate.now())) {
+            this.choreDisplay.getStyleClass().add("overdue");
+
+        }
+
     }
 
     public void updateWidth(double newWidth) {

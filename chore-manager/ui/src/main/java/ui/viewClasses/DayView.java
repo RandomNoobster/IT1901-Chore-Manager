@@ -146,7 +146,6 @@ public class DayView extends Button implements ViewInterface {
         int buttonHeight = 30;
         this.container.setMinHeight(newHeight - buttonHeight);
         this.container.setPrefHeight(newHeight - buttonHeight);
-
     }
 
 }

@@ -301,8 +301,14 @@
 
 .overdue {
     -fx-border-color: derive(-redColor, 0%);
-    -fx-border-width: 2px;
-    -fx-underline: true;
+    -fx-border-width: 3px;
+    -fx-font-weight: bold;
+
+}
+
+.checked {
+    -fx-border-color: derive(-checked, 0%);
+    -fx-border-width: 3px;
 }
 
 .align-left {
