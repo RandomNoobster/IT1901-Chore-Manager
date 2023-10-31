@@ -1,4 +1,4 @@
-package core.data;
+package core.utilities;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -28,7 +28,8 @@ public final class JSONValidator {
      * @param jsonString the JSON string to decode
      * @param clazz      the class of the object to decode the JSON string into
      * @return the decoded object
-     * @throws IllegalArgumentException if the JSON string is invalid
+     * @throws IllegalArgumentException if the JSON string is invalid or the class does not have a
+     *                                  decodeFromJSON method
      */
     public static <T> T decodeFromJSONString(String jsonString, Class<T> clazz) {
         JSONParser parser = new JSONParser();
@@ -55,7 +56,8 @@ public final class JSONValidator {
      * @param clazz          the class of the object to decode the JSON string into
      * @param throwException whether or not to throw an exception if the JSON string is invalid
      * @return the decoded object, or null if the JSON string is invalid and throwException is false
-     * @throws IllegalArgumentException if the JSON string is invalid and throwException is true
+     * @throws IllegalArgumentException if the JSON string is invalid or the class does not have a
+     *                                  decodeFromJSON method and throwException is true
      */
     public static <T> T decodeFromJSONString(String jsonString, Class<T> clazz,
             boolean throwException) {

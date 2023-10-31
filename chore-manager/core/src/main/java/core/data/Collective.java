@@ -10,6 +10,8 @@ import java.util.Random;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import core.utilities.JSONValidator;
+
 /**
  * The Collective class represents a collective in the chore manager.
  */
