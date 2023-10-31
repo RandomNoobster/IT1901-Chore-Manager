@@ -184,27 +184,6 @@ public class Collective {
     }
 
     /**
-     * Decodes a {@link Collective} object from a JSON string.
-     *
-     * @param jsonString The JSON string to decode.
-     * @return The decoded {@link Collective} object.
-     */
-    // public static Collective decodeFromJSON(String jsonString, boolean throwException) {
-    // JSONParser parser = new JSONParser();
-    // JSONObject jsonObject;
-    // try {
-    // jsonObject = (JSONObject) parser.parse(jsonString);
-    // return decodeFromJSON(jsonObject);
-    // } catch (ParseException e) {
-    // if (throwException) {
-    // throw new IllegalArgumentException("Invalid JSON string");
-    // }
-    // e.printStackTrace();
-    // }
-    // return null;
-    // }
-
-    /**
      * Decodes a {@link Collective} object from a {@link JSONObject}.
      *
      * @param jsonObject The {@link JSONObject} to decode.
@@ -213,7 +192,7 @@ public class Collective {
     public static Collective decodeFromJSON(JSONObject jsonObject) {
         String[] requiredKeys = { "name", "joinCode", "persons" };
 
-        if (!JSONObjectValidator.containsAllKeys(jsonObject, requiredKeys))
+        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
             throw new IllegalArgumentException("Invalid JSON object, missing keys");
 
         String name = (String) jsonObject.get("name");
