@@ -87,6 +87,6 @@ public class ChoreTest {
 
     @Test
     public void testEncodeToJSON() {
-        assertDoesNotThrow(() -> this.chore.encodeToJSON());
+        assertDoesNotThrow(() -> Chore.encodeToJSONObject(this.chore));
     }
 }

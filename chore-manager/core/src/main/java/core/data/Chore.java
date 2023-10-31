@@ -168,18 +168,18 @@ public class Chore {
      *
      * @return A {@link JSONObject} representation of the chore
      */
-    public JSONObject encodeToJSON() {
+    public static JSONObject encodeToJSONObject(Chore chore) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("choreName", this.choreName);
-        map.put("timeFrom", this.timeFrom.toString());
-        map.put("timeTo", this.timeTo.toString());
-        map.put("isWeekly", this.isWeekly);
-        map.put("points", this.points);
-        map.put("color", this.color);
-        map.put("checked", this.checked);
-        map.put("daysIncompleted", this.daysIncompleted);
-        map.put("creator", this.creator);
+        map.put("choreName", chore.choreName);
+        map.put("timeFrom", chore.timeFrom.toString());
+        map.put("timeTo", chore.timeTo.toString());
+        map.put("isWeekly", chore.isWeekly);
+        map.put("points", chore.points);
+        map.put("color", chore.color);
+        map.put("checked", chore.checked);
+        map.put("daysIncompleted", chore.daysIncompleted);
+        map.put("creator", chore.creator);
 
         JSONObject json = new JSONObject(map);
         return json;

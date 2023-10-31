@@ -43,8 +43,8 @@ public class Collective {
     }
 
     /**
-     * Check if collective is the limbo collective you get added to when creating a new user
-     * 
+     * Check if collective is the limbo collective you get added to when creating a new user.
+     *
      * @return true if this is the limbo collective
      */
     public boolean isLimboCollective() {
@@ -167,20 +167,66 @@ public class Collective {
      *
      * @return A {@link JSONObject} representing the collective
      */
-    public JSONObject encodeToJSON() {
+    public static JSONObject encodeToJSONObject(Collective collective) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("name", this.name);
+        map.put("name", collective.name);
+        map.put("joinCode", collective.joinCode);
 
         JSONArray personJSON = new JSONArray();
-        for (Person person : this.persons.values()) {
-            personJSON.add(person.encodeToJSON());
+        for (Person person : collective.persons.values()) {
+            personJSON.add(Person.encodeToJSONObject(person));
         }
 
         map.put("persons", personJSON);
-        map.put("joinCode", this.joinCode);
 
         return new JSONObject(map);
+    }
+
+    /**
+     * Decodes a {@link Collective} object from a JSON string.
+     *
+     * @param jsonString The JSON string to decode.
+     * @return The decoded {@link Collective} object.
+     */
+    // public static Collective decodeFromJSON(String jsonString, boolean throwException) {
+    // JSONParser parser = new JSONParser();
+    // JSONObject jsonObject;
+    // try {
+    // jsonObject = (JSONObject) parser.parse(jsonString);
+    // return decodeFromJSON(jsonObject);
+    // } catch (ParseException e) {
+    // if (throwException) {
+    // throw new IllegalArgumentException("Invalid JSON string");
+    // }
+    // e.printStackTrace();
+    // }
+    // return null;
+    // }
+
+    /**
+     * Decodes a {@link Collective} object from a {@link JSONObject}.
+     *
+     * @param jsonObject The {@link JSONObject} to decode.
+     * @return The decoded {@link Collective} object.
+     */
+    public static Collective decodeFromJSON(JSONObject jsonObject) {
+        String[] requiredKeys = { "name", "joinCode", "persons" };
+
+        if (!JSONObjectValidator.containsAllKeys(jsonObject, requiredKeys))
+            throw new IllegalArgumentException("Invalid JSON object, missing keys");
+
+        String name = (String) jsonObject.get("name");
+        String joinCode = (String) jsonObject.get("joinCode");
+        JSONArray personsJSON = (JSONArray) jsonObject.get("persons");
+        HashMap<String, Person> persons = new HashMap<String, Person>();
+
+        for (Object personObject : personsJSON) {
+            Person person = Person.decodeFromJSON((JSONObject) personObject);
+            persons.put(person.getUsername(), person);
+        }
+
+        return new Collective(name, joinCode, persons);
     }
 
 }

@@ -31,7 +31,7 @@ public class JSONConverter extends FileHandler {
     public void writeCollectiveToJSON(HashMap<String, Collective> collectives) {
         JSONArray collectivesJSON = new JSONArray();
         for (Collective collective : collectives.values()) {
-            collectivesJSON.add(collective.encodeToJSON());
+            collectivesJSON.add(Collective.encodeToJSONObject(collective));
         }
         this.writeToFile(collectivesJSON);
     }

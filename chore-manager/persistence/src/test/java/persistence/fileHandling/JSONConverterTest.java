@@ -75,9 +75,9 @@ public class JSONConverterTest {
         assertTrue(this.compareTwoLists(collective.getPersonsList(),
                 collectivesFromJSON.get(collective.getJoinCode()).getPersonsList()));
 
-        assertEquals(person.getChores().get(0).encodeToJSON(),
-                collectivesFromJSON.get(collective.getJoinCode()).getPersons()
-                        .get(person.getUsername()).getChores().get(0).encodeToJSON());
+        assertEquals(Chore.encodeToJSONObject(person.getChores().get(0)),
+                Chore.encodeToJSONObject(collectivesFromJSON.get(collective.getJoinCode())
+                        .getPersons().get(person.getUsername()).getChores().get(0)));
     }
 
 }

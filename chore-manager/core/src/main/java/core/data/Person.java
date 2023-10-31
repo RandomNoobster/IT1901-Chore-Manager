@@ -156,22 +156,26 @@ public class Person {
      *
      * @return A {@link JSONObject} representing the person
      */
-    public JSONObject encodeToJSON() {
+    public static JSONObject encodeToJSONObject(Person person) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("username", this.username);
+        map.put("username", person.username);
 
         JSONArray choresJSON = new JSONArray();
-        for (Chore chore : this.chores) {
-            choresJSON.add(chore.encodeToJSON());
+        for (Chore chore : person.chores) {
+            choresJSON.add(Chore.encodeToJSONObject(chore));
         }
 
         map.put("chores", choresJSON);
-        map.put("password", this.password.getPasswordString());
-        map.put("displayName", this.displayName);
-        map.put("collectiveJoinCode", this.collectiveJoinCode);
+        map.put("password", person.password.getPasswordString());
+        map.put("displayName", person.displayName);
+        map.put("collectiveJoinCode", person.collectiveJoinCode);
 
         return new JSONObject(map);
+    }
+
+    public static Person decodeFromJSON(JSONObject jsonObject) {
+        return null;
     }
 
     /**
