@@ -1,7 +1,5 @@
 package ui.viewClasses;
 
-import java.time.LocalDate;
-
 import core.data.Chore;
 import core.data.ContrastColor;
 import core.data.Person;
@@ -71,13 +69,17 @@ public class ChoreView extends VBox implements ViewInterface {
 
         if (chore.getChecked()) {
             this.choreDisplay.getStyleClass().add("checked");
-        } else if (chore.getTimeTo().isBefore(LocalDate.now())) {
+        } else if (chore.overdue()) {
             this.choreDisplay.getStyleClass().add("overdue");
-
         }
 
     }
 
+    /**
+     * Update width of chore
+     * 
+     * @param newWidth
+     */
     public void updateWidth(double newWidth) {
         double accountForPadding = 15;
         this.setPrefWidth(newWidth);
@@ -85,13 +87,20 @@ public class ChoreView extends VBox implements ViewInterface {
 
         this.choreDisplay.setMinWidth(newWidth - accountForPadding);
         this.choreDisplay.setPrefWidth(newWidth - accountForPadding);
-
     }
 
     @Override
     public Node getFxml() {
         return new VBox(this);
     }
+
+    /**
+     * Get the outer container of this chore. For a day-chore this container will contain one node
+     * for the assigned persons name, and one for the name of the chore. For a week-chore, only one,
+     * containing both the name of the assignee and the task itself
+     * 
+     * @param newWidth
+     */
 
     public VBox getContainer() {
         return new VBox(this);

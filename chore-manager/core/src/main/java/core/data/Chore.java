@@ -1,6 +1,7 @@
 package core.data;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
@@ -74,12 +75,35 @@ public class Chore {
     }
 
     /**
+     * Get offset days
+     *
+     * @return Offset days
+     */
+    private Integer getOffsetDays() {
+        int add = this.getDaysIncompleted();
+        if (!this.timeFrom.equals(this.timeTo)) {
+            if (add % 7 > 0) {
+                add = add - (add % 7) + 7;
+            }
+        }
+        return add;
+    }
+
+    public LocalDate getOriginalTimeFrom() {
+        return this.timeFrom;
+    }
+
+    public LocalDate getOriginalTimeTo() {
+        return this.timeTo;
+    }
+
+    /**
      * Outputs the time the chore is due to start.
      *
      * @return The start date of the chore
      */
     public LocalDate getTimeFrom() {
-        return this.timeFrom.plusDays(this.daysIncompleted);
+        return this.timeFrom.plusDays(this.getOffsetDays());
     }
 
     /**
@@ -88,7 +112,7 @@ public class Chore {
      * @return The end date of the chore
      */
     public LocalDate getTimeTo() {
-        return this.timeTo.plusDays(this.daysIncompleted);
+        return this.timeTo.plusDays(this.getOffsetDays());
     }
 
     /**
@@ -110,7 +134,26 @@ public class Chore {
      * @return Days chore has been incompleted past due date
      */
     public Integer getDaysIncompleted() {
+        this.updateIncompleted();
         return this.daysIncompleted;
+    }
+
+    /**
+     * Updates count of incompleted days
+     */
+    public void updateIncompleted() {
+        if (!this.getChecked() && this.timeTo.isBefore(LocalDate.now())) {
+            this.daysIncompleted = (int) ChronoUnit.DAYS.between(this.timeTo, LocalDate.now());
+        }
+    }
+
+    /**
+     * True if task is overdue
+     * 
+     * @return returns true if a task is overdue
+     */
+    public boolean overdue() {
+        return !this.checked && this.getDaysIncompleted() > 0;
     }
 
     /**

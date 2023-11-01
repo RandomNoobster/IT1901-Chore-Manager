@@ -116,8 +116,10 @@ public class AppController {
         this.topLabelContainer.setMinWidth(width);
         this.topLabelContainer.setPrefWidth(width);
 
-        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setMinWidth(width / 8));
-        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+        this.topLabelContainer.getChildren()
+                .forEach(c -> ((Label) c).setMinWidth(width / this.WEEKDAYS.size()));
+        this.topLabelContainer.getChildren()
+                .forEach(c -> ((Label) c).setPrefWidth(width / this.WEEKDAYS.size()));
 
         this.weeks.forEach(w -> w.updateWidth(width));
 
