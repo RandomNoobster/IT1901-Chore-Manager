@@ -28,6 +28,7 @@ public class DayView extends Button implements ViewInterface {
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
     private Label pastDate;
+    private static final int BUTTON_HEIGHT = 30;
 
     /**
      * A constructor for the DayView class. It creates and styles the FXML-element.
@@ -143,9 +144,8 @@ public class DayView extends Button implements ViewInterface {
     }
 
     public void updateHeight(double newHeight) {
-        int buttonHeight = 30;
-        this.container.setMinHeight(newHeight - buttonHeight);
-        this.container.setPrefHeight(newHeight - buttonHeight);
+        this.container.setMinHeight(newHeight - BUTTON_HEIGHT);
+        this.container.setPrefHeight(newHeight - BUTTON_HEIGHT);
     }
 
 }

@@ -38,6 +38,12 @@ public class ChoreCreationController {
     private Label pointsDisplay;
 
     @FXML
+    private Slider repeats;
+
+    @FXML
+    private Label repeatsDisplay;
+
+    @FXML
     private ComboBox<PersonMenuItem> personsMenu;
 
     private LocalDate dateFrom = LocalDate.MIN;
@@ -91,9 +97,12 @@ public class ChoreCreationController {
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
-        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
-                State.getInstance().getLoggedInUser().getUsername());
-        State.getInstance().addChore(chore, person);
+
+        for (int i = 0; i < (int) this.repeats.getValue(); i++) {
+            Chore chore = new Chore(choreName, this.dateFrom.plusWeeks(i), this.dateTo.plusWeeks(i),
+                    false, points, hexColor, State.getInstance().getLoggedInUser().getUsername());
+            State.getInstance().addChore(chore, person);
+        }
 
         Storage.getInstance().save();
         App.switchScene("App");
@@ -107,9 +116,16 @@ public class ChoreCreationController {
         this.pointsDisplay.setText("Points: " + (int) this.points.getValue());
     }
 
+    /**
+     * This method is called when the repeats slider is changed. It updates the repeats display.
+     */
+    @FXML
+    public void repeatsChanged() {
+        this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " times");
+    }
+
     @FXML
     public void toMain() {
         App.switchScene("App");
     }
-
 }

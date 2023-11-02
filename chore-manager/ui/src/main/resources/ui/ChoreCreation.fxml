@@ -92,7 +92,20 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <Slider fx:id="points" onMouseDragged="#pointsChanged" styleClass="border-rounded-right" value="50.0" />
+                  <Slider fx:id="points" blockIncrement="1.0" majorTickUnit="100.0" minorTickCount="100" onMouseDragged="#pointsChanged" snapToTicks="true" styleClass="border-rounded-right" value="50.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="repeatsDisplay" text="Repeat: 1 time">
+                     <styleClass>
+                        <String fx:value="white-text" />
+                        <String fx:value="border-rounded-left" />
+                        <String fx:value="background-blue" />
+                        <String fx:value="static-basic-shape" />
+                     </styleClass>
+                  </Label>
+                  <Slider fx:id="repeats" blockIncrement="1.0" max="20.0" min="1.0" onMouseDragged="#repeatsChanged" snapToTicks="true" styleClass="border-rounded-right" value="1.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-row">
