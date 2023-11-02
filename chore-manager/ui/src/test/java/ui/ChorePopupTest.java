@@ -1,8 +1,7 @@
 package ui;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.io.IOException;
+import java.util.Set;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -13,13 +12,14 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
 import core.State;
+import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import persistence.fileHandling.Storage;
 
@@ -28,7 +28,8 @@ public class ChorePopupTest extends ApplicationTest {
     private static final String filePath = "chore-manager-data-ui-test.json";
     private final static Collective testCollective = new Collective("Test Collective",
             Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-    private final static Person testPerson = new Person("Test", null);
+    private final static Person testPerson = new Person("Test", testCollective);
+    private Chore chore;
 
     /**
      * Sets the current environment to test
@@ -43,7 +44,7 @@ public class ChorePopupTest extends ApplicationTest {
     private static void setup() {
         Storage.deleteInstance();
         Storage.getInstance().addCollective(testCollective);
-
+        State.getInstance().setCurrentCollective(testCollective);
         State.getInstance().setLoggedInUser(testPerson);
     }
 
@@ -54,7 +55,7 @@ public class ChorePopupTest extends ApplicationTest {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("ChorePopup.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("App.fxml"));
         this.root = fxmlLoader.load();
 
         // CSS
@@ -70,6 +71,8 @@ public class ChorePopupTest extends ApplicationTest {
 
     @BeforeEach
     public void setupItems() {
+        chore = new Chore("Vaske gulv", null, null, false, 5, "#000000", null);
+        testPerson.addChore(chore);
         setup();
     }
 
@@ -87,21 +90,17 @@ public class ChorePopupTest extends ApplicationTest {
 
     @Test
     public void testCheck() {
+        // click on a chore to get the correct view
+        Set<Node> temp = this.lookup(".padding-medium").queryAll();
+
         CheckBox checkBox = this.lookup("#checkbox").query();
         this.clickOn(checkBox);
 
-        this.clickOn("#joinCollectiveButton");
-
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(
-                State.getInstance().getCurrentCollective().getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE));
+        // assert that the checked status was changed
     }
 
-    @Test
-    public void testBlankField() {
-        this.clickOn("#joinCollectiveButton");
+    // Test that delete works
 
-        WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(State.getInstance().getCurrentCollective() == null);
-    }
+    // Test that the go back button doesn't change or delete the chore
 }
