@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.json.simple.JSONObject;
 
+import core.utilities.JSONValidator;
+
 /**
  * The Chore class represents a task that can be assigned to a user. It stores information about the
  * chore's name, schedule, and points.
@@ -92,7 +94,7 @@ public class Chore {
     }
 
     /**
-     * Outputs if a chore is checked/done or not
+     * Outputs if a chore is checked/done or not.
      *
      * @return Chores checked status
      */
@@ -123,7 +125,7 @@ public class Chore {
     }
 
     /**
-     * Outputs the creator of the chores username
+     * Outputs the creator of the chores username.
      *
      * @return The creator of the chores username
      */
@@ -183,6 +185,45 @@ public class Chore {
 
         JSONObject json = new JSONObject(map);
         return json;
+    }
+
+    /**
+     * Decodes a JSON string into a {@link Chore} object.
+     *
+     * @param jsonString The JSON string to decode
+     * @return The decoded {@link Chore} object
+     */
+    public static Chore decodeFromJSON(String jsonString) {
+        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
+        return decodeFromJSON(jsonObject);
+    }
+
+    /**
+     * Decodes a {@link JSONObject} into a {@link Chore} object.
+     *
+     * @param jsonObject The {@link JSONObject} to decode
+     * @return The decoded {@link Chore} object
+     * @throws IllegalArgumentException If the {@link JSONObject} is missing required keys
+     */
+    public static Chore decodeFromJSON(JSONObject jsonObject) {
+        String[] requiredKeys = { "choreName", "timeFrom", "timeTo", "isWeekly", "points", "color",
+                "checked", "daysIncompleted", "creator" };
+
+        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
+            throw new IllegalArgumentException("Invalid JSON object, missing keys");
+
+        String choreName = (String) jsonObject.get("choreName");
+        LocalDate timeFrom = LocalDate.parse((String) jsonObject.get("timeFrom"));
+        LocalDate timeTo = LocalDate.parse((String) jsonObject.get("timeTo"));
+        boolean isWeekly = (boolean) jsonObject.get("isWeekly");
+        int points = ((Long) jsonObject.get("points")).intValue();
+        String color = (String) jsonObject.get("color");
+        boolean checked = (boolean) jsonObject.get("checked");
+        int daysIncompleted = ((Long) jsonObject.get("daysIncompleted")).intValue();
+        String creator = (String) jsonObject.get("creator");
+
+        return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
+                daysIncompleted, creator);
     }
 
 }

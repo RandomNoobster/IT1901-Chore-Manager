@@ -23,32 +23,22 @@ public final class JSONValidator {
     }
 
     /**
-     * Decodes a JSON string into an object of the specified class.
+     * Decodes a JSON string into a JSONObject.
      *
      * @param jsonString the JSON string to decode
-     * @param clazz      the class of the object to decode the JSON string into
-     * @return the decoded object
-     * @throws IllegalArgumentException if the JSON string is invalid or the class does not have a
-     *                                  decodeFromJSON method
+     * @return the decoded JSONObject
+     * @throws IllegalArgumentException if the JSON string is invalid
      */
-    public static <T> T decodeFromJSONString(String jsonString, Class<T> clazz) {
+    public static JSONObject decodeStringToJSONObject(String jsonString) {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject;
         try {
-            jsonObject = (JSONObject) parser.parse(jsonString);
-
-            // Get the decodeFromJSON method from the specified class
-            Method decodeMethod = clazz.getMethod("decodeFromJSON", JSONObject.class);
-
-            // Invoke the method on the JSON object, method is static so pass null as the object
-            return clazz.cast(decodeMethod.invoke(null, jsonObject));
+            return (JSONObject) parser.parse(jsonString);
         } catch (ParseException e) {
             throw new IllegalArgumentException("Invalid JSON string");
-        } catch (ReflectiveOperationException e) {
-            throw new IllegalArgumentException("Class does not have a decodeFromJSON method");
         }
     }
 
+    // TODO: Can possibly remove this method
     /**
      * Decodes a JSON string into an object of the specified class.
      *

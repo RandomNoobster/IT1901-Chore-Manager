@@ -185,6 +185,11 @@ public class Collective {
         return new JSONObject(map);
     }
 
+    public static Collective decodeFromJSON(String jsonString) {
+        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
+        return decodeFromJSON(jsonObject);
+    }
+
     /**
      * Decodes a {@link Collective} object from a {@link JSONObject}.
      *

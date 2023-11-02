@@ -7,6 +7,8 @@ import java.util.List;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import core.utilities.JSONValidator;
+
 /**
  * The Person class represents a person in the chore manager. It stores information about the
  * person's name and chores.
@@ -174,8 +176,44 @@ public class Person {
         return new JSONObject(map);
     }
 
+    /**
+     * Decodes a JSON string into a {@link Person} object.
+     *
+     * @param jsonString The JSON string to decode
+     * @return A {@link Person} object
+     */
+    public static Person decodeFromJSON(String jsonString) {
+        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
+        return decodeFromJSON(jsonObject);
+    }
+
+    /**
+     * Decodes a {@link JSONObject} into a {@link Person} object.
+     *
+     * @param jsonObject The {@link JSONObject} to decode
+     * @return A {@link Person} object
+     */
     public static Person decodeFromJSON(JSONObject jsonObject) {
-        return null;
+        String[] requiredKeys = { "username", "chores", "password", "displayName",
+                "collectiveJoinCode" };
+
+        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
+            throw new IllegalArgumentException("Invalid JSON object, missing keys");
+
+        String username = (String) jsonObject.get("username");
+        String password = (String) jsonObject.get("password");
+        String displayName = (String) jsonObject.get("displayName");
+        String collectiveJoinCode = (String) jsonObject.get("collectiveJoinCode");
+        JSONArray choresJSON = (JSONArray) jsonObject.get("chores");
+        List<Chore> chores = new ArrayList<Chore>();
+
+        for (Object choreObject : choresJSON) {
+            Chore chore = Chore.decodeFromJSON((JSONObject) choreObject);
+            chores.add(chore);
+        }
+
+        return new Person(username, collectiveJoinCode, new Password(password), chores,
+                displayName);
     }
 
     /**
