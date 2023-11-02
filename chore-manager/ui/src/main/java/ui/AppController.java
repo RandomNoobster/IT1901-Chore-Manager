@@ -134,7 +134,7 @@ public class AppController {
         this.weekContainer.setPrefHeight(height - topToolbar);
 
         this.weeks.forEach(
-                w -> w.updateHeight((height - topLabelHeight - topToolbar) / this.NUM_WEEKS));
+                w -> w.updateHeight((height - topLabelHeight - topToolbar) / NUM_WEEKS));
 
     }
 
