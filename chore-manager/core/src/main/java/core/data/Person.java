@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import core.utilities.JSONValidator;
-
 /**
  * The Person class represents a person in the chore manager. It stores information about the
  * person's name and chores.
@@ -177,24 +175,12 @@ public class Person {
     }
 
     /**
-     * Decodes a JSON string into a {@link Person} object.
-     *
-     * @param jsonString The JSON string to decode
-     * @return A {@link Person} object
-     */
-    public static Person decodeFromJSON(String jsonString) {
-        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
-        return decodeFromJSON(jsonObject);
-    }
-
-    /**
      * Decodes a {@link JSONObject} into a {@link Person} object.
      *
      * @param jsonObject The {@link JSONObject} to decode
      * @return A {@link Person} object
      */
-    public static Person decodeFromJSON(JSONObject jsonObject) {
-
+    public static Person decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
         try {
             String username = jsonObject.getString("username");
             String password = jsonObject.getString("password");

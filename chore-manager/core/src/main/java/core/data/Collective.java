@@ -10,8 +10,6 @@ import java.util.Random;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import core.utilities.JSONValidator;
-
 /**
  * The Collective class represents a collective in the chore manager.
  */
@@ -184,18 +182,13 @@ public class Collective {
         return new JSONObject(map);
     }
 
-    public static Collective decodeFromJSON(String jsonString) {
-        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
-        return decodeFromJSON(jsonObject);
-    }
-
     /**
      * Decodes a {@link Collective} object from a {@link JSONObject}.
      *
      * @param jsonObject The {@link JSONObject} to decode.
      * @return The decoded {@link Collective} object.
      */
-    public static Collective decodeFromJSON(JSONObject jsonObject) {
+    public static Collective decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
         try {
             String name = jsonObject.getString("name");
             String joinCode = jsonObject.getString("joinCode");

@@ -6,8 +6,6 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import core.utilities.JSONValidator;
-
 /**
  * The Chore class represents a task that can be assigned to a user. It stores information about the
  * chore's name, schedule, and points.
@@ -189,24 +187,13 @@ public class Chore {
     }
 
     /**
-     * Decodes a JSON string into a {@link Chore} object.
-     *
-     * @param jsonString The JSON string to decode
-     * @return The decoded {@link Chore} object
-     */
-    public static Chore decodeFromJSON(String jsonString) {
-        JSONObject jsonObject = JSONValidator.decodeStringToJSONObject(jsonString);
-        return decodeFromJSON(jsonObject);
-    }
-
-    /**
      * Decodes a {@link JSONObject} into a {@link Chore} object.
      *
      * @param jsonObject The {@link JSONObject} to decode
      * @return The decoded {@link Chore} object
      * @throws IllegalArgumentException If the {@link JSONObject} is missing required keys
      */
-    public static Chore decodeFromJSON(JSONObject jsonObject) {
+    public static Chore decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
         try {
             String choreName = jsonObject.getString("choreName");
             String timeFromStr = jsonObject.getString("timeFrom");
