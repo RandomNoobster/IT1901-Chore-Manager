@@ -80,7 +80,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0" styleClass="distance-column">
                <children>
-                  <Button mnemonicParsing="false" onAction="#toLogin" stylesheets="@Style.css" text="Go back">
+                  <Button fx:id="goBack" mnemonicParsing="false" onAction="#toLogin" stylesheets="@Style.css" text="Go back">
                      <styleClass>
                         <String fx:value="bold" />
                         <String fx:value="on-hover-underline" />
