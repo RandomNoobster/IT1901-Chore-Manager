@@ -37,11 +37,9 @@ public class Storage {
      */
     public void initialize() {
         this.jsonConverter = new JSONConverter(this.filePath);
-        System.out.println(this.filePath);
         if (this.jsonConverter.getCreatedNewFile()
                 || this.jsonConverter.getCollectives().isEmpty()) {
             this.fillFileWithDefaultData();
-            System.out.println("FILL");
         }
         this.collectives = this.jsonConverter.getCollectives();
     }

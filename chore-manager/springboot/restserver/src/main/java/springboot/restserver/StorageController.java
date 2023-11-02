@@ -2,6 +2,7 @@ package springboot.restserver;
 
 import java.util.HashMap;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,9 +38,20 @@ public class StorageController {
      * @return a HashMap containing all collectives
      */
     @GetMapping(path = "/collectives")
-    public HashMap<String, Collective> getCollectives() {
-        return this.storageService.getStorage().getCollectives();
+    public String getCollectives() {
+        HashMap<String, Collective> collectives = this.storageService.getStorage().getCollectives();
+        JSONObject jsonObject = new JSONObject();
+
+        for (String joinCode : collectives.keySet()) {
+            jsonObject.put(joinCode, Collective.encodeToJSONObject(collectives.get(joinCode)));
+        }
+
+        return jsonObject.toString();
     }
+    // @GetMapping(path = "/collectives")
+    // public HashMap<String, Collective> getCollectives() {
+    // return this.storageService.getStorage().getCollectives();
+    // }
 
     /**
      * Adds a collective to storage.
