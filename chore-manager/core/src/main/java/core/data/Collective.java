@@ -7,15 +7,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
 
 /**
  * The Collective class represents a collective in the chore manager.
  */
-@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Collective {
 
     private static final int maxJoinCode = 999999; // Inclusive
@@ -177,7 +176,7 @@ public class Collective {
 
         JSONArray personJSON = new JSONArray();
         for (Person person : collective.persons.values()) {
-            personJSON.add(Person.encodeToJSONObject(person));
+            personJSON.put(Person.encodeToJSONObject(person));
         }
 
         map.put("persons", personJSON);

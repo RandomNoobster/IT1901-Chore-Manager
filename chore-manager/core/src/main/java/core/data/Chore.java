@@ -3,7 +3,7 @@ package core.data;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import org.json.simple.JSONObject;
+import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
 

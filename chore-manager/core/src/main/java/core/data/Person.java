@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
 
@@ -13,7 +13,6 @@ import core.utilities.JSONValidator;
  * The Person class represents a person in the chore manager. It stores information about the
  * person's name and chores.
  */
-@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class Person {
     private String username;
     private List<Chore> chores;
@@ -165,7 +164,7 @@ public class Person {
 
         JSONArray choresJSON = new JSONArray();
         for (Chore chore : person.chores) {
-            choresJSON.add(Chore.encodeToJSONObject(chore));
+            choresJSON.put(Chore.encodeToJSONObject(chore));
         }
 
         map.put("chores", choresJSON);

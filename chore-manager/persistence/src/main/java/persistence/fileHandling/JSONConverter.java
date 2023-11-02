@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import core.data.Chore;
 import core.data.Collective;
@@ -16,7 +16,6 @@ import core.data.Person;
 /**
  * This class contains methods for converting JSON to objects and vice versa.
  */
-@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class JSONConverter extends FileHandler {
 
     public JSONConverter(String fileName) {
@@ -31,7 +30,7 @@ public class JSONConverter extends FileHandler {
     public void writeCollectiveToJSON(HashMap<String, Collective> collectives) {
         JSONArray collectivesJSON = new JSONArray();
         for (Collective collective : collectives.values()) {
-            collectivesJSON.add(Collective.encodeToJSONObject(collective));
+            collectivesJSON.put(Collective.encodeToJSONObject(collective));
         }
         this.writeToFile(collectivesJSON);
     }

@@ -13,9 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONTokener;
 
 /**
  * <p>
@@ -108,7 +108,7 @@ public class FileHandler {
      * Writes to the file associated with this object Note: This will overwrite the file.
      */
     public void writeToFile(JSONArray jsonArray) {
-        this.writeToFile(jsonArray.toJSONString());
+        this.writeToFile(jsonArray.toString());
     }
 
     /**
@@ -122,7 +122,7 @@ public class FileHandler {
      * Appends to the file associated with this object.
      */
     public void appendToFile(JSONArray jsonArray) {
-        this.writeToFile(jsonArray.toJSONString(), true);
+        this.writeToFile(jsonArray.toString(), true);
     }
 
     /**
@@ -131,7 +131,6 @@ public class FileHandler {
      * @return The JSONObject read from the file
      */
     public JSONArray readJSONFile() {
-        JSONParser jsonParser = new JSONParser();
         if (this.file.length() == 0) {
             System.out.println(
                     "File is empty, consider using the Storage.fillFileWithDefaultData();");
@@ -141,14 +140,14 @@ public class FileHandler {
         try (FileInputStream fileInputStream = new FileInputStream(this.file)) {
             InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,
                     StandardCharsets.UTF_8);
-            JSONArray jsonObject = (JSONArray) jsonParser.parse(inputStreamReader);
-            return jsonObject;
+            JSONArray jsonArray = new JSONArray(new JSONTokener(fileInputStream));
+            return jsonArray;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Error reading file");
-        } catch (ParseException e) {
-            System.out.println("Error parsing file");
+        } catch (JSONException e) {
+            System.out.println("Error parsing JSON");
         }
         return null;
     }
