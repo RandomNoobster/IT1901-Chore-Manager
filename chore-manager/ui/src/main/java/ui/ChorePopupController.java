@@ -39,7 +39,11 @@ public class ChorePopupController {
         this.choreName.setText(this.chore.getName());
         this.checkbox.setSelected(this.chore.getChecked());
         this.assigneeText.setText("Assignee: " + this.assignee.getDisplayName());
-        this.deadline.setText("Deadline: " + this.chore.getTimeTo());
+        if (this.chore.overdue()) {
+            this.deadline.setText("Deadline: [OVERDUE]");
+        } else {
+            this.deadline.setText("Deadline: " + this.chore.getTimeTo());
+        }
         this.points.setText("Points: " + this.chore.getPoints());
     }
 
