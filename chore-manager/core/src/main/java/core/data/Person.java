@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
@@ -193,26 +194,25 @@ public class Person {
      * @return A {@link Person} object
      */
     public static Person decodeFromJSON(JSONObject jsonObject) {
-        String[] requiredKeys = { "username", "chores", "password", "displayName",
-                "collectiveJoinCode" };
 
-        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
-            throw new IllegalArgumentException("Invalid JSON object, missing keys");
+        try {
+            String username = jsonObject.getString("username");
+            String password = jsonObject.getString("password");
+            String displayName = jsonObject.getString("displayName");
+            String collectiveJoinCode = jsonObject.getString("collectiveJoinCode");
+            JSONArray choresJSON = jsonObject.getJSONArray("chores");
 
-        String username = (String) jsonObject.get("username");
-        String password = (String) jsonObject.get("password");
-        String displayName = (String) jsonObject.get("displayName");
-        String collectiveJoinCode = (String) jsonObject.get("collectiveJoinCode");
-        JSONArray choresJSON = (JSONArray) jsonObject.get("chores");
-        List<Chore> chores = new ArrayList<Chore>();
+            List<Chore> chores = new ArrayList<Chore>();
+            for (Object choreObject : choresJSON) {
+                Chore chore = Chore.decodeFromJSON((JSONObject) choreObject);
+                chores.add(chore);
+            }
 
-        for (Object choreObject : choresJSON) {
-            Chore chore = Chore.decodeFromJSON((JSONObject) choreObject);
-            chores.add(chore);
+            return new Person(username, collectiveJoinCode, new Password(password), chores,
+                    displayName);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException("Invalid JSON object, could not decode");
         }
-
-        return new Person(username, collectiveJoinCode, new Password(password), chores,
-                displayName);
     }
 
     /**

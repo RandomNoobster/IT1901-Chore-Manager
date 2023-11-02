@@ -49,14 +49,8 @@ public class JSONConverter extends FileHandler {
 
         for (Object collectiveObject : collectivesJSON) {
             JSONObject collectiveJSON = (JSONObject) collectiveObject;
-
-            String name = (String) collectiveJSON.get("name");
-            String joinCode = (String) collectiveJSON.get("joinCode");
-            HashMap<String, Person> persons = this
-                    .getPersonsFromCollective((JSONArray) collectiveJSON.get("persons"));
-
-            Collective collective = new Collective(name, joinCode, persons);
-            collectives.put(joinCode, collective);
+            Collective collective = Collective.decodeFromJSON(collectiveJSON);
+            collectives.put(collective.getJoinCode(), collective);
         }
 
         return collectives;

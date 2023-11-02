@@ -3,6 +3,7 @@ package core.data;
 import java.time.LocalDate;
 import java.util.HashMap;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
@@ -206,24 +207,23 @@ public class Chore {
      * @throws IllegalArgumentException If the {@link JSONObject} is missing required keys
      */
     public static Chore decodeFromJSON(JSONObject jsonObject) {
-        String[] requiredKeys = { "choreName", "timeFrom", "timeTo", "isWeekly", "points", "color",
-                "checked", "daysIncompleted", "creator" };
+        try {
+            String choreName = jsonObject.getString("choreName");
+            String timeFromStr = jsonObject.getString("timeFrom");
+            String timeToStr = jsonObject.getString("timeTo");
+            LocalDate timeFrom = LocalDate.parse(timeFromStr);
+            LocalDate timeTo = LocalDate.parse(timeToStr);
+            boolean isWeekly = jsonObject.getBoolean("isWeekly");
+            int points = jsonObject.getInt("points");
+            String color = jsonObject.getString("color");
+            boolean checked = jsonObject.getBoolean("checked");
+            int daysIncompleted = jsonObject.getInt("daysIncompleted");
+            String creator = jsonObject.getString("creator");
 
-        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
-            throw new IllegalArgumentException("Invalid JSON object, missing keys");
-
-        String choreName = (String) jsonObject.get("choreName");
-        LocalDate timeFrom = LocalDate.parse((String) jsonObject.get("timeFrom"));
-        LocalDate timeTo = LocalDate.parse((String) jsonObject.get("timeTo"));
-        boolean isWeekly = (boolean) jsonObject.get("isWeekly");
-        int points = ((Long) jsonObject.get("points")).intValue();
-        String color = (String) jsonObject.get("color");
-        boolean checked = (boolean) jsonObject.get("checked");
-        int daysIncompleted = ((Long) jsonObject.get("daysIncompleted")).intValue();
-        String creator = (String) jsonObject.get("creator");
-
-        return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
-                daysIncompleted, creator);
+            return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
+                    daysIncompleted, creator);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException("Invalid JSON object, could not decode");
+        }
     }
-
 }

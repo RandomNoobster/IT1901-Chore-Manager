@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 
-import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import core.utilities.JSONValidator;
@@ -174,9 +174,9 @@ public class Collective {
         map.put("name", collective.name);
         map.put("joinCode", collective.joinCode);
 
-        JSONArray personJSON = new JSONArray();
+        JSONObject personJSON = new JSONObject();
         for (Person person : collective.persons.values()) {
-            personJSON.put(Person.encodeToJSONObject(person));
+            personJSON.put(person.getUsername(), Person.encodeToJSONObject(person));
         }
 
         map.put("persons", personJSON);
@@ -196,22 +196,23 @@ public class Collective {
      * @return The decoded {@link Collective} object.
      */
     public static Collective decodeFromJSON(JSONObject jsonObject) {
-        String[] requiredKeys = { "name", "joinCode", "persons" };
+        try {
+            String name = jsonObject.getString("name");
+            String joinCode = jsonObject.getString("joinCode");
+            JSONObject personsJSON = jsonObject.getJSONObject("persons");
+            HashMap<String, Person> persons = new HashMap<String, Person>();
 
-        if (!JSONValidator.containsAllKeys(jsonObject, requiredKeys))
-            throw new IllegalArgumentException("Invalid JSON object, missing keys");
+            for (Object key : personsJSON.keySet()) {
+                String username = (String) key;
+                JSONObject personJSONObject = personsJSON.getJSONObject(username);
+                Person person = Person.decodeFromJSON(personJSONObject);
+                persons.put(username, person);
+            }
 
-        String name = (String) jsonObject.get("name");
-        String joinCode = (String) jsonObject.get("joinCode");
-        JSONArray personsJSON = (JSONArray) jsonObject.get("persons");
-        HashMap<String, Person> persons = new HashMap<String, Person>();
-
-        for (Object personObject : personsJSON) {
-            Person person = Person.decodeFromJSON((JSONObject) personObject);
-            persons.put(person.getUsername(), person);
+            return new Collective(name, joinCode, persons);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException("Invalid JSON string, could not decode");
         }
-
-        return new Collective(name, joinCode, persons);
     }
 
 }

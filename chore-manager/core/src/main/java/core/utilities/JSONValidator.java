@@ -1,11 +1,9 @@
 package core.utilities;
 
-import java.lang.reflect.Method;
 import java.util.Arrays;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * A utility class for validating JSON and JSONObjects.
@@ -19,7 +17,7 @@ public final class JSONValidator {
      * @return true if the JSONObject contains all keys, false otherwise
      */
     public static boolean containsAllKeys(JSONObject jsonObject, String... keys) {
-        return Arrays.stream(keys).allMatch(jsonObject::containsKey);
+        return Arrays.stream(keys).allMatch(jsonObject.keySet()::contains);
     }
 
     /**
@@ -30,12 +28,18 @@ public final class JSONValidator {
      * @throws IllegalArgumentException if the JSON string is invalid
      */
     public static JSONObject decodeStringToJSONObject(String jsonString) {
-        JSONParser parser = new JSONParser();
         try {
-            return (JSONObject) parser.parse(jsonString);
-        } catch (ParseException e) {
+            return new JSONObject(jsonString);
+        } catch (JSONException e) {
             throw new IllegalArgumentException("Invalid JSON string");
         }
+
+        // JSONParser parser = new JSONParser();
+        // try {
+        // return (JSONObject) parser.parse(jsonString);
+        // } catch (ParseException e) {
+        // throw new IllegalArgumentException("Invalid JSON string");
+        // }
     }
 
     // TODO: Can possibly remove this method
@@ -49,27 +53,27 @@ public final class JSONValidator {
      * @throws IllegalArgumentException if the JSON string is invalid or the class does not have a
      *                                  decodeFromJSON method and throwException is true
      */
-    public static <T> T decodeFromJSONString(String jsonString, Class<T> clazz,
-            boolean throwException) {
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObject;
-        try {
-            jsonObject = (JSONObject) parser.parse(jsonString);
+    // public static <T> T decodeFromJSONString(String jsonString, Class<T> clazz,
+    // boolean throwException) {
+    // JSONParser parser = new JSONParser();
+    // JSONObject jsonObject;
+    // try {
+    // jsonObject = (JSONObject) parser.parse(jsonString);
 
-            // Get the decodeFromJSON method from the specified class
-            Method decodeMethod = clazz.getMethod("decodeFromJSON", JSONObject.class);
+    // // Get the decodeFromJSON method from the specified class
+    // Method decodeMethod = clazz.getMethod("decodeFromJSON", JSONObject.class);
 
-            // Invoke the method on the JSON object, method is static so pass null as the object
-            return clazz.cast(decodeMethod.invoke(null, jsonObject));
-        } catch (ParseException e) {
-            if (throwException)
-                throw new IllegalArgumentException("Invalid JSON string");
-            e.printStackTrace();
-        } catch (ReflectiveOperationException e) {
-            if (throwException)
-                throw new IllegalArgumentException("Class does not have a decodeFromJSON method");
-            e.printStackTrace();
-        }
-        return null;
-    }
+    // // Invoke the method on the JSON object, method is static so pass null as the object
+    // return clazz.cast(decodeMethod.invoke(null, jsonObject));
+    // } catch (ParseException e) {
+    // if (throwException)
+    // throw new IllegalArgumentException("Invalid JSON string");
+    // e.printStackTrace();
+    // } catch (ReflectiveOperationException e) {
+    // if (throwException)
+    // throw new IllegalArgumentException("Class does not have a decodeFromJSON method");
+    // e.printStackTrace();
+    // }
+    // return null;
+    // }
 }
