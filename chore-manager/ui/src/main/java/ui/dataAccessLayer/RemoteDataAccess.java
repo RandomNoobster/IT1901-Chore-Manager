@@ -7,11 +7,14 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.json.JSONObject;
 
 import core.data.Collective;
+import core.data.Person;
 import core.json.JSONValidator;
 
 /**
@@ -21,7 +24,8 @@ import core.json.JSONValidator;
 public class RemoteDataAccess implements DataAccess {
 
     private static final String APPLICATION_JSON = "application/json";
-    private static final String APPLICATION_FORM_URLENCODED = "application/x-www-form-urlencoded";
+    // private static final String APPLICATION_FORM_URLENCODED =
+    // "application/x-www-form-urlencoded";
     private static final String ACCEPT_HEADER = "Accept";
     private static final String CONTENT_TYPE_HEADER = "Content-Type";
 
@@ -70,10 +74,11 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public Collective getCollective(String joinCode) {
-        final URI endpoint = this.storageURI(String.format("/collectives/%s", joinCode));
+        final URI endpoint = this.storageURI(String.format("collectives/%s", joinCode));
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -110,6 +115,62 @@ public class RemoteDataAccess implements DataAccess {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public boolean removeCollective(Collective collective) {
+        final URI endpoint = this
+                .storageURI(String.format("collectives/%s", collective.getJoinCode()));
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).DELETE().build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public HashMap<String, Person> getAllPersons() {
+        final URI endpoint = this.storageURI("persons");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            HashMap<String, Person> persons = new HashMap<String, Person>();
+
+            for (Object key : jsonObject.keySet()) {
+                String username = (String) key;
+                JSONObject personJSONObject = (JSONObject) jsonObject.get(username);
+                Person person = Person.decodeFromJSON(personJSONObject);
+                persons.put(username, person);
+            }
+
+            return persons;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Person> getAllPersonsList() {
+        List<Person> persons = new ArrayList<Person>();
+        for (Collective collective : this.getCollectives().values()) {
+            persons.addAll(new ArrayList<Person>(collective.getPersons().values()));
+        }
+        return persons;
     }
 
 }

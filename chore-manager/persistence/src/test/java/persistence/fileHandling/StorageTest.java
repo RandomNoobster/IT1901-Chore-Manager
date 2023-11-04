@@ -103,7 +103,7 @@ public class StorageTest {
         Collective collective = localCollectives.values().iterator().next();
 
         localCollectives.remove(collective.getJoinCode());
-        this.storage.removeCollective(collective);
+        this.storage.removeCollective(collective.getJoinCode());
         assertTrue(this.compareTwoHashCollectives(localCollectives, this.storage.getCollectives()));
     }
 }

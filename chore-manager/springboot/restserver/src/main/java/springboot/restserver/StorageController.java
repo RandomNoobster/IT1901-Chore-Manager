@@ -6,6 +6,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Collective;
+import core.data.Person;
 import core.json.JSONValidator;
 
 /**
@@ -60,13 +63,9 @@ public class StorageController {
         Collective collective = this.storageService.getStorage().getCollective(joinCode);
         return Collective.encodeToJSONObject(collective).toString();
     }
-    // @GetMapping(path = "/collectives")
-    // public HashMap<String, Collective> getCollectives() {
-    // return this.storageService.getStorage().getCollectives();
-    // }
 
     /**
-     * Adds a collective to storage.
+     * Adds a collective to the storage.
      *
      * @param collectiveJSON the collective to add in JSON format
      * @return true if the collective was added successfully, false otherwise
@@ -74,15 +73,42 @@ public class StorageController {
     @CacheEvict(value = "collectives", key = "'all'")
     @PostMapping(path = "/collectives")
     public boolean addCollective(@RequestBody String collectiveJSON) {
-        System.out.println();
-        System.out.println(this.storageService.getStorage().getCollectives().size());
         Collective collective = Collective
                 .decodeFromJSON(JSONValidator.decodeFromJSONString(collectiveJSON));
         boolean success = this.storageService.getStorage().addCollective(collective);
-        System.out.println(success);
         this.saveToDisk();
-        System.out.println(this.storageService.getStorage().getCollectives().size());
         return success;
+    }
+
+    /**
+     * Removes a collective from the storage.
+     *
+     * @param joinCode the collective to remove in JSON format
+     * @return true if the collective was added successfully, false otherwise
+     */
+    @Caching(evict = { @CacheEvict(value = "collectives", key = "'all'"),
+            @CacheEvict(value = "collectives", key = "#joinCode") })
+    @DeleteMapping(path = "/collectives/{joinCode}")
+    public boolean removeCollective(@PathVariable("joinCode") String joinCode) {
+        boolean success = this.storageService.getStorage().removeCollective(joinCode);
+        this.saveToDisk();
+        return success;
+    }
+
+    /**
+     * Retrieves all persons from storage.
+     *
+     * @return a HashMap containing all persons
+     */
+    @Cacheable(value = "persons", key = "'all'")
+    @GetMapping(path = "/persons")
+    public String getAllPersons() {
+        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
+        JSONObject jsonObject = new JSONObject();
+        for (String username : persons.keySet()) {
+            jsonObject.put(username, Person.encodeToJSONObject(persons.get(username)));
+        }
+        return jsonObject.toString();
     }
 
 }

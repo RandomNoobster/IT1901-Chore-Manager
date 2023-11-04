@@ -145,11 +145,11 @@ public class Storage {
     /**
      * Removes a collective from the storage.
      *
-     * @param collective The collective to remove.
+     * @param joinCode The joinCode of the collective to remove.
      * @return True if the collective was removed successfully
      */
-    public boolean removeCollective(Collective collective) {
-        return this.collectives.remove(collective.getJoinCode()) != null;
+    public boolean removeCollective(String joinCode) {
+        return this.collectives.remove(joinCode) != null;
     }
 
     /**
