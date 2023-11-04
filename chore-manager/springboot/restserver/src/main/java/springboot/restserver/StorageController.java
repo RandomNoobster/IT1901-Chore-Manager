@@ -1,5 +1,7 @@
 package springboot.restserver;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import org.json.JSONObject;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Collective;
@@ -31,6 +34,10 @@ public class StorageController {
 
     @Autowired
     private StorageService storageService;
+
+    private String uriDecode(String s) {
+        return URLDecoder.decode(s, StandardCharsets.UTF_8);
+    }
 
     /**
      * Saves the current storage state to disk.
@@ -95,6 +102,7 @@ public class StorageController {
         return success;
     }
 
+    // TODO: Is this needed?
     /**
      * Retrieves all persons from storage.
      *
@@ -109,6 +117,21 @@ public class StorageController {
             jsonObject.put(username, Person.encodeToJSONObject(persons.get(username)));
         }
         return jsonObject.toString();
+    }
+
+    @GetMapping(path = "/persons/{username}")
+    public String getPerson(@PathVariable("username") String username,
+            @RequestParam("password") String password) {
+        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
+
+        if (!persons.containsKey(username))
+            return null;
+
+        Person person = persons.get(username);
+        if (!person.getPassword().getPasswordString().equals(password))
+            return null;
+
+        return Person.encodeToJSONObject(person).toString();
     }
 
 }

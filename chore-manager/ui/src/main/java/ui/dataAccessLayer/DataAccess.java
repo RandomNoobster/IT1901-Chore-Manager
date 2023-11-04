@@ -1,9 +1,7 @@
 package ui.dataAccessLayer;
 
-import java.util.HashMap;
-import java.util.List;
-
 import core.data.Collective;
+import core.data.Password;
 import core.data.Person;
 
 /**
@@ -11,13 +9,6 @@ import core.data.Person;
  * REST API.
  */
 public interface DataAccess {
-
-    /**
-     * Retrieves all collectives from storage.
-     *
-     * @return a HashMap containing all collectives
-     */
-    public HashMap<String, Collective> getCollectives();
 
     /**
      * Gets a collective from the storage API.
@@ -35,7 +26,7 @@ public interface DataAccess {
     public Collective getLimboCollective();
 
     /**
-     * Adds a new collective to the storage.
+     * Adds a new collective to the storage API.
      *
      * @param collective The collective to add.
      * @return True if the collective was added successfully, false if a collective with the same
@@ -44,7 +35,7 @@ public interface DataAccess {
     public boolean addCollective(Collective collective);
 
     /**
-     * Removes a collective from the storage.
+     * Removes a collective from the storage API.
      *
      * @param collective The collective to remove.
      * @return True if the collective was removed successfully.
@@ -52,16 +43,12 @@ public interface DataAccess {
     public boolean removeCollective(Collective collective);
 
     /**
-     * Retrieves all persons from storage.
+     * Gets a person from the storage API.
      *
-     * @return a {@link HashMap} containing all persons
+     * @param username The username of the person to get.
+     * @param password The password of the person to get.
+     * @return The person with the given username and password. Null if username or password is
+     *         wrong.
      */
-    public HashMap<String, Person> getAllPersons();
-
-    /**
-     * Retrieves all persons from storage.
-     *
-     * @return a {@link List} containing all persons
-     */
-    public List<Person> getAllPersonsList();
+    public Person getPerson(String username, Password password);
 }
