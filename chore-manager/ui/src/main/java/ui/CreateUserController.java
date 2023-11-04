@@ -65,7 +65,7 @@ public class CreateUserController {
             return false;
         }
 
-        Collective limboCollective = Storage.getInstance().getEmptyCollective();
+        Collective limboCollective = Storage.getInstance().getLimboCollective();
         Person newUser = new Person(username, limboCollective.getJoinCode(), password, displayName);
 
         if (!Storage.getInstance().addPerson(newUser, limboCollective.getJoinCode())) {

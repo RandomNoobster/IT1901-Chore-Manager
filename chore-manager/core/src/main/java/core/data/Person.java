@@ -197,7 +197,8 @@ public class Person {
             return new Person(username, collectiveJoinCode, new Password(password), chores,
                     displayName);
         } catch (JSONException e) {
-            throw new IllegalArgumentException("Invalid JSON object, could not decode");
+            throw new IllegalArgumentException(
+                    "Invalid JSONObject, could not be converted to Person object");
         }
     }
 

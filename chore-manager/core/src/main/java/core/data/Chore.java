@@ -210,7 +210,8 @@ public class Chore {
             return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
                     daysIncompleted, creator);
         } catch (JSONException e) {
-            throw new IllegalArgumentException("Invalid JSON object, could not decode");
+            throw new IllegalArgumentException(
+                    "Invalid JSONObject, could not be converted to Chore object");
         }
     }
 }

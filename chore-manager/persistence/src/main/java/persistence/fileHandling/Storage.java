@@ -123,7 +123,7 @@ public class Storage {
      *
      * @return The limbo collective.
      */
-    public Collective getEmptyCollective() {
+    public Collective getLimboCollective() {
         return this.collectives.get(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 

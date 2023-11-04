@@ -15,7 +15,8 @@ public final class JSONValidator {
      * @return the decoded JSONObject
      * @throws IllegalArgumentException if the JSON string is invalid
      */
-    public static JSONObject decodeFromJSON(String jsonString) throws IllegalArgumentException {
+    public static JSONObject decodeFromJSONString(String jsonString)
+            throws IllegalArgumentException {
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             return jsonObject;

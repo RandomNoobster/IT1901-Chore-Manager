@@ -204,7 +204,8 @@ public class Collective {
 
             return new Collective(name, joinCode, persons);
         } catch (JSONException e) {
-            throw new IllegalArgumentException("Invalid JSON string, could not decode");
+            throw new IllegalArgumentException(
+                    "Invalid JSONObject, could not be converted to Collective object");
         }
     }
 
