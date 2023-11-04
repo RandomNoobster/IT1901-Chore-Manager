@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
+import core.data.RestrictedCollective;
 import core.json.JSONValidator;
 
 /**
@@ -58,37 +59,8 @@ public class RemoteDataAccess implements DataAccess {
         return URI.create(builder.toString());
     }
 
-    // @Override
-    // public HashMap<String, Collective> getCollectives() {
-    // final URI endpoint = this.storageURI("collectives");
-
-    // HttpRequest request = HttpRequest.newBuilder(endpoint)
-    // .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-    // System.out.println("REQUEST: " + request.toString());
-    // try {
-    // final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-    // HttpResponse.BodyHandlers.ofString());
-    // final String responseBody = response.body();
-
-    // // Deserialize the response body
-    // JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
-    // HashMap<String, Collective> collectives = new HashMap<String, Collective>();
-
-    // for (Object key : jsonObject.keySet()) {
-    // String joinCode = (String) key;
-    // JSONObject collectiveJSONObject = (JSONObject) jsonObject.get(joinCode);
-    // Collective collective = Collective.decodeFromJSON(collectiveJSONObject);
-    // collectives.put(joinCode, collective);
-    // }
-
-    // return collectives;
-    // } catch (IOException | InterruptedException e) {
-    // throw new RuntimeException(e);
-    // }
-    // }
-
     @Override
-    public Collective getCollective(String joinCode) {
+    public RestrictedCollective getCollective(String joinCode) {
         final URI endpoint = this.buildURI(String.format("storage/collectives/%s", joinCode));
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -101,15 +73,15 @@ public class RemoteDataAccess implements DataAccess {
 
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
-            return Collective.decodeFromJSON(jsonObject);
+            return RestrictedCollective.decodeFromJSON(jsonObject);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Override
-    public Collective getLimboCollective() {
-        return this.getCollective(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+    public RestrictedCollective getLimboCollective() {
+        return this.getCollective(RestrictedCollective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     @Override
@@ -170,39 +142,4 @@ public class RemoteDataAccess implements DataAccess {
             throw new RuntimeException(e);
         }
     }
-
-    // @Override
-    // public HashMap<String, Person> getAllPersons() {
-    // HashMap<String, Person> persons = new HashMap<String, Person>();
-    // for (Collective collective : this.getCollectives().values()) {
-    // persons.putAll(collective.getPersons());
-    // }
-    // return persons;
-    // final URI endpoint = this.storageURI("persons");
-
-    // HttpRequest request = HttpRequest.newBuilder(endpoint)
-    // .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-    // System.out.println("REQUEST: " + request.toString());
-    // try {
-    // final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
-    // HttpResponse.BodyHandlers.ofString());
-    // final String responseBody = response.body();
-
-    // // Deserialize the response body
-    // JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
-    // HashMap<String, Person> persons = new HashMap<String, Person>();
-
-    // for (Object key : jsonObject.keySet()) {
-    // String username = (String) key;
-    // JSONObject personJSONObject = (JSONObject) jsonObject.get(username);
-    // Person person = Person.decodeFromJSON(personJSONObject);
-    // persons.put(username, person);
-    // }
-
-    // return persons;
-    // } catch (IOException | InterruptedException e) {
-    // throw new RuntimeException(e);
-    // }
-    // }
-
 }

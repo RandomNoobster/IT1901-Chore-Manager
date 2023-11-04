@@ -1,53 +1,34 @@
 package core.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * The Collective class represents a collective in the chore manager.
+ * The Collective class represents a collective in the chore manager. DO NOT USE THIS CLASS IN THE
+ * FRONTEND. USE {@link RestrictedCollective} INSTEAD.
  */
-public class Collective {
+public class Collective extends RestrictedCollective {
 
-    private static final int maxJoinCode = 999999; // Inclusive
-    public static final String LIMBO_COLLECTIVE_JOIN_CODE = "0"
-            .repeat(String.valueOf(maxJoinCode).length());
-    public static final Random random = new Random();
-    /**
-     * To avoid duplicate join codes without having to know about the persistence module.
-     */
-    private static HashSet<String> joinCodes = new HashSet<String>(
-            Arrays.asList(LIMBO_COLLECTIVE_JOIN_CODE));
-
-    private String joinCode;
-    private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
 
     public Collective(Collective collective) {
         this(collective.getName(), collective.getJoinCode(), collective.getPersons());
     }
 
+    public Collective(RestrictedCollective collective) {
+        this(collective.getName(), collective.getJoinCode());
+    }
+
     public Collective(String name) {
-        this(name, generateJoinCode());
+        super(name);
     }
 
     public Collective(String name, String joinCode) {
         this(name, joinCode, new HashMap<String, Person>());
-    }
-
-    /**
-     * Check if collective is the limbo collective you get added to when creating a new user.
-     *
-     * @return true if this is the limbo collective
-     */
-    public boolean isLimboCollective() {
-        return this.joinCode.equals(LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**
@@ -58,42 +39,8 @@ public class Collective {
      * @param persons  The persons in the collective.
      */
     public Collective(String name, String joinCode, HashMap<String, Person> persons) {
-        this.name = name;
-        this.joinCode = joinCode;
+        super(name, joinCode);
         this.persons = new HashMap<>(persons);
-
-        joinCodes.add(joinCode);
-    }
-
-    /**
-     * String is unique and not 0000000, as it is reserved for limbo collective.
-     *
-     * @param joinCode The join code to check
-     * @return True if the join code is unique, false otherwise
-     */
-    private static boolean isUniqueJoinCode(String joinCode) {
-        return !joinCodes.contains(joinCode);
-    }
-
-    private static String generateJoinCode() {
-        if (joinCodes.size() >= maxJoinCode) {
-            throw new IllegalStateException("All join codes have been used");
-        }
-        String joinCode = "";
-        do {
-            // 1 - 999999 (inclusive), 000000 is reserved
-            int randomJoinCode = random.nextInt(maxJoinCode) + 1; // 1 - 999999
-            joinCode = String.format("%06d", randomJoinCode);
-        } while (!isUniqueJoinCode(joinCode));
-        return joinCode;
-    }
-
-    public String getJoinCode() {
-        return this.joinCode;
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     /**
@@ -169,8 +116,8 @@ public class Collective {
     public static JSONObject encodeToJSONObject(Collective collective) {
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("name", collective.name);
-        map.put("joinCode", collective.joinCode);
+        map.put("name", collective.getName());
+        map.put("joinCode", collective.getJoinCode());
 
         JSONObject personJSON = new JSONObject();
         for (Person person : collective.persons.values()) {

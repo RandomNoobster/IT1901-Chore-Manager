@@ -3,6 +3,7 @@ package ui.dataAccessLayer;
 import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
+import core.data.RestrictedCollective;
 
 /**
  * Class that centralizes access to the Storage API. Makes it easier to support transparent use of a
@@ -16,14 +17,14 @@ public interface DataAccess {
      * @param joinCode The join code of the collective to get.
      * @return The collective with the given join code.
      */
-    public Collective getCollective(String joinCode);
+    public RestrictedCollective getCollective(String joinCode);
 
     /**
      * This method is used to get the limbo collective.
      *
      * @return The limbo collective.
      */
-    public Collective getLimboCollective();
+    public RestrictedCollective getLimboCollective();
 
     /**
      * Adds a new collective to the storage API.

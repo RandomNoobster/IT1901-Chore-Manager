@@ -1,10 +1,7 @@
 package springboot.restserver;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Collective;
 import core.data.Person;
+import core.data.RestrictedCollective;
 import core.json.JSONValidator;
 
 /**
@@ -35,10 +33,6 @@ public class StorageController {
     @Autowired
     private StorageService storageService;
 
-    private String uriDecode(String s) {
-        return URLDecoder.decode(s, StandardCharsets.UTF_8);
-    }
-
     /**
      * Saves the current storage state to disk.
      */
@@ -46,29 +40,11 @@ public class StorageController {
         this.storageService.saveToDisk();
     }
 
-    /**
-     * Retrieves all collectives from storage.
-     *
-     * @return a HashMap containing all collectives
-     */
-    @Cacheable(value = "collectives", key = "'all'")
-    @GetMapping(path = "/collectives")
-    public String getCollectives() {
-        HashMap<String, Collective> collectives = this.storageService.getStorage().getCollectives();
-        JSONObject jsonObject = new JSONObject();
-        System.out.println("CACHE NOT HIT");
-        for (String joinCode : collectives.keySet()) {
-            jsonObject.put(joinCode, Collective.encodeToJSONObject(collectives.get(joinCode)));
-        }
-
-        return jsonObject.toString();
-    }
-
     @Cacheable(value = "collectives", key = "#joinCode")
     @GetMapping(path = "/collectives/{joinCode}")
     public String getCollective(@PathVariable("joinCode") String joinCode) {
         Collective collective = this.storageService.getStorage().getCollective(joinCode);
-        return Collective.encodeToJSONObject(collective).toString();
+        return RestrictedCollective.encodeToJSONObject(collective).toString();
     }
 
     /**
@@ -80,8 +56,9 @@ public class StorageController {
     @CacheEvict(value = "collectives", key = "'all'")
     @PostMapping(path = "/collectives")
     public boolean addCollective(@RequestBody String collectiveJSON) {
-        Collective collective = Collective
+        RestrictedCollective restrictedCollective = RestrictedCollective
                 .decodeFromJSON(JSONValidator.decodeFromJSONString(collectiveJSON));
+        Collective collective = new Collective(restrictedCollective);
         boolean success = this.storageService.getStorage().addCollective(collective);
         this.saveToDisk();
         return success;
@@ -100,23 +77,6 @@ public class StorageController {
         boolean success = this.storageService.getStorage().removeCollective(joinCode);
         this.saveToDisk();
         return success;
-    }
-
-    // TODO: Is this needed?
-    /**
-     * Retrieves all persons from storage.
-     *
-     * @return a HashMap containing all persons
-     */
-    @Cacheable(value = "persons", key = "'all'")
-    @GetMapping(path = "/persons")
-    public String getAllPersons() {
-        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
-        JSONObject jsonObject = new JSONObject();
-        for (String username : persons.keySet()) {
-            jsonObject.put(username, Person.encodeToJSONObject(persons.get(username)));
-        }
-        return jsonObject.toString();
     }
 
     @GetMapping(path = "/persons/{username}")
