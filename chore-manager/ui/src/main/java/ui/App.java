@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import persistence.fileHandling.Storage;
 
 /**
  * The App class has the logic to start the user interface of the project.
@@ -46,11 +45,6 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.show();
-
-        stage.setOnCloseRequest(event -> {
-            Storage.getInstance().save();
-            System.exit(0);
-        });
 
     }
 
