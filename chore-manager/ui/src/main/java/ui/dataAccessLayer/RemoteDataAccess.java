@@ -2,9 +2,11 @@ package ui.dataAccessLayer;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
 import org.json.JSONObject;
@@ -29,21 +31,28 @@ public class RemoteDataAccess implements DataAccess {
         this.API_BASE_ENDPOINT = apiBaseEndpoint;
     }
 
+    private String uriEncode(String s) {
+        return URLEncoder.encode(s, StandardCharsets.UTF_8);
+    }
+
+    private URI storageURI(String endpoint) {
+        return this.API_BASE_ENDPOINT.resolve("storage/").resolve(this.uriEncode(endpoint));
+    }
+
     @Override
     public HashMap<String, Collective> getCollectives() {
-        final String endpoint = "storage/collectives";
+        final URI endpoint = this.storageURI("collectives");
 
-        HttpRequest request = HttpRequest.newBuilder(this.API_BASE_ENDPOINT.resolve(endpoint))
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
         System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
-            System.out.println(responseBody);
 
             // Deserialize the response body
-            JSONObject jsonObject = JSONValidator.decodeFromJSON(responseBody);
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
             HashMap<String, Collective> collectives = new HashMap<String, Collective>();
 
             for (Object key : jsonObject.keySet()) {
@@ -54,6 +63,50 @@ public class RemoteDataAccess implements DataAccess {
             }
 
             return collectives;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Collective getCollective(String joinCode) {
+        final URI endpoint = this.storageURI(String.format("/collectives/%s", joinCode));
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            return Collective.decodeFromJSON(jsonObject);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public Collective getLimboCollective() {
+        return this.getCollective(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+    }
+
+    @Override
+    public boolean addCollective(Collective collective) {
+        final URI endpoint = this.storageURI("collectives");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers
+                        .ofString(Collective.encodeToJSONObject(collective).toString()))
+                .build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
