@@ -79,6 +79,13 @@ public class StorageController {
         return success;
     }
 
+    /**
+     * Retrieves a person from the storage.
+     *
+     * @param username the username of the person to retrieve
+     * @param password the password of the person to retrieve
+     * @return the person in JSON format if the username and password are correct, null otherwise
+     */
     @GetMapping(path = "/persons/{username}")
     public String getPerson(@PathVariable("username") String username,
             @RequestParam("password") String password) {

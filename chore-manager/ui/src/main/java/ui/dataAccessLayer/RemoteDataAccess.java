@@ -135,9 +135,13 @@ public class RemoteDataAccess implements DataAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
-            System.out.println(responseBody);
 
-            return null;
+            if (responseBody == null || responseBody.isEmpty())
+                return null;
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            return Person.decodeFromJSON(jsonObject);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

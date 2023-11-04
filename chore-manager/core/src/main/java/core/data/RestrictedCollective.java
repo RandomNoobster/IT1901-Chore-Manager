@@ -9,9 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * RestricedCollective is a subclass of Collective. It hides the information about the persons
- * inside the collective. This is used to prevent the user from seeing the other persons in the
- * collective, and is used for security reasons. This object is exclusively used in the frontend.
+ * RestricedCollective is contains non-sensitive information about a collective. It hides the
+ * information about the persons inside the collective. This is used to prevent the user from seeing
+ * the other persons in the collective, and is used for security reasons. This object is exclusively
+ * used in the frontend.
  */
 public class RestrictedCollective {
 
