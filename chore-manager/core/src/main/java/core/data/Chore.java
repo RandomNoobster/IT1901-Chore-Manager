@@ -170,6 +170,9 @@ public class Chore {
      * @return A {@link JSONObject} representation of the chore
      */
     public static JSONObject encodeToJSONObject(Chore chore) {
+        if (chore == null)
+            throw new IllegalArgumentException("Cannot encode null");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         map.put("choreName", chore.choreName);
@@ -194,6 +197,9 @@ public class Chore {
      * @throws IllegalArgumentException If the {@link JSONObject} is missing required keys
      */
     public static Chore decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
+        if (jsonObject == null)
+            return null;
+
         try {
             String choreName = jsonObject.getString("choreName");
             String timeFromStr = jsonObject.getString("timeFrom");

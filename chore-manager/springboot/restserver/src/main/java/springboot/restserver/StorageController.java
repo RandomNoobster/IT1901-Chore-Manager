@@ -3,7 +3,6 @@ package springboot.restserver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,11 +50,12 @@ public class StorageController {
      * @param collectiveJSON the collective to add in JSON format
      * @return true if the collective was added successfully, false otherwise
      */
-    @CacheEvict(value = "collectives", key = "'all'")
+    @CacheEvict(value = "collectives", key = "#restrictedCollective.joinCode")
     @PostMapping(path = "/collectives")
     public boolean addCollective(@RequestBody String collectiveJSON) {
         RestrictedCollective restrictedCollective = RestrictedCollective
                 .decodeFromJSON(JSONValidator.decodeFromJSONString(collectiveJSON));
+
         Collective collective = new Collective(restrictedCollective);
         boolean success = this.storageService.getStorage().addCollective(collective);
         this.saveToDisk();
@@ -68,8 +68,7 @@ public class StorageController {
      * @param joinCode the collective to remove in JSON format
      * @return true if the collective was added successfully, false otherwise
      */
-    @Caching(evict = { @CacheEvict(value = "collectives", key = "'all'"),
-            @CacheEvict(value = "collectives", key = "#joinCode") })
+    @CacheEvict(value = "collectives", key = "#joinCode")
     @DeleteMapping(path = "/collectives/{joinCode}")
     public boolean removeCollective(@PathVariable("joinCode") String joinCode) {
         boolean success = this.storageService.getStorage().removeCollective(joinCode);

@@ -157,6 +157,9 @@ public class Person {
      * @return A {@link JSONObject} representing the person
      */
     public static JSONObject encodeToJSONObject(Person person) {
+        if (person == null)
+            throw new IllegalArgumentException("Cannot encode null");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         map.put("username", person.username);
@@ -181,6 +184,9 @@ public class Person {
      * @return A {@link Person} object
      */
     public static Person decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
+        if (jsonObject == null)
+            return null;
+
         try {
             String username = jsonObject.getString("username");
             String password = jsonObject.getString("password");

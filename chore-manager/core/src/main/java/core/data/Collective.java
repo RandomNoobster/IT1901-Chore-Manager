@@ -114,6 +114,9 @@ public class Collective extends RestrictedCollective {
      * @return A {@link JSONObject} representing the collective
      */
     public static JSONObject encodeToJSONObject(Collective collective) {
+        if (collective == null)
+            throw new IllegalArgumentException("Cannot encode null");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         map.put("name", collective.getName());
@@ -136,6 +139,9 @@ public class Collective extends RestrictedCollective {
      * @return The decoded {@link Collective} object.
      */
     public static Collective decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
+        if (jsonObject == null)
+            return null;
+
         try {
             String name = jsonObject.getString("name");
             String joinCode = jsonObject.getString("joinCode");
