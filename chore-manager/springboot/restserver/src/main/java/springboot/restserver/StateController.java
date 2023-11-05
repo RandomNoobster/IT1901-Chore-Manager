@@ -2,6 +2,9 @@ package springboot.restserver;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Collective;
 import core.data.Person;
+import core.data.RestrictedCollective;
 
 /**
  * The controller for interacting with the state service. Handles incoming HTTP requests related to
@@ -32,6 +36,8 @@ public class StateController {
      *
      * @return The logged in user.
      */
+    @Caching(evict = { @CacheEvict(value = "logged-in-user"),
+            @CacheEvict(value = "current-collective") })
     @PostMapping(path = "/log-in")
     public boolean logIn(@RequestBody String loginInfo) {
 
@@ -58,10 +64,23 @@ public class StateController {
      *
      * @return The logged in user.
      */
+    @Cacheable(value = "logged-in-user")
     @GetMapping(path = "/logged-in-user")
     public String getLoggedInUser() {
         Person user = this.stateService.getInstance().getLoggedInUser();
         return Person.encodeToJSONObject(user).toString();
+    }
+
+    /**
+     * This method is used to get the current collective.
+     *
+     * @return The current collective.
+     */
+    @Cacheable(value = "current-collective")
+    @GetMapping(path = "/current-collective")
+    public String getCurrentCollective() {
+        Collective collective = this.stateService.getInstance().getCurrentCollective();
+        return RestrictedCollective.encodeToJSONObject(collective).toString();
     }
 
 }

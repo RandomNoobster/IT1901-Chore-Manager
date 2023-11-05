@@ -52,4 +52,30 @@ public interface DataAccess {
      *         wrong.
      */
     public Person getPerson(String username, Password password);
+
+    /**
+     * This method is used to set the logged in user and the corresponding collective. If the
+     * collective or person does not exist in storage, it will fail to log in.
+     *
+     * @param user         The user to set as the logged in user.
+     * @param userPassword The password of the user to set as the logged in user.
+     * @param collective   The collective to set as the current collective.
+     * @return true if the user was logged in successfully, false if the collective or user does not
+     *         exist in storage
+     */
+    public boolean logIn(Person user, Password userPassword, Collective collective);
+
+    /**
+     * This method is used to set the logged in user.
+     *
+     * @return The logged in user
+     */
+    public Person getLoggedInUser();
+
+    /**
+     * This method is used to get the current collective.
+     *
+     * @return The current collective.
+     */
+    public RestrictedCollective getCurrentCollective();
 }

@@ -147,16 +147,7 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
-    /**
-     * This method is used to set the logged in user and the corresponding collective. If the
-     * collective or person does not exist in storage, it will fail to log in.
-     *
-     * @param user         The user to set as the logged in user.
-     * @param userPassword The password of the user to set as the logged in user.
-     * @param collective   The collective to set as the current collective.
-     * @return true if the user was logged in successfully, false if the collective or user does not
-     *         exist in storage
-     */
+    @Override
     public boolean logIn(Person user, Password userPassword, Collective collective) {
         final URI endpoint = this.buildURI("state/log-in");
 
@@ -178,6 +169,44 @@ public class RemoteDataAccess implements DataAccess {
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
             return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Person getLoggedInUser() {
+        final URI endpoint = this.buildURI("state/logged-in-user");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            return Person.decodeFromJSON(jsonObject);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public RestrictedCollective getCurrentCollective() {
+        final URI endpoint = this.buildURI("state/current-collective");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            return RestrictedCollective.decodeFromJSON(jsonObject);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
