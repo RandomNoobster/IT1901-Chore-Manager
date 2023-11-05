@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import core.data.Chore;
 import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
@@ -174,6 +175,7 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
+    @Override
     public Person getLoggedInUser() {
         final URI endpoint = this.buildURI("state/logged-in-user");
 
@@ -193,6 +195,7 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
+    @Override
     public RestrictedCollective getCurrentCollective() {
         final URI endpoint = this.buildURI("state/current-collective");
 
@@ -207,6 +210,29 @@ public class RemoteDataAccess implements DataAccess {
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
             return RestrictedCollective.decodeFromJSON(jsonObject);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean addChore(Chore chore, Person assignedPerson) {
+        final URI endpoint = this.buildURI("state/add-chore");
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("chore", chore);
+        requestBody.put("assignedPerson", assignedPerson.getUsername());
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

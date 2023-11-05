@@ -91,22 +91,28 @@ public class State {
     }
 
     /**
-     * This method adds a chore to a person.
+     * This method adds a chore to a person within the current collective.
      *
      * @param chore          The chore to add.
      * @param assignedPerson The person to add the chore to.
      */
-    public void addChore(Chore chore, Person assignedPerson) {
+    public boolean addChore(Chore chore, Person assignedPerson) {
         if (assignedPerson == null) {
             System.out.println("Person is null, cannot add chore");
-            return;
+            return false;
+        }
+
+        if (this.currentCollective == null) {
+            System.out.println("Current collective is null, cannot add chore");
+            return false;
         }
 
         if (this.currentCollective.hasPerson(assignedPerson)) {
-            Person person = this.currentCollective.getPersons().get(assignedPerson.getUsername());
-            person.addChore(chore);
-        } else {
-            System.out.println("Person does not exist");
+            Person person = this.currentCollective.getPerson(assignedPerson.getUsername());
+            return person.addChore(chore);
         }
+
+        System.out.println("Person does not exist in this collective, could not add chore");
+        return false;
     }
 }

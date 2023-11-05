@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
 import core.data.RestrictedCollective;
+import core.json.JSONValidator;
 
 /**
  * The controller for interacting with the state service. Handles incoming HTTP requests related to
@@ -41,7 +43,7 @@ public class StateController {
     @PostMapping(path = "/log-in")
     public boolean logIn(@RequestBody String loginInfo) {
 
-        JSONObject loginInfoJSON = new JSONObject(loginInfo);
+        JSONObject loginInfoJSON = JSONValidator.decodeFromJSONString(loginInfo);
         String username = loginInfoJSON.getString("username");
         String joinCode = loginInfoJSON.getString("joinCode");
         String password = loginInfoJSON.getString("password");
@@ -81,6 +83,19 @@ public class StateController {
     public String getCurrentCollective() {
         Collective collective = this.stateService.getInstance().getCurrentCollective();
         return RestrictedCollective.encodeToJSONObject(collective).toString();
+    }
+
+    /**
+     * This method is used to add a chore to a person within the current collective
+     */
+    @PostMapping(path = "/add-chore")
+    public boolean addChore(@RequestBody String choreInfo) {
+        JSONObject jsonObject = JSONValidator.decodeFromJSONString(choreInfo);
+        Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
+        String assignedPersonUsername = jsonObject.getString("assignedPerson");
+
+        Person person = this.stateService.getInstance().getCurrentCollective().getPerson(username);
+        return this.stateService.getInstance().addChore(chore, person);
     }
 
 }

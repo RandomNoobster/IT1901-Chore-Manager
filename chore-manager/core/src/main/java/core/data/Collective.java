@@ -44,7 +44,16 @@ public class Collective extends RestrictedCollective {
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get a person from this collective
+     * 
+     * @return The person with the given username
+     */
+    public Person getPerson(String username) {
+        return this.persons.get(username);
+    }
+
+    /**
+     * This method is used to get the persons from this collective.
      *
      * @return A {@link HashMap} of persons and their unique keys.
      */
@@ -53,7 +62,7 @@ public class Collective extends RestrictedCollective {
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get the persons from this collective.
      *
      * @return A {@link List} of persons.
      */

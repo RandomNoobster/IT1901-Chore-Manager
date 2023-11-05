@@ -1,5 +1,6 @@
 package ui.dataAccessLayer;
 
+import core.data.Chore;
 import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
@@ -54,6 +55,15 @@ public interface DataAccess {
     public Person getPerson(String username, Password password);
 
     /**
+     * Adds a new person to the storage API.
+     * 
+     * @param person             The person to add.
+     * @param collectiveJoinCode The join code of the collective to add the person to.
+     * @return True if the person was added successfully, false if a person with the same username
+     */
+    // public boolean addPerson(Person person, String collectiveJoinCode);
+
+    /**
      * This method is used to set the logged in user and the corresponding collective. If the
      * collective or person does not exist in storage, it will fail to log in.
      *
@@ -78,4 +88,11 @@ public interface DataAccess {
      * @return The current collective.
      */
     public RestrictedCollective getCurrentCollective();
+
+    /**
+     * This method is used to add a chore to a person in the current collective
+     * 
+     * @return true if the chore was added successfully, false otherwise
+     */
+    public boolean addChore(Chore chore, Person person);
 }

@@ -112,8 +112,8 @@ public class Person {
      *
      * @param chore The chore to add
      */
-    public void addChore(Chore chore) {
-        this.chores.add(chore);
+    public boolean addChore(Chore chore) {
+        return this.chores.add(chore);
     }
 
     public void deleteChore(Chore chore) {
