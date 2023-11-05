@@ -146,4 +146,40 @@ public class RemoteDataAccess implements DataAccess {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * This method is used to set the logged in user and the corresponding collective. If the
+     * collective or person does not exist in storage, it will fail to log in.
+     *
+     * @param user         The user to set as the logged in user.
+     * @param userPassword The password of the user to set as the logged in user.
+     * @param collective   The collective to set as the current collective.
+     * @return true if the user was logged in successfully, false if the collective or user does not
+     *         exist in storage
+     */
+    public boolean logIn(Person user, Password userPassword, Collective collective) {
+        final URI endpoint = this.buildURI("state/log-in");
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("username", user.getUsername());
+        requestBody.put("password", userPassword.getPasswordString()); // TODO: Don't think this is
+                                                                       // needed as you know the
+                                                                       // password from Person
+                                                                       // object
+        requestBody.put("joinCode", collective.getJoinCode());
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
