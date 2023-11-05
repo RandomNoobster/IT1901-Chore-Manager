@@ -149,6 +149,32 @@ public class RemoteDataAccess implements DataAccess {
     }
 
     @Override
+    public boolean addPerson(Person person, String joinCode) {
+        final URI endpoint = this
+                .buildURI(String.format("storage/persons/%s", person.getUsername()));
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("person", Person.encodeToJSONObject(person));
+        requestBody.put("joinCode", joinCode);
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
+
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
     public boolean logIn(Person user, Password userPassword, Collective collective) {
         final URI endpoint = this.buildURI("state/log-in");
 
@@ -220,7 +246,7 @@ public class RemoteDataAccess implements DataAccess {
         final URI endpoint = this.buildURI("state/add-chore");
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("chore", chore);
+        requestBody.put("chore", Chore.encodeToJSONObject(chore));
         requestBody.put("assignedPerson", assignedPerson.getUsername());
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -237,4 +263,5 @@ public class RemoteDataAccess implements DataAccess {
             throw new RuntimeException(e);
         }
     }
+
 }

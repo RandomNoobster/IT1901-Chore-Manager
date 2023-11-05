@@ -55,13 +55,13 @@ public interface DataAccess {
     public Person getPerson(String username, Password password);
 
     /**
-     * Adds a new person to the storage API.
-     * 
-     * @param person             The person to add.
-     * @param collectiveJoinCode The join code of the collective to add the person to.
-     * @return True if the person was added successfully, false if a person with the same username
+     * This method adds a unique person to a collective in the API.
+     *
+     * @param person   The person to add
+     * @param joinCode The join code of the collective to add the person to
+     * @return True if the person was added, false otherwise
      */
-    // public boolean addPerson(Person person, String collectiveJoinCode);
+    public boolean addPerson(Person person, String joinCode);
 
     /**
      * This method is used to set the logged in user and the corresponding collective. If the

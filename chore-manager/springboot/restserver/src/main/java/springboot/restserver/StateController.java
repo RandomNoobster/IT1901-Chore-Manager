@@ -94,7 +94,8 @@ public class StateController {
         Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
         String assignedPersonUsername = jsonObject.getString("assignedPerson");
 
-        Person person = this.stateService.getInstance().getCurrentCollective().getPerson(username);
+        Person person = this.stateService.getInstance().getCurrentCollective()
+                .getPerson(assignedPersonUsername);
         return this.stateService.getInstance().addChore(chore, person);
     }
 

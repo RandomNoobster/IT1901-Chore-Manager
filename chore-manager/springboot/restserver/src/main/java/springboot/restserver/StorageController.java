@@ -1,5 +1,6 @@
 package springboot.restserver;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -95,6 +96,23 @@ public class StorageController {
             return null;
 
         return Person.encodeToJSONObject(person).toString();
+    }
+
+    /**
+     * Adds a person to the storage.
+     *
+     * @param requestBody the request body
+     * @return true if the person was added successfully, false otherwise
+     */
+    @PostMapping(path = "/persons/{username}")
+    public boolean addPerson(@RequestBody String requestBody) {
+        JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);
+        Person person = Person.decodeFromJSON(jsonObject.getJSONObject("person"));
+        String joinCode = jsonObject.getString("joinCode");
+
+        boolean success = this.storageService.getStorage().addPerson(person, joinCode);
+        this.saveToDisk();
+        return success;
     }
 
 }
