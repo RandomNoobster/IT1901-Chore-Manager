@@ -153,6 +153,20 @@ public class Storage {
     }
 
     /**
+     * This method is used to get a person from the file system.
+     *
+     * @param username The username of the person to get.
+     * @return The person with the specified username.
+     */
+    public Person getPerson(String username) {
+        for (Collective collective : this.collectives.values()) {
+            if (collective.getPersons().containsKey(username))
+                return collective.getPersons().get(username);
+        }
+        return null;
+    }
+
+    /**
      * This method is used to get all persons from the file system.
      *
      * @return A {@link List} of all persons.

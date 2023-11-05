@@ -14,6 +14,10 @@ public class Password {
     private boolean isLegalLength = false;
 
     public Password(String password) {
+        if (password == null) {
+            throw new IllegalArgumentException("Password cannot be null.");
+        }
+
         this.password = password;
         this.updateFlags();
     }

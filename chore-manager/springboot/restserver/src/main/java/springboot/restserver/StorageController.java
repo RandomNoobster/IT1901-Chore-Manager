@@ -1,7 +1,5 @@
 package springboot.restserver;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -89,12 +87,11 @@ public class StorageController {
     @GetMapping(path = "/persons/{username}")
     public String getPerson(@PathVariable("username") String username,
             @RequestParam("password") String password) {
-        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
+        Person person = this.storageService.getStorage().getPerson(username);
 
-        if (!persons.containsKey(username))
+        if (person == null)
             return null;
 
-        Person person = persons.get(username);
         if (!person.getPassword().getPasswordString().equals(password))
             return null;
 

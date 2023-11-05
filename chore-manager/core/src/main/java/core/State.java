@@ -46,6 +46,15 @@ public class State {
     }
 
     /**
+     * This method is used to get the current collective.
+     *
+     * @return The current collective.
+     */
+    public Collective getCurrentCollective() {
+        return this.currentCollective;
+    }
+
+    /**
      * This method is used to set the logged in user and the corresponding collective.
      *
      * @param user The user to set as the logged in user.
@@ -79,15 +88,6 @@ public class State {
     public void logOutUser() {
         this.loggedInUser = null;
         this.currentCollective = null;
-    }
-
-    /**
-     * This method is used to get the current collective.
-     *
-     * @return The current collective.
-     */
-    public Collective getCurrentCollective() {
-        return this.currentCollective;
     }
 
     /**
