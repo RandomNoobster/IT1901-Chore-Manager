@@ -1,5 +1,7 @@
 package ui.dataAccessLayer;
 
+import java.util.List;
+
 import core.data.Chore;
 import core.data.Collective;
 import core.data.Password;
@@ -90,9 +92,16 @@ public interface DataAccess {
     public RestrictedCollective getCurrentCollective();
 
     /**
-     * This method is used to add a chore to a person in the current collective
-     * 
+     * This method is used to add a chore to a person in the current collective.
+     *
      * @return true if the chore was added successfully, false otherwise
      */
     public boolean addChore(Chore chore, Person person);
+
+    /**
+     * This method is used to get the chores from the current collective.
+     * 
+     * @return A {@link List} of chores.
+     */
+    public List<Chore> getChores();
 }

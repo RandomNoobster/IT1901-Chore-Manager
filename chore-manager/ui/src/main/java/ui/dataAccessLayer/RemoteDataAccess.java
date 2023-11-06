@@ -7,8 +7,11 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import core.data.Chore;
@@ -243,7 +246,7 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public boolean addChore(Chore chore, Person assignedPerson) {
-        final URI endpoint = this.buildURI("state/add-chore");
+        final URI endpoint = this.buildURI("state/chores");
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("chore", Chore.encodeToJSONObject(chore));
@@ -264,4 +267,33 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
+    public List<Chore> getChores() {
+        final URI endpoint = this.buildURI("state/chores");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            if (responseBody == null || responseBody.isEmpty())
+                return null;
+
+            // Deserialize the response body
+            JSONArray jsonArray = JSONValidator.decodeFromJSONStringArray(responseBody);
+            List<Chore> chores = new ArrayList<Chore>();
+
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                chores.add(Chore.decodeFromJSON(jsonObject));
+            }
+
+            return chores;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

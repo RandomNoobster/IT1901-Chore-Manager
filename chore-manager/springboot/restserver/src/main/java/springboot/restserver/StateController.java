@@ -1,5 +1,8 @@
 package springboot.restserver;
 
+import java.util.List;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -86,9 +89,9 @@ public class StateController {
     }
 
     /**
-     * This method is used to add a chore to a person within the current collective
+     * This method is used to add a chore to a person within the current collective.
      */
-    @PostMapping(path = "/add-chore")
+    @PostMapping(path = "/chores")
     public boolean addChore(@RequestBody String choreInfo) {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(choreInfo);
         Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
@@ -97,6 +100,26 @@ public class StateController {
         Person person = this.stateService.getInstance().getCurrentCollective()
                 .getPerson(assignedPersonUsername);
         return this.stateService.getInstance().addChore(chore, person);
+    }
+
+    /**
+     * Gets all chores within this collective
+     */
+    @GetMapping(path = "/chores")
+    public String getChores() {
+        if (this.stateService.getInstance().getCurrentCollective() == null) {
+            System.out.println("You haven't logged in");
+            return null;
+        }
+
+        List<Chore> chores = this.stateService.getInstance().getCurrentCollective().getChoresList();
+
+        JSONArray choresJSON = new JSONArray();
+        for (Chore chore : chores) {
+            choresJSON.put(Chore.encodeToJSONObject(chore));
+        }
+
+        return choresJSON.toString();
     }
 
 }
