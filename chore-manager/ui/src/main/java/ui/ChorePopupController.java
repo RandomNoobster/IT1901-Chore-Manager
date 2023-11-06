@@ -8,6 +8,9 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import persistence.fileHandling.Storage;
 
+/**
+ * This is the controller for the chore popup view.
+ */
 public class ChorePopupController {
     @FXML
     private Label choreName;
@@ -31,6 +34,12 @@ public class ChorePopupController {
 
     }
 
+    /**
+     * This method is called when the view is loaded. It passes the chore and the assignee.
+     *
+     * @param chore    The chore
+     * @param assignee The assignee
+     */
     public void passData(Chore chore, Person assignee) {
         System.out.println(chore);
         this.chore = chore;
