@@ -9,6 +9,8 @@
 
     -buttonColor: #9CC0F8;
     -buttonHover: #669EF6;
+    -mediumBlue: #3E70B7;
+    -darkBlue: #2762B5;
     -pastDay: #FFF0C3;
 
     -weekLabels: #FCE292;
@@ -59,8 +61,6 @@
 
 .day-container {
     -fx-alignment: TOP_CENTER;
-    -fx-border-width: 0 0 2px 0; /* Adjust the border width as needed */
-    -fx-border-color: derive(-textWhite, 0%);
 }
 
 .bold {
@@ -183,6 +183,7 @@
 
 .static-button {
     -fx-pref-width: 110px;
+    -fx-cursor: hand;
 }
 
 .invisible-label .label {
@@ -206,6 +207,10 @@
     -fx-background-color: derive(-buttonColor, 0%);
 }
 
+.background-medium-blue {
+    -fx-background-color: derive(-mediumBlue, 0%);
+}
+
 .background-red {
     -fx-background-color: derive(-redColor, 0%);
 }
@@ -217,21 +222,33 @@
 
 .on-hover-background-blue:hover {
     -fx-background-color: derive(-buttonHover, 0%);
+    -fx-cursor: hand;
 }
+
+.on-hover-background-medium-blue {
+    -fx-background-color: derive(-darkBlue, 0%);
+    -fx-cursor: hand;
+
+}
+
 .on-hover-background-red:hover {
     -fx-background-color: derive(-redColorHover, 0%);
+    -fx-cursor: hand;
 }
 
 .on-hover-background-green:hover {
     -fx-background-color: derive(-checked, 10%);
+    -fx-cursor: hand;
 }
 
 .on-hover-underline {
     -fx-underline: false;
+    -fx-cursor: hand;
 }
 
 .on-hover-underline:hover {
     -fx-underline: true;
+    -fx-cursor: hand;
 }
 
 .blue-text {
@@ -284,8 +301,14 @@
 
 .overdue {
     -fx-border-color: derive(-redColor, 0%);
-    -fx-border-width: 2px;
-    -fx-underline: true;
+    -fx-border-width: 3px;
+    -fx-font-weight: bold;
+
+}
+
+.checked {
+    -fx-border-color: derive(-checked, 0%);
+    -fx-border-width: 3px;
 }
 
 .align-left {
@@ -300,4 +323,8 @@
 
 .padding-medium {
     -fx-padding: 7px;
+}
+
+.medium-font {
+    -fx-font-size: 20px;
 }

@@ -53,6 +53,15 @@ public class Week {
     }
 
     /**
+     * Outputs the end date of the week.
+     *
+     * @return The end date of the week
+     */
+    public LocalDate getEndDate() {
+        return this.startDate.plusDays(7);
+    }
+
+    /**
      * Outputs the week number (0-52).
      *
      * @return The number of the week
