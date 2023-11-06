@@ -1,7 +1,6 @@
 package ui;
 
 import core.data.Chore;
-import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -28,20 +27,19 @@ public class ChorePopupController {
     private Text points;
 
     private Chore chore;
-    private Person assignee;
+    private String assignee;
 
     public ChorePopupController() {
 
     }
 
-    public void passData(Chore chore, Person assignee) {
-        System.out.println(chore);
+    public void passData(Chore chore, String assignee) {
         this.chore = chore;
         this.assignee = assignee;
 
         this.choreName.setText(this.chore.getName());
         this.checkbox.setSelected(this.chore.getChecked());
-        this.assigneeText.setText("Assignee: " + this.assignee.getDisplayName());
+        this.assigneeText.setText("Assignee: " + this.assignee);
         this.deadline.setText("Deadline: " + this.chore.getTimeTo());
         this.points.setText("Points: " + this.chore.getPoints());
     }

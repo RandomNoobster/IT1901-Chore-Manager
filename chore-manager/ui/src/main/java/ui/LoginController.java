@@ -1,22 +1,22 @@
 package ui;
 
-import java.util.HashMap;
-
-import core.State;
-import core.data.Collective;
+import core.data.Password;
 import core.data.Person;
+import core.data.RestrictedCollective;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
 
 /**
  * This is the controller for the login view.
  */
 public class LoginController {
+
+    private DataAccess dataAccess;
 
     @FXML
     private TextField username;
@@ -36,7 +36,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
     private void showAlertWarning(String title, String message) {
@@ -55,18 +55,23 @@ public class LoginController {
         String username = this.username.getText();
         String password = this.password.getText();
 
-        HashMap<String, Person> allPersons = Storage.getInstance().getAllPersons();
-        if (!allPersons.containsKey(username)
-                || !allPersons.get(username).getPassword().getPasswordString().equals(password)) {
+        Person user = this.dataAccess.getPerson(username, new Password(password));
+        if (user == null) {
             this.showAlertWarning("Unknown user", "Wrong username or password!");
             return;
         }
 
-        Person user = allPersons.get(username);
-        Collective collective = Storage.getInstance().getCollective(user.getCollectiveJoinCode());
-        State.getInstance().logIn(user, collective);
+        RestrictedCollective collective = this.dataAccess
+                .getCollective(user.getCollectiveJoinCode());
+        boolean success = this.dataAccess.logIn(user, user.getPassword(), collective);
 
-        if (State.getInstance().getCurrentCollective().isLimboCollective()) {
+        if (!success) {
+            this.showAlertWarning("Something went wrong",
+                    "Something went wrong. Please try again.");
+            return;
+        }
+
+        if (collective.isLimboCollective()) {
             App.switchScene("JoinCollective");
         } else {
             App.switchScene("App");

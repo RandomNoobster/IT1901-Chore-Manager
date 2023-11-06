@@ -5,10 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.State;
 import core.data.Chore;
 import core.data.Day;
-import core.data.Person;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +14,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.App;
+import ui.dataAccessLayer.DataAccess;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -23,6 +22,7 @@ import ui.App;
  */
 public class DayView extends Button implements ViewInterface {
 
+    private DataAccess dataAccess;
     private Day day;
     private VBox container = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
@@ -36,6 +36,8 @@ public class DayView extends Button implements ViewInterface {
      */
     public DayView(Day day) {
         super();
+
+        this.dataAccess = App.getDataAccess();
 
         // Go to chorecreation when button is pressed
         this.setOnAction(
@@ -108,13 +110,11 @@ public class DayView extends Button implements ViewInterface {
 
         List<VBox> labels = new ArrayList<>();
 
-        for (Person person : State.getInstance().getCurrentCollective().getPersonsList()) {
-            for (Chore chore : person.getChores()) {
-                if (chore.getTimeFrom().equals(this.getDay().getDate())) {
+        for (Chore chore : this.dataAccess.getChores()) {
+            if (chore.getTimeFrom().equals(this.getDay().getDate())) {
 
-                    ChoreView choreView = new ChoreView(chore, person);
-                    labels.add(choreView.getContainer());
-                }
+                ChoreView choreView = new ChoreView(chore, chore.getAssignedTo());
+                labels.add(choreView.getContainer());
             }
         }
 

@@ -180,7 +180,7 @@ public class RemoteDataAccess implements DataAccess {
     }
 
     @Override
-    public boolean logIn(Person user, Password userPassword, Collective collective) {
+    public boolean logIn(Person user, Password userPassword, RestrictedCollective collective) {
         final URI endpoint = this.buildURI("state/log-in");
 
         JSONObject requestBody = new JSONObject();

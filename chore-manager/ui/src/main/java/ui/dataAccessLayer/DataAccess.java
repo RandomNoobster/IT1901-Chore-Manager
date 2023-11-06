@@ -78,7 +78,7 @@ public interface DataAccess {
      * @return true if the user was logged in successfully, false if the collective or user does not
      *         exist in storage
      */
-    public boolean logIn(Person user, Password userPassword, Collective collective);
+    public boolean logIn(Person user, Password userPassword, RestrictedCollective collective);
 
     /**
      * This method is used to log out the current user.
