@@ -2,6 +2,7 @@ package core.data;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.UUID;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,6 +23,7 @@ public class Chore {
     private int daysIncompleted;
     private String creator;
     private String assignedTo;
+    private UUID uuid;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
@@ -37,7 +39,8 @@ public class Chore {
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color, String creator, String assignedTo) {
-        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator, assignedTo);
+        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator, assignedTo,
+                UUID.randomUUID());
     }
 
     /**
@@ -57,7 +60,7 @@ public class Chore {
 
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color, boolean checked, int daysIncompleted, String creator,
-            String assignedTo) {
+            String assignedTo, UUID uuid) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -68,6 +71,7 @@ public class Chore {
         this.daysIncompleted = daysIncompleted;
         this.creator = creator;
         this.assignedTo = assignedTo;
+        this.uuid = uuid;
     }
 
     /**
@@ -169,6 +173,24 @@ public class Chore {
     }
 
     /**
+     * Outputs the person the chore is assigned to.
+     *
+     * @return The person the chore is assigned to
+     */
+    public String getAssignedTo() {
+        return this.assignedTo;
+    }
+
+    /**
+     * Outputs the UUID of the chore.
+     *
+     * @return The UUID of the chore
+     */
+    public UUID getUUID() {
+        return this.uuid;
+    }
+
+    /**
      * Outputs a {@link JSONObject} representation of the chore's state. The object's variables will
      * be turned into key/value pairs in the JSONObject.
      *
@@ -180,6 +202,7 @@ public class Chore {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
 
+        map.put("uuid", chore.uuid.toString());
         map.put("choreName", chore.choreName);
         map.put("timeFrom", chore.timeFrom.toString());
         map.put("timeTo", chore.timeTo.toString());
@@ -207,6 +230,7 @@ public class Chore {
             return null;
 
         try {
+            UUID uuid = UUID.fromString(jsonObject.getString("uuid"));
             String choreName = jsonObject.getString("choreName");
             String timeFromStr = jsonObject.getString("timeFrom");
             String timeToStr = jsonObject.getString("timeTo");
@@ -221,10 +245,24 @@ public class Chore {
             String assignedTo = jsonObject.getString("assignedTo");
 
             return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
-                    daysIncompleted, creator, assignedTo);
+                    daysIncompleted, creator, assignedTo, uuid);
         } catch (JSONException e) {
             throw new IllegalArgumentException(
                     "Invalid JSONObject, could not be converted to Chore object");
         }
     }
+
+    @Override
+    public boolean equals(Object arg0) {
+        if (!(arg0 instanceof Chore)) {
+            return false;
+        }
+        return this.uuid.equals(((Chore) arg0).getUUID());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.uuid.hashCode();
+    }
+
 }

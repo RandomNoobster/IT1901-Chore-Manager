@@ -3,6 +3,7 @@ package core.data;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -92,13 +93,35 @@ public class Person extends RestrictedPerson {
      * Adds a chore to the person.
      *
      * @param chore The chore to add
+     * @return True if the chore was added successfully, false otherwise
      */
     public boolean addChore(Chore chore) {
         return this.chores.add(chore);
     }
 
-    public void deleteChore(Chore chore) {
-        this.chores.remove(chore);
+    /**
+     * Removes a chore from the person.
+     *
+     * @param chore The chore to remove
+     * @return True if the chore was removed successfully, false otherwise
+     */
+    public boolean deleteChore(Chore chore) {
+        return this.chores.remove(chore);
+    }
+
+    /**
+     * Removes a chore from the person.
+     *
+     * @param uuid The uuid of the chore to remove
+     * @return True if the chore was removed successfully, false otherwise
+     */
+    public boolean deleteChore(UUID uuid) {
+        for (Chore chore : this.chores) {
+            if (chore.getUUID().equals(uuid)) {
+                return this.chores.remove(chore);
+            }
+        }
+        return false;
     }
 
     /**
