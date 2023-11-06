@@ -11,7 +11,8 @@ import org.json.JSONObject;
 
 /**
  * The Person class represents a person in the chore manager. This class stores sensitive data. DO
- * NOT USE THIS CLASS IN THE FRONTEND. USE {@link RestrictedPerson} INSTEAD.
+ * NOT USE THIS CLASS IN THE FRONTEND UNLESS IT IS ABOUT THE CURRENT USER. USE
+ * {@link RestrictedPerson} INSTEAD.
  */
 public class Person extends RestrictedPerson {
 

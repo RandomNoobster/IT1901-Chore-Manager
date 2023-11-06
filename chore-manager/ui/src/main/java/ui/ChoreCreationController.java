@@ -3,7 +3,6 @@ package ui;
 import java.time.LocalDate;
 import java.util.HashMap;
 
-import core.State;
 import core.data.Chore;
 import core.data.RestrictedPerson;
 import javafx.fxml.FXML;
@@ -91,11 +90,12 @@ public class ChoreCreationController {
             return;
         }
         RestrictedPerson person = personMenuItem.getPerson();
+        RestrictedPerson creator = this.dataAccess.getLoggedInUser();
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
-                State.getInstance().getLoggedInUser().getUsername(), person.getUsername());
+                creator.getUsername(), person.getUsername());
         this.dataAccess.addChore(chore, person);
 
         App.switchScene("App");

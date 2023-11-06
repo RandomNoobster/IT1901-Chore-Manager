@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Chore;
@@ -69,6 +71,7 @@ public class StateController {
         if (!user.getPassword().getPasswordString().equals(password))
             return false;
 
+        System.out.println("Logged in");
         this.stateService.getInstance().logIn(user, collective);
         return true;
     }
@@ -133,16 +136,7 @@ public class StateController {
     @DeleteMapping(path = "/chores/{uuid}")
     public boolean removeChore(@PathVariable("uuid") String uuidString) {
         UUID uuid = UUID.fromString(uuidString);
-
-        // Find chore with uuid
-        List<Chore> chores = this.stateService.getInstance().getCurrentCollective().getChoresList();
-        Chore chore = null;
-        for (Chore c : chores) {
-            if (c.getUUID().equals(uuid)) {
-                chore = c;
-                break;
-            }
-        }
+        Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
 
         if (chore == null)
             return false;
@@ -153,6 +147,21 @@ public class StateController {
 
         this.saveToDisk();
         return removed;
+    }
+
+    @PutMapping(path = "/chores/{uuid}")
+    public boolean updateChoreChecked(@PathVariable("uuid") String uuidString,
+            @RequestParam("checked") boolean checked) {
+        UUID uuid = UUID.fromString(uuidString);
+        Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
+
+        if (chore == null)
+            return false;
+
+        System.out.println("Print incoming checked: " + checked);
+        chore.setChecked(checked);
+        this.saveToDisk();
+        return true;
     }
 
     /**

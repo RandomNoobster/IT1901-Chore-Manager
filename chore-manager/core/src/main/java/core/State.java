@@ -1,5 +1,8 @@
 package core;
 
+import java.util.List;
+import java.util.UUID;
+
 import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
@@ -88,6 +91,24 @@ public class State {
     public void logOutUser() {
         this.loggedInUser = null;
         this.currentCollective = null;
+    }
+
+    /**
+     * This methods retrieves the chore with the given uuid from the current collective.
+     *
+     * @param uuid The uuid of the chore to retrieve.
+     * @return The chore with the given uuid.
+     */
+    public Chore getChoreInCurrentCollective(UUID uuid) {
+        List<Chore> chores = this.currentCollective.getChoresList();
+        Chore chore = null;
+        for (Chore c : chores) {
+            if (c.getUUID().equals(uuid)) {
+                chore = c;
+                break;
+            }
+        }
+        return chore;
     }
 
     /**

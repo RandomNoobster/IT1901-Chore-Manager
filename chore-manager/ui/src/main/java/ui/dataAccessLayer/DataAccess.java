@@ -72,7 +72,8 @@ public interface DataAccess {
      * collective or person does not exist in storage, it will fail to log in.
      *
      * @param user         The user to set as the logged in user.
-     * @param userPassword The password of the user to set as the logged in user.
+     * @param userPassword The password of the user to set as the logged in user. We ask for this to
+     *                     ensure you are authorized and did not create dummy Person.
      * @param collective   The collective to set as the current collective.
      * @return true if the user was logged in successfully, false if the collective or user does not
      *         exist in storage
@@ -113,6 +114,13 @@ public interface DataAccess {
      * @return true if the chore was removed successfully, false otherwise
      */
     public boolean removeChore(Chore chore);
+
+    /**
+     * This method is used to update a chore in the current collective.
+     *
+     * @return true if the chore was updated successfully, false otherwise
+     */
+    public boolean updateChoreChecked(Chore chore, boolean checked);
 
     /**
      * This method is used to get the chores from the current collective.

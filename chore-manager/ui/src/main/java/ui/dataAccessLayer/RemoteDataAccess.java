@@ -185,10 +185,7 @@ public class RemoteDataAccess implements DataAccess {
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("username", user.getUsername());
-        requestBody.put("password", userPassword.getPasswordString()); // TODO: Don't think this is
-                                                                       // needed as you know the
-                                                                       // password from Person
-                                                                       // object
+        requestBody.put("password", userPassword.getPasswordString());
         requestBody.put("joinCode", collective.getJoinCode());
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -235,6 +232,12 @@ public class RemoteDataAccess implements DataAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
+
+            if (responseBody == null || responseBody.isEmpty()) {
+                System.out.println("Could not retrieve logged in user");
+                return null;
+            }
+            System.out.println("RESPONSE: " + responseBody);
 
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
@@ -294,6 +297,26 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON).DELETE().build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean updateChoreChecked(Chore chore, boolean checked) {
+        final URI endpoint = this.buildURI(
+                String.format("state/chores/%s", chore.getUUID(), Map.of("checked", checked)));
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                .PUT(HttpRequest.BodyPublishers.noBody()).build();
         System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,

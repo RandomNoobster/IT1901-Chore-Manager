@@ -6,9 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
 
 public class ChorePopupController {
+
+    private DataAccess dataAccess;
+
     @FXML
     private Label choreName;
 
@@ -45,7 +48,7 @@ public class ChorePopupController {
 
     @FXML
     protected void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
     @FXML
@@ -55,15 +58,12 @@ public class ChorePopupController {
 
     @FXML
     public void delete() {
-        this.assignee.deleteChore(this.chore);
+        this.dataAccess.removeChore(this.chore);
         App.switchScene("App");
-        Storage.getInstance().save();
     }
 
     @FXML
     public void updateChecked() {
-        this.chore.setChecked(this.checkbox.isSelected());
-        Storage.getInstance().save();
+        this.dataAccess.updateChoreChecked(this.chore, this.checkbox.isSelected());
     }
-
 }
