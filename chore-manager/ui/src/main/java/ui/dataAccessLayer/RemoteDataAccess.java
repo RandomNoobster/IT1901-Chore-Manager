@@ -207,6 +207,23 @@ public class RemoteDataAccess implements DataAccess {
     }
 
     @Override
+    public boolean logOut() {
+        final URI endpoint = this.buildURI("state/log-out");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public Person getLoggedInUser() {
         final URI endpoint = this.buildURI("state/logged-in-user");
 

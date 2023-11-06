@@ -66,6 +66,12 @@ public class StateController {
         return true;
     }
 
+    @PostMapping(path = "/log-out")
+    public boolean logOut() {
+        this.stateService.getInstance().logOutUser();
+        return true;
+    }
+
     /**
      * This method is used to get the logged in user.
      *

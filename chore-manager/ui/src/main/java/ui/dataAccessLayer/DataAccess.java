@@ -80,6 +80,13 @@ public interface DataAccess {
     public boolean logIn(Person user, Password userPassword, Collective collective);
 
     /**
+     * This method is used to log out the current user.
+     * 
+     * @return true if the user was logged out successfully, false otherwise
+     */
+    public boolean logOut();
+
+    /**
      * This method is used to set the logged in user.
      *
      * @return The logged in user
