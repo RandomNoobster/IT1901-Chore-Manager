@@ -43,8 +43,8 @@ public class Collective {
     }
 
     /**
-     * Check if collective is the limbo collective you get added to when creating a new user
-     * 
+     * Check if collective is the limbo collective you get added to when creating a new user.
+     *
      * @return true if this is the limbo collective
      */
     public boolean isLimboCollective() {

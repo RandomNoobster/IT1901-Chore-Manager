@@ -92,7 +92,7 @@ public class Chore {
     }
 
     /**
-     * Outputs if a chore is checked/done or not
+     * Outputs if a chore is checked/done or not.
      *
      * @return Chores checked status
      */
@@ -123,7 +123,7 @@ public class Chore {
     }
 
     /**
-     * Outputs the creator of the chores username
+     * Outputs the creator of the chores username.
      *
      * @return The creator of the chores username
      */
