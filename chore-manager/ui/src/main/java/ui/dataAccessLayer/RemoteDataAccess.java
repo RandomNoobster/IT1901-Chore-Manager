@@ -265,7 +265,7 @@ public class RemoteDataAccess implements DataAccess {
     }
 
     @Override
-    public boolean addChore(Chore chore, Person assignedPerson) {
+    public boolean addChore(Chore chore, RestrictedPerson assignedPerson) {
         final URI endpoint = this.buildURI("state/chores");
 
         JSONObject requestBody = new JSONObject();

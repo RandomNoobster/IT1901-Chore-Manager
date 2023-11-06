@@ -36,7 +36,11 @@ public class StateController {
     private StateService stateService;
 
     @Autowired
-    private StorageService storageService; // Only used for GETTING information about collectives
+    private StorageService storageService; // Only used for getting and saving information
+
+    private void saveToDisk() {
+        this.storageService.saveToDisk();
+    }
 
     /**
      * This method is used to get the logged in user.
@@ -109,6 +113,7 @@ public class StateController {
 
         Person person = this.stateService.getInstance().getCurrentCollective()
                 .getPerson(assignedPersonUsername);
+        this.saveToDisk();
         return this.stateService.getInstance().addChore(chore, person);
     }
 
@@ -132,7 +137,7 @@ public class StateController {
         return choresJSON.toString();
     }
 
-    // @Cacheable(value = "persons")
+    // TODO: @Cacheable(value = "persons")
     @GetMapping(path = "/persons")
     public String getPersons() {
         HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();

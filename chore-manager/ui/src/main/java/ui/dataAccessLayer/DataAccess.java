@@ -105,7 +105,7 @@ public interface DataAccess {
      *
      * @return true if the chore was added successfully, false otherwise
      */
-    public boolean addChore(Chore chore, Person person);
+    public boolean addChore(Chore chore, RestrictedPerson person);
 
     /**
      * This method is used to get the chores from the current collective.
