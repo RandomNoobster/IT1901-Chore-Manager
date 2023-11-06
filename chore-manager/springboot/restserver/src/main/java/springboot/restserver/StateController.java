@@ -66,6 +66,8 @@ public class StateController {
         return true;
     }
 
+    @Caching(evict = { @CacheEvict(value = "logged-in-user"),
+            @CacheEvict(value = "current-collective") })
     @PostMapping(path = "/log-out")
     public boolean logOut() {
         this.stateService.getInstance().logOutUser();

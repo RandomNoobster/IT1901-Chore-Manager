@@ -213,6 +213,7 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
                 .build();
+        System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
