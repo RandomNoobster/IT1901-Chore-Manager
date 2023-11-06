@@ -266,7 +266,7 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public boolean addChore(Chore chore, RestrictedPerson assignedPerson) {
-        final URI endpoint = this.buildURI("state/chores");
+        final URI endpoint = this.buildURI(String.format("state/chores/%s", chore.getUUID()));
 
         JSONObject requestBody = new JSONObject();
         requestBody.put("chore", Chore.encodeToJSONObject(chore));
@@ -276,6 +276,24 @@ public class RemoteDataAccess implements DataAccess {
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean removeChore(Chore chore) {
+        final URI endpoint = this.buildURI(String.format("state/chores/%s", chore.getUUID()));
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON).DELETE().build();
         System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,

@@ -81,7 +81,7 @@ public interface DataAccess {
 
     /**
      * This method is used to log out the current user.
-     * 
+     *
      * @return true if the user was logged out successfully, false otherwise
      */
     public boolean logOut();
@@ -108,8 +108,15 @@ public interface DataAccess {
     public boolean addChore(Chore chore, RestrictedPerson person);
 
     /**
+     * This method is used to remove a chore from a person in the current collective.
+     *
+     * @return true if the chore was removed successfully, false otherwise
+     */
+    public boolean removeChore(Chore chore);
+
+    /**
      * This method is used to get the chores from the current collective.
-     * 
+     *
      * @return A {@link List} of chores.
      */
     public List<Chore> getChores();

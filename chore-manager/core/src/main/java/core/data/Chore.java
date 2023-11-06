@@ -251,18 +251,4 @@ public class Chore {
                     "Invalid JSONObject, could not be converted to Chore object");
         }
     }
-
-    @Override
-    public boolean equals(Object arg0) {
-        if (!(arg0 instanceof Chore)) {
-            return false;
-        }
-        return this.uuid.equals(((Chore) arg0).getUUID());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.uuid.hashCode();
-    }
-
 }

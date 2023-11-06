@@ -2,6 +2,7 @@ package springboot.restserver;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -9,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -104,8 +107,10 @@ public class StateController {
 
     /**
      * This method is used to add a chore to a person within the current collective.
+     *
+     * @return True if the chore was added successfully, false otherwise.
      */
-    @PostMapping(path = "/chores")
+    @PostMapping(path = "/chores/{uuid}")
     public boolean addChore(@RequestBody String choreInfo) {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(choreInfo);
         Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
@@ -113,12 +118,47 @@ public class StateController {
 
         Person person = this.stateService.getInstance().getCurrentCollective()
                 .getPerson(assignedPersonUsername);
+
+        boolean added = this.stateService.getInstance().addChore(chore, person);
         this.saveToDisk();
-        return this.stateService.getInstance().addChore(chore, person);
+        return added;
     }
 
     /**
-     * Gets all chores within this collective
+     * This method is used to remove a chore from a person within the current collective.
+     *
+     * @param uuidString The uuid of the chore to remove.
+     * @return True if the chore was removed successfully, false otherwise.
+     */
+    @DeleteMapping(path = "/chores/{uuid}")
+    public boolean removeChore(@PathVariable("uuid") String uuidString) {
+        UUID uuid = UUID.fromString(uuidString);
+
+        // Find chore with uuid
+        List<Chore> chores = this.stateService.getInstance().getCurrentCollective().getChoresList();
+        Chore chore = null;
+        for (Chore c : chores) {
+            if (c.getUUID().equals(uuid)) {
+                chore = c;
+                break;
+            }
+        }
+
+        if (chore == null)
+            return false;
+
+        Person person = this.stateService.getInstance().getCurrentCollective()
+                .getPerson(chore.getAssignedTo());
+        boolean removed = person.deleteChore(chore);
+
+        this.saveToDisk();
+        return removed;
+    }
+
+    /**
+     * Gets all chores within this collective.
+     *
+     * @return All chores within this collective.
      */
     @GetMapping(path = "/chores")
     public String getChores() {
@@ -137,6 +177,11 @@ public class StateController {
         return choresJSON.toString();
     }
 
+    /**
+     * Gets all persons within this collective.
+     *
+     * @return All persons registered to this collective.
+     */
     // TODO: @Cacheable(value = "persons")
     @GetMapping(path = "/persons")
     public String getPersons() {
