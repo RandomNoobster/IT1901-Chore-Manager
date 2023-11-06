@@ -1,17 +1,11 @@
 package persistence.fileHandling;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import core.data.Chore;
 import core.data.Collective;
-import core.data.Password;
-import core.data.Person;
 
 /**
  * This class contains methods for converting JSON to objects and vice versa.
@@ -55,60 +49,4 @@ public class JSONConverter extends FileHandler {
 
         return collectives;
     }
-
-    /**
-     * This method is used to read a hashmap of persons from a {@link JSONArray}.
-     *
-     * @param personsJSON A JSONArray of JSONObjects of Person .
-     * @return A HashMap of persons.
-     */
-    public HashMap<String, Person> getPersonsFromCollective(JSONArray personsJSON) {
-        HashMap<String, Person> persons = new HashMap<String, Person>();
-
-        for (Object personObject : personsJSON) {
-            JSONObject personJSON = (JSONObject) personObject;
-
-            String username = (String) personJSON.get("username");
-            List<Chore> chores = this.getChoresListFromPerson((JSONArray) personJSON.get("chores"));
-            Password password = new Password((String) personJSON.get("password"));
-            String displayName = (String) personJSON.get("displayName");
-            String collectiveJoinCode = (String) personJSON.get("collectiveJoinCode");
-
-            Person person = new Person(username, collectiveJoinCode, password, chores, displayName);
-            persons.put(username, person);
-        }
-
-        return persons;
-    }
-
-    /**
-     * This method is used to read a list of chores from a {@link JSONArray}.
-     *
-     * @param choreJSON A list of chores.
-     * @return A list of chores.
-     */
-    public List<Chore> getChoresListFromPerson(JSONArray choreJSON) {
-        List<Chore> chores = new ArrayList<>();
-        for (Object chore : choreJSON) {
-            JSONObject choreObject = (JSONObject) chore;
-
-            String choreName = (String) choreObject.get("choreName");
-            LocalDate timeFrom = LocalDate.parse((String) choreObject.get("timeFrom"));
-            LocalDate timeTo = LocalDate.parse((String) choreObject.get("timeTo"));
-            boolean isWeekly = (boolean) choreObject.get("isWeekly");
-            int points = ((Long) choreObject.get("points")).intValue();
-            String color = (String) choreObject.get("color");
-            Boolean checked = (Boolean) choreObject.get("checked");
-            int daysIncompleted = ((Long) choreObject.get("daysIncompleted")).intValue();
-            String creator = (String) choreObject.get("creator");
-            String assignedTo = (String) choreObject.get("assignedTo");
-
-            Chore newChore = new Chore(choreName, timeFrom, timeTo, isWeekly, points, color,
-                    checked, daysIncompleted, creator, assignedTo);
-            chores.add(newChore);
-        }
-
-        return chores;
-    }
-
 }
