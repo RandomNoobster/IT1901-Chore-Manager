@@ -8,8 +8,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * The Collective class represents a collective in the chore manager. DO NOT USE THIS CLASS IN THE
- * FRONTEND. USE {@link RestrictedCollective} INSTEAD.
+ * The Collective class represents a collective in the chore manager. This class stores sensitive
+ * data about the users. DO NOT USE THIS CLASS IN THE FRONTEND. USE {@link RestrictedCollective}
+ * INSTEAD.
  */
 public class Collective extends RestrictedCollective {
 

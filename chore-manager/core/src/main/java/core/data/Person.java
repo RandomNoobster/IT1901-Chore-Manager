@@ -9,15 +9,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * The Person class represents a person in the chore manager. It stores information about the
- * person's name and chores.
+ * The Person class represents a person in the chore manager. This class stores sensitive data. DO
+ * NOT USE THIS CLASS IN THE FRONTEND. USE {@link RestrictedPerson} INSTEAD.
  */
-public class Person {
-    private String username;
+public class Person extends RestrictedPerson {
+
     private List<Chore> chores;
     private Password password;
-    private String displayName;
-    private String collectiveJoinCode;
 
     /**
      * A constructor for the Person class that initializes the state of the object.
@@ -47,6 +45,7 @@ public class Person {
      * @param collectiveJoinCode The collective that the person is a part of
      */
     public Person(String username, String collectiveJoinCode, List<Chore> chores) {
+
         this(username, collectiveJoinCode, new Password(), chores, username);
     }
 
@@ -60,24 +59,24 @@ public class Person {
      */
     public Person(String username, String collectiveJoinCode, Password password,
             String displayName) {
+
         this(username, collectiveJoinCode, password, new ArrayList<Chore>(), displayName);
     }
 
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param username    The unique name of the person
-     * @param password    The password of the person
-     * @param chores      The chores of the person
-     * @param displayName The display name of the person
+     * @param username           The unique name of the person
+     * @param collectiveJoinCode The collective that the person is a part of
+     * @param password           The password of the person
+     * @param chores             The chores of the person
+     * @param displayName        The display name of the person
      */
     public Person(String username, String collectiveJoinCode, Password password, List<Chore> chores,
             String displayName) {
-        this.username = username;
-        this.displayName = displayName;
+        super(username, collectiveJoinCode, displayName);
         this.chores = new ArrayList<Chore>(chores);
         this.password = password;
-        this.collectiveJoinCode = collectiveJoinCode;
     }
 
     /**
@@ -87,24 +86,6 @@ public class Person {
      */
     public Password getPassword() {
         return this.password;
-    }
-
-    /**
-     * Outputs the display name of the person.
-     *
-     * @return The display name of the person
-     */
-    public String getDisplayName() {
-        return this.displayName;
-    }
-
-    /**
-     * Outputs the name of the person.
-     *
-     * @return The name of the person
-     */
-    public String getUsername() {
-        return this.username;
     }
 
     /**
@@ -130,27 +111,6 @@ public class Person {
     }
 
     /**
-     * Outputs the collective that the person is a part of.
-     *
-     * @return The collective that the person is a part of
-     */
-    public String getCollectiveJoinCode() {
-        return this.collectiveJoinCode;
-    }
-
-    /**
-     * Sets the collective that the person is a part of.
-     */
-    public void setCollective(String collectiveJoinCode) {
-        this.collectiveJoinCode = collectiveJoinCode;
-    }
-
-    public boolean isInEmptyCollective() {
-        return this.collectiveJoinCode == null
-                || this.collectiveJoinCode.equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-    }
-
-    /**
      * Outputs a {@link JSONObject} representing the person. Object variables are turned into
      * key/value pairs.
      *
@@ -162,7 +122,7 @@ public class Person {
 
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("username", person.username);
+        map.put("username", person.getUsername());
 
         JSONArray choresJSON = new JSONArray();
         for (Chore chore : person.chores) {
@@ -171,8 +131,8 @@ public class Person {
 
         map.put("chores", choresJSON);
         map.put("password", person.password.getPasswordString());
-        map.put("displayName", person.displayName);
-        map.put("collectiveJoinCode", person.collectiveJoinCode);
+        map.put("displayName", person.getDisplayName());
+        map.put("collectiveJoinCode", person.getCollectiveJoinCode());
 
         return new JSONObject(map);
     }
@@ -206,29 +166,5 @@ public class Person {
             throw new IllegalArgumentException(
                     "Invalid JSONObject, could not be converted to Person object");
         }
-    }
-
-    /**
-     * Outputs a boolean indicating wether or not the objects have the same username (since this is
-     * unique).
-     *
-     * @return If the usernames are equal
-     */
-    @Override
-    public boolean equals(Object arg0) {
-        if (!(arg0 instanceof Person)) {
-            return false;
-        }
-        return this.username.equals(((Person) arg0).getUsername());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.username.hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return this.getUsername();
     }
 }
