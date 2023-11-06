@@ -10,4 +10,5 @@ module main.ui {
     opens ui to javafx.graphics, javafx.fxml;
 
     exports ui;
+    exports ui.dataAccessLayer;
 }

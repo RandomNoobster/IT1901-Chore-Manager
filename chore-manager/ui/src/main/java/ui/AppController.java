@@ -1,12 +1,10 @@
 package ui;
 
-import java.net.URI;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -19,9 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import persistence.fileHandling.EnvironmentConfigurator;
 import ui.dataAccessLayer.DataAccess;
-import ui.dataAccessLayer.RemoteDataAccess;
 import ui.viewClasses.WeekView;
 
 /**
@@ -62,33 +58,14 @@ public class AppController {
     }
 
     /**
-     * Sets the data access layer for the controller.
-     */
-    private void setDataAccess() {
-        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
-        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
-
-        if (apiBaseEndpoint != null) {
-            this.dataAccess = new RemoteDataAccess(apiBaseEndpoint);
-        } else {
-            // Use direct data access here
-            throw new RuntimeException("Could not find API base endpoint");
-        }
-    }
-
-    /**
      * Initializes the controller class. This method is automatically called after the fxml file has
      * been loaded.
      */
     @FXML
     public void initialize() {
-        // Set data access layer
-        this.setDataAccess();
-        this.dataAccess.getCollectives();
-        // System.out.println("Collectives: " + this.dataAccess.getCollectives());
 
-        this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
-        this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
+        // Set data access layer
+        this.dataAccess = App.getDataAccess();
 
         // Set top column that displays what each column means
         this.setTopColumn();
@@ -158,8 +135,7 @@ public class AppController {
         this.weekContainer.setMinHeight(height - topToolbar);
         this.weekContainer.setPrefHeight(height - topToolbar);
 
-        this.weeks.forEach(
-                w -> w.updateHeight((height - topLabelHeight - topToolbar) / this.NUM_WEEKS));
+        this.weeks.forEach(w -> w.updateHeight((height - topLabelHeight - topToolbar) / NUM_WEEKS));
 
     }
 
@@ -192,7 +168,7 @@ public class AppController {
 
     @FXML
     public void toLogin() {
-        State.getInstance().logOutUser();
+        this.dataAccess.logOut();
         App.switchScene("Login");
     }
 
@@ -200,7 +176,7 @@ public class AppController {
     public void copyCode() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString(State.getInstance().getCurrentCollective().getJoinCode());
+        content.putString(this.dataAccess.getCurrentCollective().getJoinCode());
         clipboard.setContent(content);
 
         Alert alert = new Alert(AlertType.INFORMATION);

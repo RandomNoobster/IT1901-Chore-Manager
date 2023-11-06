@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 
 import core.data.Chore;
@@ -12,6 +13,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import persistence.fileHandling.EnvironmentConfigurator;
+import ui.dataAccessLayer.DataAccess;
+import ui.dataAccessLayer.RemoteDataAccess;
 
 /**
  * The App class has the logic to start the user interface of the project.
@@ -101,6 +105,21 @@ public class App extends Application {
             scene.setRoot(parent);
         } catch (IOException e) {
             System.out.println(e);
+        }
+    }
+
+    /**
+     * Gets the data access layer.
+     */
+    public static DataAccess getDataAccess() {
+        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+
+        if (apiBaseEndpoint != null) {
+            return new RemoteDataAccess(apiBaseEndpoint);
+        } else {
+            // Use direct data access here
+            throw new RuntimeException("Could not find API base endpoint");
         }
     }
 
