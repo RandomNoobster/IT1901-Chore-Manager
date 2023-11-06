@@ -2,92 +2,63 @@ package ui;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
 import core.State;
 import core.data.Chore;
-import core.data.Collective;
-import core.data.Person;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import javafx.scene.paint.Color;
 import persistence.fileHandling.Storage;
 
-public class ChoreCreationTest extends ApplicationTest {
+/**
+ * Test that the chore creation page works as expected.
+ */
+public class ChoreCreationTest extends BasicTestClass {
 
-    private Parent root;
-    private final static Collective testCollective = new Collective("Test Collective");
-    private final static Person testPerson = new Person("Test", testCollective);
+    private static final String fxmlFileName = "ChoreCreation.fxml";
 
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-        Storage.getInstance().deleteFile();
-        setup();
-    }
-
-    private static void setup() {
-        Storage.deleteInstance();
-        Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
-
-        State.getInstance().setLoggedInUser(testPerson);
+    @Override
+    protected String getFileName() {
+        return fxmlFileName;
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("ChoreCreation.fxml"));
-        this.root = fxmlLoader.load();
-
-        // CSS
-        Scene scene = new Scene(this.root);
-        scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
-
-        // Title
-        stage.setTitle("Chore Manager");
-
-        stage.setScene(scene);
-        stage.show();
+    protected void setup() {
+        Storage.deleteInstance();
+        Storage.getInstance().addCollective(testCollective);
+        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+        testCollective.addPerson(testPerson);
+        State.getInstance().setLoggedInUser(testPerson);
     }
 
-    @BeforeEach
-    public void setupItems() {
-        setup();
-    }
-
-    @AfterEach
-    public void clearItems() {
-        Storage.getInstance().deleteFile();
-    }
-
+    /**
+     * Clicks on the buttons with the given labels
+     *
+     * @param labels
+     */
     private void click(String... labels) {
         for (var label : labels) {
             this.clickOn(LabeledMatchers.hasText(label));
         }
     }
 
+    /**
+     * Test that the chore creation page works as expected.
+     */
     @Test
     public void testCreateChore() {
         List<Chore> savedChores = Storage.getInstance().getAllChores();
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
-            name.setText("Bob");
+            name.setText("Vaske!");
         });
 
         ComboBox<String> comboBox = this.lookup("#personsMenu").query();
@@ -95,9 +66,21 @@ public class ChoreCreationTest extends ApplicationTest {
             comboBox.getSelectionModel().select(0);
         });
 
+        ColorPicker colorPicker = this.lookup("#colorPicker").query();
+        this.interact(() -> {
+            colorPicker.setValue(new Color(0.5, 0.5, 0.5, 1));
+        });
+
+        Slider slider = this.lookup("#points").query();
+        this.interact(() -> {
+            slider.setValue(5);
+        });
+
         this.click("Create");
 
         WaitForAsyncUtils.waitForFxEvents();
+
+        // Ensure that a new Chore has been made
         assertTrue(savedChores.size() + 1 == Storage.getInstance().getAllChores().size());
     }
 }

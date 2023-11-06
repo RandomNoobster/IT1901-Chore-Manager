@@ -1,108 +1,60 @@
 package ui;
 
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.io.IOException;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.util.WaitForAsyncUtils;
 
 import core.State;
-import core.data.Collective;
-import core.data.Person;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import persistence.fileHandling.Storage;
 
-public class JoinCollectiveTest extends ApplicationTest {
-    private Parent root;
-    private static final String filePath = "chore-manager-data-ui-test.json";
-    private final static Collective testCollective = new Collective("Test Collective",
-            Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-    private final static Person testPerson = new Person("Test", null);
+/**
+ * Test that the join collective page works as expected.
+ */
+public class JoinCollectiveTest extends BasicTestClass {
 
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-        Storage.getInstance().deleteFile();
-        setup();
-    }
+    private static final String fxmlFileName = "JoinCollective.fxml";
 
-    private static void setup() {
-        Storage.deleteInstance();
-        Storage.getInstance().addCollective(testCollective);
-
-        State.getInstance().setLoggedInUser(testPerson);
-    }
-
-    @BeforeAll
-    public static void setupAll() {
-        setup();
+    @Override
+    protected String getFileName() {
+        return fxmlFileName;
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(this.getClass().getResource("JoinCollective.fxml"));
-        this.root = fxmlLoader.load();
-
-        // CSS
-        Scene scene = new Scene(this.root);
-        scene.getStylesheets().add(this.getClass().getResource("Style.css").toExternalForm());
-
-        // Title
-        stage.setTitle("Chore Manager");
-
-        stage.setScene(scene);
-        stage.show();
+    protected void setup() {
+        Storage.deleteInstance();
+        Storage.getInstance().addCollective(testCollective);
+        testPerson.setCollective(null);
+        State.getInstance().setLoggedInUser(testPerson);
     }
 
-    @BeforeEach
-    public void setupItems() {
-        setup();
-    }
-
-    @AfterEach
-    public void clearItems() {
-        Storage.getInstance().deleteFileContent();
-    }
-
-    @AfterAll
-    public static void deleteFile() {
-        if (Storage.getInstance().getFilePath().equals(filePath)) {
-            Storage.getInstance().deleteFile();
-        }
-    }
-
+    /**
+     * Test that the user is added to a collective if they enter the correct join code.
+     */
     @Test
     public void testJoin() {
         TextField joinCode = this.lookup("#joningCode").query();
         this.interact(() -> {
-            joinCode.setText("000000");
+            joinCode.setText(testCollective.getJoinCode());
         });
 
         this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(
-                State.getInstance().getCurrentCollective().getJoinCode().equals(Collective.LIMBO_COLLECTIVE_JOIN_CODE));
+        assertTrue(State.getInstance().getCurrentCollective().getJoinCode()
+                .equals(testCollective.getJoinCode()));
     }
 
+    /**
+     * Test that the user does not get added to a collective if they do not enter a join code.
+     */
     @Test
     public void testBlankField() {
         this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(State.getInstance().getCurrentCollective() == null);
+        assertNull(State.getInstance().getCurrentCollective());
     }
 }
