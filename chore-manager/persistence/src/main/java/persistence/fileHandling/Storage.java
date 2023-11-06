@@ -240,7 +240,7 @@ public class Storage {
         Person person4 = new Person("Lasse", collective.getJoinCode());
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF", person1.getUsername());
+                "#FFFFFF", person1.getUsername(), person1.getUsername());
         person1.addChore(chore);
 
         collective.addPerson(person1);

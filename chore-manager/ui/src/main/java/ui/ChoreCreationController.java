@@ -92,7 +92,7 @@ public class ChoreCreationController {
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
-                State.getInstance().getLoggedInUser().getUsername());
+                State.getInstance().getLoggedInUser().getUsername(), person.getUsername());
         State.getInstance().addChore(chore, person);
 
         Storage.getInstance().save();

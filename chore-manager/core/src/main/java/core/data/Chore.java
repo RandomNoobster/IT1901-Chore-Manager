@@ -21,21 +21,23 @@ public class Chore {
     private boolean checked;
     private int daysIncompleted;
     private String creator;
+    private String assignedTo;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
      *
-     * @param choreName The name of the chore
-     * @param timeFrom  The start date of the chore
-     * @param timeTo    The end date of the chore
-     * @param isWeekly  Whether the chore is weekly or not
-     * @param points    The points of the chore
-     * @param color     The color of the chore
-     * @param creator   The creator of the chore
+     * @param choreName  The name of the chore
+     * @param timeFrom   The start date of the chore
+     * @param timeTo     The end date of the chore
+     * @param isWeekly   Whether the chore is weekly or not
+     * @param points     The points of the chore
+     * @param color      The color of the chore
+     * @param creator    The creator of the chore
+     * @param assignedTo The person the chore is assigned to
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, String creator) {
-        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator);
+            int points, String color, String creator, String assignedTo) {
+        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator, assignedTo);
     }
 
     /**
@@ -50,10 +52,12 @@ public class Chore {
      * @param checked         Wheter a chore is done or not
      * @param daysIncompleted How many days since the chores due date
      * @param creator         The creator of the chore
+     * @param assignedTo      The person the chore is assigned to
      */
 
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, boolean checked, int daysIncompleted, String creator) {
+            int points, String color, boolean checked, int daysIncompleted, String creator,
+            String assignedTo) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -63,6 +67,7 @@ public class Chore {
         this.checked = checked;
         this.daysIncompleted = daysIncompleted;
         this.creator = creator;
+        this.assignedTo = assignedTo;
     }
 
     /**
@@ -184,6 +189,7 @@ public class Chore {
         map.put("checked", chore.checked);
         map.put("daysIncompleted", chore.daysIncompleted);
         map.put("creator", chore.creator);
+        map.put("assignedTo", chore.assignedTo);
 
         JSONObject json = new JSONObject(map);
         return json;
@@ -212,9 +218,10 @@ public class Chore {
             boolean checked = jsonObject.getBoolean("checked");
             int daysIncompleted = jsonObject.getInt("daysIncompleted");
             String creator = jsonObject.getString("creator");
+            String assignedTo = jsonObject.getString("assignedTo");
 
             return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
-                    daysIncompleted, creator);
+                    daysIncompleted, creator, assignedTo);
         } catch (JSONException e) {
             throw new IllegalArgumentException(
                     "Invalid JSONObject, could not be converted to Chore object");

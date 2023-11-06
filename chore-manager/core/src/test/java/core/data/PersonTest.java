@@ -36,7 +36,7 @@ public class PersonTest {
 
         // Test that the constructor properly adds chores
         List<Chore> chores = new ArrayList<Chore>();
-        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF", "Creator");
+        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF", "Creator", "Assignee");
         chores.add(chore);
         assertDoesNotThrow(() -> new Person("John", this.collective.getJoinCode(), chores));
         assertEquals(chore,
@@ -51,12 +51,13 @@ public class PersonTest {
     @Test
     public void testChores() {
         // Test that addChore adds the chore to the list
-        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF", "Creator");
+        Chore chore = new Chore("Vaske", null, null, false, 10, "#FFFFFF", "Creator", "Assignee");
         this.person.addChore(chore);
         assertEquals(chore, this.person.getChores().get(0));
 
         // Test adding multiple chores
-        Chore chore2 = new Chore("Støvsuge", null, null, false, 10, "#FFFFFF", "Creator");
+        Chore chore2 = new Chore("Støvsuge", null, null, false, 10, "#FFFFFF", "Creator",
+                "Assignee");
         this.person.addChore(chore2);
         assertEquals(chore, this.person.getChores().get(0));
         assertEquals(chore2, this.person.getChores().get(1));
