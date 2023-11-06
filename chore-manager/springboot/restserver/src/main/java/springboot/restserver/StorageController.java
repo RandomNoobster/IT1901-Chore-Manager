@@ -104,6 +104,7 @@ public class StorageController {
      * @param requestBody the request body
      * @return true if the person was added successfully, false otherwise
      */
+    // @CacheEvict(value = "persons")
     @PostMapping(path = "/persons/{username}")
     public boolean addPerson(@RequestBody String requestBody) {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);

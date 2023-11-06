@@ -1,5 +1,6 @@
 package ui.dataAccessLayer;
 
+import java.util.HashMap;
 import java.util.List;
 
 import core.data.Chore;
@@ -7,6 +8,7 @@ import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
+import core.data.RestrictedPerson;
 
 /**
  * Class that centralizes access to the Storage API. Makes it easier to support transparent use of a
@@ -104,4 +106,11 @@ public interface DataAccess {
      * @return A {@link List} of chores.
      */
     public List<Chore> getChores();
+
+    /**
+     * This method is used to get the persons from the current collective.
+     *
+     * @return A {@link HashMap} of persons, where key is the username.
+     */
+    public HashMap<String, RestrictedPerson> getPersons();
 }

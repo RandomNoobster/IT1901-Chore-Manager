@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
+import core.data.RestrictedPerson;
 import core.json.JSONValidator;
 
 /**
@@ -267,6 +269,7 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
+    @Override
     public List<Chore> getChores() {
         final URI endpoint = this.buildURI("state/chores");
 
@@ -296,4 +299,33 @@ public class RemoteDataAccess implements DataAccess {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public HashMap<String, RestrictedPerson> getPersons() {
+        final URI endpoint = this.buildURI("state/persons");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
+
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+
+            // Deserialize the response body
+            JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
+            HashMap<String, RestrictedPerson> persons = new HashMap<String, RestrictedPerson>();
+
+            for (String username : jsonObject.keySet()) {
+                JSONObject personJSONObject = jsonObject.getJSONObject(username);
+                persons.put(username, RestrictedPerson.decodeFromJSON(personJSONObject));
+            }
+
+            return persons;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

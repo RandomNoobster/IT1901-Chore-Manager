@@ -1,5 +1,6 @@
 package springboot.restserver;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -18,6 +19,7 @@ import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
 import core.data.RestrictedCollective;
+import core.data.RestrictedPerson;
 import core.json.JSONValidator;
 
 /**
@@ -120,6 +122,19 @@ public class StateController {
         }
 
         return choresJSON.toString();
+    }
+
+    // @Cacheable(value = "persons")
+    @GetMapping(path = "/persons")
+    public String getPersons() {
+        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
+
+        JSONObject personsJSON = new JSONObject();
+        for (Person person : persons.values()) {
+            personsJSON.put(person.getUsername(), RestrictedPerson.encodeToJSONObject(person));
+        }
+
+        return personsJSON.toString();
     }
 
 }
