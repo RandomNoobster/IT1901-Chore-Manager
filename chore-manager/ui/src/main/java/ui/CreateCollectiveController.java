@@ -31,17 +31,19 @@ public class CreateCollectiveController {
 
     @FXML
     public void create() {
-
         if (this.name.getText().length() > this.minLength) {
             Collective newCollective = new Collective(this.name.getText());
             if (this.dataAccess.addCollective(newCollective)) {
                 Person loggedInUser = this.dataAccess.getLoggedInUser();
                 this.dataAccess.addPerson(loggedInUser, newCollective.getJoinCode());
+                this.dataAccess.movePersonToAnotherCollective(loggedInUser.getUsername(),
+                        loggedInUser.getPassword(), loggedInUser.getCollectiveJoinCode(),
+                        newCollective.getJoinCode());
 
                 this.dataAccess.logIn(loggedInUser, loggedInUser.getPassword(), newCollective);
                 App.switchScene("App");
             } else {
-                String error = "Please inform developers if this error occurs,\nbecause it really should not occur...";
+                String error = "An unexpected error occurred. Please try to reopen the app again.";
                 this.showAlertWarning("Unknown error", error);
             }
         } else {
