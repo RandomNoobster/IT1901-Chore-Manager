@@ -53,13 +53,13 @@ public class ChoreTest {
     @Test
     public void testGetTimeFrom() {
         assertDoesNotThrow(() -> this.chore.getTimeFrom());
-        assertTrue(this.timeFrom.equals(this.chore.getTimeFrom()));
+        assertTrue(this.timeFrom.equals(this.chore.getOriginalTimeFrom()));
     }
 
     @Test
     public void testGetTimeTo() {
         assertDoesNotThrow(() -> this.chore.getTimeTo());
-        assertTrue(this.timeTo.equals(this.chore.getTimeTo()));
+        assertTrue(this.timeTo.equals(this.chore.getOriginalTimeTo()));
     }
 
     @Test

@@ -108,13 +108,13 @@ public class DayView extends Button implements ViewInterface {
         this.vBoxContainer.getChildren().clear();
         this.vBoxContainer.getStyleClass().add("distance-row");
 
-        List<VBox> labels = new ArrayList<>();
+        List<ChoreView> labels = new ArrayList<>();
 
         for (Chore chore : this.dataAccess.getChores()) {
-            if (chore.getTimeFrom().equals(this.getDay().getDate())) {
-
+            if (chore.getTimeFrom().equals(this.getDay().getDate())
+                    && chore.getTimeTo().equals(this.getDay().getDate())) {
                 ChoreView choreView = new ChoreView(chore, chore.getAssignedTo());
-                labels.add(choreView.getContainer());
+                labels.add(choreView);
             }
         }
 
@@ -136,8 +136,16 @@ public class DayView extends Button implements ViewInterface {
                 this.vBoxContainer)) {
             ((Region) node).setMinWidth(newWidth);
             ((Region) node).setPrefWidth(newWidth);
-
         }
+
+        this.vBoxContainer.getChildren().forEach(l -> ((ChoreView) l).updateWidth(newWidth));
+
+    }
+
+    public void updateHeight(double newHeight) {
+        int buttonHeight = 30;
+        this.container.setMinHeight(newHeight - buttonHeight);
+        this.container.setPrefHeight(newHeight - buttonHeight);
     }
 
 }

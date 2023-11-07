@@ -97,7 +97,7 @@ public class AppController {
         this.weekContainer.getChildren().add(this.topLabelContainer);
         for (String info : this.WEEKDAYS) {
             Label label = new Label(info);
-            label.getStyleClass().addAll("static-basic-shape", "background-yellow", "bold");
+            label.getStyleClass().addAll("static-basic-shape", "background-medium-blue", "bold");
             this.topLabelContainer.getChildren().add(label);
         }
     }
@@ -128,8 +128,10 @@ public class AppController {
         this.topLabelContainer.setMinWidth(width);
         this.topLabelContainer.setPrefWidth(width);
 
-        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setMinWidth(width / 8));
-        this.topLabelContainer.getChildren().forEach(c -> ((Label) c).setPrefWidth(width / 8));
+        this.topLabelContainer.getChildren()
+                .forEach(c -> ((Label) c).setMinWidth(width / this.WEEKDAYS.size()));
+        this.topLabelContainer.getChildren()
+                .forEach(c -> ((Label) c).setPrefWidth(width / this.WEEKDAYS.size()));
 
         this.weeks.forEach(w -> w.updateWidth(width));
 
