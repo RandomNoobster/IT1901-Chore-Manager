@@ -77,6 +77,9 @@ public class RemoteDataAccess implements DataAccess {
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
+            if (responseBody == null || responseBody.isEmpty())
+                return null;
+
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
             return RestrictedCollective.decodeFromJSON(jsonObject);
@@ -282,6 +285,9 @@ public class RemoteDataAccess implements DataAccess {
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
+            if (responseBody == null || responseBody.isEmpty())
+                return null;
+
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
             return RestrictedCollective.decodeFromJSON(jsonObject);
@@ -394,6 +400,9 @@ public class RemoteDataAccess implements DataAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
+
+            if (responseBody == null || responseBody.isEmpty())
+                return null;
 
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);

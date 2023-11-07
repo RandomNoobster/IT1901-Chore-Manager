@@ -92,6 +92,8 @@ public class StateController {
     @GetMapping(path = "/logged-in-user")
     public String getLoggedInUser() {
         Person user = this.stateService.getInstance().getLoggedInUser();
+        if (user == null)
+            return null;
         return Person.encodeToJSONObject(user).toString();
     }
 
@@ -165,7 +167,6 @@ public class StateController {
             return false;
 
         boolean checked = Boolean.parseBoolean(checkedString);
-        System.out.println("Print incoming checked: " + checked);
         chore.setChecked(checked);
         this.saveToDisk();
         return true;

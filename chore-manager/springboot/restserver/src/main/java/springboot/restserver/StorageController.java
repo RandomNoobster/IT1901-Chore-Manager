@@ -48,6 +48,8 @@ public class StorageController {
     @GetMapping(path = "/collectives/{joinCode}")
     public String getCollective(@PathVariable("joinCode") String joinCode) {
         Collective collective = this.storageService.getStorage().getCollective(joinCode);
+        if (collective == null)
+            return null;
         return RestrictedCollective.encodeToJSONObject(collective).toString();
     }
 
