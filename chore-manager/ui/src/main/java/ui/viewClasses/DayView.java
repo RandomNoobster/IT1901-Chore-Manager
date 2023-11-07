@@ -28,7 +28,6 @@ public class DayView extends Button implements ViewInterface {
     private ScrollPane scrollContainer = new ScrollPane();
     private VBox vBoxContainer = new VBox();
     private Label pastDate;
-    private static final int BUTTON_HEIGHT = 30;
 
     /**
      * A constructor for the DayView class. It creates and styles the FXML-element.
@@ -39,8 +38,7 @@ public class DayView extends Button implements ViewInterface {
         super();
 
         // Go to chorecreation when button is pressed
-        this.setOnAction(
-                e -> App.setChoreCreationScene("ChoreCreation", day.getDate(), day.getDate()));
+        this.setOnAction(e -> App.setChoreCreationScene(day.getDate(), day.getDate()));
 
         // Add CSS
         this.container.getStyleClass().add("day-container");
@@ -105,7 +103,7 @@ public class DayView extends Button implements ViewInterface {
      */
     public void updateFxml() {
         this.vBoxContainer.getChildren().clear();
-        this.vBoxContainer.getStyleClass().add("distance-row");
+        this.vBoxContainer.getStyleClass().addAll("distance-row");
 
         List<ChoreView> labels = new ArrayList<>();
 
@@ -133,19 +131,19 @@ public class DayView extends Button implements ViewInterface {
             this.pastDate.setPrefWidth(newWidth);
 
         }
+
         for (Node node : Arrays.asList(this, this.container, this.scrollContainer,
                 this.vBoxContainer)) {
             ((Region) node).setMinWidth(newWidth);
             ((Region) node).setPrefWidth(newWidth);
         }
-
         this.vBoxContainer.getChildren().forEach(l -> ((ChoreView) l).updateWidth(newWidth));
 
     }
 
     public void updateHeight(double newHeight) {
-        this.container.setMinHeight(newHeight - BUTTON_HEIGHT);
-        this.container.setPrefHeight(newHeight - BUTTON_HEIGHT);
+        this.container.setMinHeight(newHeight - CSSGlobal.BUTTON_HEIGHT);
+        this.container.setPrefHeight(newHeight - CSSGlobal.BUTTON_HEIGHT);
     }
 
 }

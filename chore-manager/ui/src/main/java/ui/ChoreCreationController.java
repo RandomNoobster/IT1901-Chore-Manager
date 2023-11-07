@@ -7,6 +7,7 @@ import core.State;
 import core.data.Chore;
 import core.data.Person;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -49,6 +50,8 @@ public class ChoreCreationController {
     private LocalDate dateFrom = LocalDate.MIN;
     private LocalDate dateTo = LocalDate.MIN;
 
+    private final int CHARACTER_MINIMUM = 5;
+
     public ChoreCreationController() {
 
     }
@@ -83,6 +86,13 @@ public class ChoreCreationController {
      */
     public void createChore() {
         String choreName = this.name.getText();
+
+        if (choreName.length() < this.CHARACTER_MINIMUM) {
+            App.showAlert("Chore name not long enough", "The name of the chore must be at least "
+                    + this.CHARACTER_MINIMUM + " characters", AlertType.WARNING);
+            return;
+        }
+
         Integer points = (int) this.points.getValue();
         Color selectedColor = this.colorPicker.getValue();
         int red = (int) (selectedColor.getRed() * 255);
@@ -91,6 +101,8 @@ public class ChoreCreationController {
 
         PersonMenuItem personMenuItem = (PersonMenuItem) this.personsMenu.getValue();
         if (personMenuItem == null) {
+            App.showAlert("Assignee not set", "Assign the task to a member of your collective",
+                    AlertType.WARNING);
             return;
         }
         Person person = personMenuItem.getPerson();

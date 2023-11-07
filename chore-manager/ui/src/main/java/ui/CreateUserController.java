@@ -5,7 +5,6 @@ import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -40,28 +39,23 @@ public class CreateUserController {
 
     }
 
-    private void errorMsg(String title, String header) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.show();
-    }
-
     private Boolean createAccount(String username, String displayName, Password password) {
 
         if (username.length() < this.allowedUsername) {
-            this.errorMsg("Username issue",
-                    "Username must be at least " + this.allowedUsername + " characters");
+            App.showAlert("Username issue",
+                    "Username must be at least " + this.allowedUsername + " characters",
+                    AlertType.WARNING);
             return false;
         }
         if (displayName.length() < this.allowedDisplayname) {
-            this.errorMsg("Fullname issue",
-                    "Displayname must be at least " + this.allowedDisplayname + " characters");
+            App.showAlert("Fullname issue",
+                    "Displayname must be at least " + this.allowedDisplayname + " characters",
+                    AlertType.WARNING);
             return false;
         }
 
         if (!password.isLegal()) {
-            this.errorMsg("Password issue", password.getFixMsg());
+            App.showAlert("Password issue", password.getFixMsg(), AlertType.WARNING);
             return false;
         }
 
@@ -70,7 +64,7 @@ public class CreateUserController {
         Person newUser = new Person(username, limboCollective, password, displayName);
 
         if (!Storage.getInstance().addPerson(newUser, limboCollective.getJoinCode())) {
-            this.errorMsg("Username issue", "Username is not unique");
+            App.showAlert("Username issue", "Username is not unique", AlertType.WARNING);
             return false;
         }
 
@@ -91,6 +85,7 @@ public class CreateUserController {
 
             State.getInstance()
                     .setLoggedInUser(Storage.getInstance().getAllPersons().get(username));
+            Storage.getInstance().save();
 
             if (State.getInstance().getCurrentCollective().isLimboCollective()) {
                 App.switchScene("JoinCollective");

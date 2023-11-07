@@ -8,16 +8,17 @@ import java.util.List;
 import core.State;
 import core.data.Week;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import ui.viewClasses.CSSGlobal;
 import ui.viewClasses.WeekView;
 
 /**
@@ -42,10 +43,13 @@ public class AppController {
 
     private HBox topLabelContainer = new HBox();
     private List<WeekView> weeks = new ArrayList<>();
+    private ScrollPane subWeekScrollContainer = new ScrollPane();
+    private VBox subWeekContainer = new VBox();
     private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks
                                                // before
     // current week)
-    private static final int NUM_WEEKS = 4; // Number of weeks to create
+    private static final int NUM_WEEKS = 5; // Number of weeks to create
+
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
             "Thursday", "Friday", "Saturday", "Sunday");
 
@@ -61,7 +65,6 @@ public class AppController {
      */
     @FXML
     public void initialize() {
-
         this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
         this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
 
@@ -76,6 +79,9 @@ public class AppController {
 
         // Update view
         this.updateFxml();
+
+        this.weekContainer.getChildren().add(this.subWeekScrollContainer);
+        this.subWeekScrollContainer.setContent(this.subWeekContainer);
     }
 
     /**
@@ -116,27 +122,24 @@ public class AppController {
         this.topLabelContainer.setMinWidth(width);
         this.topLabelContainer.setPrefWidth(width);
 
-        this.topLabelContainer.getChildren()
-                .forEach(c -> ((Label) c).setMinWidth(width / this.WEEKDAYS.size()));
-        this.topLabelContainer.getChildren()
-                .forEach(c -> ((Label) c).setPrefWidth(width / this.WEEKDAYS.size()));
+        this.topLabelContainer.getChildren().forEach(c -> ((Label) c)
+                .setMinWidth((width - CSSGlobal.SCROLLBAR_WIDTH) / this.WEEKDAYS.size()));
+        this.topLabelContainer.getChildren().forEach(c -> ((Label) c)
+                .setPrefWidth((width - CSSGlobal.SCROLLBAR_WIDTH) / this.WEEKDAYS.size()));
 
-        this.weeks.forEach(w -> w.updateWidth(width));
+        this.weeks.forEach(w -> w.updateWidth(width - CSSGlobal.SCROLLBAR_WIDTH));
 
     }
 
     private void resizeHeight(double height) {
-        double topLabelHeight = 30;
-        double topToolbar = 50;
 
         this.subScene.setMinHeight(height);
         this.subScene.setPrefHeight(height);
 
-        this.weekContainer.setMinHeight(height - topToolbar);
-        this.weekContainer.setPrefHeight(height - topToolbar);
+        this.weekContainer.setMinHeight(height - CSSGlobal.TOP_LABEL_HEIGHT);
+        this.weekContainer.setPrefHeight(height - CSSGlobal.TOP_LABEL_HEIGHT);
 
-        this.weeks.forEach(
-                w -> w.updateHeight((height - topLabelHeight - topToolbar) / this.NUM_WEEKS));
+        this.weeks.forEach(w -> w.updateHeight(CSSGlobal.WEEK_HEIGHT));
 
     }
 
@@ -157,7 +160,7 @@ public class AppController {
 
         // Draw weeks
         for (WeekView week : weeks) {
-            this.weekContainer.getChildren().add(week.getFxml());
+            this.subWeekContainer.getChildren().add(week.getFxml());
         }
         return weeks;
     }
@@ -180,9 +183,6 @@ public class AppController {
         content.putString(State.getInstance().getCurrentCollective().getJoinCode());
         clipboard.setContent(content);
 
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Code copied");
-        alert.setHeaderText("Copied collective-code to clipboard");
-        alert.show();
+        App.showAlert("Code copied", "Copied collective-code to clipboard", AlertType.INFORMATION);
     }
 }

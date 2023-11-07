@@ -81,12 +81,11 @@ public class ChoreView extends VBox implements ViewInterface {
      * @param newWidth
      */
     public void updateWidth(double newWidth) {
-        double accountForPadding = 15;
         this.setPrefWidth(newWidth);
         this.setMinWidth(newWidth);
 
-        this.choreDisplay.setMinWidth(newWidth - accountForPadding);
-        this.choreDisplay.setPrefWidth(newWidth - accountForPadding);
+        this.choreDisplay.setMinWidth(newWidth - CSSGlobal.ACCOUNT_FOR_PADDING);
+        this.choreDisplay.setPrefWidth(newWidth - CSSGlobal.ACCOUNT_FOR_PADDING);
     }
 
     @Override

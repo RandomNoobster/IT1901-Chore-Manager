@@ -3,7 +3,6 @@ package ui;
 import core.State;
 import core.data.Collective;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import persistence.fileHandling.Storage;
@@ -19,13 +18,6 @@ public class CreateCollectiveController {
 
     }
 
-    private void showAlertWarning(String title, String message) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(message);
-        alert.show();
-    }
-
     @FXML
     public void create() {
 
@@ -34,14 +26,16 @@ public class CreateCollectiveController {
             if (Storage.getInstance().addCollective(newCollective)) {
                 newCollective.addPerson(State.getInstance().getLoggedInUser());
                 State.getInstance().setCurrentCollective(newCollective);
+                Storage.getInstance().save();
                 App.switchScene("App");
+
             } else {
                 String error = "Please inform developers if this error occurs,\nbecause it really should not occur...";
-                this.showAlertWarning("Unknown error", error);
+                App.showAlert("Unknown error", error, AlertType.WARNING);
             }
         } else {
             String error = "Name has to be longer than " + (this.minLength - 1) + " characters";
-            this.showAlertWarning("Name not long enough", error);
+            App.showAlert("Name not long enough", error, AlertType.WARNING);
         }
     }
 

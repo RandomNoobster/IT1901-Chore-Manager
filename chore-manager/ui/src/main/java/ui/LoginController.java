@@ -5,7 +5,6 @@ import java.util.HashMap;
 import core.State;
 import core.data.Person;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -38,13 +37,6 @@ public class LoginController {
 
     }
 
-    private void showAlertWarning(String title, String message) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(message);
-        alert.show();
-    }
-
     /**
      * This method is called when the login button is pressed. If the user exists and the login
      * information is correct, the active user is set to this user.
@@ -57,7 +49,7 @@ public class LoginController {
         HashMap<String, Person> allPersons = Storage.getInstance().getAllPersons();
         if (!allPersons.containsKey(username)
                 || !allPersons.get(username).getPassword().getPasswordString().equals(password)) {
-            this.showAlertWarning("Unknown user", "Wrong username or password!");
+            App.showAlert("Unknown user", "Wrong username or password!", AlertType.WARNING);
             return;
         }
 

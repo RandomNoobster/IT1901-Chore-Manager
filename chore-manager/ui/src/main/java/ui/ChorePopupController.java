@@ -32,7 +32,6 @@ public class ChorePopupController {
     }
 
     public void passData(Chore chore, Person assignee) {
-        System.out.println(chore);
         this.chore = chore;
         this.assignee = assignee;
 
