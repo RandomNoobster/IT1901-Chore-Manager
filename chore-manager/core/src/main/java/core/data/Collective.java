@@ -45,8 +45,8 @@ public class Collective extends RestrictedCollective {
     }
 
     /**
-     * This method is used to get a person from this collective
-     * 
+     * This method is used to get a person from this collective.
+     *
      * @return The person with the given username
      */
     public Person getPerson(String username) {
@@ -100,8 +100,8 @@ public class Collective extends RestrictedCollective {
      *
      * @param person The person to remove
      */
-    public void removePerson(Person person) {
-        this.persons.remove(person.getUsername());
+    public boolean removePerson(Person person) {
+        return this.persons.remove(person.getUsername()) != null;
     }
 
     /**

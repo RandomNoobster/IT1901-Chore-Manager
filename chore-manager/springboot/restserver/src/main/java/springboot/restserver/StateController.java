@@ -148,6 +148,13 @@ public class StateController {
         return removed;
     }
 
+    /**
+     * This method is used to update a chore in the current collective.
+     *
+     * @param uuidString    The uuid of the chore to update.
+     * @param checkedString The new checked value of the chore.
+     * @return True if the chore was updated successfully, false otherwise.
+     */
     @PutMapping(path = "/chores/{uuid}")
     public boolean updateChoreChecked(@PathVariable("uuid") String uuidString,
             @RequestParam("checked") String checkedString) {

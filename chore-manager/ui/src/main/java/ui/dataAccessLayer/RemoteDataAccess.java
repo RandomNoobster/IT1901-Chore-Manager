@@ -176,7 +176,31 @@ public class RemoteDataAccess implements DataAccess {
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    @Override
+    public boolean movePersonToAnotherCollective(String username, Password password,
+            String oldJoinCode, String newJoinCode) {
+        final URI endpoint = this.buildURI(String.format("storage/persons/%s", username));
+
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("password", password.getPasswordString());
+        requestBody.put("oldJoinCode", oldJoinCode);
+        requestBody.put("newJoinCode", newJoinCode);
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON)
+                .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
+                .PUT(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
+        System.out.println("REQUEST: " + request.toString());
+        try {
+            final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
+                    HttpResponse.BodyHandlers.ofString());
+            final String responseBody = response.body();
+            return Boolean.parseBoolean(responseBody);
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

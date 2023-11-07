@@ -2,12 +2,15 @@ package springboot.restserver;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -31,6 +34,9 @@ public class StorageController {
     @Autowired
     private StorageService storageService;
 
+    @Autowired
+    private CacheManager cacheManager;
+
     /**
      * Saves the current storage state to disk.
      */
@@ -51,14 +57,20 @@ public class StorageController {
      * @param collectiveJSON the collective to add in JSON format
      * @return true if the collective was added successfully, false otherwise
      */
-    @CacheEvict(value = "collectives", key = "#restrictedCollective.joinCode")
     @PostMapping(path = "/collectives")
     public boolean addCollective(@RequestBody String collectiveJSON) {
         RestrictedCollective restrictedCollective = RestrictedCollective
                 .decodeFromJSON(JSONValidator.decodeFromJSONString(collectiveJSON));
 
         Collective collective = new Collective(restrictedCollective);
+
         boolean success = this.storageService.getStorage().addCollective(collective);
+
+        String joinCode = restrictedCollective.getJoinCode();
+        Cache collectivesCache = this.cacheManager.getCache("collectives");
+        if (collectivesCache != null) {
+            collectivesCache.evict(joinCode);
+        }
         this.saveToDisk();
         return success;
     }
@@ -104,7 +116,7 @@ public class StorageController {
      * @param requestBody the request body
      * @return true if the person was added successfully, false otherwise
      */
-    // @CacheEvict(value = "persons")
+    @CacheEvict(value = "persons")
     @PostMapping(path = "/persons/{username}")
     public boolean addPerson(@RequestBody String requestBody) {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);
@@ -112,6 +124,33 @@ public class StorageController {
         String joinCode = jsonObject.getString("joinCode");
 
         boolean success = this.storageService.getStorage().addPerson(person, joinCode);
+        this.saveToDisk();
+        return success;
+    }
+
+    /**
+     * Updates the collective join code for a person in the storage.
+     *
+     * @param username    the username of the person to update
+     * @param requestBody the request body
+     * @return true if the person was updated successfully, false otherwise
+     */
+    @CacheEvict(value = "persons")
+    @PutMapping(path = "/persons/{username}")
+    public boolean movePersonToAnotherCollective(@PathVariable("username") String username,
+            @RequestBody String requestBody) {
+        JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);
+        String oldJoinCode = jsonObject.getString("oldJoinCode");
+        String newJoinCode = jsonObject.getString("newJoinCode");
+        String password = jsonObject.getString("password");
+
+        Person user = this.storageService.getStorage().getPerson(username);
+
+        if (user == null || !user.getPassword().getPasswordString().equals(password))
+            return false;
+
+        boolean success = this.storageService.getStorage().movePersonToAnotherCollective(user,
+                oldJoinCode, newJoinCode);
         this.saveToDisk();
         return success;
     }

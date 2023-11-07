@@ -224,6 +224,28 @@ public class Storage {
     }
 
     /**
+     * Moves a person from one collective to another
+     *
+     * @param person      The person to update
+     * @param oldJoinCode The old join code
+     * @param newJoinCode The new join code
+     */
+    public boolean movePersonToAnotherCollective(Person person, String oldJoinCode,
+            String newJoinCode) {
+        Collective oldCollective = this.collectives.get(oldJoinCode);
+        Collective newCollective = this.collectives.get(newJoinCode);
+
+        if (oldCollective == null || newCollective == null)
+            return false;
+
+        oldCollective.removePerson(person);
+        newCollective.addPerson(person);
+        person.setCollective(newJoinCode);
+
+        return true;
+    }
+
+    /**
      * This is a method to create a file for the application with default data. This should be
      * called if you do not have any persons in the application.
      */

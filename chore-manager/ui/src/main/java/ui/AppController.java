@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import core.data.RestrictedCollective;
 import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -67,6 +68,9 @@ public class AppController {
         // Set data access layer
         this.dataAccess = App.getDataAccess();
 
+        // Set collective name
+        this.setCollectiveName();
+
         // Set top column that displays what each column means
         this.setTopColumn();
 
@@ -78,6 +82,12 @@ public class AppController {
 
         // Update view
         this.updateFxml();
+    }
+
+    private void setCollectiveName() {
+        RestrictedCollective currentCollective = this.dataAccess.getCurrentCollective();
+        this.code.setText("Code: " + currentCollective.getJoinCode());
+        this.collectiveName.setText(currentCollective.getName());
     }
 
     /**

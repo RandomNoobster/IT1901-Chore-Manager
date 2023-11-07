@@ -68,6 +68,17 @@ public interface DataAccess {
     public boolean addPerson(Person person, String joinCode);
 
     /**
+     * This method moves a person from one collective to another.
+     *
+     * @param username    The username of the person to move
+     * @param password    The password of the person to move
+     * @param oldJoinCode The join code of the collective to move the person from
+     * @param newJoinCode The join code of the collective to move the person to
+     */
+    public boolean movePersonToAnotherCollective(String username, Password password,
+            String oldJoinCode, String newJoinCode);
+
+    /**
      * This method is used to set the logged in user and the corresponding collective. If the
      * collective or person does not exist in storage, it will fail to log in.
      *
