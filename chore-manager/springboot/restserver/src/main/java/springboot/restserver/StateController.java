@@ -71,7 +71,6 @@ public class StateController {
         if (!user.getPassword().getPasswordString().equals(password))
             return false;
 
-        System.out.println("Logged in");
         this.stateService.getInstance().logIn(user, collective);
         return true;
     }
@@ -151,13 +150,14 @@ public class StateController {
 
     @PutMapping(path = "/chores/{uuid}")
     public boolean updateChoreChecked(@PathVariable("uuid") String uuidString,
-            @RequestParam("checked") boolean checked) {
+            @RequestParam("checked") String checkedString) {
         UUID uuid = UUID.fromString(uuidString);
         Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
 
         if (chore == null)
             return false;
 
+        boolean checked = Boolean.parseBoolean(checkedString);
         System.out.println("Print incoming checked: " + checked);
         chore.setChecked(checked);
         this.saveToDisk();

@@ -237,7 +237,6 @@ public class RemoteDataAccess implements DataAccess {
                 System.out.println("Could not retrieve logged in user");
                 return null;
             }
-            System.out.println("RESPONSE: " + responseBody);
 
             // Deserialize the response body
             JSONObject jsonObject = JSONValidator.decodeFromJSONString(responseBody);
@@ -310,8 +309,8 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public boolean updateChoreChecked(Chore chore, boolean checked) {
-        final URI endpoint = this.buildURI(
-                String.format("state/chores/%s", chore.getUUID(), Map.of("checked", checked)));
+        final URI endpoint = this.buildURI(String.format("state/chores/%s", chore.getUUID()),
+                Map.of("checked", String.valueOf(checked)));
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
