@@ -4,10 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.State;
+// import core.State;
 import core.data.Chore;
 import core.data.Day;
-import core.data.Person;
 import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,12 +16,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.App;
+import ui.dataAccessLayer.DataAccess;
 
 /**
  * The WeekView class represents a week in the calendar.
  */
 public class WeekView implements ViewInterface {
 
+    private DataAccess dataAccess;
     private Week week;
     private List<DayView> dayViews = new ArrayList<>();
     private final Integer COLUMN_COUNT = 8;
@@ -65,6 +66,8 @@ public class WeekView implements ViewInterface {
      * @param week The week to be represented by the WeekView.
      */
     public WeekView(Week week) {
+        this.dataAccess = App.getDataAccess();
+
         this.week = week;
 
         // Set up hierarchy
@@ -89,16 +92,16 @@ public class WeekView implements ViewInterface {
 
         // Add weekChores
         List<ChoreView> choreViews = new ArrayList<>();
-        for (Person person : State.getInstance().getCurrentCollective().getPersonsList()) {
-            for (Chore chore : person.getChores()) {
-                if (chore.getTimeFrom().equals(this.week.getStartDate())
-                        && chore.getTimeTo().equals(this.week.getEndDate())) {
 
-                    ChoreView weekChore = new ChoreView(chore, person, true);
-                    choreViews.add(weekChore);
-                }
+        for (Chore chore : this.dataAccess.getChores()) {
+            if (chore.getTimeFrom().equals(this.week.getStartDate())
+                    && chore.getTimeTo().equals(this.week.getEndDate())) {
+
+                ChoreView weekChore = new ChoreView(chore, chore.getAssignedTo(), true);
+                choreViews.add(weekChore);
             }
         }
+
         this.weekChores.getChildren().addAll(choreViews);
 
         // Add styling
@@ -159,10 +162,10 @@ public class WeekView implements ViewInterface {
     }
 
     /**
-     * Set width of a region
-     * 
-     * @param region
-     * @param width
+     * Set width of a region.
+     *
+     * @param region The region to set width of
+     * @param width  The width to set
      */
     private void setMinAndPrefW(Region region, Double width) {
         region.setMinWidth(width);
@@ -170,10 +173,10 @@ public class WeekView implements ViewInterface {
     }
 
     /**
-     * Set height of a region
-     * 
-     * @param region
-     * @param width
+     * Set height of a region.
+     *
+     * @param region The region to set height of
+     * @param width  The height to set
      */
     private void setMinAndPrefH(Region region, Double height) {
         region.setMinHeight(height);

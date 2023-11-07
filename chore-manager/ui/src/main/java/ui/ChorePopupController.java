@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import ui.dataAccessLayer.DataAccess;
 
+/**
+ * Controller for the chore popup window.
+ */
 public class ChorePopupController {
 
     private DataAccess dataAccess;
@@ -33,6 +36,12 @@ public class ChorePopupController {
 
     }
 
+    /**
+     * Passes data to the popup window.
+     *
+     * @param chore    the chore to display
+     * @param assignee the assignee of the chore
+     */
     public void passData(Chore chore, String assignee) {
         this.chore = chore;
         this.assignee = assignee;
