@@ -4,8 +4,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +13,8 @@ public class CollectiveTest {
 
     @BeforeEach
     public void setUp() {
-        limboCollective = new Collective("Limbo", Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-        otherCollective = new Collective("Other");
+        this.limboCollective = new Collective("Limbo", Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+        this.otherCollective = new Collective("Other");
     }
 
     @Test
@@ -37,24 +35,24 @@ public class CollectiveTest {
 
     @Test
     public void testGetJoinCode() {
-        assertDoesNotThrow(() -> limboCollective.getJoinCode());
+        assertDoesNotThrow(() -> this.limboCollective.getJoinCode());
     }
 
     @Test
     public void testGetName() {
-        assertDoesNotThrow(() -> limboCollective.getName());
+        assertDoesNotThrow(() -> this.limboCollective.getName());
     }
 
     @Test
     public void testPersons() {
-        assertDoesNotThrow(() -> limboCollective.getPersons());
+        assertDoesNotThrow(() -> this.limboCollective.getPersons());
 
         Person person1 = new Person("Jimmy", this.limboCollective);
-        assertTrue(limboCollective.addPerson(person1));
-        assertTrue(limboCollective.hasPerson(person1));
-        assertFalse(limboCollective.addPerson(person1));
+        assertTrue(this.limboCollective.addPerson(person1));
+        assertTrue(this.limboCollective.hasPerson(person1));
+        assertFalse(this.limboCollective.addPerson(person1));
         assertDoesNotThrow(() -> this.limboCollective.removePerson(person1));
-        assertFalse(limboCollective.hasPerson(person1));
+        assertFalse(this.limboCollective.hasPerson(person1));
     }
 
     @Test
