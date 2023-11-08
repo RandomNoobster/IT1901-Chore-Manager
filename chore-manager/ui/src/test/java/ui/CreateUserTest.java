@@ -93,6 +93,78 @@ public class CreateUserTest extends BaseTestClass {
     }
 
     /**
+     * Test that the user does not get created if they enter a username that is too short.
+     */
+    @Test
+    public void testShortUsername() {
+        this.interact(() -> {
+            this.username.setText("K");
+        });
+
+        this.interact(() -> {
+            this.displayname.setText("Kristoffer69420");
+        });
+
+        this.interact(() -> {
+            this.password.setText("Password12345");
+        });
+
+        List<Person> preClick = new ArrayList<>(Storage.getInstance().getAllPersonsList());
+        this.clickOn(this.create);
+
+        WaitForAsyncUtils.waitForFxEvents();
+        assertEquals(preClick, Storage.getInstance().getAllPersonsList());
+    }
+
+    /**
+     * Test that the user does not get created if they enter a display name that is too short.
+     */
+    @Test
+    public void testShortDisplayName() {
+        this.interact(() -> {
+            this.username.setText("Kristoffer");
+        });
+
+        this.interact(() -> {
+            this.displayname.setText("K");
+        });
+
+        this.interact(() -> {
+            this.password.setText("Password12345");
+        });
+
+        List<Person> preClick = new ArrayList<>(Storage.getInstance().getAllPersonsList());
+        this.clickOn(this.create);
+
+        WaitForAsyncUtils.waitForFxEvents();
+        assertEquals(preClick, Storage.getInstance().getAllPersonsList());
+    }
+
+    /**
+     * Test that the user does not get created if they enter a password that illegal.
+     */
+    @Test
+    public void testIllegalPassword() {
+        this.interact(() -> {
+            this.username.setText("Kristoffer");
+        });
+
+        this.interact(() -> {
+            this.displayname.setText("Kristoffer69420");
+        });
+
+        this.interact(() -> {
+            this.password.setText("pwd");
+        });
+
+        List<Person> preClick = new ArrayList<>(Storage.getInstance().getAllPersonsList());
+        this.clickOn(this.create);
+
+        WaitForAsyncUtils.waitForFxEvents();
+        assertEquals(preClick, Storage.getInstance().getAllPersonsList());
+    }
+
+    /**
      * Test that no user is created if they go back.
      */
     @Test
