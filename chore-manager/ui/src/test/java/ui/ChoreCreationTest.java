@@ -3,6 +3,7 @@ package ui;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
@@ -13,7 +14,6 @@ import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.State;
 import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
@@ -23,13 +23,33 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import persistence.fileHandling.EnvironmentConfigurator;
 import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
+import ui.dataAccessLayer.RemoteDataAccess;
 
 public class ChoreCreationTest extends ApplicationTest {
 
     private Parent root;
-    private final static Collective testCollective = new Collective("Test Collective");
-    private final static Person testPerson = new Person("Test", testCollective.getJoinCode());
+    private static DataAccess dataAccess = getDataAccess();
+
+    /**
+     * Gets the data access layer.
+     */
+    // Kristoffer! Move this to the base test class you made (with the dataAccess field)
+    public static DataAccess getDataAccess() {
+        if (dataAccess != null)
+            return dataAccess;
+        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        if (apiBaseEndpoint != null) {
+            dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+            return dataAccess;
+        } else {
+            // Use direct data access here
+            throw new RuntimeException("Could not find API base endpoint");
+        }
+    }
 
     /**
      * Sets the current environment to test
@@ -43,11 +63,14 @@ public class ChoreCreationTest extends ApplicationTest {
     }
 
     private static void setup() {
-        Storage.deleteInstance();
-        Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testCollective.getJoinCode());
+        Storage.getInstance().deleteFileContent();
+        dataAccess.enterTestMode();
 
-        State.getInstance().logIn(testPerson, testCollective);
+        // Temporary solution. Kristoffer has a better way
+        Collective testCollective = new Collective("Test Collective");
+        Person testPerson = new Person("Test", testCollective.getJoinCode());
+
+        dataAccess.logIn(testPerson, testPerson.getPassword(), testCollective);
     }
 
     @Override
@@ -84,12 +107,20 @@ public class ChoreCreationTest extends ApplicationTest {
 
     @Test
     public void testCreateChore() {
-        List<Chore> savedChores = Storage.getInstance().getAllChores();
+        List<Chore> savedChores = dataAccess.getChores();
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
             name.setText("Bob");
         });
+
+        // Wait 15 seconds
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
         ComboBox<String> comboBox = this.lookup("#personsMenu").query();
         this.interact(() -> {
@@ -99,6 +130,7 @@ public class ChoreCreationTest extends ApplicationTest {
         this.click("Create");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(savedChores.size() + 1 == Storage.getInstance().getAllChores().size());
+
+        assertTrue(savedChores.size() + 1 == this.dataAccess.getChores().size());
     }
 }

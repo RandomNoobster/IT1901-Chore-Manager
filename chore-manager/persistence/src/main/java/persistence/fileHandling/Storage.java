@@ -224,7 +224,7 @@ public class Storage {
     }
 
     /**
-     * Moves a person from one collective to another
+     * Moves a person from one collective to another.
      *
      * @param person      The person to update
      * @param oldJoinCode The old join code

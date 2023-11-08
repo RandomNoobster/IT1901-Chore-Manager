@@ -163,4 +163,25 @@ public class StorageController {
         return success;
     }
 
+    /**
+     * This method initializes the API to use the .env-development file. This is the standard mode.
+     * On startup you can expect the API to be in this mode.
+     */
+    @PostMapping(path = "/mode/enter-standard-mode")
+    public void enterStandardMode() {
+        System.setProperty("env", "development");
+        this.storageService.updateStorageService();
+        System.out.println("API is now in standard mode");
+    }
+
+    /**
+     * This method initializes the API to use test data and the .env-test file.
+     */
+    @PostMapping(path = "/mode/enter-test-mode")
+    public void enterTestMode() {
+        System.setProperty("env", "test");
+        this.storageService.updateStorageService();
+        System.out.println("API is now in test mode");
+    }
+
 }

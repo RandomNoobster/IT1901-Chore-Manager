@@ -228,6 +228,9 @@ public class StateController {
     @Cacheable(value = "persons", key = "'all'")
     @GetMapping(path = "/persons")
     public String getPersons() {
+        if (!this.loggedIn())
+            return null;
+
         HashMap<String, Person> persons = this.stateService.getInstance().getCurrentCollective()
                 .getPersons();
 

@@ -146,4 +146,15 @@ public interface DataAccess {
      * @return A {@link HashMap} of persons, where key is the username.
      */
     public HashMap<String, RestrictedPerson> getPersons();
+
+    /**
+     * This method initializes the API to use the .env-development file. This is the standard mode.
+     * On startup you can expect the API to be in this mode.
+     */
+    public void enterStandardMode();
+
+    /**
+     * This method initializes the API to use test data and the .env-test file.
+     */
+    public void enterTestMode();
 }

@@ -114,10 +114,8 @@ public class App extends Application {
     public static DataAccess getDataAccess() {
         if (dataAccess != null)
             return dataAccess;
-
         EnvironmentConfigurator configurator = new EnvironmentConfigurator();
         URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
-
         if (apiBaseEndpoint != null) {
             dataAccess = new RemoteDataAccess(apiBaseEndpoint);
             return dataAccess;

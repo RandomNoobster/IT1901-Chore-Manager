@@ -261,7 +261,7 @@ public class RemoteDataAccess implements DataAccess {
             final String responseBody = response.body();
 
             if (responseBody == null || responseBody.isEmpty()) {
-                System.out.println("Could not retrieve logged in user");
+                System.out.println("No user was logged in");
                 return null;
             }
 
@@ -414,6 +414,34 @@ public class RemoteDataAccess implements DataAccess {
             }
 
             return persons;
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void enterStandardMode() {
+        final URI endpoint = this.buildURI("storage/mode/enter-test-mode");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void enterTestMode() {
+        final URI endpoint = this.buildURI("storage/mode/enter-test-mode");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }

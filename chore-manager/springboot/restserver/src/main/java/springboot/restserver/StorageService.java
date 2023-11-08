@@ -25,6 +25,15 @@ public class StorageService {
     }
 
     /**
+     * Updates the storage service to use the latest version of the storage. This is useful when
+     * changing from development to testing as we want to use different files.
+     */
+    public void updateStorageService() {
+        Storage.deleteInstance();
+        this.storage = Storage.getInstance();
+    }
+
+    /**
      * Saves the current state of the application to disk. Should be called after each update.
      */
     public void saveToDisk() {
