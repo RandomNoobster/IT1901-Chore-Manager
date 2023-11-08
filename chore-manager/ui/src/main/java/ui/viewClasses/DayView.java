@@ -142,6 +142,9 @@ public class DayView extends Button implements ViewInterface {
 
     }
 
+    /**
+     * Updates the height of this and the parent FXML-elements.
+     */
     public void updateHeight(double newHeight) {
         int buttonHeight = 30;
         this.container.setMinHeight(newHeight - buttonHeight);
