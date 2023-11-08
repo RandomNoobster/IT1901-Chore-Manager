@@ -37,22 +37,22 @@ First install the necessary dependencies in [chore-manager](/chore-manager/):
 
 ```shell
 cd chore-manager/
-mvn install 
-```
-
-Then run the javafx run command in [chore-manager/ui](/chore-manager/ui/):
-
-```shell
-cd chore-manager/ui/
-mvn javafx:run
+mvn install -DskipTests
 ```
 
 Then you will need to start the REST API in [chore-manager/springboot/restserver](/chore-manager/springboot/restserver/):
-First open a new terminal, within this terminal you need to navigate to `chore-manager/springboot/restserver`
+Navigate to `chore-manager/springboot/restserver`:
 
 ```shell
-cd chore-manager/springboot/restserver
+cd springboot/restserver
 mvn spring-boot:run
+```
+
+Then you need to open a new terminal window, while the API is running.
+Then navigate to [chore-manager/ui](/chore-manager/ui/) in your new terminal, and run the following command:
+```shell
+cd chore-manager/ui/
+mvn javafx:run
 ```
 
 You will be presented with a login page. Please create a user in the application by clicking the "Create user" button. Then you can log in with the user you just created.
