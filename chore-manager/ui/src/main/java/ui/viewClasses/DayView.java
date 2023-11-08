@@ -52,8 +52,6 @@ public class DayView extends Button implements ViewInterface {
         // Saving classes
         this.day = new Day(day);
 
-        this.updateFxml();
-
         // If date = today, assign special class
         if (this.day.getDate().isEqual(LocalDate.now())) {
             this.container.getStyleClass().add("this-day");
@@ -104,13 +102,13 @@ public class DayView extends Button implements ViewInterface {
     /**
      * Updates the FXML of this DayView to include all active chores.
      */
-    public void updateFxml() {
+    public void updateFxml(List<Chore> chores) {
         this.vBoxContainer.getChildren().clear();
         this.vBoxContainer.getStyleClass().add("distance-row");
 
         List<ChoreView> labels = new ArrayList<>();
 
-        for (Chore chore : this.dataAccess.getChores()) {
+        for (Chore chore : chores) {
             if (chore.getTimeFrom().equals(this.getDay().getDate())
                     && chore.getTimeTo().equals(this.getDay().getDate())) {
                 ChoreView choreView = new ChoreView(chore, chore.getAssignedTo());

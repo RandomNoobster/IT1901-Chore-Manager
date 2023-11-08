@@ -1,12 +1,14 @@
 package ui;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import core.data.Chore;
+import core.data.RestrictedPerson;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,9 +39,15 @@ public class Leaderboard {
 
         this.leaderboard.getItems().clear();
         List<Pair<String, Integer>> pointsList = new ArrayList<>();
+        HashMap<String, Integer> points = new HashMap<String, Integer>();
+
+        Collection<RestrictedPerson> persons = this.dataAccess.getPersons().values();
+
+        for (RestrictedPerson person : persons) {
+            points.put(person.getUsername(), 0);
+        }
 
         List<Chore> chores = this.dataAccess.getChores();
-        HashMap<String, Integer> points = new HashMap<String, Integer>();
         for (Chore chore : chores) {
             if (chore.getChecked()) {
                 Integer prevPoints = points.getOrDefault(chore.getAssignedTo(), 0);

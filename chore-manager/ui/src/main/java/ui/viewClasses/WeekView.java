@@ -90,20 +90,6 @@ public class WeekView implements ViewInterface {
             this.dayContainer.getChildren().add(dayView.getFxml());
         }
 
-        // Add weekChores
-        List<ChoreView> choreViews = new ArrayList<>();
-
-        for (Chore chore : this.dataAccess.getChores()) {
-            if (chore.getTimeFrom().equals(this.week.getStartDate())
-                    && chore.getTimeTo().equals(this.week.getEndDate())) {
-
-                ChoreView weekChore = new ChoreView(chore, chore.getAssignedTo(), true);
-                choreViews.add(weekChore);
-            }
-        }
-
-        this.weekChores.getChildren().addAll(choreViews);
-
         // Add styling
         this.addStyling();
     }
@@ -154,11 +140,28 @@ public class WeekView implements ViewInterface {
         return new HBox(this.container);
     }
 
+    private void updateWeekChoresFXML(List<Chore> chores) {
+        this.weekChores.getChildren().clear();
+        List<ChoreView> choreViews = new ArrayList<>();
+
+        for (Chore chore : chores) {
+            if (chore.getTimeFrom().equals(this.week.getStartDate())
+                    && chore.getTimeTo().equals(this.week.getEndDate())) {
+
+                ChoreView weekChore = new ChoreView(chore, chore.getAssignedTo(), true);
+                choreViews.add(weekChore);
+            }
+        }
+
+        this.weekChores.getChildren().addAll(choreViews);
+    }
+
     /**
      * Updates the FXML-elements of the DayViews in the week.
      */
-    public void updateFxml() {
-        this.getDayViews().forEach(d -> d.updateFxml());
+    public void updateFxml(List<Chore> chores) {
+        this.getDayViews().forEach(d -> d.updateFxml(chores));
+        this.updateWeekChoresFXML(chores);
     }
 
     /**

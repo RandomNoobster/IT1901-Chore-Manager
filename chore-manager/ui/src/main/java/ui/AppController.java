@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import core.data.Chore;
 import core.data.RestrictedCollective;
 import core.data.Week;
 import javafx.fxml.FXML;
@@ -151,8 +152,12 @@ public class AppController {
 
     }
 
+    /**
+     * Updates the FXML. Run this when updating the view with new content.
+     */
     public void updateFxml() {
-        this.weeks.forEach(w -> w.updateFxml());
+        List<Chore> chores = this.dataAccess.getChores();
+        this.weeks.forEach(w -> w.updateFxml(chores));
     }
 
     /**

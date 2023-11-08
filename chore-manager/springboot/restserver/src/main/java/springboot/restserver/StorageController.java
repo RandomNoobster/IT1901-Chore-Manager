@@ -44,6 +44,12 @@ public class StorageController {
         this.storageService.saveToDisk();
     }
 
+    /**
+     * Retrieves a collective from the storage.
+     *
+     * @param joinCode the join code of the collective to retrieve
+     * @return the collective in JSON format if it exists, null otherwise
+     */
     @Cacheable(value = "collectives", key = "#joinCode")
     @GetMapping(path = "/collectives/{joinCode}")
     public String getCollective(@PathVariable("joinCode") String joinCode) {
