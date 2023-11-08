@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.testfx.matcher.control.LabeledMatchers;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.State;
 import core.data.Chore;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -20,22 +19,13 @@ import persistence.fileHandling.Storage;
 /**
  * Test that the chore creation page works as expected.
  */
-public class ChoreCreationTest extends BasicTestClass {
+public class ChoreCreationTest extends BaseTestClass {
 
     private static final String fxmlFileName = "ChoreCreation.fxml";
 
     @Override
     protected String getFileName() {
         return fxmlFileName;
-    }
-
-    @Override
-    protected void setup() {
-        Storage.deleteInstance();
-        Storage.getInstance().addCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
-        testCollective.addPerson(testPerson);
-        State.getInstance().setLoggedInUser(testPerson);
     }
 
     /**

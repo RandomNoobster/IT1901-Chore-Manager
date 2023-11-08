@@ -19,7 +19,7 @@ import persistence.fileHandling.Storage;
 /**
  * Test that the create user page works as expected.
  */
-public class CreateUserTest extends BasicTestClass {
+public class CreateUserTest extends BaseTestClass {
 
     private TextField username;
     private TextField displayname;

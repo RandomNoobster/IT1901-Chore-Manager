@@ -9,7 +9,7 @@ import javafx.scene.Parent;
 /**
  * TestFX App test
  */
-public class AppTest extends BasicTestClass {
+public class AppTest extends BaseTestClass {
 
     private static final String fxmlFileName = "App.fxml";
 

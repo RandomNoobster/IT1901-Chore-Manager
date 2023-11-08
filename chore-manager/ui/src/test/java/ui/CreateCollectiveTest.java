@@ -18,7 +18,7 @@ import persistence.fileHandling.Storage;
 /**
  * Test that the create collective page works as expected.
  */
-public class CreateCollectiveTest extends BasicTestClass {
+public class CreateCollectiveTest extends BaseTestClass {
 
     private TextField collectiveName;
     private Button createButton;

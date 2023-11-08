@@ -12,7 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import persistence.fileHandling.Storage;
 
-public class LoginTest extends BasicTestClass {
+public class LoginTest extends BaseTestClass {
 
     private static final String fxmlFileName = "Login.fxml";
 

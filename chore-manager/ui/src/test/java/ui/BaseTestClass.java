@@ -23,14 +23,13 @@ import persistence.fileHandling.Storage;
  * Basic test class that all other test classes should extend.
  */
 @TestInstance(Lifecycle.PER_CLASS)
-public class BasicTestClass extends ApplicationTest {
+public class BaseTestClass extends ApplicationTest {
 
     protected Parent root;
     protected String fxmlFileName;
     protected FXMLLoader fxmlLoader;
-    protected static final Collective testCollective = new Collective("Test Collective",
-            Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-    protected static final Person testPerson = new Person("Test", testCollective);
+    protected static Collective testCollective;
+    protected static Person testPerson;
 
     private static final String filePath = "chore-manager-data-ui-test.json";
 
@@ -49,9 +48,17 @@ public class BasicTestClass extends ApplicationTest {
      */
     protected void setup() {
         Storage.deleteInstance();
+
+        testCollective = new Collective("Test Collective",
+            Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+
+        testPerson = new Person("Test", testCollective);
+
         Storage.getInstance().addCollective(testCollective);
+        testPerson.setCollective(testCollective);
         Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
         testCollective.addPerson(testPerson);
+        
         State.getInstance().setLoggedInUser(testPerson);
     }
 
@@ -70,7 +77,7 @@ public class BasicTestClass extends ApplicationTest {
     @Override
     public void start(Stage stage) throws IOException {
         this.fxmlLoader = new FXMLLoader(this.getClass().getResource(this.getFileName()));
-        this.root = fxmlLoader.load();
+        this.root = this.fxmlLoader.load();
 
         // CSS
         Scene scene = new Scene(this.root);

@@ -13,7 +13,7 @@ import persistence.fileHandling.Storage;
 /**
  * Test that the join collective page works as expected.
  */
-public class JoinCollectiveTest extends BasicTestClass {
+public class JoinCollectiveTest extends BaseTestClass {
 
     private static final String fxmlFileName = "JoinCollective.fxml";
 

@@ -17,7 +17,7 @@ import javafx.scene.control.CheckBox;
 /**
  * Test that the chore popup works as expected.
  */
-public class ChorePopupTest extends BasicTestClass {
+public class ChorePopupTest extends BaseTestClass {
 
     private static final String fxmlFileName = "ChorePopup.fxml";
     private Chore chore;
@@ -37,7 +37,7 @@ public class ChorePopupTest extends BasicTestClass {
 
         Platform.runLater(() -> {
             ChorePopupController controller = this.fxmlLoader.getController();
-            controller.passData(chore, testPerson);
+            controller.passData(this.chore, testPerson);
         });
     }
 
