@@ -133,8 +133,6 @@ public class FileHandler {
      */
     public JSONArray readJSONFile() {
         if (this.file.length() == 0) {
-            System.out.println(
-                    "File is empty, consider using the Storage.fillFileWithDefaultData();");
             return new JSONArray();
         }
 

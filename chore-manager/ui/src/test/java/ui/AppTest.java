@@ -68,6 +68,8 @@ public class AppTest extends ApplicationTest {
         Collective testCollective = new Collective("Test Collective");
         Person testPerson = new Person("Test", testCollective.getJoinCode());
 
+        dataAccess.addCollective(testCollective);
+        dataAccess.addPerson(testPerson, testPerson.getCollectiveJoinCode());
         dataAccess.logIn(testPerson, testPerson.getPassword(), testCollective);
     }
 

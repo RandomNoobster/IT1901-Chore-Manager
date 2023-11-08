@@ -171,7 +171,6 @@ public class StorageController {
     public void enterStandardMode() {
         System.setProperty("env", "development");
         this.storageService.updateStorageService();
-        System.out.println("API is now in standard mode");
     }
 
     /**
@@ -181,7 +180,6 @@ public class StorageController {
     public void enterTestMode() {
         System.setProperty("env", "test");
         this.storageService.updateStorageService();
-        System.out.println("API is now in test mode");
     }
 
 }

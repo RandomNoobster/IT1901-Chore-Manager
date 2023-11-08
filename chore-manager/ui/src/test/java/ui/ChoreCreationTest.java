@@ -70,6 +70,8 @@ public class ChoreCreationTest extends ApplicationTest {
         Collective testCollective = new Collective("Test Collective");
         Person testPerson = new Person("Test", testCollective.getJoinCode());
 
+        dataAccess.addCollective(testCollective);
+        dataAccess.addPerson(testPerson, testPerson.getCollectiveJoinCode());
         dataAccess.logIn(testPerson, testPerson.getPassword(), testCollective);
     }
 
@@ -114,9 +116,8 @@ public class ChoreCreationTest extends ApplicationTest {
             name.setText("Bob");
         });
 
-        // Wait 15 seconds
         try {
-            Thread.sleep(5000);
+            Thread.sleep(20000);
         } catch (InterruptedException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -131,6 +132,6 @@ public class ChoreCreationTest extends ApplicationTest {
 
         WaitForAsyncUtils.waitForFxEvents();
 
-        assertTrue(savedChores.size() + 1 == this.dataAccess.getChores().size());
+        assertTrue(savedChores.size() + 1 == dataAccess.getChores().size());
     }
 }
