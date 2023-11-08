@@ -124,7 +124,7 @@ public class StorageController {
      * @param requestBody the request body
      * @return true if the person was added successfully, false otherwise
      */
-    @CacheEvict(value = "persons")
+    @CacheEvict(value = "persons", key = "'all'")
     @PostMapping(path = "/persons/{username}")
     public boolean addPerson(@RequestBody String requestBody) {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);
@@ -143,7 +143,7 @@ public class StorageController {
      * @param requestBody the request body
      * @return true if the person was updated successfully, false otherwise
      */
-    @CacheEvict(value = "persons")
+    @CacheEvict(value = "persons", key = "'all'")
     @PutMapping(path = "/persons/{username}")
     public boolean movePersonToAnotherCollective(@PathVariable("username") String username,
             @RequestBody String requestBody) {

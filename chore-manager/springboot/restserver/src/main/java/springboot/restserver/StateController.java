@@ -48,12 +48,24 @@ public class StateController {
     }
 
     /**
+     * This method is used to check if the user is logged in. You cannot perform all actions if you
+     * are not logged in
+     *
+     * @return True if the user is logged in, false otherwise.
+     */
+    private boolean loggedIn() {
+        return this.stateService.getInstance().getLoggedInUser() != null
+                && this.stateService.getInstance().getCurrentCollective() != null;
+    }
+
+    /**
      * This method is used to get the logged in user.
      *
      * @return The logged in user.
      */
-    @Caching(evict = { @CacheEvict(value = "logged-in-user"),
-            @CacheEvict(value = "current-collective") })
+    @Caching(evict = { @CacheEvict(value = "logged-in-user", allEntries = true),
+            @CacheEvict(value = "current-collective", allEntries = true),
+            @CacheEvict(value = "chores", key = "'all'") })
     @PostMapping(path = "/log-in")
     public boolean logIn(@RequestBody String loginInfo) {
 
@@ -75,8 +87,9 @@ public class StateController {
         return true;
     }
 
-    @Caching(evict = { @CacheEvict(value = "logged-in-user"),
-            @CacheEvict(value = "current-collective") })
+    @Caching(evict = { @CacheEvict(value = "logged-in-user", allEntries = true),
+            @CacheEvict(value = "current-collective", allEntries = true),
+            @CacheEvict(value = "chores", key = "'all'") })
     @PostMapping(path = "/log-out")
     public boolean logOut() {
         this.stateService.getInstance().logOutUser();
@@ -106,6 +119,8 @@ public class StateController {
     @GetMapping(path = "/current-collective")
     public String getCurrentCollective() {
         Collective collective = this.stateService.getInstance().getCurrentCollective();
+        if (collective == null)
+            return null;
         return RestrictedCollective.encodeToJSONObject(collective).toString();
     }
 
@@ -114,8 +129,12 @@ public class StateController {
      *
      * @return True if the chore was added successfully, false otherwise.
      */
+    @CacheEvict(value = "chores", key = "'all'")
     @PostMapping(path = "/chores/{uuid}")
     public boolean addChore(@RequestBody String choreInfo) {
+        if (!this.loggedIn())
+            return false;
+
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(choreInfo);
         Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
         String assignedPersonUsername = jsonObject.getString("assignedPerson");
@@ -134,8 +153,12 @@ public class StateController {
      * @param uuidString The uuid of the chore to remove.
      * @return True if the chore was removed successfully, false otherwise.
      */
+    @CacheEvict(value = "chores", key = "'all'")
     @DeleteMapping(path = "/chores/{uuid}")
     public boolean removeChore(@PathVariable("uuid") String uuidString) {
+        if (!this.loggedIn())
+            return false;
+
         UUID uuid = UUID.fromString(uuidString);
         Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
 
@@ -157,9 +180,13 @@ public class StateController {
      * @param checkedString The new checked value of the chore.
      * @return True if the chore was updated successfully, false otherwise.
      */
+    @CacheEvict(value = "chores", key = "'all'")
     @PutMapping(path = "/chores/{uuid}")
     public boolean updateChoreChecked(@PathVariable("uuid") String uuidString,
             @RequestParam("checked") String checkedString) {
+        if (!this.loggedIn())
+            return false;
+
         UUID uuid = UUID.fromString(uuidString);
         Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
 
@@ -177,12 +204,11 @@ public class StateController {
      *
      * @return All chores within this collective.
      */
+    @Cacheable(value = "chores", key = "'all'")
     @GetMapping(path = "/chores")
     public String getChores() {
-        if (this.stateService.getInstance().getCurrentCollective() == null) {
-            System.out.println("You haven't logged in");
+        if (!this.loggedIn())
             return null;
-        }
 
         List<Chore> chores = this.stateService.getInstance().getCurrentCollective().getChoresList();
 
@@ -199,10 +225,11 @@ public class StateController {
      *
      * @return All persons registered to this collective.
      */
-    // TODO: @Cacheable(value = "persons")
+    @Cacheable(value = "persons", key = "'all'")
     @GetMapping(path = "/persons")
     public String getPersons() {
-        HashMap<String, Person> persons = this.storageService.getStorage().getAllPersons();
+        HashMap<String, Person> persons = this.stateService.getInstance().getCurrentCollective()
+                .getPersons();
 
         JSONObject personsJSON = new JSONObject();
         for (Person person : persons.values()) {
@@ -211,5 +238,4 @@ public class StateController {
 
         return personsJSON.toString();
     }
-
 }
