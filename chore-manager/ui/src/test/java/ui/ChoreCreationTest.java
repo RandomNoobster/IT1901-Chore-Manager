@@ -116,13 +116,6 @@ public class ChoreCreationTest extends ApplicationTest {
             name.setText("Bob");
         });
 
-        try {
-            Thread.sleep(20000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
         ComboBox<String> comboBox = this.lookup("#personsMenu").query();
         this.interact(() -> {
             comboBox.getSelectionModel().select(0);
