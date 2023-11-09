@@ -78,7 +78,7 @@
                             <id>spotbugs-check</id>
                             <phase>verify</phase>
                             <goals>
-                                <goal>spotbugs</goal>
+                                <goal>check</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -89,8 +89,8 @@
                     <version>3.3.0</version>
                     <executions>
                         <execution>
-                            <id>checksyle-check</id>
-                            <phase>validate</phase>
+                            <id>checkstyle-check</id>
+                            <phase>verify</phase>
                             <goals>
                                 <goal>check</goal>
                             </goals>
@@ -115,7 +115,7 @@
                     <version>3.6.0</version>
                     <executions>
                         <execution>
-                            <phase>validate</phase>
+                            <phase>verify</phase>
                             <id>attach-javadocs</id>
                             <goals>
                                 <goal>aggregate</goal>
