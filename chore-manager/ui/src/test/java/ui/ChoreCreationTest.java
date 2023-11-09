@@ -69,9 +69,6 @@ public class ChoreCreationTest extends BaseTestClass {
         this.click("Create");
 
         WaitForAsyncUtils.waitForFxEvents();
-
-        Object items = dataAccess.getChores();
-
         assertTrue(savedChores.size() + 1 == dataAccess.getChores().size());
     }
 }
