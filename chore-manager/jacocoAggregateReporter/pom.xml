@@ -27,6 +27,11 @@
             <artifactId>modules-ui</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>it1901</groupId>
+            <artifactId>springboot.restserver</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
 
         <!-- junit testing with jupiter -->
