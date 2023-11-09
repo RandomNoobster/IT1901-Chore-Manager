@@ -132,10 +132,10 @@ public class RestrictedPerson {
      */
     @Override
     public boolean equals(Object arg0) {
-        if (!(arg0 instanceof Person)) {
+        if (!(arg0 instanceof RestrictedPerson)) {
             return false;
         }
-        return this.username.equals(((Person) arg0).getUsername());
+        return this.username.equals(((RestrictedPerson) arg0).getUsername());
     }
 
     @Override
