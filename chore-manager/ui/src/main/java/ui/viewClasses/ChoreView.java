@@ -35,7 +35,7 @@ public class ChoreView extends VBox implements ViewInterface {
      */
     public ChoreView(Chore chore, String assignee, Boolean weekChore) {
         this.assignee = assignee;
-        this.chore = chore;
+        this.chore = new Chore(chore);
         this.assigneeLabel = new Label(this.assignee + ":");
         this.assigneeLabel.getStyleClass().clear();
 

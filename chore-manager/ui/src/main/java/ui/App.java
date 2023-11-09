@@ -24,7 +24,6 @@ public class App extends Application {
     // TODO: Possible rewrite into a SceneController class?
     // Cannot be null, will cause exception when switching scenes
     private static Scene scene = new Scene(new Pane());
-    private static DataAccess dataAccess; // Caching purposes
 
     /**
      * The start method is called when the application is launched. It loads the FXML-file and sets
@@ -95,7 +94,6 @@ public class App extends Application {
 
     public static void setChorePopupScene(Chore chore, String assignee) {
         try {
-            System.out.println(chore);
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ChorePopup.fxml"));
             Parent parent = fxmlLoader.load();
 
@@ -112,13 +110,10 @@ public class App extends Application {
      * Gets the data access layer.
      */
     public static DataAccess getDataAccess() {
-        if (dataAccess != null)
-            return dataAccess;
         EnvironmentConfigurator configurator = new EnvironmentConfigurator();
         URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
         if (apiBaseEndpoint != null) {
-            dataAccess = new RemoteDataAccess(apiBaseEndpoint);
-            return dataAccess;
+            return new RemoteDataAccess(apiBaseEndpoint);
         } else {
             // Use direct data access here
             throw new RuntimeException("Could not find API base endpoint");

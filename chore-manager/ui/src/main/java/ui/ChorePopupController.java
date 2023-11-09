@@ -43,7 +43,7 @@ public class ChorePopupController {
      * @param assignee the assignee of the chore
      */
     public void passData(Chore chore, String assignee) {
-        this.chore = chore;
+        this.chore = new Chore(chore);
         this.assignee = assignee;
 
         this.choreName.setText(this.chore.getName());
