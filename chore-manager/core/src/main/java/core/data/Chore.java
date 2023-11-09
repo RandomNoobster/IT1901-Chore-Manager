@@ -62,6 +62,9 @@ public class Chore {
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color, boolean checked, int daysIncompleted, String creator,
             String assignedTo, UUID uuid) {
+        if (uuid == null)
+            throw new IllegalArgumentException("UUID cannot be null");
+
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;

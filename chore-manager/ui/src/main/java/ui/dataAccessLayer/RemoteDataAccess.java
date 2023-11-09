@@ -67,6 +67,9 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public RestrictedCollective getCollective(String joinCode) {
+        if (joinCode == null || joinCode.isEmpty())
+            return null;
+
         final URI endpoint = this.buildURI(String.format("storage/collectives/%s", joinCode));
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -76,7 +79,7 @@ public class RemoteDataAccess implements DataAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
-
+            System.out.println(responseBody);
             if (responseBody == null || responseBody.isEmpty())
                 return null;
 
@@ -133,6 +136,9 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public Person getPerson(String username, Password password) {
+        if (username == null || username.isEmpty())
+            return null;
+
         final URI endpoint = this.buildURI(String.format("storage/persons/%s", username),
                 Map.of("password", password.getPasswordString()));
 
@@ -184,6 +190,9 @@ public class RemoteDataAccess implements DataAccess {
     @Override
     public boolean movePersonToAnotherCollective(String username, Password password,
             String oldJoinCode, String newJoinCode) {
+        if (username == null || username.isEmpty())
+            return false;
+
         final URI endpoint = this.buildURI(String.format("storage/persons/%s", username));
 
         JSONObject requestBody = new JSONObject();

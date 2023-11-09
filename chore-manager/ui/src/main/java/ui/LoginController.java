@@ -35,7 +35,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
     /**

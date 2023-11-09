@@ -18,7 +18,7 @@ public class CreateCollectiveController {
 
     @FXML
     public void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
     @FXML
@@ -40,7 +40,7 @@ public class CreateCollectiveController {
                 App.showAlert("Unknown error", error, AlertType.WARNING);
             }
         } else {
-            String error = "Name has to be longer than " + (this.minLength - 1) + " characters";
+            String error = "Name has to be longer than " + this.minLength + " characters";
             App.showAlert("Name not long enough", error, AlertType.WARNING);
         }
     }

@@ -29,6 +29,7 @@ public class JoinCollectiveController {
      */
     @FXML
     public void join() {
+        System.out.println(this.joinCode.getText());
         RestrictedCollective joinedCollective = this.dataAccess
                 .getCollective(this.joinCode.getText());
         if (joinedCollective != null) {

@@ -41,6 +41,9 @@ public class RestrictedCollective {
      * @param joinCode The join code of the collective
      */
     public RestrictedCollective(String name, String joinCode) {
+        if (joinCode == null)
+            throw new IllegalArgumentException("Join code cannot be null");
+
         this.name = name;
         this.joinCode = joinCode;
 

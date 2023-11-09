@@ -38,6 +38,8 @@ public class RestrictedPerson {
      * @param displayName        The display name of the person
      */
     public RestrictedPerson(String username, String collectiveJoinCode, String displayName) {
+        if (username == null || username.isEmpty())
+            throw new IllegalArgumentException("Username cannot be empty");
         this.username = username;
         this.collectiveJoinCode = collectiveJoinCode;
         this.displayName = displayName;
