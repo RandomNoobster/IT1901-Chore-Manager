@@ -16,11 +16,7 @@ public class StateService {
         this.state = State.getInstance();
     }
 
-    public StateService(State state) {
-        this.state = state;
-    }
-
-    public State getInstance() {
+    public State getState() {
         return this.state;
     }
 

@@ -16,10 +16,6 @@ public class StorageService {
         this.storage = Storage.getInstance();
     }
 
-    public StorageService(Storage storage) {
-        this.storage = storage;
-    }
-
     public Storage getStorage() {
         return this.storage;
     }

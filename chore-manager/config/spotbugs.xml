@@ -19,23 +19,22 @@
     </Or>
 </Match>
 <Match>
-    <!-- Due to the current collective being referenced by both State and Storage, new instances would not be appropriate. -->
-    <Class name="core.data.Person"/>
-    <Or>
-        <And>
-            <Method name="getCollectiveReference"/>
-            <Bug pattern="EI_EXPOSE_REP"/>
-        </And>
-        <And>
-            <Bug pattern="EI_EXPOSE_REP2"/>
-        </And>
-    </Or>
-</Match>
-<Match>
     <Class name="ui.viewClasses.DayView"/>
     
     <Method name="getFxml"/>
 
+    <Bug pattern="EI_EXPOSE_REP"/>
+</Match>
+<Match>
+    <!-- The StateService has to return the internal state due to the State class being a singleton. -->
+    <Class name="springboot.restserver.StateService"/>
+    <Method name="getState"/>
+    <Bug pattern="EI_EXPOSE_REP"/>
+</Match>
+<Match>
+    <!-- The StateService has to return the internal state due to the State class being a singleton. -->
+    <Class name="springboot.restserver.StorageService"/>
+    <Method name="getStorage"/>
     <Bug pattern="EI_EXPOSE_REP"/>
 </Match>
 </FindBugsFilter>

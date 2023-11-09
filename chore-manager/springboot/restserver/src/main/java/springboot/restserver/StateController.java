@@ -54,8 +54,8 @@ public class StateController {
      * @return True if the user is logged in, false otherwise.
      */
     private boolean loggedIn() {
-        return this.stateService.getInstance().getLoggedInUser() != null
-                && this.stateService.getInstance().getCurrentCollective() != null;
+        return this.stateService.getState().getLoggedInUser() != null
+                && this.stateService.getState().getCurrentCollective() != null;
     }
 
     /**
@@ -83,7 +83,7 @@ public class StateController {
         if (!user.getPassword().getPasswordString().equals(password))
             return false;
 
-        this.stateService.getInstance().logIn(user, collective);
+        this.stateService.getState().logIn(user, collective);
         return true;
     }
 
@@ -92,7 +92,7 @@ public class StateController {
             @CacheEvict(value = "chores", key = "'all'") })
     @PostMapping(path = "/log-out")
     public boolean logOut() {
-        this.stateService.getInstance().logOutUser();
+        this.stateService.getState().logOutUser();
         return true;
     }
 
@@ -104,7 +104,7 @@ public class StateController {
     @Cacheable(value = "logged-in-user")
     @GetMapping(path = "/logged-in-user")
     public String getLoggedInUser() {
-        Person user = this.stateService.getInstance().getLoggedInUser();
+        Person user = this.stateService.getState().getLoggedInUser();
         if (user == null)
             return null;
         return Person.encodeToJSONObject(user).toString();
@@ -118,7 +118,7 @@ public class StateController {
     @Cacheable(value = "current-collective")
     @GetMapping(path = "/current-collective")
     public String getCurrentCollective() {
-        Collective collective = this.stateService.getInstance().getCurrentCollective();
+        Collective collective = this.stateService.getState().getCurrentCollective();
         if (collective == null)
             return null;
         return RestrictedCollective.encodeToJSONObject(collective).toString();
@@ -139,10 +139,10 @@ public class StateController {
         Chore chore = Chore.decodeFromJSON(jsonObject.getJSONObject("chore"));
         String assignedPersonUsername = jsonObject.getString("assignedPerson");
 
-        Person person = this.stateService.getInstance().getCurrentCollective()
+        Person person = this.stateService.getState().getCurrentCollective()
                 .getPerson(assignedPersonUsername);
 
-        boolean added = this.stateService.getInstance().addChore(chore, person);
+        boolean added = this.stateService.getState().addChore(chore, person);
         this.saveToDisk();
         return added;
     }
@@ -160,12 +160,12 @@ public class StateController {
             return false;
 
         UUID uuid = UUID.fromString(uuidString);
-        Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
+        Chore chore = this.stateService.getState().getChoreInCurrentCollective(uuid);
 
         if (chore == null)
             return false;
 
-        Person person = this.stateService.getInstance().getCurrentCollective()
+        Person person = this.stateService.getState().getCurrentCollective()
                 .getPerson(chore.getAssignedTo());
         boolean removed = person.deleteChore(chore);
 
@@ -188,7 +188,7 @@ public class StateController {
             return false;
 
         UUID uuid = UUID.fromString(uuidString);
-        Chore chore = this.stateService.getInstance().getChoreInCurrentCollective(uuid);
+        Chore chore = this.stateService.getState().getChoreInCurrentCollective(uuid);
 
         if (chore == null)
             return false;
@@ -210,7 +210,7 @@ public class StateController {
         if (!this.loggedIn())
             return null;
 
-        List<Chore> chores = this.stateService.getInstance().getCurrentCollective().getChoresList();
+        List<Chore> chores = this.stateService.getState().getCurrentCollective().getChoresList();
 
         JSONArray choresJSON = new JSONArray();
         for (Chore chore : chores) {
@@ -231,7 +231,7 @@ public class StateController {
         if (!this.loggedIn())
             return null;
 
-        HashMap<String, Person> persons = this.stateService.getInstance().getCurrentCollective()
+        HashMap<String, Person> persons = this.stateService.getState().getCurrentCollective()
                 .getPersons();
 
         JSONObject personsJSON = new JSONObject();
