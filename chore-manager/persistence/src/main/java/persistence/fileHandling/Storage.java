@@ -110,7 +110,7 @@ public class Storage {
     /**
      * This method is used to get the collectives from the file system.
      *
-     * @param Joincode to collective (if a collective with that joincode exists)
+     * @param joinCode to collective (if a collective with that joincode exists)
      * 
      * @return Collective with code
      */
@@ -123,7 +123,7 @@ public class Storage {
      *
      * @return The limbo collective.
      */
-    public Collective getEmptyCollective() {
+    public Collective getLimboCollective() {
         return this.collectives.get(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
@@ -145,11 +145,25 @@ public class Storage {
     /**
      * Removes a collective from the storage.
      *
-     * @param collective The collective to remove.
+     * @param joinCode The joinCode of the collective to remove.
      * @return True if the collective was removed successfully
      */
-    public boolean removeCollective(Collective collective) {
-        return this.collectives.remove(collective.getJoinCode()) != null;
+    public boolean removeCollective(String joinCode) {
+        return this.collectives.remove(joinCode) != null;
+    }
+
+    /**
+     * This method is used to get a person from the file system.
+     *
+     * @param username The username of the person to get.
+     * @return The person with the specified username.
+     */
+    public Person getPerson(String username) {
+        for (Collective collective : this.collectives.values()) {
+            if (collective.getPersons().containsKey(username))
+                return collective.getPersons().get(username);
+        }
+        return null;
     }
 
     /**
@@ -210,6 +224,28 @@ public class Storage {
     }
 
     /**
+     * Moves a person from one collective to another.
+     *
+     * @param person      The person to update
+     * @param oldJoinCode The old join code
+     * @param newJoinCode The new join code
+     */
+    public boolean movePersonToAnotherCollective(Person person, String oldJoinCode,
+            String newJoinCode) {
+        Collective oldCollective = this.collectives.get(oldJoinCode);
+        Collective newCollective = this.collectives.get(newJoinCode);
+
+        if (oldCollective == null || newCollective == null)
+            return false;
+
+        oldCollective.removePerson(person);
+        newCollective.addPerson(person);
+        person.setCollective(newJoinCode);
+
+        return true;
+    }
+
+    /**
      * This is a method to create a file for the application with default data. This should be
      * called if you do not have any persons in the application.
      */
@@ -220,13 +256,13 @@ public class Storage {
         this.collectives.put(collective.getJoinCode(), collective);
         this.collectives.put(limboCollective.getJoinCode(), limboCollective);
 
-        Person person1 = new Person("Christian", limboCollective);
-        Person person2 = new Person("Sebastian", limboCollective);
-        Person person3 = new Person("Kristoffer", limboCollective);
-        Person person4 = new Person("Lasse", limboCollective);
+        Person person1 = new Person("Christian", collective.getJoinCode());
+        Person person2 = new Person("Sebastian", collective.getJoinCode());
+        Person person3 = new Person("Kristoffer", collective.getJoinCode());
+        Person person4 = new Person("Lasse", collective.getJoinCode());
 
         Chore chore = new Chore("Chore Test", LocalDate.now(), LocalDate.now(), false, 10,
-                "#FFFFFF", person1.getUsername());
+                "#FFFFFF", person1.getUsername(), person1.getUsername());
         person1.addChore(chore);
 
         collective.addPerson(person1);

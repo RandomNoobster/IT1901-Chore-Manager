@@ -1,32 +1,32 @@
 package ui.viewClasses;
 
-import core.data.Person;
+import core.data.RestrictedPerson;
 
 /**
  * The PersonMenuItem class is a class that is used to display a person in a menu.
  */
 public class PersonMenuItem {
 
-    private Person person;
+    private RestrictedPerson person;
 
     /**
      * A constructor for the PersonMenuItem class.
      *
      * @param person The person to be displayed
      */
-    public PersonMenuItem(Person person) {
-        this.person = new Person(person);
+    public PersonMenuItem(RestrictedPerson person) {
+        this.person = new RestrictedPerson(person);
 
     }
 
     /**
      * Returns the person that is displayed.
      */
-    public Person getPerson() {
-        return new Person(this.person);
+    public RestrictedPerson getPerson() {
+        return new RestrictedPerson(this.person);
     }
 
-    /** 
+    /**
      * Returns the name of the person.
      */
     @Override

@@ -1,9 +1,9 @@
 package core.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
@@ -35,13 +35,13 @@ public class ChoreTest {
         this.isWeekly = false;
         this.points = 10;
         this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly,
-                this.points, "#FFFFFF", "Creator");
+                this.points, "#FFFFFF", "Creator", "Assignee");
     }
 
     @Test
     public void testConstructor() {
         assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10,
-                "#FFFFFF", "Creator"));
+                "#FFFFFF", "Creator", "Assignee"));
     }
 
     @Test
@@ -87,6 +87,6 @@ public class ChoreTest {
 
     @Test
     public void testEncodeToJSON() {
-        assertDoesNotThrow(() -> this.chore.encodeToJSON());
+        assertDoesNotThrow(() -> Chore.encodeToJSONObject(this.chore));
     }
 }
