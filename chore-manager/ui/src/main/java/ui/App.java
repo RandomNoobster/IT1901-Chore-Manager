@@ -71,7 +71,7 @@ public class App extends Application {
     }
 
     /**
-     * This method is called when the user wants to switch to chore creation scene
+     * This method is called when the user wants to switch to chore creation scene.
      *
      * @param dateFrom The start date of the chore
      * @param dateTo   The end date of the chore
@@ -90,10 +90,10 @@ public class App extends Application {
     }
 
     /**
-     * This method is called when the user wants to switch to chorepopup scene
+     * This method is called when the user wants to switch to chorepopup scene.
      *
-     * @param dateFrom The start date of the chore
-     * @param dateTo   The end date of the chore
+     * @param chore    The chore to be displayed
+     * @param assignee The assignee of the chore
      */
     public static void setChorePopupScene(Chore chore, String assignee) {
         try {
@@ -126,7 +126,7 @@ public class App extends Application {
         EnvironmentConfigurator configurator = new EnvironmentConfigurator();
         URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
         if (apiBaseEndpoint != null) {
-            dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+            DataAccess dataAccess = new RemoteDataAccess(apiBaseEndpoint);
             setCorrectMode(dataAccess);
             return dataAccess;
         } else {
@@ -136,8 +136,8 @@ public class App extends Application {
     }
 
     /**
-     * Creates alerts
-     * 
+     * Creates alerts.
+     *
      * @param title   Title of alert
      * @param message Additional information that the alert should give
      * @param type    Type of alert, ex: waring, information, ...
