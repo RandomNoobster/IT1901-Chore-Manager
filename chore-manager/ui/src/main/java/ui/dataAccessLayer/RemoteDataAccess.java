@@ -46,7 +46,7 @@ public class RemoteDataAccess implements DataAccess {
 
     private URI buildURI(String endpoint, Map<String, String> queryParameters) {
         StringBuilder builder = new StringBuilder(this.API_BASE_ENDPOINT.toString());
-        builder.append(endpoint);
+        builder.append(URLEncoder.encode(endpoint, StandardCharsets.UTF_8));
 
         if (!queryParameters.isEmpty()) {
             builder.append("?");
@@ -67,6 +67,9 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public RestrictedCollective getCollective(String joinCode) {
+        if (joinCode == null || joinCode.isEmpty())
+            return null;
+
         final URI endpoint = this.buildURI(String.format("storage/collectives/%s", joinCode));
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
@@ -133,6 +136,9 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public Person getPerson(String username, Password password) {
+        if (username == null || username.isEmpty())
+            return null;
+
         final URI endpoint = this.buildURI(String.format("storage/persons/%s", username),
                 Map.of("password", password.getPasswordString()));
 
@@ -184,6 +190,9 @@ public class RemoteDataAccess implements DataAccess {
     @Override
     public boolean movePersonToAnotherCollective(String username, Password password,
             String oldJoinCode, String newJoinCode) {
+        if (username == null || username.isEmpty())
+            return false;
+
         final URI endpoint = this.buildURI(String.format("storage/persons/%s", username));
 
         JSONObject requestBody = new JSONObject();
@@ -421,7 +430,7 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public void enterStandardMode() {
-        final URI endpoint = this.buildURI("storage/mode/enter-test-mode");
+        final URI endpoint = this.buildURI("storage/mode/enter-standard-mode");
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())

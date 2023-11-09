@@ -4,7 +4,6 @@ import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -39,13 +38,6 @@ public class LoginController {
         this.dataAccess = App.getDataAccess();
     }
 
-    private void showAlertWarning(String title, String message) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(message);
-        alert.show();
-    }
-
     /**
      * This method is called when the login button is pressed. If the user exists and the login
      * information is correct, the active user is set to this user.
@@ -57,7 +49,7 @@ public class LoginController {
 
         Person user = this.dataAccess.getPerson(username, new Password(password));
         if (user == null) {
-            this.showAlertWarning("Unknown user", "Wrong username or password!");
+            App.showAlert("Unknown user", "Wrong username or password!", AlertType.WARNING);
             return;
         }
 
@@ -66,8 +58,8 @@ public class LoginController {
         boolean success = this.dataAccess.logIn(user, user.getPassword(), collective);
 
         if (!success) {
-            this.showAlertWarning("Something went wrong",
-                    "Something went wrong. Please try again.");
+            App.showAlert("Something went wrong", "Something went wrong. Please try again.",
+                    AlertType.WARNING);
             return;
         }
 

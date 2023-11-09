@@ -4,7 +4,6 @@ import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -43,29 +42,24 @@ public class CreateUserController {
         this.dataAccess = App.getDataAccess();
     }
 
-    private void errorMsg(String title, String header) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(header);
-        alert.show();
-    }
-
     private Pair<Boolean, Person> createAccount(String username, String displayName,
             Password password, RestrictedCollective collectiveToJoin) {
 
         if (username.length() < this.allowedUsername) {
-            this.errorMsg("Username issue",
-                    "Username must be at least " + this.allowedUsername + " characters");
+            App.showAlert("Username issue",
+                    "Username must be at least " + this.allowedUsername + " characters",
+                    AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
         if (displayName.length() < this.allowedDisplayname) {
-            this.errorMsg("Fullname issue",
-                    "Displayname must be at least " + this.allowedDisplayname + " characters");
+            App.showAlert("Fullname issue",
+                    "Displayname must be at least " + this.allowedDisplayname + " characters",
+                    AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
 
         if (!password.isLegal()) {
-            this.errorMsg("Password issue", password.getFixMsg());
+            App.showAlert("Password issue", password.getFixMsg(), AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
 
@@ -73,7 +67,7 @@ public class CreateUserController {
                 displayName);
 
         if (!this.dataAccess.addPerson(newUser, collectiveToJoin.getJoinCode())) {
-            this.errorMsg("Username issue", "Username is not unique");
+            App.showAlert("Username issue", "Username is not unique", AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
 

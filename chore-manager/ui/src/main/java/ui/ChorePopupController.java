@@ -37,7 +37,7 @@ public class ChorePopupController {
     }
 
     /**
-     * Passes data to the popup window.
+     * This method is called when the view is loaded. It passes the chore and the assignee.
      *
      * @param chore    the chore to display
      * @param assignee the assignee of the chore

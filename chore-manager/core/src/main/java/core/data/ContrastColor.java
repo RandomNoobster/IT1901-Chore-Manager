@@ -7,7 +7,7 @@ package core.data;
 public class ContrastColor {
 
     /**
-     * Returns true if the text color should be black, false if it should be white.
+     * Returns true if the text color should be white, false if it should be black.
      */
     public static Boolean blackText(String hex) {
 
