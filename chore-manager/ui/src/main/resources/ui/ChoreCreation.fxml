@@ -97,7 +97,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="repeatsDisplay" text="Repeat: 1 time">
+                  <Label fx:id="repeatsDisplay" text="Repeats: 1 time">
                      <styleClass>
                         <String fx:value="white-text" />
                         <String fx:value="border-rounded-left" />
