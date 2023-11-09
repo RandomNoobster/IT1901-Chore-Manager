@@ -47,7 +47,10 @@ public class Day {
      */
     @Override
     public boolean equals(Object arg0) {
-        return this.hashCode() == arg0.hashCode();
+        if (!(arg0 instanceof Day)) {
+            return false;
+        }
+        return this.date.equals(((Day) arg0).getDate());
     }
 
     /**

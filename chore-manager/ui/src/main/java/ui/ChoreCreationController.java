@@ -51,7 +51,7 @@ public class ChoreCreationController {
     private LocalDate dateFrom = LocalDate.MIN;
     private LocalDate dateTo = LocalDate.MIN;
 
-    private final int CHARACTER_MINIMUM = 5;
+    private static final int CHARACTER_MINIMUM = 5;
 
     public ChoreCreationController() {
     }
@@ -89,9 +89,10 @@ public class ChoreCreationController {
     public void createChore() {
         String choreName = this.name.getText();
 
-        if (choreName.length() < this.CHARACTER_MINIMUM) {
-            App.showAlert("Chore name not long enough", "The name of the chore must be at least "
-                    + this.CHARACTER_MINIMUM + " characters", AlertType.WARNING);
+        if (choreName.length() < CHARACTER_MINIMUM) {
+            App.showAlert("Chore name not long enough",
+                    "The name of the chore must be at least " + CHARACTER_MINIMUM + " characters",
+                    AlertType.WARNING);
             return;
         }
 
