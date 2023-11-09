@@ -430,7 +430,7 @@ public class RemoteDataAccess implements DataAccess {
 
     @Override
     public void enterStandardMode() {
-        final URI endpoint = this.buildURI("storage/mode/enter-test-mode");
+        final URI endpoint = this.buildURI("storage/mode/enter-standard-mode");
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
