@@ -135,7 +135,12 @@ public class ChoreCreationController {
      */
     @FXML
     public void repeatsChanged() {
-        this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " times");
+        if ((int) this.repeats.getValue() == 1) {
+            this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " time");
+        } else {
+            this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " times");
+
+        }
     }
 
     @FXML
