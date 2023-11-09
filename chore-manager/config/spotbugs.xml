@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <FindBugsFilter>
 <Match>
-    <!-- The getInstance method has to return the internal state due to the Storage object being a singleton. -->
+    <!-- The getInstance and setInstance method has to return the internal state due to the Storage object being a singleton. -->
     <Class name="persistence.fileHandling.Storage"/>
-    <Method name="getInstance"/>
+    <Or>
+        <Method name="getInstance"/>
+        <Method name="setInstance"/>
+    </Or>
     <Bug pattern="MS_EXPOSE_REP"/>
 </Match>
 <Match>
