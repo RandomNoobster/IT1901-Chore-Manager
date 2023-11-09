@@ -79,7 +79,7 @@ public class RemoteDataAccess implements DataAccess {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
-            System.out.println(responseBody);
+
             if (responseBody == null || responseBody.isEmpty())
                 return null;
 
