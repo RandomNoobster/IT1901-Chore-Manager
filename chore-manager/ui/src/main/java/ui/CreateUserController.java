@@ -1,20 +1,23 @@
 package ui;
 
-import core.State;
-import core.data.Collective;
 import core.data.Password;
 import core.data.Person;
+import core.data.RestrictedCollective;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import persistence.fileHandling.Storage;
+import javafx.util.Pair;
+import ui.dataAccessLayer.DataAccess;
 
 /**
  * This is the controller for the create user view.
  */
 public class CreateUserController {
+
+    private DataAccess dataAccess;
+
     @FXML
     private TextField username;
 
@@ -36,39 +39,39 @@ public class CreateUserController {
 
     @FXML
     public void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
-    private Boolean createAccount(String username, String displayName, Password password) {
+    private Pair<Boolean, Person> createAccount(String username, String displayName,
+            Password password, RestrictedCollective collectiveToJoin) {
 
         if (username.length() < this.allowedUsername) {
             App.showAlert("Username issue",
                     "Username must be at least " + this.allowedUsername + " characters",
                     AlertType.WARNING);
-            return false;
+            return new Pair<Boolean, Person>(false, null);
         }
         if (displayName.length() < this.allowedDisplayname) {
             App.showAlert("Fullname issue",
                     "Displayname must be at least " + this.allowedDisplayname + " characters",
                     AlertType.WARNING);
-            return false;
+            return new Pair<Boolean, Person>(false, null);
         }
 
         if (!password.isLegal()) {
             App.showAlert("Password issue", password.getFixMsg(), AlertType.WARNING);
-            return false;
+            return new Pair<Boolean, Person>(false, null);
         }
 
-        // TODO: Change Collective join code here
-        Collective limboCollective = Storage.getInstance().getEmptyCollective();
-        Person newUser = new Person(username, limboCollective, password, displayName);
+        Person newUser = new Person(username, collectiveToJoin.getJoinCode(), password,
+                displayName);
 
-        if (!Storage.getInstance().addPerson(newUser, limboCollective.getJoinCode())) {
+        if (!this.dataAccess.addPerson(newUser, collectiveToJoin.getJoinCode())) {
             App.showAlert("Username issue", "Username is not unique", AlertType.WARNING);
-            return false;
+            return new Pair<Boolean, Person>(false, null);
         }
 
-        return true;
+        return new Pair<Boolean, Person>(true, newUser);
     }
 
     /**
@@ -80,20 +83,15 @@ public class CreateUserController {
         String username = this.username.getText();
         String displayName = this.displayName.getText();
         Password password = new Password(this.password.getText());
+        RestrictedCollective limboCollective = this.dataAccess.getLimboCollective();
 
-        if (this.createAccount(username, displayName, password)) {
+        Pair<Boolean, Person> result = this.createAccount(username, displayName, password,
+                limboCollective);
 
-            State.getInstance()
-                    .setLoggedInUser(Storage.getInstance().getAllPersons().get(username));
-            Storage.getInstance().save();
-
-            if (State.getInstance().getCurrentCollective().isLimboCollective()) {
-                App.switchScene("JoinCollective");
-            } else {
-                App.switchScene("App");
-            }
+        if (result.getKey()) {
+            this.dataAccess.logIn(result.getValue(), password, limboCollective);
+            App.switchScene("JoinCollective");
         }
-
     }
 
     @FXML

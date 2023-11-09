@@ -1,21 +1,22 @@
 package persistence.fileHandling;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
-import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONTokener;
 
 /**
  * <p>
@@ -108,7 +109,7 @@ public class FileHandler {
      * Writes to the file associated with this object Note: This will overwrite the file.
      */
     public void writeToFile(JSONArray jsonArray) {
-        this.writeToFile(jsonArray.toJSONString());
+        this.writeToFile(jsonArray.toString());
     }
 
     /**
@@ -122,7 +123,7 @@ public class FileHandler {
      * Appends to the file associated with this object.
      */
     public void appendToFile(JSONArray jsonArray) {
-        this.writeToFile(jsonArray.toJSONString(), true);
+        this.writeToFile(jsonArray.toString(), true);
     }
 
     /**
@@ -131,24 +132,21 @@ public class FileHandler {
      * @return The JSONObject read from the file
      */
     public JSONArray readJSONFile() {
-        JSONParser jsonParser = new JSONParser();
         if (this.file.length() == 0) {
-            System.out.println(
-                    "File is empty, consider using the Storage.fillFileWithDefaultData();");
             return new JSONArray();
         }
 
-        try (FileInputStream fileInputStream = new FileInputStream(this.file)) {
-            InputStreamReader inputStreamReader = new InputStreamReader(fileInputStream,
-                    StandardCharsets.UTF_8);
-            JSONArray jsonObject = (JSONArray) jsonParser.parse(inputStreamReader);
-            return jsonObject;
+        try (FileReader fileReader = new FileReader(this.file, StandardCharsets.UTF_8)) {
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String content = bufferedReader.lines().collect(Collectors.joining());
+            JSONArray jsonArray = new JSONArray(new JSONTokener(content));
+            return jsonArray;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");
         } catch (IOException e) {
             System.out.println("Error reading file");
-        } catch (ParseException e) {
-            System.out.println("Error parsing file");
+        } catch (JSONException e) {
+            System.out.println("Error parsing JSON");
         }
         return null;
     }

@@ -3,8 +3,10 @@ package core.data;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
+import java.util.UUID;
 
-import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * The Chore class represents a task that can be assigned to a user. It stores information about the
@@ -21,21 +23,25 @@ public class Chore {
     private boolean checked;
     private int daysIncompleted;
     private String creator;
+    private String assignedTo;
+    private UUID uuid;
 
     /**
      * A constructor for the Chore class that initializes the state of the object.
      *
-     * @param choreName The name of the chore
-     * @param timeFrom  The start date of the chore
-     * @param timeTo    The end date of the chore
-     * @param isWeekly  Whether the chore is weekly or not
-     * @param points    The points of the chore
-     * @param color     The color of the chore
-     * @param creator   The creator of the chore
+     * @param choreName  The name of the chore
+     * @param timeFrom   The start date of the chore
+     * @param timeTo     The end date of the chore
+     * @param isWeekly   Whether the chore is weekly or not
+     * @param points     The points of the chore
+     * @param color      The color of the chore
+     * @param creator    The creator of the chore
+     * @param assignedTo The person the chore is assigned to
      */
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, String creator) {
-        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator);
+            int points, String color, String creator, String assignedTo) {
+        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator, assignedTo,
+                UUID.randomUUID());
     }
 
     /**
@@ -50,10 +56,12 @@ public class Chore {
      * @param checked         Wheter a chore is done or not
      * @param daysIncompleted How many days since the chores due date
      * @param creator         The creator of the chore
+     * @param assignedTo      The person the chore is assigned to
      */
 
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, boolean checked, int daysIncompleted, String creator) {
+            int points, String color, boolean checked, int daysIncompleted, String creator,
+            String assignedTo, UUID uuid) {
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -63,6 +71,8 @@ public class Chore {
         this.checked = checked;
         this.daysIncompleted = daysIncompleted;
         this.creator = creator;
+        this.assignedTo = assignedTo;
+        this.uuid = uuid;
     }
 
     /**
@@ -116,7 +126,7 @@ public class Chore {
     }
 
     /**
-     * Outputs if a chore is checked/done or not
+     * Outputs if a chore is checked/done or not.
      *
      * @return Chores checked status
      */
@@ -166,7 +176,7 @@ public class Chore {
     }
 
     /**
-     * Outputs the creator of the chores username
+     * Outputs the creator of the chores username.
      *
      * @return The creator of the chores username
      */
@@ -206,26 +216,82 @@ public class Chore {
     }
 
     /**
+     * Outputs the person the chore is assigned to.
+     *
+     * @return The person the chore is assigned to
+     */
+    public String getAssignedTo() {
+        return this.assignedTo;
+    }
+
+    /**
+     * Outputs the UUID of the chore.
+     *
+     * @return The UUID of the chore
+     */
+    public UUID getUUID() {
+        return this.uuid;
+    }
+
+    /**
      * Outputs a {@link JSONObject} representation of the chore's state. The object's variables will
      * be turned into key/value pairs in the JSONObject.
      *
      * @return A {@link JSONObject} representation of the chore
      */
-    public JSONObject encodeToJSON() {
+    public static JSONObject encodeToJSONObject(Chore chore) {
+        if (chore == null)
+            throw new IllegalArgumentException("Cannot encode null");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("choreName", this.choreName);
-        map.put("timeFrom", this.timeFrom.toString());
-        map.put("timeTo", this.timeTo.toString());
-        map.put("isWeekly", this.isWeekly);
-        map.put("points", this.points);
-        map.put("color", this.color);
-        map.put("checked", this.checked);
-        map.put("daysIncompleted", this.daysIncompleted);
-        map.put("creator", this.creator);
+        map.put("uuid", chore.uuid.toString());
+        map.put("choreName", chore.choreName);
+        map.put("timeFrom", chore.timeFrom.toString());
+        map.put("timeTo", chore.timeTo.toString());
+        map.put("isWeekly", chore.isWeekly);
+        map.put("points", chore.points);
+        map.put("color", chore.color);
+        map.put("checked", chore.checked);
+        map.put("daysIncompleted", chore.daysIncompleted);
+        map.put("creator", chore.creator);
+        map.put("assignedTo", chore.assignedTo);
 
         JSONObject json = new JSONObject(map);
         return json;
     }
 
+    /**
+     * Decodes a {@link JSONObject} into a {@link Chore} object.
+     *
+     * @param jsonObject The {@link JSONObject} to decode
+     * @return The decoded {@link Chore} object
+     * @throws IllegalArgumentException If the {@link JSONObject} is missing required keys
+     */
+    public static Chore decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
+        if (jsonObject == null)
+            return null;
+
+        try {
+            UUID uuid = UUID.fromString(jsonObject.getString("uuid"));
+            String choreName = jsonObject.getString("choreName");
+            String timeFromStr = jsonObject.getString("timeFrom");
+            String timeToStr = jsonObject.getString("timeTo");
+            LocalDate timeFrom = LocalDate.parse(timeFromStr);
+            LocalDate timeTo = LocalDate.parse(timeToStr);
+            boolean isWeekly = jsonObject.getBoolean("isWeekly");
+            int points = jsonObject.getInt("points");
+            String color = jsonObject.getString("color");
+            boolean checked = jsonObject.getBoolean("checked");
+            int daysIncompleted = jsonObject.getInt("daysIncompleted");
+            String creator = jsonObject.getString("creator");
+            String assignedTo = jsonObject.getString("assignedTo");
+
+            return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
+                    daysIncompleted, creator, assignedTo, uuid);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException(
+                    "Invalid JSONObject, could not be converted to Chore object");
+        }
+    }
 }

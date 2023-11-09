@@ -1,13 +1,16 @@
 package ui;
 
-import core.State;
 import core.data.Collective;
+import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
-import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
 
 public class CreateCollectiveController {
+
+    private DataAccess dataAccess;
+
     @FXML
     private TextField name;
 
@@ -20,17 +23,20 @@ public class CreateCollectiveController {
 
     @FXML
     public void create() {
-
         if (this.name.getText().length() > this.minLength) {
             Collective newCollective = new Collective(this.name.getText());
-            if (Storage.getInstance().addCollective(newCollective)) {
-                newCollective.addPerson(State.getInstance().getLoggedInUser());
-                State.getInstance().setCurrentCollective(newCollective);
-                Storage.getInstance().save();
+            if (this.dataAccess.addCollective(newCollective)) {
+                Person loggedInUser = this.dataAccess.getLoggedInUser();
+                this.dataAccess.addPerson(loggedInUser, newCollective.getJoinCode());
+                this.dataAccess.movePersonToAnotherCollective(loggedInUser.getUsername(),
+                        loggedInUser.getPassword(), loggedInUser.getCollectiveJoinCode(),
+                        newCollective.getJoinCode());
+
+                this.dataAccess.logIn(loggedInUser, loggedInUser.getPassword(), newCollective);
                 App.switchScene("App");
 
             } else {
-                String error = "Please inform developers if this error occurs,\nbecause it really should not occur...";
+                String error = "An unexpected error occurred. Please try to reopen the app again.";
                 App.showAlert("Unknown error", error, AlertType.WARNING);
             }
         } else {

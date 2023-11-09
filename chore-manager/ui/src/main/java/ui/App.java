@@ -1,10 +1,10 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URI;
 import java.time.LocalDate;
 
 import core.data.Chore;
-import core.data.Person;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,7 +14,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import persistence.fileHandling.Storage;
+import persistence.fileHandling.EnvironmentConfigurator;
+import ui.dataAccessLayer.DataAccess;
+import ui.dataAccessLayer.RemoteDataAccess;
 
 /**
  * The App class has the logic to start the user interface of the project.
@@ -23,6 +25,7 @@ public class App extends Application {
 
     // Cannot be null, will cause exception when switching scenes
     private static Scene scene = new Scene(new Pane());
+    private static DataAccess dataAccess; // Caching purposes
 
     /**
      * The start method is called when the application is launched. It loads the FXML-file and sets
@@ -47,11 +50,6 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.show();
-
-        stage.setOnCloseRequest(event -> {
-            Storage.getInstance().save();
-            System.exit(0);
-        });
 
     }
 
@@ -99,7 +97,7 @@ public class App extends Application {
      * @param dateFrom The start date of the chore
      * @param dateTo   The end date of the chore
      */
-    public static void setChorePopupScene(Chore chore, Person assignee) {
+    public static void setChorePopupScene(Chore chore, String assignee) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("ChorePopup.fxml"));
             Parent parent = fxmlLoader.load();
@@ -109,6 +107,23 @@ public class App extends Application {
             scene.setRoot(parent);
         } catch (IOException e) {
             System.out.println(e);
+        }
+    }
+
+    /**
+     * Gets the data access layer.
+     */
+    public static DataAccess getDataAccess() {
+        if (dataAccess != null)
+            return dataAccess;
+        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        if (apiBaseEndpoint != null) {
+            dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+            return dataAccess;
+        } else {
+            // Use direct data access here
+            throw new RuntimeException("Could not find API base endpoint");
         }
     }
 

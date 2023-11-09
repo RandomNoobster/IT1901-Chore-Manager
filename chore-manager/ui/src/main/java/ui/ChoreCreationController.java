@@ -1,11 +1,10 @@
 package ui;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashMap;
 
-import core.State;
 import core.data.Chore;
-import core.data.Person;
+import core.data.RestrictedPerson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -15,13 +14,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
 import ui.viewClasses.PersonMenuItem;
 
 /**
  * This is the controller for the chore creation view.
  */
 public class ChoreCreationController {
+
+    private DataAccess dataAccess;
 
     @FXML
     private TextField name;
@@ -53,7 +54,6 @@ public class ChoreCreationController {
     private final int CHARACTER_MINIMUM = 5;
 
     public ChoreCreationController() {
-
     }
 
     /**
@@ -73,9 +73,11 @@ public class ChoreCreationController {
      */
     @FXML
     protected void initialize() {
-        List<Person> persons = State.getInstance().getCurrentCollective().getPersonsList();
+        this.dataAccess = App.getDataAccess();
 
-        for (Person person : persons) {
+        HashMap<String, RestrictedPerson> persons = this.dataAccess.getPersons();
+
+        for (RestrictedPerson person : persons.values()) {
             this.personsMenu.getItems().add(new PersonMenuItem(person));
         }
     }
@@ -105,18 +107,18 @@ public class ChoreCreationController {
                     AlertType.WARNING);
             return;
         }
-        Person person = personMenuItem.getPerson();
+        RestrictedPerson person = personMenuItem.getPerson();
+        RestrictedPerson creator = this.dataAccess.getLoggedInUser();
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
 
         for (int i = 0; i < (int) this.repeats.getValue(); i++) {
             Chore chore = new Chore(choreName, this.dateFrom.plusWeeks(i), this.dateTo.plusWeeks(i),
-                    false, points, hexColor, State.getInstance().getLoggedInUser().getUsername());
-            State.getInstance().addChore(chore, person);
+                    false, points, hexColor, creator.getUsername(), person.getUsername());
+            this.dataAccess.addChore(chore, person);
         }
 
-        Storage.getInstance().save();
         App.switchScene("App");
     }
 

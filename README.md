@@ -37,11 +37,19 @@ First install the necessary dependencies in [chore-manager](/chore-manager/):
 
 ```shell
 cd chore-manager/
-mvn install 
+mvn install -DskipTests
 ```
 
-Then run the javafx run command in [chore-manager/ui](/chore-manager/ui/):
+Then you will need to start the REST API in [chore-manager/springboot/restserver](/chore-manager/springboot/restserver/):
+Navigate to `chore-manager/springboot/restserver`:
 
+```shell
+cd springboot/restserver
+mvn spring-boot:run
+```
+
+Then you need to open a new terminal window, while the API is running.
+Then navigate to [chore-manager/ui](/chore-manager/ui/) in your new terminal, and run the following command:
 ```shell
 cd chore-manager/ui/
 mvn javafx:run

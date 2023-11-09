@@ -1,5 +1,7 @@
 package persistence.fileHandling;
 
+import java.io.File;
+import java.net.URI;
 import java.util.Properties;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -9,6 +11,8 @@ import io.github.cdimascio.dotenv.Dotenv;
  */
 public class EnvironmentConfigurator {
 
+    private static final String ROOT_MODULE_DIRECTORY = "chore-manager";
+    private static String rootModuleDirectoryPath; // For caching purposes
     private Properties properties = new Properties();
 
     /**
@@ -25,6 +29,37 @@ public class EnvironmentConfigurator {
     }
 
     /**
+     * Returns the absolute path of the root module directory. Assumes the name of the root module
+     * directory is `chore-manager` and by definition the root must be above the
+     * searchFromDirectory. Recursively searches for the root module directory.
+     *
+     * @param searchFromDirectory The directory to start searching from
+     * @return The absolute path of the root module directory
+     */
+    private static String findRootModuleDirectory(String searchFromDirectory) {
+        if (rootModuleDirectoryPath != null) {
+            return rootModuleDirectoryPath;
+        }
+
+        File currentDir = new File(searchFromDirectory);
+
+        if (currentDir.getName().equals(ROOT_MODULE_DIRECTORY)) {
+            rootModuleDirectoryPath = currentDir.getAbsolutePath();
+            return rootModuleDirectoryPath;
+        }
+
+        String parentDirectory = currentDir.getParent();
+        if (parentDirectory != null) {
+            String getRootModuleDirectory = findRootModuleDirectory(parentDirectory);
+            rootModuleDirectoryPath = getRootModuleDirectory;
+            return rootModuleDirectoryPath;
+        }
+
+        // If no root module directory is found, throw an exception
+        throw new RuntimeException("Could not find root module directory");
+    }
+
+    /**
      * This constructor reads the current environment and gets the corresponding .env file. Then
      * loads it into properties. If no environment is set, it default to 'development'
      */
@@ -32,21 +67,38 @@ public class EnvironmentConfigurator {
         String environment = System.getProperty("env", "development"); // Defaults to
                                                                        // "development"
         String envFileName = ".env." + environment;
+        String rootModuleDirectory = findRootModuleDirectory(System.getProperty("user.dir"));
 
-        Dotenv dotenv = Dotenv.configure().directory("../../.").filename(envFileName).load();
-        String saveFilePath = dotenv.get("SAVE_FILE_PATH");
-        String saveFilePathAlt = dotenv.get("SAVE_FILE_PATH_ALT", null);
+        Dotenv dotenv = Dotenv.configure().directory(rootModuleDirectory).filename(envFileName)
+                .load();
+        final String SAVE_FILE_PATH = dotenv.get("SAVE_FILE_PATH");
+        final String API_BASE_ENDPOINT = dotenv.get("API_BASE_ENDPOINT");
 
-        this.addProperty("saveFilePath", saveFilePath);
-        this.addProperty("saveFilePathAlt", saveFilePathAlt);
+        this.addProperty("SAVE_FILE_PATH", SAVE_FILE_PATH);
+        this.addProperty("API_BASE_ENDPOINT", API_BASE_ENDPOINT);
     }
 
+    /**
+     * Returns the save file path from the properties object.
+     *
+     * @return The save file path
+     */
     public String getSaveFilePath() {
-        return this.properties.getProperty("saveFilePath", null);
+        return this.properties.getProperty("SAVE_FILE_PATH", null);
     }
 
-    public String getSaveFilePathAlt() {
-        return this.properties.getProperty("saveFilePathAlt", null);
+    /**
+     * Returns the base API endpoint from the properties object.
+     *
+     * @return The base API endpoint
+     */
+    public URI getAPIBaseEndpoint() {
+        final String API_BASE_ENDPOINT = this.properties.getProperty("API_BASE_ENDPOINT", null);
+        if (API_BASE_ENDPOINT == null)
+            return null;
+
+        URI uri = URI.create(API_BASE_ENDPOINT);
+        return uri;
     }
 
 }

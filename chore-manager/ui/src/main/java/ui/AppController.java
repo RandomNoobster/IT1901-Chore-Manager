@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import core.State;
+import core.data.Chore;
+import core.data.RestrictedCollective;
 import core.data.Week;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
@@ -18,6 +19,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import ui.dataAccessLayer.DataAccess;
 import ui.viewClasses.CSSGlobal;
 import ui.viewClasses.WeekView;
 
@@ -25,6 +27,8 @@ import ui.viewClasses.WeekView;
  * The AppController class is the controller for the main view of the application.
  */
 public class AppController {
+
+    private DataAccess dataAccess;
 
     @FXML
     private VBox weekContainer;
@@ -65,8 +69,11 @@ public class AppController {
      */
     @FXML
     public void initialize() {
-        this.code.setText("Code: " + State.getInstance().getCurrentCollective().getJoinCode());
-        this.collectiveName.setText(State.getInstance().getCurrentCollective().getName());
+        // Set data access layer
+        this.dataAccess = App.getDataAccess();
+
+        // Set collective name
+        this.setCollectiveName();
 
         // Set top column that displays what each column means
         this.setTopColumn();
@@ -82,6 +89,12 @@ public class AppController {
 
         this.weekContainer.getChildren().add(this.subWeekScrollContainer);
         this.subWeekScrollContainer.setContent(this.subWeekContainer);
+    }
+
+    private void setCollectiveName() {
+        RestrictedCollective currentCollective = this.dataAccess.getCurrentCollective();
+        this.code.setText("Code: " + currentCollective.getJoinCode());
+        this.collectiveName.setText(currentCollective.getName());
     }
 
     /**
@@ -143,8 +156,12 @@ public class AppController {
 
     }
 
+    /**
+     * Updates the FXML. Run this when updating the view with new content.
+     */
     public void updateFxml() {
-        this.weeks.forEach(w -> w.updateFxml());
+        List<Chore> chores = this.dataAccess.getChores();
+        this.weeks.forEach(w -> w.updateFxml(chores));
     }
 
     /**
@@ -172,7 +189,7 @@ public class AppController {
 
     @FXML
     public void toLogin() {
-        State.getInstance().logOutUser();
+        this.dataAccess.logOut();
         App.switchScene("Login");
     }
 
@@ -180,7 +197,7 @@ public class AppController {
     public void copyCode() {
         Clipboard clipboard = Clipboard.getSystemClipboard();
         ClipboardContent content = new ClipboardContent();
-        content.putString(State.getInstance().getCurrentCollective().getJoinCode());
+        content.putString(this.dataAccess.getCurrentCollective().getJoinCode());
         clipboard.setContent(content);
 
         App.showAlert("Code copied", "Copied collective-code to clipboard", AlertType.INFORMATION);
