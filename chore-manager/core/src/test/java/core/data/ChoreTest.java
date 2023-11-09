@@ -1,11 +1,12 @@
 package core.data;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,6 +26,8 @@ public class ChoreTest {
     private boolean checked;
     private int daysIncompleted;
     private String creator;
+    private String assignee;
+    private UUID uuid;
 
     /**
      * Sets the current environment to test
@@ -48,8 +51,10 @@ public class ChoreTest {
         this.checked = false;
         this.daysIncompleted = 0;
         this.creator = "Creator";
+        this.assignee = "Assignee";
+        this.uuid = UUID.randomUUID();
         this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly,
-                this.points, this.color, this.checked, this.daysIncompleted, this.creator);
+                this.points, this.color, this.checked, this.daysIncompleted, this.creator, this.assignee, this.uuid);
     }
 
     /**
@@ -58,7 +63,7 @@ public class ChoreTest {
     @Test
     public void testConstructor() {
         assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10,
-                "#FFFFFF", "Creator"));
+                "#FFFFFF", "Creator", "Assignee"));
     }
 
     /**
@@ -158,6 +163,6 @@ public class ChoreTest {
      */
     @Test
     public void testEncodeToJSON() {
-        assertDoesNotThrow(() -> this.chore.encodeToJSON());
+        assertDoesNotThrow(() -> Chore.encodeToJSONObject(this.chore));
     }
 }

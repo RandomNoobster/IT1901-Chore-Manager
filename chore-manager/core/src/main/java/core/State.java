@@ -1,5 +1,8 @@
 package core;
 
+import java.util.List;
+import java.util.UUID;
+
 import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
@@ -46,15 +49,38 @@ public class State {
     }
 
     /**
+     * This method is used to get the current collective.
+     *
+     * @return The current collective.
+     */
+    public Collective getCurrentCollective() {
+        return this.currentCollective;
+    }
+
+    /**
      * This method is used to set the logged in user and the corresponding collective.
      *
      * @param user The user to set as the logged in user.
      */
-    public void setLoggedInUser(Person user) {
+    public void logIn(Person user, Collective collective) {
         this.loggedInUser = user;
-        this.currentCollective = user.getCollective();
+        this.currentCollective = collective;
     }
 
+    /**
+     * This method is used to set the logged in user.
+     *
+     * @param user The user to set as the logged in user.
+     */
+    public void setCurrentUser(Person user) {
+        this.loggedInUser = user;
+    }
+
+    /**
+     * This method is used to set the current collective.
+     *
+     * @param collective The collective to set as the current collective.
+     */
     public void setCurrentCollective(Collective collective) {
         this.currentCollective = collective;
     }
@@ -68,31 +94,46 @@ public class State {
     }
 
     /**
-     * This method is used to get the current collective.
+     * This methods retrieves the chore with the given uuid from the current collective.
      *
-     * @return The current collective.
+     * @param uuid The uuid of the chore to retrieve.
+     * @return The chore with the given uuid.
      */
-    public Collective getCurrentCollective() {
-        return this.currentCollective;
+    public Chore getChoreInCurrentCollective(UUID uuid) {
+        List<Chore> chores = this.currentCollective.getChoresList();
+        Chore chore = null;
+        for (Chore c : chores) {
+            if (c.getUUID().equals(uuid)) {
+                chore = c;
+                break;
+            }
+        }
+        return chore;
     }
 
     /**
-     * This method adds a chore to a person.
+     * This method adds a chore to a person within the current collective.
      *
      * @param chore          The chore to add.
      * @param assignedPerson The person to add the chore to.
      */
-    public void addChore(Chore chore, Person assignedPerson) {
+    public boolean addChore(Chore chore, Person assignedPerson) {
         if (assignedPerson == null) {
             System.out.println("Person is null, cannot add chore");
-            return;
+            return false;
+        }
+
+        if (this.currentCollective == null) {
+            System.out.println("Current collective is null, cannot add chore");
+            return false;
         }
 
         if (this.currentCollective.hasPerson(assignedPerson)) {
-            Person person = this.currentCollective.getPersons().get(assignedPerson.getUsername());
-            person.addChore(chore);
-        } else {
-            System.out.println("Person does not exist");
+            Person person = this.currentCollective.getPerson(assignedPerson.getUsername());
+            return person.addChore(chore);
         }
+
+        System.out.println("Person does not exist in this collective, could not add chore");
+        return false;
     }
 }

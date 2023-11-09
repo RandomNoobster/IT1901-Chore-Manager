@@ -158,5 +158,6 @@
         <module>persistence</module>
         <module>ui</module>
         <module>jacocoAggregateReporter</module>
+        <module>springboot/restserver</module>
     </modules>
 </project>

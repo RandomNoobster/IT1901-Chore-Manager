@@ -1,6 +1,7 @@
 module main.core {
-    requires transitive json.simple;
+    requires transitive org.json;
 
     exports core.data;
+    exports core.json;
     exports core;
 }

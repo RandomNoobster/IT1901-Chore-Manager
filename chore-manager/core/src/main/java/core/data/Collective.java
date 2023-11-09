@@ -1,54 +1,35 @@
 package core.data;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Random;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
- * The Collective class represents a collective in the chore manager.
+ * The Collective class represents a collective in the chore manager. This class stores sensitive
+ * data about the users. DO NOT USE THIS CLASS IN THE FRONTEND. USE {@link RestrictedCollective}
+ * INSTEAD.
  */
-@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
-public class Collective {
+public class Collective extends RestrictedCollective {
 
-    private static final int maxJoinCode = 999999; // Inclusive
-    public static final String LIMBO_COLLECTIVE_JOIN_CODE = "0"
-            .repeat(String.valueOf(maxJoinCode).length());
-    public static final Random random = new Random();
-    /**
-     * To avoid duplicate join codes without having to know about the persistence module.
-     */
-    private static HashSet<String> joinCodes = new HashSet<String>(
-            Arrays.asList(LIMBO_COLLECTIVE_JOIN_CODE));
-
-    private String joinCode;
-    private String name;
     private HashMap<String, Person> persons = new HashMap<String, Person>();
 
     public Collective(Collective collective) {
         this(collective.getName(), collective.getJoinCode(), collective.getPersons());
     }
 
+    public Collective(RestrictedCollective collective) {
+        this(collective.getName(), collective.getJoinCode());
+    }
+
     public Collective(String name) {
-        this(name, generateJoinCode());
+        super(name);
     }
 
     public Collective(String name, String joinCode) {
         this(name, joinCode, new HashMap<String, Person>());
-    }
-
-    /**
-     * Check if collective is the limbo collective you get added to when creating a new user.
-     *
-     * @return true if this is the limbo collective
-     */
-    public boolean isLimboCollective() {
-        return this.joinCode.equals(LIMBO_COLLECTIVE_JOIN_CODE);
     }
 
     /**
@@ -59,46 +40,21 @@ public class Collective {
      * @param persons  The persons in the collective.
      */
     public Collective(String name, String joinCode, HashMap<String, Person> persons) {
-        this.name = name;
-        this.joinCode = joinCode;
+        super(name, joinCode);
         this.persons = new HashMap<>(persons);
-
-        joinCodes.add(joinCode);
     }
 
     /**
-     * String is unique and not 0000000, as it is reserved for limbo collective.
+     * This method is used to get a person from this collective.
      *
-     * @param joinCode The join code to check
-     * @return True if the join code is unique, false otherwise
+     * @return The person with the given username
      */
-    private static boolean isUniqueJoinCode(String joinCode) {
-        return !joinCodes.contains(joinCode);
-    }
-
-    private static String generateJoinCode() {
-        if (joinCodes.size() >= maxJoinCode) {
-            throw new IllegalStateException("All join codes have been used");
-        }
-        String joinCode = "";
-        do {
-            // 1 - 999999 (inclusive), 000000 is reserved
-            int randomJoinCode = random.nextInt(maxJoinCode) + 1; // 1 - 999999
-            joinCode = String.format("%06d", randomJoinCode);
-        } while (!isUniqueJoinCode(joinCode));
-        return joinCode;
-    }
-
-    public String getJoinCode() {
-        return this.joinCode;
-    }
-
-    public String getName() {
-        return this.name;
+    public Person getPerson(String username) {
+        return this.persons.get(username);
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get the persons from this collective.
      *
      * @return A {@link HashMap} of persons and their unique keys.
      */
@@ -107,7 +63,7 @@ public class Collective {
     }
 
     /**
-     * This method is used to get the persons from the file system.
+     * This method is used to get the persons from this collective.
      *
      * @return A {@link List} of persons.
      */
@@ -144,8 +100,8 @@ public class Collective {
      *
      * @param person The person to remove
      */
-    public void removePerson(Person person) {
-        this.persons.remove(person.getUsername());
+    public boolean removePerson(Person person) {
+        return this.persons.remove(person.getUsername()) != null;
     }
 
     /**
@@ -167,20 +123,53 @@ public class Collective {
      *
      * @return A {@link JSONObject} representing the collective
      */
-    public JSONObject encodeToJSON() {
+    public static JSONObject encodeToJSONObject(Collective collective) {
+        if (collective == null)
+            throw new IllegalArgumentException("Cannot encode null");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
-        map.put("name", this.name);
+        map.put("name", collective.getName());
+        map.put("joinCode", collective.getJoinCode());
 
-        JSONArray personJSON = new JSONArray();
-        for (Person person : this.persons.values()) {
-            personJSON.add(person.encodeToJSON());
+        JSONObject personJSON = new JSONObject();
+        for (Person person : collective.persons.values()) {
+            personJSON.put(person.getUsername(), Person.encodeToJSONObject(person));
         }
 
         map.put("persons", personJSON);
-        map.put("joinCode", this.joinCode);
 
         return new JSONObject(map);
+    }
+
+    /**
+     * Decodes a {@link Collective} object from a {@link JSONObject}.
+     *
+     * @param jsonObject The {@link JSONObject} to decode.
+     * @return The decoded {@link Collective} object.
+     */
+    public static Collective decodeFromJSON(JSONObject jsonObject) throws IllegalArgumentException {
+        if (jsonObject == null)
+            return null;
+
+        try {
+            String name = jsonObject.getString("name");
+            String joinCode = jsonObject.getString("joinCode");
+            JSONObject personsJSON = jsonObject.getJSONObject("persons");
+            HashMap<String, Person> persons = new HashMap<String, Person>();
+
+            for (Object key : personsJSON.keySet()) {
+                String username = (String) key;
+                JSONObject personJSONObject = personsJSON.getJSONObject(username);
+                Person person = Person.decodeFromJSON(personJSONObject);
+                persons.put(username, person);
+            }
+
+            return new Collective(name, joinCode, persons);
+        } catch (JSONException e) {
+            throw new IllegalArgumentException(
+                    "Invalid JSONObject, could not be converted to Collective object");
+        }
     }
 
 }

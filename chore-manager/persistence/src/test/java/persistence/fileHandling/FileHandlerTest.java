@@ -6,14 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-@SuppressWarnings("unchecked") // There is no way to parameterize the JSONArray
 public class FileHandlerTest {
 
     private FileHandler fileHandler;
@@ -92,17 +91,17 @@ public class FileHandlerTest {
         map.put("username", "testName");
         JSONObject jsonObject = new JSONObject(map);
         JSONArray jsonArray = new JSONArray();
-        jsonArray.add(jsonObject);
+        jsonArray.put(jsonObject);
         this.fileHandler.writeToFile(jsonArray);
 
-        assertEquals(jsonArray, this.fileHandler.readJSONFile());
+        assertEquals(jsonArray.toString(), this.fileHandler.readJSONFile().toString());
     }
 
     @Test
     public void testReadJSONFileEmpty() {
         assertEquals(0, this.fileHandler.getFile().length());
 
-        assertEquals(new JSONArray(), this.fileHandler.readJSONFile());
+        assertEquals(new JSONArray().toString(), this.fileHandler.readJSONFile().toString());
     }
 
     @Test

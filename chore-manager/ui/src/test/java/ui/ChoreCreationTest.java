@@ -14,7 +14,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
-import persistence.fileHandling.Storage;
 
 /**
  * Test that the chore creation page works as expected.
@@ -44,7 +43,7 @@ public class ChoreCreationTest extends BaseTestClass {
      */
     @Test
     public void testCreateChore() {
-        List<Chore> savedChores = Storage.getInstance().getAllChores();
+        List<Chore> savedChores = dataAccess.getChores();
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
@@ -70,7 +69,6 @@ public class ChoreCreationTest extends BaseTestClass {
 
         WaitForAsyncUtils.waitForFxEvents();
 
-        // Ensure that a new Chore has been made
-        assertTrue(savedChores.size() + 1 == Storage.getInstance().getAllChores().size());
+        assertTrue(savedChores.size() + 1 == dataAccess.getChores().size());
     }
 }

@@ -1,17 +1,19 @@
 package ui;
 
 import core.data.Chore;
-import core.data.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.text.Text;
-import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
 
 /**
- * This is the controller for the chore popup view.
+ * Controller for the chore popup window.
  */
 public class ChorePopupController {
+
+    private DataAccess dataAccess;
+
     @FXML
     private Label choreName;
 
@@ -28,7 +30,7 @@ public class ChorePopupController {
     private Text points;
 
     private Chore chore;
-    private Person assignee;
+    private String assignee;
 
     public ChorePopupController() {
 
@@ -37,17 +39,16 @@ public class ChorePopupController {
     /**
      * This method is called when the view is loaded. It passes the chore and the assignee.
      *
-     * @param chore    The chore
-     * @param assignee The assignee
+     * @param chore    the chore to display
+     * @param assignee the assignee of the chore
      */
-    public void passData(Chore chore, Person assignee) {
-        System.out.println(chore);
+    public void passData(Chore chore, String assignee) {
         this.chore = chore;
         this.assignee = assignee;
 
         this.choreName.setText(this.chore.getName());
         this.checkbox.setSelected(this.chore.getChecked());
-        this.assigneeText.setText("Assignee: " + this.assignee.getDisplayName());
+        this.assigneeText.setText("Assignee: " + this.assignee);
         if (this.chore.overdue()) {
             this.deadline.setText("Deadline: [OVERDUE]");
         } else {
@@ -58,7 +59,7 @@ public class ChorePopupController {
 
     @FXML
     protected void initialize() {
-
+        this.dataAccess = App.getDataAccess();
     }
 
     @FXML
@@ -68,15 +69,12 @@ public class ChorePopupController {
 
     @FXML
     public void delete() {
-        this.assignee.deleteChore(this.chore);
+        this.dataAccess.removeChore(this.chore);
         App.switchScene("App");
-        Storage.getInstance().save();
     }
 
     @FXML
     public void updateChecked() {
-        this.chore.setChecked(this.checkbox.isSelected());
-        Storage.getInstance().save();
+        this.dataAccess.updateChoreChecked(this.chore, this.checkbox.isSelected());
     }
-
 }
