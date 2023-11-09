@@ -126,25 +126,6 @@ public class RestrictedPerson {
         }
     }
 
-    /**
-     * Outputs a boolean indicating wether or not the objects have the same username (since this is
-     * unique).
-     *
-     * @return If the usernames are equal
-     */
-    @Override
-    public boolean equals(Object arg0) {
-        if (!(arg0 instanceof RestrictedPerson)) {
-            return false;
-        }
-        return this.username.equals(((RestrictedPerson) arg0).getUsername());
-    }
-
-    @Override
-    public int hashCode() {
-        return this.username.hashCode();
-    }
-
     @Override
     public String toString() {
         return this.getUsername();

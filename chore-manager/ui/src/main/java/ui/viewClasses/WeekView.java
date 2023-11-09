@@ -16,14 +16,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.App;
-import ui.dataAccessLayer.DataAccess;
 
 /**
  * The WeekView class represents a week in the calendar.
  */
 public class WeekView implements ViewInterface {
 
-    private DataAccess dataAccess;
     private Week week;
     private List<DayView> dayViews = new ArrayList<>();
     private final Integer COLUMN_COUNT = 8;
@@ -67,7 +65,6 @@ public class WeekView implements ViewInterface {
      * @param week The week to be represented by the WeekView.
      */
     public WeekView(Week week) {
-        this.dataAccess = App.getDataAccess();
 
         this.week = week;
 

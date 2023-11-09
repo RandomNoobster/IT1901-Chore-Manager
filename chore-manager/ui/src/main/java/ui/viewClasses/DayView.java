@@ -14,7 +14,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.App;
-import ui.dataAccessLayer.DataAccess;
 
 /**
  * The DayView class represents a day in the calendar. It extends Button because it should be
@@ -22,7 +21,6 @@ import ui.dataAccessLayer.DataAccess;
  */
 public class DayView extends Button implements ViewInterface {
 
-    private DataAccess dataAccess;
     private Day day;
     private VBox container = new VBox();
     private ScrollPane scrollContainer = new ScrollPane();
@@ -36,8 +34,6 @@ public class DayView extends Button implements ViewInterface {
      */
     public DayView(Day day) {
         super();
-
-        this.dataAccess = App.getDataAccess();
 
         // Go to chorecreation when button is pressed
         this.setOnAction(e -> App.setChoreCreationScene(day.getDate(), day.getDate()));

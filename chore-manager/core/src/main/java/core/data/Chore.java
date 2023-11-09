@@ -27,6 +27,18 @@ public class Chore {
     private UUID uuid;
 
     /**
+     * A constructor for the Chore class that initializes the state of the object. This is used for
+     * creating a copy of a Chore.
+     *
+     * @param chore The chore to copy
+     */
+    public Chore(Chore chore) {
+        this(chore.choreName, chore.timeFrom, chore.timeTo, chore.isWeekly, chore.points,
+                chore.color, chore.checked, chore.daysIncompleted, chore.creator, chore.assignedTo,
+                chore.uuid);
+    }
+
+    /**
      * A constructor for the Chore class that initializes the state of the object.
      *
      * @param choreName  The name of the chore

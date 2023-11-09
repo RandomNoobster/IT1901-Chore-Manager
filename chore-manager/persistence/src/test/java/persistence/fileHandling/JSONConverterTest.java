@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,10 +24,6 @@ public class JSONConverterTest {
     private JSONConverter jsonConverter;
     private final String fileName = "chore-manager-test-jsonconverter.json";
     private final LocalDate date = LocalDate.of(2020, 1, 1);
-
-    private <T> boolean compareTwoLists(Collection<T> list1, Collection<T> list2) {
-        return list1.containsAll(list2) && list2.containsAll(list1);
-    }
 
     /**
      * Sets the current environment to test
@@ -73,8 +68,14 @@ public class JSONConverterTest {
 
         HashMap<String, Collective> collectivesFromJSON = this.jsonConverter.getCollectives();
         assertTrue(collectivesFromJSON.containsKey(collective.getJoinCode()));
-        assertTrue(this.compareTwoLists(collective.getPersonsList(),
-                collectivesFromJSON.get(collective.getJoinCode()).getPersonsList()));
+
+        HashMap<String, Person> persons1 = collective.getPersons();
+        HashMap<String, Person> persons2 = collectivesFromJSON.get(collective.getJoinCode())
+                .getPersons();
+
+        // Check that all keys are equal
+        assertTrue(persons1.keySet().stream().allMatch(persons2::containsKey));
+        assertTrue(persons2.keySet().stream().allMatch(persons1::containsKey));
 
         assertEquals(Chore.encodeToJSONObject(person.getChores().get(0)).toString(),
                 Chore.encodeToJSONObject(collectivesFromJSON.get(collective.getJoinCode())
