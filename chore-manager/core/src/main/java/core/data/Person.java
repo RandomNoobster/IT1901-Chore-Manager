@@ -22,16 +22,6 @@ public class Person extends RestrictedPerson {
     /**
      * A constructor for the Person class that initializes the state of the object.
      *
-     * @param person The person to copy
-     */
-    public Person(Person person) {
-        this(person.getUsername(), person.getCollectiveJoinCode(), person.getPassword(),
-                person.getChores(), person.getDisplayName());
-    }
-
-    /**
-     * A constructor for the Person class that initializes the state of the object.
-     *
      * @param username           The username of the person
      * @param collectiveJoinCode The collective that the person is a part of
      */
