@@ -59,10 +59,11 @@ public class JSONConverterTest {
 
     @Test
     public void writeAndReadToJSONTest() {
-        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF", "creator");
+        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF", "creator",
+                "Assignee");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Collective collective = new Collective("test");
-        Person person = new Person("username", collective, chores);
+        Person person = new Person("username", collective.getJoinCode(), chores);
         collective.addPerson(person);
         HashMap<String, Collective> collectives = new HashMap<String, Collective>();
         collectives.put(collective.getJoinCode(), collective);
@@ -75,9 +76,9 @@ public class JSONConverterTest {
         assertTrue(this.compareTwoLists(collective.getPersonsList(),
                 collectivesFromJSON.get(collective.getJoinCode()).getPersonsList()));
 
-        assertEquals(person.getChores().get(0).encodeToJSON(),
-                collectivesFromJSON.get(collective.getJoinCode()).getPersons()
-                        .get(person.getUsername()).getChores().get(0).encodeToJSON());
+        assertEquals(Chore.encodeToJSONObject(person.getChores().get(0)).toString(),
+                Chore.encodeToJSONObject(collectivesFromJSON.get(collective.getJoinCode())
+                        .getPerson(person.getUsername()).getChores().get(0)).toString());
     }
 
 }

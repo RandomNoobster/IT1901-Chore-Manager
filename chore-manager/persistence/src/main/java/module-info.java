@@ -1,5 +1,5 @@
 module main.persistence {
-    requires transitive json.simple;
+    requires transitive org.json;
     requires io.github.cdimascio.dotenv.java;
     requires transitive main.core;
 
