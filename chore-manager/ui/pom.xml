@@ -69,7 +69,6 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -98,6 +97,14 @@
                     <configuration>
                         <!-- syntax: module-name/full-app-class-name -->
                         <mainClass>main.ui/ui.App</mainClass>
+                        <!-- jLink -->
+                        <compress>2</compress>
+                        <noHeaderFiles>true</noHeaderFiles>
+                        <stripDebug>true</stripDebug>
+                        <noManPages>true</noManPages>
+                        <launcher>App</launcher>
+                        <jlinkImageName>chore-manager</jlinkImageName>
+                        <jlinkZipName>chore-manager</jlinkZipName>
                     </configuration>
                 </plugin>
                 <plugin>
