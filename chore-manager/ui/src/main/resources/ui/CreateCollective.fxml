@@ -38,7 +38,7 @@
                         <String fx:value="static-basic-shape" />
                      </styleClass>
                   </Label>
-                  <TextField id="collectiveNameInput" fx:id="name" promptText="name">
+                  <TextField fx:id="name" id="collectiveNameInput" promptText="name">
                      <styleClass>
                         <String fx:value="input-text" />
                         <String fx:value="border-rounded-right" />
@@ -48,7 +48,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button id="createCollectiveButton" mnemonicParsing="false" onAction="#goToJoin" stylesheets="@Style.css" text="Go back">
+                  <Button id="goBackButton" mnemonicParsing="false" onAction="#goToJoin" stylesheets="@Style.css" text="Go back">
                      <styleClass>
                         <String fx:value="border-rounded" />
                         <String fx:value="static-basic-shape" />
@@ -57,7 +57,7 @@
                         <String fx:value="white-text" />
                      </styleClass>
                   </Button>
-                  <Button id="createCollectiveButton" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create">
+                  <Button id="createButton" mnemonicParsing="false" onAction="#create" stylesheets="@Style.css" text="Create">
                      <styleClass>
                         <String fx:value="border-rounded" />
                         <String fx:value="static-basic-shape" />

@@ -52,7 +52,7 @@
                         <String fx:value="white-text" />
                      </styleClass>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#delete" stylesheets="@Style.css" text="Delete chore">
+                  <Button id="delete" mnemonicParsing="false" onAction="#delete" stylesheets="@Style.css" text="Delete chore">
                      <styleClass>
                         <String fx:value="bold" />
                         <String fx:value="on-hover-underline" />
