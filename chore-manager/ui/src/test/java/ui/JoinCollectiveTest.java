@@ -1,14 +1,14 @@
 package ui;
 
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.State;
+import core.data.Collective;
 import javafx.scene.control.TextField;
-import persistence.fileHandling.Storage;
 
 /**
  * Test that the join collective page works as expected.
@@ -22,12 +22,12 @@ public class JoinCollectiveTest extends BaseTestClass {
         return fxmlFileName;
     }
 
-    @Override
-    protected void setup() {
-        Storage.deleteInstance();
-        Storage.getInstance().addCollective(testCollective);
-        testPerson.setCollective(null);
-        State.getInstance().setLoggedInUser(testPerson);
+    @BeforeEach
+    private void boot() {
+        testCollective = new Collective("Party Collective");
+        dataAccess.addCollective(testCollective);
+        dataAccess.logIn(testPerson, testPerson.getPassword(),
+                new Collective("Limbo", Collective.LIMBO_COLLECTIVE_JOIN_CODE));
     }
 
     /**
@@ -43,7 +43,7 @@ public class JoinCollectiveTest extends BaseTestClass {
         this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(State.getInstance().getCurrentCollective().getJoinCode()
+        assertTrue(dataAccess.getCurrentCollective().getJoinCode()
                 .equals(testCollective.getJoinCode()));
     }
 
@@ -55,6 +55,7 @@ public class JoinCollectiveTest extends BaseTestClass {
         this.clickOn("#joinCollectiveButton");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertNull(State.getInstance().getCurrentCollective());
+        assertEquals(dataAccess.getCurrentCollective().getJoinCode(),
+                Collective.LIMBO_COLLECTIVE_JOIN_CODE);
     }
 }

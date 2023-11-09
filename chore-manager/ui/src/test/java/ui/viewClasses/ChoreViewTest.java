@@ -29,12 +29,12 @@ public class ChoreViewTest extends BaseTestClass {
     public void boot() {
         // create chore with dark color and overdue
         this.chore1 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), false,
-                1, "#000000", testPerson.getUsername());
+                1, "#000000", testPerson.getUsername(), testPerson.getUsername());
         testPerson.addChore(this.chore1);
 
         // create chore with light color and checked
         this.chore2 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), false,
-                1, "#FFFFFF", testPerson.getUsername());
+                1, "#FFFFFF", testPerson.getUsername(), testPerson.getUsername());
         this.chore2.setChecked(true);
         testPerson.addChore(this.chore2);
     }
@@ -44,8 +44,8 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testConstructor() {
-        assertDoesNotThrow(() -> new ChoreView(this.chore1, testPerson));
-        assertDoesNotThrow(() -> new ChoreView(this.chore2, testPerson));
+        assertDoesNotThrow(() -> new ChoreView(this.chore1, testPerson.getUsername()));
+        assertDoesNotThrow(() -> new ChoreView(this.chore2, testPerson.getUsername()));
     }
 
     /**
@@ -54,7 +54,7 @@ public class ChoreViewTest extends BaseTestClass {
     @Test
     public void testUpdateWith() {
         double newWidth = 100;
-        ChoreView choreView = new ChoreView(this.chore1, testPerson);
+        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.updateWidth(newWidth));
     }
 
@@ -63,7 +63,7 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testGetFxml() {
-        ChoreView choreView = new ChoreView(this.chore1, testPerson);
+        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.getFxml());
     }
 
@@ -72,7 +72,7 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testGetContainer() {
-        ChoreView choreView = new ChoreView(this.chore1, testPerson);
+        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.getContainer());
     }
 

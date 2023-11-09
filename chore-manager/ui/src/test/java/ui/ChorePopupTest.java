@@ -1,7 +1,7 @@
 package ui;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
 
@@ -33,11 +33,12 @@ public class ChorePopupTest extends BaseTestClass {
     @BeforeEach
     private void passData() {
         this.chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), false,
-                0, "#000000", testPerson.getUsername());
+                0, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        dataAccess.addChore(this.chore, testPerson);
 
         Platform.runLater(() -> {
             ChorePopupController controller = this.fxmlLoader.getController();
-            controller.passData(this.chore, testPerson);
+            controller.passData(this.chore, testPerson.getUsername());
         });
     }
 
@@ -50,11 +51,13 @@ public class ChorePopupTest extends BaseTestClass {
         this.clickOn(checkBox);
 
         WaitForAsyncUtils.waitForFxEvents();
+        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword()).getChores().get(0);
         assertTrue(this.chore.getChecked());
 
         this.clickOn(checkBox);
 
         WaitForAsyncUtils.waitForFxEvents();
+        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword()).getChores().get(0);
         assertFalse(this.chore.getChecked());
     }
 

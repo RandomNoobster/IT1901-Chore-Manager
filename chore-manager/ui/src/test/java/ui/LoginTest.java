@@ -1,13 +1,12 @@
 package ui;
 
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.State;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
@@ -22,7 +21,7 @@ public class LoginTest extends BaseTestClass {
 
     @BeforeEach
     private void boot() {
-        State.getInstance().logOutUser();
+        dataAccess.logOut();
     }
 
     /**
@@ -43,8 +42,7 @@ public class LoginTest extends BaseTestClass {
         this.clickOn("#login");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(State.getInstance().getLoggedInUser().getUsername()
-                .equals(testPerson.getUsername()));
+        assertTrue(dataAccess.getLoggedInUser().getUsername().equals(testPerson.getUsername()));
     }
 
     /**
@@ -53,7 +51,7 @@ public class LoginTest extends BaseTestClass {
     @Test
     public void testCreate() {
         this.clickOn("#create");
-        assertNull(State.getInstance().getLoggedInUser());
+        assertNull(dataAccess.getLoggedInUser());
     }
 
     /**
@@ -64,6 +62,6 @@ public class LoginTest extends BaseTestClass {
         this.clickOn("#login");
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertNull(State.getInstance().getLoggedInUser());
+        assertNull(dataAccess.getLoggedInUser());
     }
 }

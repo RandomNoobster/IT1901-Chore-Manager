@@ -19,7 +19,6 @@ public class LeaderboardTest extends BaseTestClass {
 
     private static final String fxmlFileName = "Leaderboard.fxml";
     private ListView<String> leaderboard;
-    private Person p1;
 
     @Override
     protected String getFileName() {
@@ -29,15 +28,17 @@ public class LeaderboardTest extends BaseTestClass {
     @BeforeAll
     private void boot() {
         Chore chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), false,
-                0, "#000000", testPerson.getUsername());
+                0, "#000000", testPerson.getUsername(), testPerson.getUsername());
         chore.setChecked(true);
-        testPerson.addChore(chore);
+        dataAccess.addChore(chore, testPerson);
 
-        this.p1 = new Person("James", testCollective);
-        testCollective.addPerson(this.p1);
-        Chore chore2 = new Chore("Chore 2", null, null, true, 1, "#000000", this.p1.getUsername());
+        Person p1 = new Person("James", testCollective.getJoinCode());
+        dataAccess.addPerson(p1, testCollective.getJoinCode());
+
+        Chore chore2 = new Chore("Chore 2", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2),
+                true, 1, "#000000", p1.getUsername(), p1.getUsername());
         chore2.setChecked(true);
-        this.p1.addChore(chore2);
+        dataAccess.addChore(chore2, p1);
     }
 
     /**

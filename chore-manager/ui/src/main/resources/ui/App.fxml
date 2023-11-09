@@ -37,7 +37,7 @@
                         <String fx:value="white-text" />
                      </styleClass>
                   </Button>
-                  <Button fx:id="code" mnemonicParsing="false" onAction="#copyCode" text="Code: ">
+                  <Button id="code" fx:id="code" mnemonicParsing="false" onAction="#copyCode" text="Code: ">
                      <styleClass>
                         <String fx:value="static-basic-shape" />
                         <String fx:value="background-none" />

@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.net.URI;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -10,14 +11,16 @@ import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testfx.framework.junit5.ApplicationTest;
 
-import core.State;
 import core.data.Collective;
 import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import persistence.fileHandling.EnvironmentConfigurator;
 import persistence.fileHandling.Storage;
+import ui.dataAccessLayer.DataAccess;
+import ui.dataAccessLayer.RemoteDataAccess;
 
 /**
  * Basic test class that all other test classes should extend.
@@ -30,8 +33,26 @@ public class BaseTestClass extends ApplicationTest {
     protected FXMLLoader fxmlLoader;
     protected static Collective testCollective;
     protected static Person testPerson;
+    protected static DataAccess dataAccess = getDataAccess();
 
     private static final String filePath = "chore-manager-data-ui-test.json";
+
+    /**
+     * Gets the data access layer.
+     */
+    public static DataAccess getDataAccess() {
+        if (dataAccess != null)
+            return dataAccess;
+        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        if (apiBaseEndpoint != null) {
+            dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+            return dataAccess;
+        } else {
+            // Use direct data access here
+            throw new RuntimeException("Could not find API base endpoint");
+        }
+    }
 
     /**
      * Sets the current environment to test.
@@ -39,7 +60,9 @@ public class BaseTestClass extends ApplicationTest {
     @BeforeAll
     public void setTestEnvironment() {
         System.setProperty("env", "test");
+        Storage.deleteInstance();
         Storage.getInstance().deleteFile();
+        dataAccess.enterTestMode();
         this.setup();
     }
 
@@ -47,19 +70,15 @@ public class BaseTestClass extends ApplicationTest {
      * Sets up the test environment.
      */
     protected void setup() {
-        Storage.deleteInstance();
+        Storage.getInstance().deleteFileContent();
 
-        testCollective = new Collective("Test Collective",
-            Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-
-        testPerson = new Person("Test", testCollective);
-
-        Storage.getInstance().addCollective(testCollective);
-        testPerson.setCollective(testCollective);
-        Storage.getInstance().addPerson(testPerson, testPerson.getCollective().getJoinCode());
+        testCollective = new Collective("Test Collective", Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+        testPerson = new Person("Test", testCollective.getJoinCode());
         testCollective.addPerson(testPerson);
-        
-        State.getInstance().setLoggedInUser(testPerson);
+
+        dataAccess.addCollective(testCollective);
+        dataAccess.addPerson(testPerson, testPerson.getCollectiveJoinCode());
+        dataAccess.logIn(testPerson, testPerson.getPassword(), testCollective);
     }
 
     /**

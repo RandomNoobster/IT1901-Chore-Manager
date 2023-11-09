@@ -1,7 +1,7 @@
 package ui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
 
+import core.data.Password;
 import core.data.Person;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -51,7 +52,7 @@ public class CreateUserTest extends BaseTestClass {
     @Test
     public void testSuccessfulCreate() {
         this.interact(() -> {
-            this.username.setText("Ole Petter");
+            this.username.setText("OlePetter");
         });
 
         this.interact(() -> {
@@ -65,7 +66,9 @@ public class CreateUserTest extends BaseTestClass {
         this.clickOn(this.create);
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertNotNull(Storage.getInstance().getAllPersons().get("Ole Petter"));
+
+        Object test = dataAccess.getPerson("OlePetter", new Password("Password12345"));
+        assertNotNull(dataAccess.getPerson("OlePetter", new Password("Password12345")));
     }
 
     /**

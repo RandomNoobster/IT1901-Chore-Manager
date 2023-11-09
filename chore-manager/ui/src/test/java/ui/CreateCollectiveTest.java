@@ -1,7 +1,7 @@
 package ui;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.util.HashMap;
 
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testfx.util.WaitForAsyncUtils;
 
-import core.State;
 import core.data.Collective;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -30,12 +29,6 @@ public class CreateCollectiveTest extends BaseTestClass {
         return fxmlFileName;
     }
 
-    @Override
-    protected void setup() {
-        Storage.deleteInstance();
-        State.getInstance().setLoggedInUser(testPerson);
-    }
-
     /**
      * Query the FXML elements.
      */
@@ -50,16 +43,15 @@ public class CreateCollectiveTest extends BaseTestClass {
      * Test that the collective gets created if the user enters a valid name.
      */
     @Test
-    public void testCreate() {
+    public void testCreate() throws InterruptedException {
         this.interact(() -> {
             this.collectiveName.setText("Super Duper Collective");
         });
 
-        int pre = Storage.getInstance().getCollectives().size();
         this.clickOn(this.createButton);
 
         WaitForAsyncUtils.waitForFxEvents();
-        assertTrue(pre + 1 == Storage.getInstance().getCollectives().size());
+        assertNotEquals(testCollective, dataAccess.getCurrentCollective());
     }
 
     /**

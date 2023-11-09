@@ -46,7 +46,7 @@ public class RemoteDataAccess implements DataAccess {
 
     private URI buildURI(String endpoint, Map<String, String> queryParameters) {
         StringBuilder builder = new StringBuilder(this.API_BASE_ENDPOINT.toString());
-        builder.append(endpoint);
+        builder.append(URLEncoder.encode(endpoint, StandardCharsets.UTF_8));
 
         if (!queryParameters.isEmpty()) {
             builder.append("?");

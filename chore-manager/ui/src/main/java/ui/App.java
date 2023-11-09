@@ -49,7 +49,6 @@ public class App extends Application {
 
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void setScene(Parent parent) {
@@ -109,6 +108,17 @@ public class App extends Application {
     }
 
     /**
+     * Sets the correct api mode.
+     */
+    private static void setCorrectMode(DataAccess dataAccess) {
+        if (System.getProperty("env", "development").equals("development")) {
+            dataAccess.enterStandardMode();
+        } else {
+            dataAccess.enterTestMode();
+        }
+    }
+
+    /**
      * Gets the data access layer.
      */
     public static DataAccess getDataAccess() {
@@ -118,6 +128,7 @@ public class App extends Application {
         URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
         if (apiBaseEndpoint != null) {
             dataAccess = new RemoteDataAccess(apiBaseEndpoint);
+            setCorrectMode(dataAccess);
             return dataAccess;
         } else {
             // Use direct data access here

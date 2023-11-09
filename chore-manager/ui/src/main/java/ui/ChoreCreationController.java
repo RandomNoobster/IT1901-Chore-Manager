@@ -96,7 +96,8 @@ public class ChoreCreationController {
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
         Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
                 creator.getUsername(), person.getUsername());
-        this.dataAccess.addChore(chore, person);
+        System.out.println("HELLELEOEOELEO");
+        boolean res = this.dataAccess.addChore(chore, person);
 
         App.switchScene("App");
     }
