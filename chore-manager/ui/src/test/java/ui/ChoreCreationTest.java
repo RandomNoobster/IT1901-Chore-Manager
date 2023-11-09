@@ -113,7 +113,7 @@ public class ChoreCreationTest extends ApplicationTest {
 
         TextField name = this.lookup("#name").query();
         this.interact(() -> {
-            name.setText("Bob");
+            name.setText("Clean up your mess!");
         });
 
         ComboBox<String> comboBox = this.lookup("#personsMenu").query();
