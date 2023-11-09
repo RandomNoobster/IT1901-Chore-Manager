@@ -3,7 +3,6 @@ package ui;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.TextField;
 import ui.dataAccessLayer.DataAccess;
@@ -17,13 +16,6 @@ public class JoinCollectiveController {
 
     @FXML
     private TextField joinCode;
-
-    private void showAlertWarning(String title, String message) {
-        Alert alert = new Alert(AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(message);
-        alert.show();
-    }
 
     @FXML
     protected void initialize() {
@@ -48,8 +40,9 @@ public class JoinCollectiveController {
             this.dataAccess.logIn(loggedInUser, loggedInUser.getPassword(), joinedCollective);
             App.switchScene("App");
         } else {
-            this.showAlertWarning("Wrong code",
-                    "This is not a collective's join code.\nAsk your roommate for the code,\nor be the one to create your collective's collective.");
+            App.showAlert("Wrong code",
+                    "This is not a collective's join code.\nAsk your roommate for the code,\nor be the one to create your collective's collective.",
+                    AlertType.WARNING);
         }
     }
 

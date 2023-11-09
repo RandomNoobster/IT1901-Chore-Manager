@@ -6,6 +6,7 @@ import java.util.HashMap;
 import core.data.Chore;
 import core.data.RestrictedPerson;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
@@ -39,10 +40,18 @@ public class ChoreCreationController {
     private Label pointsDisplay;
 
     @FXML
+    private Slider repeats;
+
+    @FXML
+    private Label repeatsDisplay;
+
+    @FXML
     private ComboBox<PersonMenuItem> personsMenu;
 
     private LocalDate dateFrom = LocalDate.MIN;
     private LocalDate dateTo = LocalDate.MIN;
+
+    private final int CHARACTER_MINIMUM = 5;
 
     public ChoreCreationController() {
     }
@@ -79,6 +88,13 @@ public class ChoreCreationController {
      */
     public void createChore() {
         String choreName = this.name.getText();
+
+        if (choreName.length() < this.CHARACTER_MINIMUM) {
+            App.showAlert("Chore name not long enough", "The name of the chore must be at least "
+                    + this.CHARACTER_MINIMUM + " characters", AlertType.WARNING);
+            return;
+        }
+
         Integer points = (int) this.points.getValue();
         Color selectedColor = this.colorPicker.getValue();
         int red = (int) (selectedColor.getRed() * 255);
@@ -87,6 +103,8 @@ public class ChoreCreationController {
 
         PersonMenuItem personMenuItem = (PersonMenuItem) this.personsMenu.getValue();
         if (personMenuItem == null) {
+            App.showAlert("Assignee not set", "Assign the task to a member of your collective",
+                    AlertType.WARNING);
             return;
         }
         RestrictedPerson person = personMenuItem.getPerson();
@@ -94,10 +112,12 @@ public class ChoreCreationController {
 
         // Format each component with leading zeros if necessary
         String hexColor = String.format("#%02X%02X%02X", red, green, blue);
-        Chore chore = new Chore(choreName, this.dateFrom, this.dateTo, false, points, hexColor,
-                creator.getUsername(), person.getUsername());
-        System.out.println("HELLELEOEOELEO");
-        boolean res = this.dataAccess.addChore(chore, person);
+
+        for (int i = 0; i < (int) this.repeats.getValue(); i++) {
+            Chore chore = new Chore(choreName, this.dateFrom.plusWeeks(i), this.dateTo.plusWeeks(i),
+                    false, points, hexColor, creator.getUsername(), person.getUsername());
+            this.dataAccess.addChore(chore, person);
+        }
 
         App.switchScene("App");
     }
@@ -110,9 +130,21 @@ public class ChoreCreationController {
         this.pointsDisplay.setText("Points: " + (int) this.points.getValue());
     }
 
+    /**
+     * This method is called when the repeats slider is changed. It updates the repeats display.
+     */
+    @FXML
+    public void repeatsChanged() {
+        if ((int) this.repeats.getValue() == 1) {
+            this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " time");
+        } else {
+            this.repeatsDisplay.setText("Repeats: " + (int) this.repeats.getValue() + " times");
+
+        }
+    }
+
     @FXML
     public void toMain() {
         App.switchScene("App");
     }
-
 }
