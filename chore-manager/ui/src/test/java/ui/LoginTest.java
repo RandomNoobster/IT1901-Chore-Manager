@@ -36,7 +36,7 @@ public class LoginTest extends BaseTestClass {
 
         PasswordField pwd = this.lookup("#password").query();
         this.interact(() -> {
-            pwd.setText(testPerson.getPassword().getPasswordString());
+            pwd.setText(testPersonUnhashedPassword);
         });
 
         this.clickOn("#login");
