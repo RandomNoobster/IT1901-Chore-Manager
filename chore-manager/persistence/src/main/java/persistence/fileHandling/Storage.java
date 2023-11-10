@@ -19,10 +19,11 @@ public class Storage {
     private String filePath;
     private JSONConverter jsonConverter;
     private HashMap<String, Collective> collectives = new HashMap<String, Collective>();
+    private EnvironmentConfigurator environmentConfigurator;
 
     private Storage() {
-        EnvironmentConfigurator environmentConfigurator = new EnvironmentConfigurator();
-        this.filePath = environmentConfigurator.getSaveFilePath();
+        this.environmentConfigurator = new EnvironmentConfigurator();
+        this.filePath = this.environmentConfigurator.getSaveFilePath();
         this.initialize();
     }
 
@@ -96,6 +97,15 @@ public class Storage {
      */
     public void deleteFileContent() {
         this.jsonConverter.deleteFileContent();
+    }
+
+    /**
+     * This method is used to get the environment setting for this Storage instance.
+     *
+     * @return The environment setting.
+     */
+    public String getEnvironmentSetting() {
+        return this.environmentConfigurator.getEnvironmentSetting();
     }
 
     /**

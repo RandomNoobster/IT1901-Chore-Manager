@@ -157,4 +157,9 @@ public interface DataAccess {
      * This method initializes the API to use test data and the .env-test file.
      */
     public void enterTestMode();
+
+    /**
+     * Resets API by deleting Storage and reading from file again.
+     */
+    public void resetAPI();
 }

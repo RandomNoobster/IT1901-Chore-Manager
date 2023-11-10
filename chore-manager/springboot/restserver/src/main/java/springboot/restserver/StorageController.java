@@ -169,6 +169,9 @@ public class StorageController {
      */
     @PostMapping(path = "/mode/enter-standard-mode")
     public void enterStandardMode() {
+        if (this.storageService.getStorage().getEnvironmentSetting().equals("development"))
+            return;
+
         System.setProperty("env", "development");
         this.storageService.updateStorageService();
     }
@@ -178,7 +181,18 @@ public class StorageController {
      */
     @PostMapping(path = "/mode/enter-test-mode")
     public void enterTestMode() {
+        if (this.storageService.getStorage().getEnvironmentSetting().equals("test"))
+            return;
+
         System.setProperty("env", "test");
+        this.storageService.updateStorageService();
+    }
+
+    /**
+     * Resets API by deleting Storage and reading from file again.
+     */
+    @PostMapping(path = "/mode/reset-api")
+    public void resetAPI() {
         this.storageService.updateStorageService();
     }
 

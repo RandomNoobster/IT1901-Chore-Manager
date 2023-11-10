@@ -63,6 +63,7 @@ public class BaseTestClass extends ApplicationTest {
         Storage.deleteInstance();
         Storage.getInstance().deleteFile();
         dataAccess.enterTestMode();
+        dataAccess.resetAPI();
         this.setup();
     }
 

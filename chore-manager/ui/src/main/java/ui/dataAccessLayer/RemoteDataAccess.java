@@ -456,4 +456,18 @@ public class RemoteDataAccess implements DataAccess {
         }
     }
 
+    @Override
+    public void resetAPI() {
+        final URI endpoint = this.buildURI("storage/mode/reset-api");
+
+        HttpRequest request = HttpRequest.newBuilder(endpoint)
+                .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        try {
+            HttpClient.newBuilder().build().send(request, HttpResponse.BodyHandlers.ofString());
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

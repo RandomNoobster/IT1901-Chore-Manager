@@ -74,8 +74,18 @@ public class EnvironmentConfigurator {
         final String SAVE_FILE_PATH = dotenv.get("SAVE_FILE_PATH");
         final String API_BASE_ENDPOINT = dotenv.get("API_BASE_ENDPOINT");
 
+        this.addProperty("ENV", environment);
         this.addProperty("SAVE_FILE_PATH", SAVE_FILE_PATH);
         this.addProperty("API_BASE_ENDPOINT", API_BASE_ENDPOINT);
+    }
+
+    /**
+     * Returns the environment setting from the properties object.
+     *
+     * @return The environment setting
+     */
+    public String getEnvironmentSetting() {
+        return this.properties.getProperty("ENV", null);
     }
 
     /**
