@@ -33,6 +33,17 @@ public class Person extends RestrictedPerson {
      * A constructor for the Person class that initializes the state of the object.
      *
      * @param username           The username of the person
+     * @param collectiveJoinCode The collective that the person is a part of
+     * @param password           The password of the person
+     */
+    public Person(String username, String collectiveJoinCode, Password password) {
+        this(username, collectiveJoinCode, password, new ArrayList<>(), username);
+    }
+
+    /**
+     * A constructor for the Person class that initializes the state of the object.
+     *
+     * @param username           The username of the person
      * @param chores             The chores of the person
      * @param collectiveJoinCode The collective that the person is a part of
      */
@@ -174,7 +185,7 @@ public class Person extends RestrictedPerson {
                 chores.add(chore);
             }
 
-            return new Person(username, collectiveJoinCode, new Password(password), chores,
+            return new Person(username, collectiveJoinCode, new Password(password, true), chores,
                     displayName);
         } catch (JSONException e) {
             throw new IllegalArgumentException(

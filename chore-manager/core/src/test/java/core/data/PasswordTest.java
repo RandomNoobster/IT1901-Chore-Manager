@@ -19,10 +19,10 @@ public class PasswordTest {
     List<Password> illegalPwdList = new ArrayList<>();
 
     public PasswordTest() {
-        illegalPwdList.add(new Password("password"));
-        illegalPwdList.add(new Password("password1"));
-        illegalPwdList.add(new Password("PASSWORD1"));
-        illegalPwdList.add(new Password("PwD1"));
+        this.illegalPwdList.add(new Password("password"));
+        this.illegalPwdList.add(new Password("password1"));
+        this.illegalPwdList.add(new Password("PASSWORD1"));
+        this.illegalPwdList.add(new Password("PwD1"));
     }
 
     /**
@@ -42,8 +42,7 @@ public class PasswordTest {
     }
 
     /**
-     * Test that the constructor can construct a new object without throwing any
-     * errors.
+     * Test that the constructor can construct a new object without throwing any errors.
      */
     @Test
     public void testConstructor() {
@@ -59,13 +58,12 @@ public class PasswordTest {
     }
 
     /**
-     * Test that {@link Password#isLegal} doesn't throw any errors and returns the
-     * correct value.
+     * Test that {@link Password#isLegal} doesn't throw any errors and returns the correct value.
      */
     @Test
     public void testIsLegal() {
         // Test illegal passwords
-        for (Password password : illegalPwdList) {
+        for (Password password : this.illegalPwdList) {
             assertDoesNotThrow(() -> password.isLegal());
             assertFalse(password.isLegal());
         }
@@ -81,8 +79,21 @@ public class PasswordTest {
      */
     @Test
     public void testGetFixMsg() {
-        for (Password password : illegalPwdList) {
+        for (Password password : this.illegalPwdList) {
             assertDoesNotThrow(() -> password.getFixMsg());
         }
+    }
+
+    /**
+     * Test that the same password string generates the same hash.
+     */
+    @Test
+    public void testMD5Hashing() {
+        Password password1 = new Password("advanced-password123");
+        Password password2 = new Password("advanced-password123");
+        Password password3 = new Password("advanced-password1234");
+
+        assertTrue(password1.equals(password2));
+        assertFalse(password1.equals(password3));
     }
 }

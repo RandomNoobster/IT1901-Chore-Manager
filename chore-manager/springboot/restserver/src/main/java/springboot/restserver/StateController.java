@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Chore;
 import core.data.Collective;
+import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import core.data.RestrictedPerson;
@@ -72,7 +73,8 @@ public class StateController {
         JSONObject loginInfoJSON = JSONValidator.decodeFromJSONString(loginInfo);
         String username = loginInfoJSON.getString("username");
         String joinCode = loginInfoJSON.getString("joinCode");
-        String password = loginInfoJSON.getString("password");
+        String passwordString = loginInfoJSON.getString("password");
+        Password password = new Password(passwordString, true);
 
         Person user = this.storageService.getStorage().getPerson(username);
         Collective collective = this.storageService.getStorage().getCollective(joinCode);
@@ -80,7 +82,7 @@ public class StateController {
         if (user == null || collective == null)
             return false;
 
-        if (!user.getPassword().getPasswordString().equals(password))
+        if (!user.getPassword().equals(password))
             return false;
 
         this.stateService.getState().logIn(user, collective);
