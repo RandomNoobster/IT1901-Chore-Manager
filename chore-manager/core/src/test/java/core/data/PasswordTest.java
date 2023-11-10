@@ -7,14 +7,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import core.BaseTestClass;
 
 /**
  * Tests for the {@link Password} class.
  */
-public class PasswordTest {
+public class PasswordTest extends BaseTestClass {
     private Password password;
     List<Password> illegalPwdList = new ArrayList<>();
 
@@ -23,14 +24,6 @@ public class PasswordTest {
         this.illegalPwdList.add(new Password("password1"));
         this.illegalPwdList.add(new Password("PASSWORD1"));
         this.illegalPwdList.add(new Password("PwD1"));
-    }
-
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
     }
 
     /**
