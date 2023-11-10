@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import core.data.Collective;
+import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import core.json.JSONValidator;
@@ -100,19 +101,20 @@ public class StorageController {
     /**
      * Retrieves a person from the storage.
      *
-     * @param username the username of the person to retrieve
-     * @param password the password of the person to retrieve
+     * @param username       the username of the person to retrieve
+     * @param passwordString the password of the person to retrieve
      * @return the person in JSON format if the username and password are correct, null otherwise
      */
     @GetMapping(path = "/persons/{username}")
     public String getPerson(@PathVariable("username") String username,
-            @RequestParam("password") String password) {
+            @RequestParam("password") String passwordString) {
         Person person = this.storageService.getStorage().getPerson(username);
+        Password password = new Password(passwordString, true);
 
         if (person == null)
             return null;
 
-        if (!person.getPassword().getPasswordString().equals(password))
+        if (!person.getPassword().equals(password))
             return null;
 
         return Person.encodeToJSONObject(person).toString();
@@ -150,11 +152,12 @@ public class StorageController {
         JSONObject jsonObject = JSONValidator.decodeFromJSONString(requestBody);
         String oldJoinCode = jsonObject.getString("oldJoinCode");
         String newJoinCode = jsonObject.getString("newJoinCode");
-        String password = jsonObject.getString("password");
+        String passwordString = jsonObject.getString("password");
+        Password password = new Password(passwordString, true);
 
         Person user = this.storageService.getStorage().getPerson(username);
 
-        if (user == null || !user.getPassword().getPasswordString().equals(password))
+        if (user == null || !user.getPassword().equals(password))
             return false;
 
         boolean success = this.storageService.getStorage().movePersonToAnotherCollective(user,
