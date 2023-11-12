@@ -43,7 +43,7 @@ public class CreateUserController {
     }
 
     private Pair<Boolean, Person> createAccount(String username, String displayName,
-            Password password, RestrictedCollective collectiveToJoin) {
+            String passwordString, RestrictedCollective collectiveToJoin) {
 
         if (username.length() < this.allowedUsername) {
             App.showAlert("Username issue",
@@ -58,13 +58,14 @@ public class CreateUserController {
             return new Pair<Boolean, Person>(false, null);
         }
 
-        if (!password.isValid()) {
-            App.showAlert("Password issue", password.getRequirements(), AlertType.WARNING);
+        if (!Password.isValid(passwordString)) {
+            App.showAlert("Password issue", Password.getRequirements(passwordString),
+                    AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
 
-        Person newUser = new Person(username, collectiveToJoin.getJoinCode(), password,
-                displayName);
+        Person newUser = new Person(username, collectiveToJoin.getJoinCode(),
+                new Password(passwordString), displayName);
 
         if (!this.dataAccess.addPerson(newUser, collectiveToJoin.getJoinCode())) {
             App.showAlert("Username issue", "Username is not unique", AlertType.WARNING);
@@ -82,13 +83,14 @@ public class CreateUserController {
     public void create() {
         String username = this.username.getText();
         String displayName = this.displayName.getText();
-        Password password = new Password(this.password.getText());
+        String passwordString = this.password.getText();
         RestrictedCollective limboCollective = this.dataAccess.getLimboCollective();
 
-        Pair<Boolean, Person> result = this.createAccount(username, displayName, password,
+        Pair<Boolean, Person> result = this.createAccount(username, displayName, passwordString,
                 limboCollective);
 
         if (result.getKey()) {
+            Password password = new Password(passwordString);
             this.dataAccess.logIn(result.getValue(), password, limboCollective);
             App.switchScene("JoinCollective");
         }

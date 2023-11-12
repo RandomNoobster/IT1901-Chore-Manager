@@ -42,41 +42,13 @@ public class Password {
      * @throws IllegalArgumentException If the password string is invalid.
      */
     public Password(String password, boolean alreadyHashed) {
-        if (!this.isValid())
+        if (!isValid(password))
             throw new IllegalArgumentException(
-                    "Password is not valid. Please check if the password is valid");
+                    "Password is not valid. Please check if the password is valid before creating a new Password object.");
 
         if (!alreadyHashed) {
             this.password = this.hashMD5(password);
         }
-    }
-
-    /**
-     * Determines if the password follows contraints.
-     *
-     * @return true if the password is valid, false otherwise.
-     */
-    public boolean isValid() {
-        return isValid(this.getPasswordString());
-    }
-
-    /**
-     * Determines if the given password follows contraints.
-     *
-     * @param password The password to check.
-     * @return true if the password is valid, false otherwise.
-     */
-    public static boolean isValid(String password) {
-        return validator.validate(password);
-    }
-
-    /**
-     * Returns a string containing the requirements for a legal password.
-     *
-     * @return A string containing the requirements for a legal password.
-     */
-    public String getRequirements() {
-        return validator.getRequirements(this.getPasswordString());
     }
 
     public String getPasswordString() {
@@ -102,6 +74,25 @@ public class Password {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Determines if the given password follows contraints.
+     *
+     * @param password The password to check.
+     * @return true if the password is valid, false otherwise.
+     */
+    public static boolean isValid(String password) {
+        return validator.validate(password);
+    }
+
+    /**
+     * Returns a string containing the requirements for a legal password.
+     *
+     * @return A string containing the requirements for a legal password.
+     */
+    public static String getRequirements(String password) {
+        return validator.getRequirements(password);
     }
 
     @Override
