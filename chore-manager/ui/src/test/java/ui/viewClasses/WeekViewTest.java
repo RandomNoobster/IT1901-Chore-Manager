@@ -28,13 +28,13 @@ public class WeekViewTest extends BaseTestClass {
     @BeforeEach
     public void boot() {
         // create and add a daily chore to a person in the active collective
-        Chore chore1 = new Chore("Vaske", LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 6),
-                false, 1, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        Chore chore1 = new Chore("Vaske", LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 6), 1,
+                "#000000", testPerson.getUsername(), testPerson.getUsername());
         testPerson.addChore(chore1);
 
         // create and add a weekly chore to a person in the active collective
-        Chore chore2 = new Chore("Vaske", LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 13),
-                true, 1, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        Chore chore2 = new Chore("Vaske", LocalDate.of(2023, 11, 6), LocalDate.of(2023, 11, 13), 1,
+                "#000000", testPerson.getUsername(), testPerson.getUsername());
         testPerson.addChore(chore2);
     }
 
