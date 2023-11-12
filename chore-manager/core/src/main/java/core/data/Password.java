@@ -48,6 +48,8 @@ public class Password {
 
         if (!alreadyHashed) {
             this.password = this.hashMD5(password);
+        } else {
+            this.password = password;
         }
     }
 
