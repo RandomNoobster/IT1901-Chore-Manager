@@ -63,8 +63,8 @@ public class State {
      * @param user The user to set as the logged in user.
      */
     public void logIn(Person user, Collective collective) {
-        this.loggedInUser = user;
-        this.currentCollective = collective;
+        setCurrentUser(user);
+        setCurrentCollective(collective);
     }
 
     /**
