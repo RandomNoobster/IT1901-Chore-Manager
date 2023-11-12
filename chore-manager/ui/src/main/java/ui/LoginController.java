@@ -47,6 +47,11 @@ public class LoginController {
         String username = this.username.getText();
         String password = this.password.getText();
 
+        if (!Password.isValid(password)) {
+            App.showAlert("Unknown user", "Wrong username or password!", AlertType.WARNING);
+            return;
+        }
+
         Person user = this.dataAccess.getPerson(username, new Password(password));
         if (user == null) {
             App.showAlert("Unknown user", "Wrong username or password!", AlertType.WARNING);
