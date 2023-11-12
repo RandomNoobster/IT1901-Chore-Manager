@@ -22,6 +22,9 @@ public class PasswordValidator {
      * @return true if the password is valid, false otherwise
      */
     public boolean validate(String password) {
+        if (password == null)
+            return false;
+
         for (Function<String, Boolean> validator : this.validators.keySet()) {
             if (!validator.apply(password))
                 return false;
@@ -36,11 +39,21 @@ public class PasswordValidator {
      * @return a string containing the requirements for a valid password
      */
     public String getRequirements(String password) {
+        if (this.validate(password))
+            return "";
+
         StringBuilder sb = new StringBuilder("Password must:\n");
+
+        if (password == null) {
+            sb.append("- Not be null.");
+            return sb.toString();
+        }
+
         for (Map.Entry<Function<String, Boolean>, String> entry : this.validators.entrySet()) {
             if (!entry.getKey().apply(password))
                 sb.append(entry.getValue()).append("\n");
         }
+
         return sb.toString();
     }
 

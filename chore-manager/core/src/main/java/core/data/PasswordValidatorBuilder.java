@@ -14,11 +14,6 @@ public class PasswordValidatorBuilder {
     public PasswordValidatorBuilder() {
     }
 
-    public PasswordValidatorBuilder notNull() {
-        this.validators.put(password -> password != null, "- Not be null.");
-        return this;
-    }
-
     /**
      * Adds a validator that checks if the password has a length greater than or equal to the
      * specified length.
