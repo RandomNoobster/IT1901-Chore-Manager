@@ -1,7 +1,9 @@
 package core;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.UUID;
 
@@ -13,14 +15,14 @@ import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
 
-public class StateTest extends BaseTestClass{
+public class StateTest extends BaseTestClass {
     private static Collective collective = new Collective("Test");
-    private static Person person = new Person("Test", collective.getJoinCode());
+    private static Person testPerson = new Person("Test", collective.getJoinCode());
     private static State state = State.getInstance();
 
     @BeforeAll
     public static void init() {
-        collective.addPerson(person);
+        collective.addPerson(testPerson);
     }
 
     @BeforeEach
@@ -44,8 +46,8 @@ public class StateTest extends BaseTestClass{
     public void testLoggedInUser() {
         assertEquals(state.getLoggedInUser(), null);
 
-        state.logIn(person, collective);
-        assertEquals(state.getLoggedInUser(), person);
+        state.logIn(testPerson, collective);
+        assertEquals(state.getLoggedInUser(), testPerson);
 
         state.logOutUser();
         assertEquals(state.getLoggedInUser(), null);
@@ -58,7 +60,7 @@ public class StateTest extends BaseTestClass{
     public void testCurrentCollective() {
         assertEquals(state.getCurrentCollective(), null);
 
-        state.logIn(person, collective);
+        state.logIn(testPerson, collective);
         assertEquals(state.getCurrentCollective(), collective);
     }
 
@@ -70,16 +72,36 @@ public class StateTest extends BaseTestClass{
         assertThrows(NullPointerException.class,
                 () -> state.getChoreInCurrentCollective(UUID.randomUUID()));
 
-        state.logIn(person, collective);
+        state.logIn(testPerson, collective);
         assertEquals(state.getChoreInCurrentCollective(UUID.randomUUID()), null);
 
-        Chore chore = new Chore("Test", null, null, false, 1, "#000000", person.getUsername(),
-                person.getUsername());
-        person.addChore(chore);
+        Chore chore = new Chore("Test", null, null, false, 1, "#000000", testPerson.getUsername(),
+                testPerson.getUsername());
+        testPerson.addChore(chore);
         assertEquals(chore, state.getChoreInCurrentCollective(chore.getUUID()));
 
         state.logOutUser();
         assertThrows(NullPointerException.class,
                 () -> state.getChoreInCurrentCollective(UUID.randomUUID()));
+    }
+
+    /**
+     * Test that {@link State#addChore} works as expected.
+     */
+    @Test
+    public void testAddChore() {
+        Chore chore = new Chore("Test", null, null, false, 1, "#000000", testPerson.getUsername(),
+                testPerson.getUsername());
+
+        // Assert false when assignee is null
+        assertFalse(state.addChore(chore, null));
+
+        // Assert false while currentCollective is not set
+        assertFalse(state.addChore(chore, testPerson));
+
+        // Assert true once collective is set and person is valid
+        state.setCurrentCollective(collective);
+        assertTrue(state.addChore(chore, testPerson));
+        assertEquals(chore.getUUID(), state.getChoreInCurrentCollective(chore.getUUID()).getUUID());
     }
 }
