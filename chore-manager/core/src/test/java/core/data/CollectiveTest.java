@@ -1,15 +1,15 @@
 package core.data;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import core.BaseTestClass;
 
+/**
+ * Unit tests for the {@link Collective} class.
+ */
 public class CollectiveTest extends BaseTestClass {
     private Collective limboCollective;
     private Collective otherCollective;
@@ -110,5 +110,48 @@ public class CollectiveTest extends BaseTestClass {
         this.otherCollective.addPerson(person1);
         person1.addChore(new Chore(null, null, null, false, 0, null, null, null));
         assertTrue(this.otherCollective.getChoresList().equals(person1.getChores()));
+    }
+
+    /**
+     * This test method checks the following: - The getPersonsList() method does not throw an
+     * exception. - A new Person can be added to the collective using the addPerson() method - The
+     * getPersonsList() method correctly retrieves the list of Persons in the collective.
+     */
+    @Test
+    public void testGetPersonsList() {
+        assertDoesNotThrow(() -> this.otherCollective.getPersonsList());
+        Person person1 = new Person("Alice", this.otherCollective.getJoinCode());
+        this.otherCollective.addPerson(person1);
+        assertTrue(this.otherCollective.getPersonsList().contains(person1));
+    }
+
+    /**
+     * This test method checks the following: - The getPerson() method does not throw an exception.
+     * - A new Person can be added to the collective using the addPerson() method - The getPerson()
+     * method correctly retrieves a Person from the collective.
+     */
+    @Test
+    public void testGetPerson() {
+        assertDoesNotThrow(() -> this.otherCollective.getPerson("Bob"));
+        Person person1 = new Person("Bob", this.otherCollective.getJoinCode());
+        this.otherCollective.addPerson(person1);
+        assertEquals(person1, this.otherCollective.getPerson("Bob"));
+    }
+
+    /**
+     * This test method checks the following: - The encodeToJSONObject() method does not throw an
+     * exception. - The decodeFromJSON() method does not throw an exception. - The decoded
+     * Collective object has the same name, join code, and persons as the original test collective.
+     */
+    @Test
+    public void testEncodeDecodeJSON() {
+        assertDoesNotThrow(() -> Collective.encodeToJSONObject(this.limboCollective));
+        assertDoesNotThrow(() -> Collective.decodeFromJSON(Collective.encodeToJSONObject(this.limboCollective)));
+
+        Collective decodedCollective = Collective.decodeFromJSON(Collective.encodeToJSONObject(this.limboCollective));
+
+        assertEquals(this.limboCollective.getName(), decodedCollective.getName());
+        assertEquals(this.limboCollective.getJoinCode(), decodedCollective.getJoinCode());
+        assertEquals(this.limboCollective.getPersons(), decodedCollective.getPersons());
     }
 }

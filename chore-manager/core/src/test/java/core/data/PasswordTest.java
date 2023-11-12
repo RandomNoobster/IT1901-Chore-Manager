@@ -89,4 +89,38 @@ public class PasswordTest extends BaseTestClass {
         assertTrue(password1.equals(password2));
         assertFalse(password1.equals(password3));
     }
+
+    /**
+     * Test that {@link Password#getPasswordString()} doesn't throw any errors.
+     */
+    @Test
+    public void testGetPasswordString() {
+        assertDoesNotThrow(() -> this.password.getPasswordString());
+    }
+
+    /**
+     * Test that the equals method compares passwords correctly.
+     */
+    @Test
+    public void testEquals() {
+        Password password1 = new Password("password");
+        Password password2 = new Password("password");
+        Password password3 = new Password("different-password");
+
+        assertTrue(password1.equals(password2));
+        assertFalse(password1.equals(password3));
+    }
+
+    /**
+     * Test that the hashCode method generates hash codes correctly.
+     */
+    @Test
+    public void testHashCode() {
+        Password password1 = new Password("password");
+        Password password2 = new Password("password");
+        Password password3 = new Password("different-password");
+
+        assertTrue(password1.hashCode() == password2.hashCode());
+        assertFalse(password1.hashCode() == password3.hashCode());
+    }
 }
