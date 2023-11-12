@@ -94,7 +94,7 @@ public class AppController {
         // Remove scrolling using trackpad, source:
         // stackoverflow.com/questions/17830531/javafx-scrollpane-disable-panning-for-touch-events
         this.subScene.addEventFilter(InputEvent.ANY, (event) -> {
-            if (event.getEventType().toString() == "SCROLL") {
+            if (event.getEventType().toString().equals("SCROLL")) {
                 event.consume();
             }
         });
