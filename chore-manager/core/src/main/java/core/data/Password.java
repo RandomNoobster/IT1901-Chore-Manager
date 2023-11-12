@@ -42,15 +42,17 @@ public class Password {
      * @throws IllegalArgumentException If the password string is invalid.
      */
     public Password(String password, boolean alreadyHashed) {
+        if (alreadyHashed) {
+            this.password = password;
+            return;
+        }
+
         if (!isValid(password))
             throw new IllegalArgumentException(
                     "Password is not valid. Please check if the password is valid before creating a new Password object.");
 
-        if (!alreadyHashed) {
-            this.password = this.hashMD5(password);
-        } else {
-            this.password = password;
-        }
+        this.password = this.hashMD5(password);
+
     }
 
     public String getPasswordString() {
