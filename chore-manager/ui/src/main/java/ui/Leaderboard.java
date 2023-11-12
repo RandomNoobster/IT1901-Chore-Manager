@@ -1,6 +1,5 @@
 package ui;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,7 +37,6 @@ public class Leaderboard {
     public void displayLeaderboard() {
 
         this.leaderboard.getItems().clear();
-        List<Pair<String, Integer>> pointsList = new ArrayList<>();
         HashMap<String, Integer> points = new HashMap<String, Integer>();
 
         Collection<RestrictedPerson> persons = this.dataAccess.getPersons().values();
@@ -55,7 +53,7 @@ public class Leaderboard {
             }
         }
 
-        pointsList = points.entrySet().stream()
+        List<Pair<String, Integer>> pointsList = points.entrySet().stream()
                 .map(e -> new Pair<String, Integer>(e.getKey(), e.getValue()))
                 .collect(Collectors.toList());
         Collections.sort(pointsList, (p1, p2) -> Integer.compare(p2.getValue(), p1.getValue()));

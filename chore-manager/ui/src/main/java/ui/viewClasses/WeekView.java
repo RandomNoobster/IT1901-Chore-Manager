@@ -16,14 +16,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ui.App;
-import ui.dataAccessLayer.DataAccess;
 
 /**
  * The WeekView class represents a week in the calendar.
  */
 public class WeekView implements ViewInterface {
 
-    private DataAccess dataAccess;
     private Week week;
     private List<DayView> dayViews = new ArrayList<>();
     private final Integer COLUMN_COUNT = 8;
@@ -39,6 +37,7 @@ public class WeekView implements ViewInterface {
     private HBox weekNumberContainer = new HBox();
     private Label weekNumber = new Label();
     private Button weekNumberButton = new Button();
+    private Label notWeekNumberButton = new Label();
 
     private static final int WEEK_CHORE_WEIGHT = 2;
     private static final int DAY_CHORE_WEIGHT = 5;
@@ -66,12 +65,16 @@ public class WeekView implements ViewInterface {
      * @param week The week to be represented by the WeekView.
      */
     public WeekView(Week week) {
-        this.dataAccess = App.getDataAccess();
 
         this.week = week;
 
         // Set up hierarchy
-        this.weekNumberContainer.getChildren().addAll(this.weekNumber, this.weekNumberButton);
+        this.weekNumberContainer.getChildren().add(this.weekNumber);
+        if (week.getEndDate().isBefore(LocalDate.now())) {
+            this.weekNumberContainer.getChildren().add(this.notWeekNumberButton);
+        } else {
+            this.weekNumberContainer.getChildren().add(this.weekNumberButton);
+        }
         this.container.getChildren().addAll(this.weekNumberContainer, this.weekContainer);
         this.weekContainer.getChildren().addAll(this.dayContainer, this.scrollContainer);
         this.scrollContainer.setContent(this.weekChores);
@@ -80,8 +83,8 @@ public class WeekView implements ViewInterface {
         this.weekNumberButton.setText("Add");
 
         // Make weekNumberButton take you to chore creation
-        this.weekNumberButton.setOnAction(e -> App.setChoreCreationScene("ChoreCreation",
-                week.getStartDate(), week.getEndDate()));
+        this.weekNumberButton.setOnAction(
+                e -> App.setChoreCreationScene(week.getStartDate(), week.getEndDate()));
 
         // Add day containers to VBox
         for (Day day : week.getDays()) {
@@ -97,8 +100,13 @@ public class WeekView implements ViewInterface {
     private void addStyling() {
         this.weekNumber.getStyleClass().addAll("background-medium-blue", "bold", "white-text",
                 "medium-font");
-        this.weekNumberButton.getStyleClass().addAll("background-blue", "bold",
-                "on-hover-underline", "on-hover-background-blue", "white-text", "medium-font");
+
+        if (this.week.getEndDate().isBefore(LocalDate.now())) {
+            this.notWeekNumberButton.getStyleClass().addAll("background-blue");
+        } else {
+            this.weekNumberButton.getStyleClass().addAll("background-blue", "bold",
+                    "on-hover-underline", "on-hover-background-blue", "white-text", "medium-font");
+        }
 
         this.weekChores.getStyleClass().add("distance-row");
 
@@ -197,11 +205,17 @@ public class WeekView implements ViewInterface {
         this.setMinAndPrefW(this.container, newWidth);
         this.setMinAndPrefW(this.weekNumberContainer, newWidth / this.COLUMN_COUNT);
         this.setMinAndPrefW(this.weekNumber, newWidth / this.COLUMN_COUNT / 2);
-        this.setMinAndPrefW(this.weekNumberButton, newWidth / this.COLUMN_COUNT / 2);
+
+        if (this.week.getEndDate().isBefore(LocalDate.now())) {
+            this.setMinAndPrefW(this.notWeekNumberButton, newWidth / this.COLUMN_COUNT / 2);
+        } else {
+            this.setMinAndPrefW(this.weekNumberButton, newWidth / this.COLUMN_COUNT / 2);
+        }
+
         this.setMinAndPrefW(this.weekContainer, sevenDayWidth);
         this.setMinAndPrefW(this.dayContainer, sevenDayWidth);
-        this.setMinAndPrefW(this.scrollContainer, sevenDayWidth);
-        this.setMinAndPrefW(this.weekChores, sevenDayWidth);
+        this.setMinAndPrefW(this.scrollContainer, sevenDayWidth - CSSGlobal.SCROLLBAR_WIDTH);
+        this.setMinAndPrefW(this.weekChores, sevenDayWidth - CSSGlobal.SCROLLBAR_WIDTH);
 
         for (DayView day : this.getDayViews()) {
             day.updateWidth(newWidth / this.COLUMN_COUNT);
@@ -222,7 +236,11 @@ public class WeekView implements ViewInterface {
         }
         this.setMinAndPrefH(this.container, newHeight);
         this.setMinAndPrefH(this.weekNumberContainer, newHeight);
-        this.setMinAndPrefH(this.weekNumberButton, newHeight);
+        if (this.week.getEndDate().isBefore(LocalDate.now())) {
+            this.setMinAndPrefH(this.notWeekNumberButton, newHeight);
+        } else {
+            this.setMinAndPrefH(this.weekNumberButton, newHeight);
+        }
         this.setMinAndPrefH(this.weekNumber, newHeight);
         this.setMinAndPrefH(this.weekContainer, newHeight);
         this.setMinAndPrefH(this.scrollContainer,

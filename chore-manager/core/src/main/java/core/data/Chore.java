@@ -27,6 +27,18 @@ public class Chore {
     private UUID uuid;
 
     /**
+     * A constructor for the Chore class that initializes the state of the object. This is used for
+     * creating a copy of a Chore.
+     *
+     * @param chore The chore to copy
+     */
+    public Chore(Chore chore) {
+        this(chore.choreName, chore.timeFrom, chore.timeTo, chore.isWeekly, chore.points,
+                chore.color, chore.checked, chore.daysIncompleted, chore.creator, chore.assignedTo,
+                chore.uuid);
+    }
+
+    /**
      * A constructor for the Chore class that initializes the state of the object.
      *
      * @param choreName  The name of the chore
@@ -62,6 +74,9 @@ public class Chore {
     public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
             int points, String color, boolean checked, int daysIncompleted, String creator,
             String assignedTo, UUID uuid) {
+        if (uuid == null)
+            throw new IllegalArgumentException("UUID cannot be null");
+
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
@@ -85,7 +100,7 @@ public class Chore {
     }
 
     /**
-     * Get offset days
+     * Get offset days.
      *
      * @return Offset days
      */
@@ -149,7 +164,7 @@ public class Chore {
     }
 
     /**
-     * Updates count of incompleted days
+     * Updates count of incompleted days.
      */
     public void updateIncompleted() {
         if (!this.getChecked() && this.timeTo.isBefore(LocalDate.now())) {
@@ -158,8 +173,8 @@ public class Chore {
     }
 
     /**
-     * True if task is overdue
-     * 
+     * True if task is overdue.
+     *
      * @return returns true if a task is overdue
      */
     public boolean overdue() {

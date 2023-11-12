@@ -39,8 +39,10 @@
     -fx-margin: 0px;
     -fx-font-family: "Helvetica Neue", Arial, sans-serif;
     -fx-font-size: 12px;
+
+    
     -fx-hbar-policy: never;
-    -fx-vbar-policy: never;
+    
 }
 
 .this-week {
@@ -61,6 +63,7 @@
 
 .day-container {
     -fx-alignment: TOP_CENTER;
+    
 }
 
 .bold {
@@ -327,4 +330,16 @@
 
 .medium-font {
     -fx-font-size: 20px;
+}
+
+
+.scroll-bar:vertical {
+    -fx-background-color: derive(-textWhite, 0%); /* Background color */
+    -fx-pref-width: 10px;
+}
+
+.scroll-bar:vertical .thumb {
+    -fx-background-color: derive(-buttonColor, 0%);
+    -fx-pref-width: 10px;
+
 }

@@ -140,6 +140,8 @@ public class FileHandler {
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String content = bufferedReader.lines().collect(Collectors.joining());
             JSONArray jsonArray = new JSONArray(new JSONTokener(content));
+
+            bufferedReader.close();
             return jsonArray;
         } catch (FileNotFoundException e) {
             System.out.println("File not found");

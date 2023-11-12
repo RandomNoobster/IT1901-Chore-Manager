@@ -35,7 +35,7 @@ public class ChoreView extends VBox implements ViewInterface {
      */
     public ChoreView(Chore chore, String assignee, Boolean weekChore) {
         this.assignee = assignee;
-        this.chore = chore;
+        this.chore = new Chore(chore);
         this.assigneeLabel = new Label(this.assignee + ":");
         this.assigneeLabel.getStyleClass().clear();
 
@@ -83,12 +83,11 @@ public class ChoreView extends VBox implements ViewInterface {
      * @param newWidth The new width.
      */
     public void updateWidth(double newWidth) {
-        double accountForPadding = 15;
         this.setPrefWidth(newWidth);
         this.setMinWidth(newWidth);
 
-        this.choreDisplay.setMinWidth(newWidth - accountForPadding);
-        this.choreDisplay.setPrefWidth(newWidth - accountForPadding);
+        this.choreDisplay.setMinWidth(newWidth - CSSGlobal.ACCOUNT_FOR_PADDING);
+        this.choreDisplay.setPrefWidth(newWidth - CSSGlobal.ACCOUNT_FOR_PADDING);
     }
 
     @Override
