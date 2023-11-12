@@ -64,23 +64,23 @@ public class PasswordTest {
     public void testIsLegal() {
         // Test illegal passwords
         for (Password password : this.illegalPwdList) {
-            assertDoesNotThrow(() -> password.isLegal());
-            assertFalse(password.isLegal());
+            assertDoesNotThrow(() -> password.isValid());
+            assertFalse(password.isValid());
         }
 
         // Test legal password
         Password password = new Password("Password1");
-        assertDoesNotThrow(() -> password.isLegal());
-        assertTrue(password.isLegal());
+        assertDoesNotThrow(() -> password.isValid());
+        assertTrue(password.isValid());
     }
 
     /**
-     * Test that {@link Password#getFixMsg()} doesn't throw any errors.
+     * Test that {@link Password#getRequirements()} doesn't throw any errors.
      */
     @Test
     public void testGetFixMsg() {
         for (Password password : this.illegalPwdList) {
-            assertDoesNotThrow(() -> password.getFixMsg());
+            assertDoesNotThrow(() -> password.getRequirements());
         }
     }
 

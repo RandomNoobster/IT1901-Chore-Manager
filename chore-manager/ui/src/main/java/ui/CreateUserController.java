@@ -58,8 +58,8 @@ public class CreateUserController {
             return new Pair<Boolean, Person>(false, null);
         }
 
-        if (!password.isLegal()) {
-            App.showAlert("Password issue", password.getFixMsg(), AlertType.WARNING);
+        if (!password.isValid()) {
+            App.showAlert("Password issue", password.getRequirements(), AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
 
