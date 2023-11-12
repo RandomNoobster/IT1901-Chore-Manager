@@ -12,7 +12,7 @@ public class PasswordValidator {
     private Map<Function<String, Boolean>, String> validators = new LinkedHashMap<>();
 
     public PasswordValidator(Map<Function<String, Boolean>, String> validators) {
-        this.validators = validators;
+        this.validators.putAll(validators);
     }
 
     /**
