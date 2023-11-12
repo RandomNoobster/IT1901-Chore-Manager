@@ -83,3 +83,26 @@ To remind her to chop down a tree before Christmas, Lisa added a chore for that 
 - Specify how many points a chore is worth in the chore-creation-menu
 - Receive said amount of points when having done a chore
 	- The points will add up, and everyone in the group should be able to see the "scoreboard".
+
+
+### Quality of life
+Sometimes when Lisa is trying to log in, she presses the "Create user" button. She wants to go back.
+
+Other times she wants to log out from the application so that her roomie, that doesnt have a PC, can log into their account and mark some tasks as done. 
+
+However, none of this is possible unless she restarts the application.
+
+She also wants an easier way to pass around the code to her collective to her roomies.
+
+Its safe to say that some quality of life features are needed to make it easier to use the application. 
+
+### Requirements:
+**Users should be able to**
+- "Go back" on pages where this makes sense *(page -> page button takes you to)*
+	- Create user page -> Login page
+	- Create collective page -> Join collective page
+	- Chore creation page -> Calendar page
+	- Leaderboard page -> Calendar page
+	- Chore information page -> Calendar page
+- Log out from the calendar page
+- Copy the code to their collective from the calendar page
