@@ -52,7 +52,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#getCollective(String)} method.
      */
     @Test
-    void testGetCollective() {
+    public void testGetCollective() {
         RestrictedCollective collective = remoteDataAccess.getCollective(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
 
         assertNotNull(collective);
@@ -63,7 +63,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#getLimboCollective()} method.
      */
     @Test
-    void testGetLimboCollective() {
+    public void testGetLimboCollective() {
         RestrictedCollective limboCollective = remoteDataAccess.getLimboCollective();
 
         assertNotNull(limboCollective);
@@ -74,7 +74,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#addCollective(Collective)} method.
      */
     @Test
-    void testAddCollective() {
+    public void testAddCollective() {
         Collective newCollective = new Collective("New Collective");
 
         boolean result = remoteDataAccess.addCollective(newCollective);
@@ -86,7 +86,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#removeCollective(Collective)} method.
      */
     @Test
-    void testRemoveCollective() {
+    public void testRemoveCollective() {
         String joinCode = "TEST456";
         Collective testCollective = new Collective("Test Collective", joinCode);
         remoteDataAccess.addCollective(testCollective);
@@ -100,7 +100,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#getPersons()} method.
      */
     @Test
-    void testGetPersons() {
+    public void testGetPersons() {
         HashMap<String, RestrictedPerson> persons = remoteDataAccess.getPersons();
 
         assertNotNull(persons);
@@ -110,7 +110,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#addPerson(Person, String)} method.
      */
     @Test
-    void testAddPerson() {
+    public void testAddPerson() {
         Collective testCollective = new Collective("Test");
         String joinCode = testCollective.getJoinCode();
         remoteDataAccess.addCollective(testCollective);
@@ -126,7 +126,7 @@ class RemoteDataAccessTest {
      * Tests the {@link RemoteDataAccess#logIn(Person, Password, RestrictedCollective)} method.
      */
     @Test
-    void testLogIn() {
+    public void testLogIn() {
         Collective collective = new Collective("Test Collective", "TEST123");
 
         String username = "testUser";
