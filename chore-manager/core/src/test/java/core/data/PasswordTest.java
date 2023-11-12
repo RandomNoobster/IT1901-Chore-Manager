@@ -26,6 +26,7 @@ public class PasswordTest {
         this.illegalPasswords.add("1As"); // Too short
         this.illegalPasswords.add("password1"); // No uppercase
         this.illegalPasswords.add("PASSWORD1"); // No lowercase
+        this.illegalPasswords.add("Password"); // No digit
     }
 
     /**

@@ -55,7 +55,7 @@ public class PasswordValidatorBuilder {
      * @return the PasswordValidatorBuilder instance
      */
     public PasswordValidatorBuilder hasDigit() {
-        this.validators.put(password -> password.matches(".*\\d.*"), "- Contain a number.");
+        this.validators.put(password -> password.matches(".*\\d.*"), "- Contain a digit.");
         return this;
     }
 

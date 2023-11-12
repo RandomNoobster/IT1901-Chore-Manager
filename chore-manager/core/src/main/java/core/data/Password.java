@@ -15,7 +15,7 @@ public class Password {
     private static final Integer legalLength = 8;
 
     private static final PasswordValidator validator = new PasswordValidatorBuilder()
-            .hasLength(legalLength).hasUppercase().hasLowercase().build();
+            .hasLength(legalLength).hasUppercase().hasLowercase().hasDigit().build();
 
     /**
      * Constructs a new Password object with the given password string.
