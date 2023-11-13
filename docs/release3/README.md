@@ -20,3 +20,7 @@ We chose `JSON.simple`/`JSON in Java` because we thought that would cover all ou
 ## Changes in file classes
 Previously we only had a `Storage` class, which contained all information about the application. Now we introduced a new class `State`, which holds information about the current state of the application. By that, I mean which person is logged in and the corresponding collective. By introducing this class we better uphold the Single Responsibility Principle. In addition, this made it easier to hide information about other collectives and users, which is important for security reasons. since we do not want to expose information about other users and collectives outside the collective the logged-in user in registered to. 
 
+## CI/CD pipelines
+In order to conform with best practices, we decided to protect the master branch. This means we remove the ability to direct push to the master branch, and instead have to go through merge requests. 
+
+By doing this, we ensure the master branch is always in a working state.
