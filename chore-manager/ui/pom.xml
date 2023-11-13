@@ -35,7 +35,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.8</version>
         </dependency>
-
+       
         <!-- junit testing with jupiter -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -58,7 +58,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testfx</groupId>
+             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
             <version>4.0.16-alpha</version>
             <scope>test</scope>
@@ -115,49 +115,46 @@
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
                     <mainClass>main.ui/ui.App</mainClass>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
+                    <launcher>chore-manager-app</launcher>
+                    <jlinkImageName>chore-manager</jlinkImageName>
+                    <jlinkZipName>chore-manager</jlinkZipName>
                 </configuration>
             </plugin>
-        </plugins>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-surefire-plugin</artifactId>
-                    <configuration>
-                        <argLine>
-                        @{argLine} --add-opens main.ui/ui=ALL-UNNAMED --add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED
-                        </argLine>
-                    </configuration>
-                </plugin>
 
-                <plugin>
-                    <groupId>org.openjfx</groupId>
-                    <artifactId>javafx-maven-plugin</artifactId>
-                    <version>0.0.8</version>
-                    <!-- Default configuration for running -->
-                    <!-- Usage: mvn javafx:run -->
-                    <configuration>
-                        <!-- syntax: module-name/full-app-class-name -->
-                        <mainClass>main.ui/ui.App</mainClass>
-                        <!-- jLink -->
-                        <compress>2</compress>
-                        <noHeaderFiles>true</noHeaderFiles>
-                        <stripDebug>true</stripDebug>
-                        <noManPages>true</noManPages>
-                        <launcher>App</launcher>
-                        <jlinkImageName>chore-manager</jlinkImageName>
-                        <jlinkZipName>chore-manager</jlinkZipName>
-                    </configuration>
-                </plugin>
-                <plugin>
-                    <groupId>org.jacoco</groupId>
-                    <artifactId>jacoco-maven-plugin</artifactId>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+            <!-- Jpackage -->
+
+            <!-- <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <name>chore-manager</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>it1901</vendor>
+                    <destination>target</destination>
+                    <module>main.ui/ui.App</module>
+                    <runtimeImage>target/todolistfx</runtimeImage>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+
+                    linuxoptions
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxMenuGroup>chore-manager</linuxMenuGroup>
+
+                    windows options 
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+                    <winMenu>true</winMenu>
+                    <winMenuGroup>chore-manager</winMenuGroup>
+                </configuration>
+            </plugin> -->
+
+        </plugins>
+       
     </build>
 </project>
