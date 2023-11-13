@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.net.URI;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -16,6 +15,7 @@ import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
 import core.data.RestrictedPerson;
+import persistence.fileHandling.EnvironmentConfigurator;
 import persistence.fileHandling.Storage;
 
 /**
@@ -23,8 +23,8 @@ import persistence.fileHandling.Storage;
  */
 class RemoteDataAccessTest {
 
-    private static final URI SERVER_URI = URI.create("http://localhost:8080/");
-    private static RemoteDataAccess remoteDataAccess = new RemoteDataAccess(SERVER_URI);
+    private static RemoteDataAccess remoteDataAccess = new RemoteDataAccess(
+            new EnvironmentConfigurator().getAPIBaseEndpoint());
 
     /**
      * Sets up the current environment for testing.
@@ -53,7 +53,8 @@ class RemoteDataAccessTest {
      */
     @Test
     public void testGetCollective() {
-        RestrictedCollective collective = remoteDataAccess.getCollective(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
+        RestrictedCollective collective = remoteDataAccess
+                .getCollective(Collective.LIMBO_COLLECTIVE_JOIN_CODE);
 
         assertNotNull(collective);
         assertEquals(Collective.LIMBO_COLLECTIVE_JOIN_CODE, collective.getJoinCode());
@@ -67,7 +68,8 @@ class RemoteDataAccessTest {
         RestrictedCollective limboCollective = remoteDataAccess.getLimboCollective();
 
         assertNotNull(limboCollective);
-        assertEquals(RestrictedCollective.LIMBO_COLLECTIVE_JOIN_CODE, limboCollective.getJoinCode());
+        assertEquals(RestrictedCollective.LIMBO_COLLECTIVE_JOIN_CODE,
+                limboCollective.getJoinCode());
     }
 
     /**
@@ -136,7 +138,8 @@ class RemoteDataAccessTest {
         remoteDataAccess.addCollective(collective);
         remoteDataAccess.addPerson(person, collective.getJoinCode());
 
-        boolean result = remoteDataAccess.logIn(new Person(username, collective.getJoinCode()), password, collective);
+        boolean result = remoteDataAccess.logIn(new Person(username, collective.getJoinCode()),
+                password, collective);
 
         assertTrue(result);
     }
