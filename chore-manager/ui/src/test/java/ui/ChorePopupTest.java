@@ -32,8 +32,8 @@ public class ChorePopupTest extends BaseTestClass {
      */
     @BeforeEach
     private void passData() {
-        this.chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), false,
-                0, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        this.chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), 0,
+                "#000000", testPerson.getUsername(), testPerson.getUsername());
         dataAccess.addChore(this.chore, testPerson);
 
         Platform.runLater(() -> {
@@ -47,17 +47,19 @@ public class ChorePopupTest extends BaseTestClass {
      */
     @Test
     public void testCheck() {
-        CheckBox checkBox = lookup("#checkbox").query();
+        CheckBox checkBox = this.lookup("#checkbox").query();
         this.clickOn(checkBox);
 
         WaitForAsyncUtils.waitForFxEvents();
-        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword()).getChores().get(0);
+        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword())
+                .getChores().get(0);
         assertTrue(this.chore.getChecked());
 
         this.clickOn(checkBox);
 
         WaitForAsyncUtils.waitForFxEvents();
-        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword()).getChores().get(0);
+        this.chore = dataAccess.getPerson(testPerson.getUsername(), testPerson.getPassword())
+                .getChores().get(0);
         assertFalse(this.chore.getChecked());
     }
 
@@ -66,7 +68,7 @@ public class ChorePopupTest extends BaseTestClass {
      */
     @Test
     public void testDelete() {
-        Button delete = lookup("#delete").query();
+        Button delete = this.lookup("#delete").query();
 
         this.clickOn(delete);
 

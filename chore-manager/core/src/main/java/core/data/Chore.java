@@ -17,7 +17,6 @@ public class Chore {
     private String choreName;
     private LocalDate timeFrom;
     private LocalDate timeTo;
-    private boolean isWeekly;
     private int points;
     private String color;
     private boolean checked;
@@ -26,6 +25,8 @@ public class Chore {
     private String assignedTo;
     private UUID uuid;
 
+    private static final int CHARACTER_MINIMUM = 3;
+
     /**
      * A constructor for the Chore class that initializes the state of the object. This is used for
      * creating a copy of a Chore.
@@ -33,9 +34,8 @@ public class Chore {
      * @param chore The chore to copy
      */
     public Chore(Chore chore) {
-        this(chore.choreName, chore.timeFrom, chore.timeTo, chore.isWeekly, chore.points,
-                chore.color, chore.checked, chore.daysIncompleted, chore.creator, chore.assignedTo,
-                chore.uuid);
+        this(chore.choreName, chore.timeFrom, chore.timeTo, chore.points, chore.color,
+                chore.checked, chore.daysIncompleted, chore.creator, chore.assignedTo, chore.uuid);
     }
 
     /**
@@ -44,15 +44,14 @@ public class Chore {
      * @param choreName  The name of the chore
      * @param timeFrom   The start date of the chore
      * @param timeTo     The end date of the chore
-     * @param isWeekly   Whether the chore is weekly or not
      * @param points     The points of the chore
      * @param color      The color of the chore
      * @param creator    The creator of the chore
      * @param assignedTo The person the chore is assigned to
      */
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, String creator, String assignedTo) {
-        this(choreName, timeFrom, timeTo, isWeekly, points, color, false, 0, creator, assignedTo,
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, int points, String color,
+            String creator, String assignedTo) {
+        this(choreName, timeFrom, timeTo, points, color, false, 0, creator, assignedTo,
                 UUID.randomUUID());
     }
 
@@ -62,7 +61,6 @@ public class Chore {
      * @param choreName       The name of the chore
      * @param timeFrom        The start date of the chore
      * @param timeTo          The end date of the chore
-     * @param isWeekly        Whether the chore is weekly or not
      * @param points          The points of the chore
      * @param color           The color of the chore
      * @param checked         Wheter a chore is done or not
@@ -71,16 +69,16 @@ public class Chore {
      * @param assignedTo      The person the chore is assigned to
      */
 
-    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, boolean isWeekly,
-            int points, String color, boolean checked, int daysIncompleted, String creator,
-            String assignedTo, UUID uuid) {
+    public Chore(String choreName, LocalDate timeFrom, LocalDate timeTo, int points, String color,
+            boolean checked, int daysIncompleted, String creator, String assignedTo, UUID uuid) {
         if (uuid == null)
             throw new IllegalArgumentException("UUID cannot be null");
+        if (!isValid(choreName))
+            throw new IllegalArgumentException(getRequirements(choreName));
 
         this.choreName = choreName;
         this.timeFrom = timeFrom;
         this.timeTo = timeTo;
-        this.isWeekly = isWeekly;
         this.points = points;
         this.color = color;
         this.checked = checked;
@@ -182,15 +180,6 @@ public class Chore {
     }
 
     /**
-     * Outputs a boolean value indicating whether the chore is weekly or not.
-     *
-     * @return Whether the chore is weekly or not
-     */
-    public boolean getIsWeekly() {
-        return this.isWeekly;
-    }
-
-    /**
      * Outputs the creator of the chores username.
      *
      * @return The creator of the chores username
@@ -264,7 +253,6 @@ public class Chore {
         map.put("choreName", chore.choreName);
         map.put("timeFrom", chore.timeFrom.toString());
         map.put("timeTo", chore.timeTo.toString());
-        map.put("isWeekly", chore.isWeekly);
         map.put("points", chore.points);
         map.put("color", chore.color);
         map.put("checked", chore.checked);
@@ -294,7 +282,6 @@ public class Chore {
             String timeToStr = jsonObject.getString("timeTo");
             LocalDate timeFrom = LocalDate.parse(timeFromStr);
             LocalDate timeTo = LocalDate.parse(timeToStr);
-            boolean isWeekly = jsonObject.getBoolean("isWeekly");
             int points = jsonObject.getInt("points");
             String color = jsonObject.getString("color");
             boolean checked = jsonObject.getBoolean("checked");
@@ -302,11 +289,36 @@ public class Chore {
             String creator = jsonObject.getString("creator");
             String assignedTo = jsonObject.getString("assignedTo");
 
-            return new Chore(choreName, timeFrom, timeTo, isWeekly, points, color, checked,
-                    daysIncompleted, creator, assignedTo, uuid);
+            return new Chore(choreName, timeFrom, timeTo, points, color, checked, daysIncompleted,
+                    creator, assignedTo, uuid);
         } catch (JSONException e) {
             throw new IllegalArgumentException(
                     "Invalid JSONObject, could not be converted to Chore object");
         }
+    }
+
+    /**
+     * Determines if a chore based on inputs given by user follows requirements or not.
+     *
+     * @param choreName name of the chore.
+     * @return True if chore follows requirement.
+     */
+    public static boolean isValid(String choreName) {
+        return getRequirements(choreName) == null;
+    }
+
+    /**
+     * Returns a string containing the requirements for a legal chore.
+     *
+     * @param choreName name of the chore.
+     * @return A string containing the requirements for a legal chore.
+     */
+    public static String getRequirements(String choreName) {
+        if (choreName == null)
+            return "Name of chore is null";
+        if (choreName.length() < CHARACTER_MINIMUM)
+            return "The name of the chore must be at least " + CHARACTER_MINIMUM + " characters";
+
+        return null;
     }
 }
