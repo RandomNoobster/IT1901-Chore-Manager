@@ -108,7 +108,7 @@ public class CollectiveTest extends BaseTestClass {
         assertDoesNotThrow(() -> this.otherCollective.getChoresList());
         Person person1 = new Person("James", this.otherCollective.getJoinCode());
         this.otherCollective.addPerson(person1);
-        person1.addChore(new Chore(null, null, null, false, 0, null, null, null));
+        person1.addChore(new Chore("A chore", null, null, 0, null, null, null));
         assertTrue(this.otherCollective.getChoresList().equals(person1.getChores()));
     }
 
