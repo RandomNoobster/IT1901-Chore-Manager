@@ -304,9 +304,7 @@ public class Chore {
      * @return True if chore follows requirement.
      */
     public static boolean isValid(String choreName) {
-        if (getRequirements(choreName) == null)
-            return true;
-        return false;
+        return getRequirements(choreName) == null;
     }
 
     /**
@@ -316,9 +314,11 @@ public class Chore {
      * @return A string containing the requirements for a legal chore.
      */
     public static String getRequirements(String choreName) {
-        if (choreName.length() < CHARACTER_MINIMUM) {
+        if (choreName == null)
+            return "Name of chore is null";
+        if (choreName.length() < CHARACTER_MINIMUM)
             return "The name of the chore must be at least " + CHARACTER_MINIMUM + " characters";
-        }
+
         return null;
     }
 }
