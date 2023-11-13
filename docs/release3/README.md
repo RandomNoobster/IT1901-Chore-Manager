@@ -1,32 +1,14 @@
 # Deliverable 3
 
 ## Application progress
-**For deliverable 1 and 2, we made it so that a user can:**
-- Add a chore (from **Lisa's mid-mid-life crisis**)
-- Specify the specific date and week a chore should be executed. (from **Lisa's mid-mid-life crisis**)
-- View the whole month with chores on specific dates in specific weeks (UI). (from **Lisa's mid-mid-life crisis**)
-- Saving the chore. (from **Lisa's mid-mid-life crisis**)
-- Choose 
-	- Name (from **"Fading plants"**)
-	- When the task should be done (from **"Fading plants"**)
-    - Color of the task (from **"Fading plants"**)
-    - How many points a task is worth (from **"Scoreboard"**)
-
-  in a chore-creation menu when creating a task
-- Create an account by choosing a username and password. This should be done when opening the application the first time (from **"Jealousy, jealousy"**)
-- Be able to log into their account when the application is opened (from **"Jealousy, jealousy"**)
-- Be able to log out of their account (from **"Jealousy, jealousy"**)
-- Assign chores to themselves, as well to other users. This should be done in the chore-creation menu (from **"Jealousy, jealousy"**)
-- Add a label to each chore in the view that states who the task is assigned to (from **"Jealousy, jealousy"**)
-
-These features combined into the completion of these user stories:
+**For deliverable 1 and 2, we implemented these user stories:**
 - **"Lisa’s mid-mid-life crisis"**
 - **Fading plants**
 - **Jealousy, jealousy**
 
 ### Acceptance criteria for deliverable 3
 
-Complete:
+**Complete:**
 - ["Scoreboard"](../../UserStory.md)
 - ["Popularity contest"](../../UserStory.md)
 - ["Chopping down Christmas tree in july?"](../../UserStory.md)
@@ -67,7 +49,6 @@ We now have pages for:
 
 The figure above shows a state diagram of how the different pages interact. You start at the "Logging in" page. From there you can either log in to an existing user, or create a brand new one by clicking "Create user" and filling in the details on the "Creating users" page. 
 
-
 After creating a user, or logging in to a user that has not yet been assigned to a collective, you will be taken to the "Joining collectives" page. From here you can either choose to join a collective by typing in a code given to you by someone who has created a collective already, or create a brand new collective by clicking the "Create collective" button and filling in the name of the collective.
 
 Finally you will be taken to the main page, "the calendar" page. From here you can log out again, by clicking "Log out", go to the leaderboard for your collective by clicking the "Leaderboard" button, copy your collectives code by clicking the "Code: [collective code]" button, or you can create chores. Create day-chores by clicking "Add" on a specific day, or create week-chores by clicking "Add" next to the number of the week you want to add a week-chore to. If you have created chores already, you can click on the created chores to view more info about them.
@@ -82,6 +63,12 @@ Finally you will be taken to the main page, "the calendar" page. From here you c
 
 
 Originally we planned that the creation of week-chores (chores that can be done over the course of a week), and the creation of day-chores (chores that need to be done on a specific day), each should have their own pages. This ended up not being nesessary as the only differences between a week-chore and a day-chore, is that day-chores have the same start and end date, while week-chores end-date are 7 days after their start date. Therefore they both got the same creation page. 
+
+The "Joining collectives" page and the "Creating collectives" page were initially planned to be just one page. However, joining and creating collectives are ideas that can map to logging in and creating a user
+
+We ended up splitting them to be more consistent with the logging into, 
+ such as the "Creating users" and "Creating chores"
+consistent with the "Logging in" and "Creating users" pages
 
 Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. 
 
