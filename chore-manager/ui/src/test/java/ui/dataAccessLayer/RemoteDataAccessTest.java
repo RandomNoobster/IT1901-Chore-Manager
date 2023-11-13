@@ -130,7 +130,7 @@ class RemoteDataAccessTest {
         Collective collective = new Collective("Test Collective", "TEST123");
 
         String username = "testUser";
-        Password password = new Password("password");
+        Password password = new Password("SupErDuPer123");
         Person person = new Person(username, collective.getJoinCode(), password);
 
         remoteDataAccess.addCollective(collective);
