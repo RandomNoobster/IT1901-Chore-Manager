@@ -335,11 +335,15 @@
 
 .scroll-bar:vertical {
     -fx-background-color: derive(-textWhite, 0%); /* Background color */
-    -fx-pref-width: 10px;
+    -fx-pref-width: 12px;
+    -fx-cursor: hand;
+
 }
 
 .scroll-bar:vertical .thumb {
     -fx-background-color: derive(-buttonColor, 0%);
-    -fx-pref-width: 10px;
+    -fx-pref-width: 12px;
+    -fx-cursor: hand;
+
 
 }
