@@ -85,7 +85,7 @@ public class StateControllerTest extends BaseTestClass {
      * @throws Exception if an error occurs during the test
      */
     private MvcResult stateAddChore() throws Exception {
-        Chore chore = new Chore("Test Chore", LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 1), false,
+        Chore chore = new Chore("Test Chore", LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 1),
                 0, "#000000", testPerson.getUsername(), testPerson.getUsername());
         testPerson.addChore(chore);
 

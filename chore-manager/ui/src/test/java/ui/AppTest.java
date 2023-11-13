@@ -48,7 +48,7 @@ public class AppTest extends BaseTestClass {
 
     @Test
     public void testSetChorePopupScene() {
-        Chore chore = new Chore("Test Chore", LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 1), false,
+        Chore chore = new Chore("Test Chore", LocalDate.of(0, 1, 1), LocalDate.of(0, 1, 1),
                 0, "#000000", testPerson.getUsername(), testPerson.getUsername());
         assertDoesNotThrow(() -> {
             App.setChorePopupScene(chore, "test");

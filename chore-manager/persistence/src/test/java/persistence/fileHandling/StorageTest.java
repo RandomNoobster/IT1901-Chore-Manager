@@ -210,7 +210,7 @@ public class StorageTest {
         Collective newCollective = new Collective("Test");
         this.storage.addCollective(newCollective);
         Person newPerson = new Person("John", newCollective.getJoinCode());
-        Chore chore = new Chore("Test Chore", LocalDate.now(), LocalDate.now(), false, 5, "#000000",
+        Chore chore = new Chore("Test Chore", LocalDate.now(), LocalDate.now(), 5, "#000000",
                 newPerson.getUsername(), newPerson.getUsername());
         newPerson.addChore(chore);
         newCollective.addPerson(newPerson);

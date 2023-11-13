@@ -75,7 +75,7 @@ public class StateTest extends BaseTestClass {
         state.logIn(testPerson, collective);
         assertEquals(state.getChoreInCurrentCollective(UUID.randomUUID()), null);
 
-        Chore chore = new Chore("Test", null, null, false, 1, "#000000", testPerson.getUsername(),
+        Chore chore = new Chore("Test", null, null, 1, "#000000", testPerson.getUsername(),
                 testPerson.getUsername());
         testPerson.addChore(chore);
         assertEquals(chore, state.getChoreInCurrentCollective(chore.getUUID()));
@@ -90,7 +90,7 @@ public class StateTest extends BaseTestClass {
      */
     @Test
     public void testAddChore() {
-        Chore chore = new Chore("Test", null, null, false, 1, "#000000", testPerson.getUsername(),
+        Chore chore = new Chore("Test", null, null, 1, "#000000", testPerson.getUsername(),
                 testPerson.getUsername());
 
         // Assert false when assignee is null
