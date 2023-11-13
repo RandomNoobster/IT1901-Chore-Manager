@@ -1,5 +1,5 @@
 # Superior Goal
-The superior goal of the application is to make living alone and with other people easier. The application aims to deliver an easy way to keep track of different chores that should be done in and around the house. Through and easy to navigate and beautiful user interface the app should let users add and delete chores, as well as specify wether a chore should be recurring or not. Each user should also have a clear overview of who should do what chores at which time.
+The superior goal of the application is to make living alone and with other people easier. The application aims to deliver an easy way to keep track of different chores that should be done in and around the house. Through and easy to navigate and beautiful user interface the app should let users add and delete chores, as well as specify wether a chore should be repeating or not. Each user should also have a clear overview of who should do what chores at which time.
 
 # Superior User Story Statement:
 "As a Chore Manager app user I want to be able to schedule chores that should be done in and around the house. I want to have a full overview of what chores is done by who and at what time. This should ensure that everyone do what the are supposed to do and the house should be more or less in order at all times."  
@@ -68,11 +68,11 @@ More and more people around the campus are starting to notice how clean Lisa and
 - The group should have a unique code, that can be passed around to roommates so that they can join the group when they first sign up.
 
 ## Chopping down Christmas tree in july?
-To remind her to chop down a tree before Christmas, Lisa added a chore for that exact occasion, but she accidentally made it recurring. Now its july, and every monday she wakes up in horror to a chore named "Chop chop time" in her calendar. Therefore she wants to be able to delete both recurring, and non-recurring tasks to stop this madness from lasting any longer.
+To remind her to chop down a tree before Christmas, Lisa added a chore for that exact occasion, but she accidentally made it repeat many times. Now its july, and every monday she wakes up in horror to a chore named "Chop chop time" in her calendar. Therefore she wants to be able to delete tasks to stop this madness from lasting any longer.
 
 ### Requirements:
 **Users should be able to**
-- Delete nonrecurring and recurring tasks.
+- Delete tasks.
 
 
 ## Scoreboard
@@ -85,7 +85,18 @@ To remind her to chop down a tree before Christmas, Lisa added a chore for that 
 	- The points will add up, and everyone in the group should be able to see the "scoreboard".
 
 
-### Quality of life
+## Spacetime
+Every week Lisa makes a task for taking out the trash on friday morning, as the garbage truck comes later the same day to pick it up. Therefore she wants to be able to make tasks repeat once every week for a certain amount of weeks.
+
+Some tasks, unlike the abovementioned take-out-trash tasks, are not day specific. The bathroom has to be cleaned at least once a week, but it does not matter what day that week it is done. Because of this, she wants to be able to create chores that can be done every day of the week.
+
+### Requirements:
+**Users should be able to**
+- State how many weeks a chore should repeat in the chore-creation menu.
+- Create chores that can be done every day of the week. 
+
+
+## Quality of life
 Sometimes when Lisa is trying to log in, she presses the "Create user" button. She wants to go back.
 
 Other times she wants to log out from the application so that her roomie, that doesnt have a PC, can log into their account and mark some tasks as done. 
