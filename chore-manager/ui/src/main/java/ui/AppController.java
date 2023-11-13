@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -89,6 +90,15 @@ public class AppController {
 
         this.weekContainer.getChildren().add(this.subWeekScrollContainer);
         this.subWeekScrollContainer.setContent(this.subWeekContainer);
+
+        // Remove scrolling using trackpad, source:
+        // stackoverflow.com/questions/17830531/javafx-scrollpane-disable-panning-for-touch-events
+        this.subScene.addEventFilter(InputEvent.ANY, (event) -> {
+            if (event.getEventType().toString().equals("SCROLL")) {
+                event.consume();
+            }
+        });
+
     }
 
     private void setCollectiveName() {
