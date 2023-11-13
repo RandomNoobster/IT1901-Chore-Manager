@@ -21,6 +21,10 @@ We chose `JSON.simple`/`JSON in Java` because we thought that would cover all ou
 Previously we only had a `Storage` class, which contained all information about the application. Now we introduced a new class `State`, which holds information about the current state of the application. By that, I mean which person is logged in and the corresponding collective. By introducing this class we better uphold the Single Responsibility Principle. In addition, this made it easier to hide information about other collectives and users, which is important for security reasons. since we do not want to expose information about other users and collectives outside the collective the logged-in user in registered to. 
 
 ## CI/CD pipelines
-In order to conform with best practices, we decided to protect the master branch. This means we remove the ability to direct push to the master branch, and instead have to go through merge requests. 
+In order to conform with best practices, we decided to protect the `master` branch. This means we remove the ability to direct push to the `master` branch, and instead have to go through merge requests. Following this change, we introduced continuous integration and continuous delivery (CI/CD) pipelines. The pipeline is only triggered on merge requests, and it will run certain maven commands. The pipeline will run the following commands:
+- `mvn install -DskipTests` - Installs the necessary dependencies.
+- `mvn test` - Runs all tests (in core and persistence).
 
-By doing this, we ensure the master branch is always in a working state.
+If any of these commands fail, the pipeline will fail, and the merge request will not be allowed to merge. This ensures that the `master` branch is always in a working state, and that no unforeseen bugs are introduced.
+`mvn test` does not only run the tests, but also Spotbugs and Checkstyle, and if any of them throw errors, the pipeline will fail. However, the pipeline does not run tests in the UI package as the pipeline fails to run the JavaFX application and render the GUI. Spotbugs and Checkstyle is still checking all packages. To conclude, the pipeline has successfully identified bugs and test-fails in our code and has helped us produce a more stable application and keep master stable. 
+
