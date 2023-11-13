@@ -15,7 +15,7 @@ After having created an account, a user should be able to join a collective. The
 When a user is logged in and a part of a collective, they can see the main view of the application. The main view shows a calendar view with the daily and weekly chores for the current and coming weeks. The main view also lets you click on a chore to mark it as completed. There is also a button for creating a new chore, and users can click on a certain day or week to create a new chore for that day or week. There is also an overview of how many points each user has.
 
 ### Create chore view
-After pressing a button to create a chore, the create chore view is shown. The create chore view allows the user to create a new chore. The user can enter a title, assignee, if the chore is weekly and if it is recurring.
+After pressing a button to create a chore, the create chore view is shown. The create chore view allows the user to create a new chore. The user can enter a title, assignee, if the chore is weekly and if it is repeating.
 
 ### The minimum viable product
 ![Minimum viable product](../img/mvp.jpg)

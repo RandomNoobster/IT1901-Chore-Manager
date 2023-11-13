@@ -27,16 +27,16 @@ public class LeaderboardTest extends BaseTestClass {
 
     @BeforeAll
     private void boot() {
-        Chore chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), false,
-                0, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        Chore chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), 0,
+                "#000000", testPerson.getUsername(), testPerson.getUsername());
         chore.setChecked(true);
         dataAccess.addChore(chore, testPerson);
 
         Person p1 = new Person("James", testCollective.getJoinCode());
         dataAccess.addPerson(p1, testCollective.getJoinCode());
 
-        Chore chore2 = new Chore("Chore 2", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2),
-                true, 1, "#000000", p1.getUsername(), p1.getUsername());
+        Chore chore2 = new Chore("Chore 2", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), 1,
+                "#000000", p1.getUsername(), p1.getUsername());
         chore2.setChecked(true);
         dataAccess.addChore(chore2, p1);
     }
