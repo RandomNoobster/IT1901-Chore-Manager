@@ -102,9 +102,9 @@ public class PasswordTest extends BaseTestClass {
      */
     @Test
     public void testEquals() {
-        Password password1 = new Password("password");
-        Password password2 = new Password("password");
-        Password password3 = new Password("different-password");
+        Password password1 = new Password("Password123");
+        Password password2 = new Password("Password123");
+        Password password3 = new Password("DifferentPassword098");
 
         assertTrue(password1.equals(password2));
         assertFalse(password1.equals(password3));
@@ -115,9 +115,9 @@ public class PasswordTest extends BaseTestClass {
      */
     @Test
     public void testHashCode() {
-        Password password1 = new Password("password");
-        Password password2 = new Password("password");
-        Password password3 = new Password("different-password");
+        Password password1 = new Password("Password123");
+        Password password2 = new Password("Password123");
+        Password password3 = new Password("DifferentPassword098");
 
         assertTrue(password1.hashCode() == password2.hashCode());
         assertFalse(password1.hashCode() == password3.hashCode());
