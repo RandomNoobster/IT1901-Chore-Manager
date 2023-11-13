@@ -28,13 +28,13 @@ public class ChoreViewTest extends BaseTestClass {
     @BeforeAll
     public void boot() {
         // create chore with dark color and overdue
-        this.chore1 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), false,
-                1, "#000000", testPerson.getUsername(), testPerson.getUsername());
+        this.chore1 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
+                "#000000", testPerson.getUsername(), testPerson.getUsername());
         testPerson.addChore(this.chore1);
 
         // create chore with light color and checked
-        this.chore2 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), false,
-                1, "#FFFFFF", testPerson.getUsername(), testPerson.getUsername());
+        this.chore2 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
+                "#FFFFFF", testPerson.getUsername(), testPerson.getUsername());
         this.chore2.setChecked(true);
         testPerson.addChore(this.chore2);
     }

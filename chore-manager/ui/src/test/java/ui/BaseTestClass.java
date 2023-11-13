@@ -12,6 +12,7 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import core.data.Collective;
+import core.data.Password;
 import core.data.Person;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -33,6 +34,7 @@ public class BaseTestClass extends ApplicationTest {
     protected FXMLLoader fxmlLoader;
     protected static Collective testCollective;
     protected static Person testPerson;
+    protected static String testPersonUnhashedPassword = "testPassword123";
     protected static DataAccess dataAccess = getDataAccess();
 
     private static final String filePath = "chore-manager-data-ui-test.json";
@@ -63,6 +65,7 @@ public class BaseTestClass extends ApplicationTest {
         Storage.deleteInstance();
         Storage.getInstance().deleteFile();
         dataAccess.enterTestMode();
+        dataAccess.resetAPI();
         this.setup();
     }
 
@@ -73,7 +76,8 @@ public class BaseTestClass extends ApplicationTest {
         Storage.getInstance().deleteFileContent();
 
         testCollective = new Collective("Test Collective", Collective.LIMBO_COLLECTIVE_JOIN_CODE);
-        testPerson = new Person("Test", testCollective.getJoinCode());
+        Password testPassword = new Password(testPersonUnhashedPassword);
+        testPerson = new Person("Test", testCollective.getJoinCode(), testPassword);
         testCollective.addPerson(testPerson);
 
         dataAccess.addCollective(testCollective);

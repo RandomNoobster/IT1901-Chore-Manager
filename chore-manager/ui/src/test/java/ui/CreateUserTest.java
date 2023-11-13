@@ -67,7 +67,6 @@ public class CreateUserTest extends BaseTestClass {
 
         WaitForAsyncUtils.waitForFxEvents();
 
-        Object test = dataAccess.getPerson("OlePetter", new Password("Password12345"));
         assertNotNull(dataAccess.getPerson("OlePetter", new Password("Password12345")));
     }
 

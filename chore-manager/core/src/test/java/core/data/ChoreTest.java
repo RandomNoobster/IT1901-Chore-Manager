@@ -20,7 +20,6 @@ public class ChoreTest {
     private LocalDate timeFrom;
     private LocalDate timeTo;
     private String choreName;
-    private boolean isWeekly;
     private int points;
     private String color;
     private boolean checked;
@@ -45,7 +44,6 @@ public class ChoreTest {
         this.timeFrom = LocalDate.of(2021, 1, 1);
         this.timeTo = LocalDate.of(2021, 1, 2);
         this.choreName = "Vaske";
-        this.isWeekly = false;
         this.points = 10;
         this.color = "#FFFFFF";
         this.checked = false;
@@ -53,8 +51,8 @@ public class ChoreTest {
         this.creator = "Creator";
         this.assignee = "Assignee";
         this.uuid = UUID.randomUUID();
-        this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.isWeekly,
-                this.points, this.color, this.checked, this.daysIncompleted, this.creator, this.assignee, this.uuid);
+        this.chore = new Chore(this.choreName, this.timeFrom, this.timeTo, this.points, this.color,
+                this.checked, this.daysIncompleted, this.creator, this.assignee, this.uuid);
     }
 
     /**
@@ -62,7 +60,7 @@ public class ChoreTest {
      */
     @Test
     public void testConstructor() {
-        assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, false, 10,
+        assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, 10,
                 "#FFFFFF", "Creator", "Assignee"));
     }
 
@@ -91,15 +89,6 @@ public class ChoreTest {
     public void testGetTimeTo() {
         assertDoesNotThrow(() -> this.chore.getTimeTo());
         assertTrue(this.timeTo.equals(this.chore.getOriginalTimeTo()));
-    }
-
-    /**
-     * Test that {@link Chore#getIsWeekly} doesn't throw any errors and returns the expected value.
-     */
-    @Test
-    public void testGetIsWeekly() {
-        assertDoesNotThrow(() -> this.chore.getIsWeekly());
-        assertEquals(this.isWeekly, this.chore.getIsWeekly());
     }
 
     /**
