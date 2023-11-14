@@ -2,20 +2,23 @@ package core.data;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import core.BaseTestClass;
 
 /**
  * Test that Chores have the expected behavior.
  */
-public class ChoreTest {
+public class ChoreTest extends BaseTestClass {
     private Chore chore;
     private LocalDate timeFrom;
     private LocalDate timeTo;
@@ -27,14 +30,6 @@ public class ChoreTest {
     private String creator;
     private String assignee;
     private UUID uuid;
-
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-    }
 
     /**
      * Before each test, create a new Chore with some sample values.
@@ -62,6 +57,8 @@ public class ChoreTest {
     public void testConstructor() {
         assertDoesNotThrow(() -> new Chore(this.choreName, this.timeFrom, this.timeTo, 10,
                 "#FFFFFF", "Creator", "Assignee"));
+        assertThrows(IllegalArgumentException.class, () -> new Chore(this.choreName, this.timeFrom,
+                this.timeTo, 10, "#FFFFFF", false, 0, "Creator", "Assignee", null));
     }
 
     /**
@@ -139,6 +136,32 @@ public class ChoreTest {
     }
 
     /**
+     * Test that {@link Chore#updateIncompleted} does not throw any errors and updates the value
+     * correctly.
+     */
+    @Test
+    public void testUpdateIncompleted() {
+        this.chore.updateIncompleted();
+
+        long expectedDays = ChronoUnit.DAYS.between(this.timeTo, LocalDate.now());
+        long actualDays = this.chore.getDaysIncompleted();
+        String message = String.format("Expected days incompleted: %d, actual days incompleted: %d",
+                expectedDays, actualDays);
+        assertEquals(expectedDays, actualDays, message);
+    }
+
+    /**
+     * Test that {@link Chore#getColor} doesn't throw any errors and returns the expected value.
+     */
+    @Test
+    public void testOverdue() {
+        assertTrue(this.chore.overdue());
+
+        this.chore.setChecked(true);
+        assertFalse(this.chore.overdue());
+    }
+
+    /**
      * Test that {@link Chore#getCreator} doesn't throw any errors and returns the expected value.
      */
     @Test
@@ -153,5 +176,13 @@ public class ChoreTest {
     @Test
     public void testEncodeToJSON() {
         assertDoesNotThrow(() -> Chore.encodeToJSONObject(this.chore));
+        assertThrows(IllegalArgumentException.class, () -> Chore.encodeToJSONObject(null));
+    }
+
+    @Test
+    public void testDecodeFromJSON() {
+        assertEquals(this.chore.getUUID(),
+                Chore.decodeFromJSON(Chore.encodeToJSONObject(this.chore)).getUUID());
+        assertEquals(null, Chore.decodeFromJSON(null));
     }
 }
