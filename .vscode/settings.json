@@ -46,11 +46,4 @@
     "java.checkstyle.configuration": "${workspaceFolder}\\chore-manager\\config\\checkstyle.xml",
     "java.checkstyle.version": "10.12.3",
     "java.format.settings.url": ".vscode/java-formatter.xml",
-    "cSpell.words": [
-        "Cacheable",
-        "restserver",
-        "servlet",
-        "springboot",
-        "springframework"
-    ],
 }
