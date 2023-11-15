@@ -18,7 +18,7 @@ import ui.BaseTestClass;
  */
 public class WeekViewTest extends BaseTestClass {
 
-    private Week week = new Week(LocalDate.of(2023, 11, 6));
+    private static Week week = new Week(LocalDate.of(2023, 11, 6));
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -44,7 +44,7 @@ public class WeekViewTest extends BaseTestClass {
     @Test
     public void testConstructor() {
         // ensure no errors are raised when generating the WeekView object
-        assertDoesNotThrow(() -> new WeekView(this.week));
+        assertDoesNotThrow(() -> new WeekView(week));
     }
 
     /**
@@ -53,7 +53,7 @@ public class WeekViewTest extends BaseTestClass {
     @Test
     public void testUpdateWidth() {
         double newWidth = 100;
-        WeekView weekView = new WeekView(this.week);
+        WeekView weekView = new WeekView(week);
         assertDoesNotThrow(() -> weekView.updateWidth(newWidth));
     }
 
@@ -63,7 +63,7 @@ public class WeekViewTest extends BaseTestClass {
     @Test
     public void testUpdateHeight() {
         double newHeight = 100;
-        WeekView weekView = new WeekView(this.week);
+        WeekView weekView = new WeekView(week);
         assertDoesNotThrow(() -> weekView.updateHeight(newHeight));
     }
 
