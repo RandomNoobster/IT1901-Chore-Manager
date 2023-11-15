@@ -13,7 +13,13 @@ public class EnvironmentConfigurator {
 
     private static final String ROOT_MODULE_DIRECTORY = "chore-manager";
     private static String rootModuleDirectoryPath; // For caching purposes
-    private Properties properties = new Properties();
+    private Properties properties = new Properties() {
+        {
+            this.setProperty("ENV", "development");
+            this.setProperty("SAVE_FILE_PATH", "chore-manager-data.json");
+            this.setProperty("API_BASE_ENDPOINT", "http://localhost:8080/");
+        }
+    };
 
     /**
      * This method adds a property to the properties object. If the value is null, it will not be
@@ -56,7 +62,8 @@ public class EnvironmentConfigurator {
         }
 
         // If no root module directory is found, throw an exception
-        throw new RuntimeException("Could not find root module directory");
+        // throw new RuntimeException("Could not find root module directory");
+        return null;
     }
 
     /**
@@ -68,6 +75,11 @@ public class EnvironmentConfigurator {
                                                                        // "development"
         String envFileName = ".env." + environment;
         String rootModuleDirectory = findRootModuleDirectory(System.getProperty("user.dir"));
+
+        if (rootModuleDirectory == null) {
+            System.out.println("COULD NOT FIND .ENV FILES, USING DEFAULT VALUES");
+            return;
+        }
 
         Dotenv dotenv = Dotenv.configure().directory(rootModuleDirectory).filename(envFileName)
                 .load();
