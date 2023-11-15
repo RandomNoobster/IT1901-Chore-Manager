@@ -1,33 +1,19 @@
 .root {
     -pastWeekColor: #F1F3F4;
     -thisWeekColor: #E1E3E7;
-    -listItem: #cb8d2f;
-
     -todayColor: #B3CFBD;
     -textWhite: #FFFFFF;
     -textBlack: #000000;
-
     -buttonColor: #9CC0F8;
     -buttonHover: #669EF6;
     -mediumBlue: #3E70B7;
     -darkBlue: #2762B5;
-    -pastDay: #FFF0C3;
-
-    -weekLabels: #FCE292;
-
-    -sliderBackground: #94D2A6;
-
-    -menuBackground: #F1F3F4;
-
     -menuHeader: #669EF6;
-
-    
+    -weekLabels: #FCE292;
+    -menuBackground: #F1F3F4;
     -redColor: #FF0000;
     -redColorHover: #c60b0b;
-
-
     -checked: #81C995;
-
 }
 
 * {
@@ -154,7 +140,7 @@
     -fx-text-fill: derive(-menuHeader, 0%);
     -fx-font-size: 25px;
     -fx-background-color: none;
-    -fx-pref-width: 200px;
+    -fx-pref-width: 250px;
     -fx-pref-height: 30px;
 }
 
@@ -335,11 +321,15 @@
 
 .scroll-bar:vertical {
     -fx-background-color: derive(-textWhite, 0%); /* Background color */
-    -fx-pref-width: 10px;
+    -fx-pref-width: 12px;
+    -fx-cursor: hand;
+
 }
 
 .scroll-bar:vertical .thumb {
     -fx-background-color: derive(-buttonColor, 0%);
-    -fx-pref-width: 10px;
+    -fx-pref-width: 12px;
+    -fx-cursor: hand;
+
 
 }
