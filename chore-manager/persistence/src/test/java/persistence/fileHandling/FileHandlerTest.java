@@ -9,22 +9,13 @@ import java.util.HashMap;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class FileHandlerTest {
+public class FileHandlerTest extends BaseTestClass {
 
     private FileHandler fileHandler;
     private final String fileName = "chore-manager-test-filehandler.json";
-
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-    }
 
     @BeforeEach
     public void populateFileHandler() {

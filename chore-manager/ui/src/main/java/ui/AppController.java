@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.InputEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -49,9 +50,7 @@ public class AppController {
     private List<WeekView> weeks = new ArrayList<>();
     private ScrollPane subWeekScrollContainer = new ScrollPane();
     private VBox subWeekContainer = new VBox();
-    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks
-                                               // before
-    // current week)
+    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
     private static final int NUM_WEEKS = 5; // Number of weeks to create
 
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
@@ -64,8 +63,7 @@ public class AppController {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called after the fxml file has
-     * been loaded.
+     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
      */
     @FXML
     public void initialize() {
@@ -89,8 +87,20 @@ public class AppController {
 
         this.weekContainer.getChildren().add(this.subWeekScrollContainer);
         this.subWeekScrollContainer.setContent(this.subWeekContainer);
+
+        // Remove scrolling using trackpad, source:
+        // stackoverflow.com/questions/17830531/javafx-scrollpane-disable-panning-for-touch-events
+        this.subScene.addEventFilter(InputEvent.ANY, (event) -> {
+            if (event.getEventType().toString().equals("SCROLL")) {
+                event.consume();
+            }
+        });
+
     }
 
+    /**
+     * Sets the collective name to the name of the current collective.
+     */
     private void setCollectiveName() {
         RestrictedCollective currentCollective = this.dataAccess.getCurrentCollective();
         this.code.setText("Code: " + currentCollective.getJoinCode());
@@ -125,6 +135,11 @@ public class AppController {
         });
     }
 
+    /**
+     * Resizes the width of the UI components based on the given width.
+     *
+     * @param width The new width.
+     */
     private void resizeWidth(double width) {
         this.subScene.setMinWidth(width);
         this.subScene.setPrefWidth(width);
@@ -144,6 +159,11 @@ public class AppController {
 
     }
 
+    /**
+     * Resizes the height of the UI components based on the given height.
+     *
+     * @param height The new height.
+     */
     private void resizeHeight(double height) {
 
         this.subScene.setMinHeight(height);
@@ -167,7 +187,7 @@ public class AppController {
     /**
      * Creates the WeekView elements and adds them to the view.
      *
-     * @return A list of the WeekViews
+     * @return A list of the WeekViews.
      */
     private List<WeekView> createWeeks() {
         List<WeekView> weeks = new ArrayList<>();
@@ -182,17 +202,26 @@ public class AppController {
         return weeks;
     }
 
+    /**
+     * Switches to the leaderboard scene.
+     */
     @FXML
     public void toLeaderboard() {
         App.switchScene("Leaderboard");
     }
 
+    /**
+     * Logs out the user and switches to the login scene.
+     */
     @FXML
     public void toLogin() {
         this.dataAccess.logOut();
         App.switchScene("Login");
     }
 
+    /**
+     * Copies the collective code to the system clipboard and shows an information alert.
+     */
     @FXML
     public void copyCode() {
         Clipboard clipboard = Clipboard.getSystemClipboard();

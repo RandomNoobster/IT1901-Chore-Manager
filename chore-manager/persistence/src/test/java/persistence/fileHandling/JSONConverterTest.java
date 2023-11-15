@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,19 +18,11 @@ import core.data.Chore;
 import core.data.Collective;
 import core.data.Person;
 
-public class JSONConverterTest {
+public class JSONConverterTest extends BaseTestClass {
 
     private JSONConverter jsonConverter;
     private final String fileName = "chore-manager-test-jsonconverter.json";
     private final LocalDate date = LocalDate.of(2020, 1, 1);
-
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-    }
 
     // Low-level classes below Storage, needs to have test filenames defined
     @BeforeEach
@@ -54,8 +45,7 @@ public class JSONConverterTest {
 
     @Test
     public void writeAndReadToJSONTest() {
-        Chore chore = new Chore("test", this.date, this.date, false, 10, "#FFFFFF", "creator",
-                "Assignee");
+        Chore chore = new Chore("test", this.date, this.date, 10, "#FFFFFF", "creator", "Assignee");
         List<Chore> chores = new ArrayList<Chore>(Arrays.asList(chore));
         Collective collective = new Collective("test");
         Person person = new Person("username", collective.getJoinCode(), chores);

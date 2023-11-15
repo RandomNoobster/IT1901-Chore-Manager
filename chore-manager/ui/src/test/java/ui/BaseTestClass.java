@@ -37,8 +37,6 @@ public class BaseTestClass extends ApplicationTest {
     protected static String testPersonUnhashedPassword = "testPassword123";
     protected static DataAccess dataAccess = getDataAccess();
 
-    private static final String filePath = "chore-manager-data-ui-test.json";
-
     /**
      * Gets the data access layer.
      */
@@ -134,8 +132,6 @@ public class BaseTestClass extends ApplicationTest {
      */
     @AfterAll
     public void deleteFile() {
-        if (Storage.getInstance().getFilePath().equals(filePath)) {
-            Storage.getInstance().deleteFile();
-        }
+        Storage.getInstance().deleteFile();
     }
 }
