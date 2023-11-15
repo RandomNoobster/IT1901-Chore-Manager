@@ -137,7 +137,7 @@ If any of these commands fail, the pipeline will fail, and the merge request wil
 
 
 ## REST API
-In this release we needed to create a REST API
+In this release we needed to create a REST API. 
 
 All UI-views does not use `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
 
@@ -147,6 +147,40 @@ We have endpoints for each of the CRUD (Create, Read, Update, Delete) operations
 
 Not overfetch
 
+#### Format
+We have two different controllers and subsequentially two different context paths: `storage/` and `state/`, which correspond to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we do not use `storage/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
+
+Our endpoints does not use verbs, like `getChores` or `createChore`, but instead uses nouns, like `chores` and `chores/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
+
+The format for a request should be as follows:
+```
+(HTTP-METHOD) baseurl/context-path/path?query-parameters
+(YOUR-HEADERS)
+```
+
+Here is an example of an API request, which gets your user information:
+```
+GET /storage%2Fpersons%2FLasse?password=39a7067148acfa9987f856e9e996e6ac
+Host: http://localhost:8080
+Accept: application/json
+Content-Type: application/x-www-form-urlencoded
+```
+
+The final URI looks like this:
+```
+http://localhost:8080/storage%2Fpersons%2FLasse?password=39a7067148acfa9987f856e9e996e6ac
+```
+
+Here is the example of the response from the API request above (formatted from a `HttpResponse`-object):
+```json
+{
+    "status":200,
+    "Content-Type": "application/json",
+    "body": {"collectiveJoinCode":"465187","password":"39a7067148acfa9987f856e9e996e6ac","chores":[],"displayName":"Lasse","username":"Lasse"},
+}
+```
+
+Some endpoints also require a body to be sent in the request. For example `POST storage/persons/{username}` which adds a user defined in the body.
 
 ### Sensitive information
 
@@ -156,13 +190,6 @@ RestricedPerson and RestricedCollective
 ### Caching
 
 
-### Other Best practices
-
-#### Using nouns instead of verbs
-Our endpoints does not use verbs, like `getChores` or `createChore`, but instead uses nouns, like `chores` and `chores/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
-
-#### Logical nesting in endpoints
-We have logical nesting in our endpoints, which can be seen with the use of `storage/` and `state/`, which corresponding to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we do not use `storage/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
 
 
 
