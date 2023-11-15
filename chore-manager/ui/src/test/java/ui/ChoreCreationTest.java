@@ -21,6 +21,7 @@ import javafx.scene.paint.Color;
 public class ChoreCreationTest extends BaseTestClass {
 
     private static final String fxmlFileName = "ChoreCreation.fxml";
+    private static final int createAmount = 5;
 
     @Override
     protected String getFileName() {
@@ -69,5 +70,33 @@ public class ChoreCreationTest extends BaseTestClass {
 
         WaitForAsyncUtils.waitForFxEvents();
         assertTrue(savedChores.size() + 1 == dataAccess.getChores().size());
+    }
+
+    /**
+     * Testing creating of repeating chore
+     */
+    @Test
+    public void testRepeatedChore() {
+        List<Chore> savedChores = dataAccess.getChores();
+
+        TextField name = this.lookup("#name").query();
+        this.interact(() -> {
+            name.setText("Clean up your mess!");
+        });
+
+        ComboBox<String> comboBox = this.lookup("#personsMenu").query();
+        this.interact(() -> {
+            comboBox.getSelectionModel().select(0);
+        });
+
+        Slider slider = this.lookup("#repeats").query();
+        this.interact(() -> {
+            slider.setValue(createAmount);
+        });
+
+        this.click("Create");
+
+        WaitForAsyncUtils.waitForFxEvents();
+        assertTrue(savedChores.size() + createAmount == dataAccess.getChores().size());
     }
 }

@@ -6,25 +6,17 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import core.BaseTestClass;
 
 /**
  * Test that Days have the expected behavior.
  */
-public class DayTest {
+public class DayTest extends BaseTestClass {
     private Day day;
     private LocalDate date;
-
-   
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
-    }
 
     /**
      * Before each test, create a new Day with some sample values.
