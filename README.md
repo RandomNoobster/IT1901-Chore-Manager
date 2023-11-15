@@ -95,3 +95,28 @@ mvn verify
 ```
 
 The `mvn verify` command will generate a Checkstyle report, Jacoco report and a Spotbugs report. The Checkstyle reports are located in [persistence](/chore-manager/persistence/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The Spotbugs reports are located in [persistence](/chore-manager/persistence/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).
+
+
+
+## How to make shippable
+
+```shell
+cd chore-manager/
+```
+
+Then run this command:
+
+```shell
+mvn javafx:jlink -f ./ui/pom.xml
+```
+
+This will generate a jlink image of the project located in [ui](/chore-manager/ui/target). Inside the chore-manager folder there will be generated four folders; [bin](/chore-manager/ui/target/chore-manager/bin), conf[conf](/chore-manager/ui/target/chore-manager/conf), [legal](/chore-manager/ui/target/chore-manager/legal), lib[lib](/chore-manager/ui/target/chore-manager/lib), including a text file called [release](/chore-manager/ui/target/chore-manager/release). While the project could be run from the (/chore-manager/ui/target/chore-manager/bin/chore-manager-app/) script located in [bin](/chore-manager/ui/target/chore-manager/bin), this isn't very user-friendly and that's where jpackage comes into the picture.
+
+
+```shell
+mvn jpackage:jpackage -f ./ui/pom.xml
+```
+
+Depending on the operating system you are running this command will create a bundle Java applications along with a Java runtime into native platform-specific packages and installers. Again depending on your OS, you will then proceed normally like downloading any other application. This executable will be placed in [dist](/chore-manager/ui/target/dist).
+
+For the application to work properly you must also make sure to run the API in the background. Like any other application, our application too needs a backend server. Instructions to run the API can be found above.
