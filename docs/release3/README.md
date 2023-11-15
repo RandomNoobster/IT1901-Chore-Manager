@@ -197,24 +197,10 @@ In practice, our application would benefit better from client-side caching, as m
 
 ### Sensitive information
 
+Our API hides sensitive information from the user, unless it is information about the authorized user itself (e.g. when logging in). This is done by creating a restricted class which does not have sensitive attributes (See [`RestrictedPerson`](/chore-manager/core/src/main/java/core/data/RestrictedPerson.java) and [`RestrictedCollective`](/chore-manager/core/src/main/java/core/data/RestrictedPerson.java)). An example is when getting a collective, we return a `RestrictedCollective`-object, which do not have any attributes for persons in the collective, and therefore does not expose sensitive information about them. The same applies for `RestrictedPerson`, which does not have any attributes for password, which means you only get information about the username and display name.  
 
-
-Hide information about other users and collectives, we do not want to expose sensitive information
-RestricedPerson and RestricedCollective
-
-All validation and checking is done in the back-end, to not expose any sensitive information to the user., 
-
-For-example when checking trying to log in, we don't call a method which returns all users, then check if the logging information match any of those users. Instead we have a method in the back-end, which takes in the username and password, and checks if it matches any of the users, then returns only that user. By doing this, you could never get access to a user without their password.
-
-
-
-
-
-
-
-
-
+In addition, all validation and checking is done in the back-end, to not expose any sensitive information to the user. 
+For-example when checking trying to log in, we don't call a method which returns all users, then check if the logging information match any of those users. Instead we have a method in the back-end, which takes in the username and password, and checks if it matches any of the users, then returns only that user.
 
 ## Refactor of `Password` class
 
-We never store the actual password in clear text, we instead store a hash of the password.
