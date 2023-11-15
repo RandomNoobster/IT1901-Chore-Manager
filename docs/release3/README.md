@@ -8,6 +8,8 @@
 
 ### Acceptance criteria for deliverable 3
 
+Instead of creating a new client, we are going to implement more features.
+
 **Complete:**
 - ["Scoreboard"](../../UserStory.md)
 - ["Popularity contest"](../../UserStory.md)
@@ -65,6 +67,8 @@ After creating a user, or logging in to a user that has not yet been assigned to
 
 Finally, you will be taken to the main page, "the calendar" page. From here you can log out again, by clicking "Log out", go to the leaderboard for your collective by clicking the "Leaderboard" button, copy your collectives code by clicking the "Code: [collective code]" button, or you can create chores. Create day-chores by clicking "Add" on a specific day, or create week-chores by clicking "Add" next to the number of the week you want to add a week-chore to. If you have created chores already, you can click on the created chores to view more info about them.
 
+[Click here](../../chore-manager/README.md) for a more in depth description of how all scenes interact.
+
 ## Diversions from the original plan
 
  Overall we followed the plan for minimum viable product described in the graphic [presented in the readme of deliverable 1](../release1/README.md) closely, but made some diversions. These diversions were mainly in the name of consistency.
@@ -90,7 +94,7 @@ Secondly, between deliverables 1 and 2, we created most "page-types" needed for 
  |:--:|
  |Pages follow a clear structure|
 
-Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one page to another, which we had done up to that point, we defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
+Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one page to another, which we had done up to that point, we instead followed the "Don't Repeat Yourself" (DRY)principle. We defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
 
 ```java
 public static void switchScene(String fxmlName) {
