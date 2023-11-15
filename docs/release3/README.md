@@ -121,7 +121,7 @@ According to JaCoCo, our test coverage was at about 70% after the second deliver
 When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this by being aware of it and writing tests that explicitly test all the code we want to test.
 
 ## Environments / Isolation
-We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data, as we needed to be extremely careful to overwrite all file paths in tests. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of choosing the file, as the file name is defined in the `.env`-files.  
+We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data. Previously we needed to manually change the file paths in tests, if we failed to change the file path somewhere, we would overwrite our main text file with test data. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of choosing the file, as the file name is defined in the `.env`-files.  
 
 Although it is not recommended to push .env-files to GitLab, and instead share it confidentially within the team. We needed to push it to the remote repository, so that the app has the necessary information without needing to contact us when grading. In addition, our .env files do not contain any sensitive information.
 
@@ -158,7 +158,6 @@ The JSON representation of the data is as follows:
                         "creator": "Christian",
                         "timeTo": "2023-11-13",
                         "color": "#FFFFFF",
-                        "isWeekly": false,
                         "choreName": "Chore Test",
                         "checked": false,
                         "uuid": "ad1fc218-5a7b-4720-9e53-14c0558a42da",
@@ -211,7 +210,6 @@ The JSON representation of the data is as follows:
                         "creator": "TestUser",
                         "timeTo": "2023-11-14",
                         "color": "#334DB3",
-                        "isWeekly": false,
                         "choreName": "Ta ut av oppvaskmaskinen",
                         "checked": false,
                         "uuid": "7902f9f0-a4b2-4115-9a65-b6b04ec95f76",
@@ -224,7 +222,6 @@ The JSON representation of the data is as follows:
                         "creator": "TestUser",
                         "timeTo": "2023-11-16",
                         "color": "#FFFFFF",
-                        "isWeekly": false,
                         "choreName": "Ta ut søpla",
                         "checked": false,
                         "uuid": "50dd48b6-133c-46ad-bbd8-bda8de938c78",
@@ -266,7 +263,7 @@ It would not be difficult to make our API stateless, but it would take a lot of 
 #### Format
 We utilize two different controllers, each associated with its respective context path: `storage/` and `state/`, which correspond to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we use `state/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
 
-Our endpoints does not use verbs, like `getPerson`, `addPerson` or `movePerson`, but instead uses nouns, like `GET persons/{uuid}`, `POST persons/{uuid}` and `PUT persons/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
+Our endpoints does not use verbs, like `getPerson`, `addPerson` or `movePerson`, but instead uses nouns, like `GET persons/{uuid}`, `POST persons/{uuid}` and `PUT persons/{uuid}`, where `GET`, `POST` and `PUT` are HTTP methods. The reason for not needing verbs is because the HTTP methods already specify the action, and therefore there is no need to explicitly specify it in the endpoint.
 
 The format for a request should be as follows:
 ```
