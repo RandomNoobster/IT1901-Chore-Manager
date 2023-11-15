@@ -29,12 +29,8 @@ public class StorageTest {
     private static final int DEFAULT_PERSONS_SIZE = 4;
     private static final int DEFAULT_CHORES_SIZE = 1;
 
-    /**
-     * Sets the current environment to test
-     */
     @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
+    public static void resetStorage() {
         Storage.deleteInstance();
         Storage.getInstance().deleteFile();
     }

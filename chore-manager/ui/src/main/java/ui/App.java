@@ -123,8 +123,17 @@ public class App extends Application {
      * Gets the data access layer.
      */
     public static DataAccess getDataAccess() {
-        EnvironmentConfigurator configurator = new EnvironmentConfigurator();
-        URI apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        URI apiBaseEndpoint;
+        try {
+            EnvironmentConfigurator configurator = new EnvironmentConfigurator();
+            apiBaseEndpoint = configurator.getAPIBaseEndpoint();
+        } catch (RuntimeException e) {
+            // JPackage application may not find the env files, (but the backend still may, so the
+            // application will still function).
+            System.out.println("COULD NOT FIND ENV FILES. USING LOCALHOST FOR THE API.");
+            apiBaseEndpoint = URI.create("http://localhost:8080/");
+        }
+
         if (apiBaseEndpoint != null) {
             DataAccess dataAccess = new RemoteDataAccess(apiBaseEndpoint);
             setCorrectMode(dataAccess);
