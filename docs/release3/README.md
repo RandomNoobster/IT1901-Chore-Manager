@@ -137,20 +137,13 @@ If any of these commands fail, the pipeline will fail, and the merge request wil
 
 
 ## REST API
-In this release we needed to create a REST API. 
-
-All UI-views does not use `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
-
-We have endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use HTTP Methods POST, GET, PUT, DELETE. 
-
-### Fetching
-
-Not overfetch
+In this release we needed to create a REST API. We have tried to follow best practices and industry standard while building it. We have endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE.  
+As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
 
 #### Format
 We have two different controllers and subsequentially two different context paths: `storage/` and `state/`, which correspond to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we do not use `storage/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
 
-Our endpoints does not use verbs, like `getChores` or `createChore`, but instead uses nouns, like `chores` and `chores/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
+Our endpoints does not use verbs, like `getPerson`, `addPerson` or `movePerson`, but instead uses nouns, like `GET persons/{uuid}`, `POST persons/{uuid}` and `PUT persons/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
 
 The format for a request should be as follows:
 ```
@@ -182,13 +175,22 @@ Here is the example of the response from the API request above (formatted from a
 
 Some endpoints also require a body to be sent in the request. For example `POST storage/persons/{username}` which adds a user defined in the body.
 
+### Fetching
+
+One thing to be careful about when building an API is to avoid over-fetching. We could in practice, have a method which gets all collectives (which contains all information about persons and chores), then cache it, then never need to perform another GET request (until data is invalidated with a POST, PUT or DELETE request), but this is considered bad practice. If we were to do this, we would fetch information that we would never need, like information about other collectives which you are not a part of. Another massive issue with a solution like that, would be that we would return data that the user should not have access to, like other users' passwords. We instead made sure to make endpoints which returns only the information that is needed, and the user should not get access to any information that is not relevant to them. This is done by having multiple smaller endpoints, instead of one large which returns everything. To give an example `getAllCollectives`-endpoint got turned into `getCollective`-, `getPerson`- and `getChores`-endpoints.
+
+### Caching
+
+
+
 ### Sensitive information
 
 Hide information about other users and collectives, we do not want to expose sensitive information
 RestricedPerson and RestricedCollective
 
-### Caching
+All validation and checking is done in the back-end, to not expose any sensitive information to the user., 
 
+For-example when checking trying to log in, we don't call a method which returns all users, then check if the logging information match any of those users. Instead we have a method in the back-end, which takes in the username and password, and checks if it matches any of the users, then returns only that user. By doing this, you could never get access to a user without their password.
 
 
 
