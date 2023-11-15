@@ -128,6 +128,8 @@ public class App extends Application {
             EnvironmentConfigurator configurator = new EnvironmentConfigurator();
             apiBaseEndpoint = configurator.getAPIBaseEndpoint();
         } catch (RuntimeException e) {
+            // JPackage application may not find the env files, (but the backend still may, so the
+            // application will still function).
             System.out.println("COULD NOT FIND ENV FILES. USING LOCALHOST FOR THE API.");
             apiBaseEndpoint = URI.create("http://localhost:8080/");
         }
