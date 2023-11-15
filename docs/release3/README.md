@@ -7,8 +7,8 @@ According to JaCoCo, our test coverage was at about 70% after the second deliver
 
 When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this by being aware of it and writing tests that explicitly test all the code we want to test.
 
-## Environments
-We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file, with our test data, and we needed to be extremely careful to overwrite all file paths in tests. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of setting the file path, as the file path is defined in the `.env`-files.  
+## Environments / Isolation
+We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data, and we needed to be extremely careful to overwrite all file paths in tests. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of setting the file path, as the file path is defined in the `.env`-files.  
 
 Although it is not recommended to push .env-files to GitLab, and instead share it confidentially within the team. We needed to push it to master, so that the app has the necessary information without needing to contact us when grading. In addition, our .env files do not contain any sensitive information.
 
@@ -138,7 +138,21 @@ If any of these commands fail, the pipeline will fail, and the merge request wil
 
 ## REST API
 In this release we needed to create a REST API. We have tried to follow best practices and industry standard while building it. We have endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE.  
+
+
+Client-server decoupling
+
 As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
+
+Note:
+At the time of writing this documentation, we noticed the REST API is not stateless. This means the API stores information about the authorized user, which should instead be provided on each request. Our `StateController` stores the currently logged in user, which should instead be stored in the frontend. Although our API would conform better with the REST standard if it was stateless, we have decided to leave it as it is. This is because it would require a lot of development time and code changes in order to make our REST API stateless, and other issues are more pressing.
+It would not be difficult to make these changes, but it would take a lot of time, here is a list of changes which would need to be made in order to make our API stateless:
+- Move `State` to UI, and store the currently logged in user there.
+- Remove all methods in `State` which manipulates data and move them into `Storage`.
+- Remove `StateController` and move most methods into `StorageController`.
+- Send the username and password on each request
+- Create a function in backend which checks if the username and password matches, then use this information to decide if the user is authorized to perform this request or not.
+- Now the API would be stateless, as it would not store any information about the client
 
 #### Format
 We have two different controllers and subsequentially two different context paths: `storage/` and `state/`, which correspond to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we do not use `storage/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
@@ -181,7 +195,10 @@ One thing to be careful about when building an API is to avoid over-fetching. We
 
 ### Caching
 
+Caching is essential in reducing server load and latency. By caching frequently accessed data, we can reduce the time the server has to spend on processing a request. In our API we have used Spring Boot's inbuilt caching implementation, which is applied with the `@Cacheable`-annotation. In addition we can invalidate data with `@CacheEvict`, when we change the corresponding data. Because we are using Spring Boot's implementation in the back-end, it is the server which caches the data, and not the client (server-side caching).  
 
+- Reduce server load
+- Reduce latency
 
 ### Sensitive information
 
