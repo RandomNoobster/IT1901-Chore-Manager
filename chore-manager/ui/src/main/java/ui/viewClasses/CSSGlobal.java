@@ -1,5 +1,8 @@
 package ui.viewClasses;
 
+/**
+ * A class containing global CSS variables.
+ */
 public class CSSGlobal {
     public static final int SCROLLBAR_WIDTH = 12;
     public static final int BUTTON_HEIGHT = 30;

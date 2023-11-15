@@ -8,13 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+
+import core.BaseTestClass;
 
 /**
  * Tests for the {@link Password} class.
  */
-public class PasswordTest {
+public class PasswordTest extends BaseTestClass {
 
     private String validPasswordString = "Password123";
     private String invalidPasswordString = "password";
@@ -27,14 +28,6 @@ public class PasswordTest {
         this.illegalPasswords.add("password1"); // No uppercase
         this.illegalPasswords.add("PASSWORD1"); // No lowercase
         this.illegalPasswords.add("Password"); // No digit
-    }
-
-    /**
-     * Sets the current environment to test
-     */
-    @BeforeAll
-    public static void setTestEnvironment() {
-        System.setProperty("env", "test");
     }
 
     /**
@@ -102,5 +95,31 @@ public class PasswordTest {
 
         assertTrue(password1.equals(password2));
         assertFalse(password1.equals(password3));
+    }
+
+    /**
+     * Test that the equals method compares passwords correctly.
+     */
+    @Test
+    public void testEquals() {
+        Password password1 = new Password("Password123");
+        Password password2 = new Password("Password123");
+        Password password3 = new Password("DifferentPassword098");
+
+        assertTrue(password1.equals(password2));
+        assertFalse(password1.equals(password3));
+    }
+
+    /**
+     * Test that the hashCode method generates hash codes correctly.
+     */
+    @Test
+    public void testHashCode() {
+        Password password1 = new Password("Password123");
+        Password password2 = new Password("Password123");
+        Password password3 = new Password("DifferentPassword098");
+
+        assertTrue(password1.hashCode() == password2.hashCode());
+        assertFalse(password1.hashCode() == password3.hashCode());
     }
 }

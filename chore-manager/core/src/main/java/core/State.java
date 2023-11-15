@@ -63,8 +63,8 @@ public class State {
      * @param user The user to set as the logged in user.
      */
     public void logIn(Person user, Collective collective) {
-        this.loggedInUser = user;
-        this.currentCollective = collective;
+        setCurrentUser(user);
+        setCurrentCollective(collective);
     }
 
     /**
@@ -100,6 +100,9 @@ public class State {
      * @return The chore with the given uuid.
      */
     public Chore getChoreInCurrentCollective(UUID uuid) {
+        if (this.currentCollective == null) {
+            throw new NullPointerException("Current collective is null, cannot get chore");
+        }
         List<Chore> chores = this.currentCollective.getChoresList();
         Chore chore = null;
         for (Chore c : chores) {
