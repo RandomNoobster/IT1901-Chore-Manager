@@ -141,5 +141,37 @@ In this release we needed to create a REST API
 
 All UI-views does not use `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
 
+We have endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use HTTP Methods POST, GET, PUT, DELETE. 
+
+### Fetching
+
+Not overfetch
+
+
+### Sensitive information
+
+Hide information about other users and collectives, we do not want to expose sensitive information
+RestricedPerson and RestricedCollective
+
+### Caching
+
+
+### Other Best practices
+
+#### Using nouns instead of verbs
+Our endpoints does not use verbs, like `getChores` or `createChore`, but instead uses nouns, like `chores` and `chores/{uuid}`. This is because the HTTP methods already specify the action, and therefore we do not need to specify it in the endpoint.
+
+#### Logical nesting in endpoints
+We have logical nesting in our endpoints, which can be seen with the use of `storage/` and `state/`, which corresponding to the `Storage` and `State` classes. This makes it easier to understand the endpoints, and makes it easier to find the endpoints you are looking for. This means if you want to do something about that is relevant to the currently logged in collective, you would use the `state/` endpoints. An example is `POST: chores/{uuid}` which creates a new chore in the currently logged in collective. As this is relevant to the current collective, we do not use `storage/`. However creating a new person, does not depend on the currently logged in collective (as we have not logged into any collective yet), and therefore we use `storage/` as the endpoint.
+
+
+
+
+
+
+
+
+
 ## Refactor of `Password` class
 
+We never store the actual password in clear text, we instead store a hash of the password.
