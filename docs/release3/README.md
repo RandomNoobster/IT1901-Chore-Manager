@@ -1,7 +1,7 @@
 # Deliverable 3
 
 ## Application progress
-**For deliverable 1 and 2, we implemented these user stories:**
+**For deliverables 1 and 2, we implemented these user stories:**
 - **"Lisa’s mid-mid-life crisis"**
 - **Fading plants**
 - **Jealousy, jealousy**
@@ -14,17 +14,26 @@
 - ["Chopping down Christmas tree in july?"](../../UserStory.md)
 - ["'Do(n't) put off until tomorrow what you can do today' - Benjamin Franklin"](../../UserStory.md)
 - ["Spacetime"](../../UserStory.md)
+- ["Detective"](../../UserStory.md)
+
 
 **A user should be able to:**
-- Receive stated amount of points when having done a chore
+- Receive the stated amount of points when having done a chore
 	- The points will add up, and everyone in the group should be able to see the "scoreboard" (from **Scoreboard**)
-- Create a group. Each group has its own calendar view, where the groups members can view their tasks (from **Popularity contest**)
-- The group should have a unique code, that can be passed around to roommates so that they can join the group when they first sign up. (from **Popularity contest**)
-- Delete tasks (from **Chopping down christmas...**)
+- Create a group. Each group has its own calendar view, where the groups members can view their chores (from **Popularity contest**)
+- The group should have a unique code, that can be passed around to roommates so that they can join the group when they first sign up (from **Popularity contest**)
+- Delete chores (from **Chopping down christmas...**)
 - Mark a chore as completed if completed (from **'Do(n't) put off until...**)
 - If the chore is not completed within the time frame it is sat to, it should be pushed to the next day and marked as high priority. This could be achieved by changing the styling and marking it in red (from **'Do(n't) put off until...**)
 - State how many weeks a chore should repeat in the chore-creation menu (from **Spacetime**)
 - Create chores that can be done every day of the week (from **Spacetime**)
+- View:
+  - name of the chore
+  - when the chore is overdue
+  - the status of the chore
+  - who the chore is assigned to 
+  in a menu (from **Detective**)
+
 
 ### How far we got
 
@@ -56,7 +65,7 @@ After creating a user, or logging in to a user that has not yet been assigned to
 
 Finally, you will be taken to the main page, "the calendar" page. From here you can log out again, by clicking "Log out", go to the leaderboard for your collective by clicking the "Leaderboard" button, copy your collectives code by clicking the "Code: [collective code]" button, or you can create chores. Create day-chores by clicking "Add" on a specific day, or create week-chores by clicking "Add" next to the number of the week you want to add a week-chore to. If you have created chores already, you can click on the created chores to view more info about them.
 
-## Diversion from the original plan
+## Diversions from the original plan
 
  Overall we followed the plan for minimum viable product described in the graphic [presented in the readme of deliverable 1](../release1/README.md) closely, but made some diversions. These diversions were mainly in the name of consistency.
 
@@ -81,7 +90,7 @@ Secondly, between deliverables 1 and 2, we created most "page-types" needed for 
  |:--:|
  |Pages follow a clear structure|
 
-Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one scene to another, which we had done up to that point, we defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
+Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one page to another, which we had done up to that point, we defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
 
 ```java
 public static void switchScene(String fxmlName) {
@@ -95,8 +104,11 @@ public static void switchScene(String fxmlName) {
 }
 ```
 
+Another diversion was a switch from weekly, recurring chores, to the ability to state how many weeks a chore should repeat. Weekly tasks were tasks that were going to reoccur every week, until it was deleted by a user. We instead gave the user the ability to choose how many weeks a chore should repeat, as deletion should be reserved for when the user has done something wrong, like spelling a chore wrong or assigning the wrong person, and not be something a user is forced to in able to use the application. 
 
-
+ |![Repeating input](images/repeating.png)|
+ |:--:|
+ |The user can decide how many weeks a chore should repeat|
  
 
 ## Test coverage
