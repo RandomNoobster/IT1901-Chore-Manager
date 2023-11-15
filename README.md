@@ -88,7 +88,7 @@ mvn test
 
 A Jacoco report will then be generated in [chore-manager/jacocoAggregateReporter/target/site](/chore-manager/jacocoAggregateReporter/target/site/).
 
-A Checkstyle report will be generated during the first maven phase, `validate`, meaning it will be generated if you run `mvn test`. If you want to generate a Spotbugs report as well, you can run the following command:
+A Checkstyle report will be generated during the first maven phase, `verify`, meaning it will be generated if you run `mvn test`. If you want to generate a Spotbugs report as well, you can run the following command:
 
 ```shell
 mvn verify
