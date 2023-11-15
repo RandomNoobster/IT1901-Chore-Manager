@@ -119,3 +119,61 @@ Another diversion was a switch from weekly, recurring chores, to the ability to 
 According to JaCoCo, our test coverage was at about 70% after the second deliverable. We have worked on improving this and getting as close as possible to 100%. Some code branches are hard to get coverage for since they are only executed in case of an error. We have tried to test these cases as well, but it is not always possible to get 100% coverage.
 
 When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this by being aware of it and writing tests that explicitly test all the code we want to test.
+
+
+
+
+## Workflow 
+
+### General Workflow
+In the last stage of our project, not much has changed when it comes to our general workflow. As before we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer,in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting looking at the requirements for deliverable 3.  
+
+### Issues
+For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible, making it as easy as possible for the developer to deal with. This has also made sure that every issue is dealt with in accordance with the issues level of importance. Most issues we have made has been marked with a tag stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
+
+
+### Branching
+We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). This means that we have a master branch which is the main branch of the project. All issues are branched into their own branch to minimize conflicts and securing that the master branch is always working. We have continued to adopt the same good practices as with previous deliverables. This includes: 
+
+- Creating merge requests when an issue is finished, having at least one teammember reviewe and approve the code before being able to merge with `master`.
+
+- Strict naming convention: `{issue-number}-name-of-branch`. 
+
+This is also documented in [Developer guide](/DEVELOPER_GUIDE.md). 
+
+
+### Milestones
+As with previous deliverables we have created milestones for the project. These milestones have been used to group issues together. 
+
+
+### Pair-programming
+Pair programming has become a notable part of our approach, especially towards the end of the project. As the project grew in size, the development of new features and debugging became increasingly complex. Gradually adopting more and more pair-programming has helped us effectively tackle these complexities and issues. This method has not only improved the overall quality of our code but also streamlined the problem-solving process. By working closely together, we have been able to quickly share insights and alternative perspectives, leading to better solutions and quicker fixes. Additionally, this approach has significantly reduced the occurrence of bugs and errors, ensuring a more reliable and robust end product.
+
+### Agile methods
+Agile methods have gradually become a more significant part of our workflow. As the project has gotten bigger, and more time is spent working outside the set meetings, we've found that Agile practices, particularly Scrum, enhance our flexibility and responsiveness to change. Implementing Scrum has brought structure and clarity to our process, with regular sprints and sprint planning meetings ensuring that we are always working towards well-defined goals. While daily stand-ups for obvious reasons has not been a part of our project, we have implemented a simplified version of the Scrum framework:
+
+- In our project, we've embraced a flexible approach to Scrum, adapting its roles and processes to fit our team's workflow. For roles like the Product Owner and Scrum Master, we've opted for a collaborative approach rather than assigning them to specific individuals. This has encouraged a sense of shared responsibility and made a more inclusive decision-making process.
+
+- Product Backlog: We created lists of user stories consisting of features that could potentially go into the product. This list has evolved throughout the project and each item is prioritized based on its importance and impact on the project.
+
+- Sprint backlog: The highest priority user (aka the feature we decide we want to implement) goes into the sprint backlog. These are the tasks we aim to in the upcoming sprint. 
+
+- Daily (Weekly) Scrum: These have been held during our weekly meetings, where we talk about what we have been working on since the last meeting, what we plan on working on during the meeting, as well as what will be the priority until the next meeting. 
+
+- Sprint: A sprint typically lasts for 1-4 weeks, meaning each deliverable could be viewed as a sprint. 
+
+All the above steps combined describe how we have implemented a "Scrum light" framework.  It offers the structured framework of traditional Scrum, yet provides the adaptability we needed given the fact that this is a school-project. This method has both improved our project management and also enhanced team collaboration and efficiency.
+
+
+### Code-quality
+In regards to our code-quality a lot has stayed the same. We still have the automatic formatter which uses RedHat's default formatting settings. The code is formatted automatically on save, this helps to keep the code style consistent, and makes the development easier, as the developer has less things on their mind. In addition to the formatter, we have also setup other actions to be performed on save:
+- `organizeImports` (add imports + reorganize import order)
+- `qualifyMembers` (automatically add `this` on attributes)
+- `addOverride` (automatically add `@Override` to methods that override a superclass method)
+
+For more information about linters see [release2's README](/docs/release2/README.md).
+
+We have also extensively followed best practices in Java, you can see some of them in the [Developer Guide](/DEVELOPER_GUIDE.md). 
+To ensure a consistent code structure we continue using the MVC-principle, which means that the model, view and controller are separated.
+
+
