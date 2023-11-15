@@ -118,7 +118,7 @@ Another diversion was a switch from weekly, recurring chores, to the ability to 
 ## Test coverage
 According to JaCoCo, our line coverage was at 77% and our branch coverage was at 55% after the second deliverable. We have worked on improving our coverage as much as possible. However, some code branches are hard to get coverage for, since they are only executed in case of an error. We have tried to test these cases as well, but it is not always possible to get 100% coverage. There is also some code that makes no sense to test, i.e. the `main`-method in [`App`](/chore-manager/ui/src/main/java/ui/App.java) or the `main`-method in [`AppApplication`](/chore-manager/springboot/restserver/src/main/java/springboot/restserver/AppApplication.java). 
 
-|![jaCoCo coverage](jaCoCo_coverage_deliverable2.png)|![jaCoCo coverage](jaCoCo_coverage_deliverable3.png)|
+|![jaCoCo coverage](images/jaCoCo_coverage_deliverable2.png)|![jaCoCo coverage](images/jaCoCo_coverage_deliverable3.png)|
 |:--:|:--:|
 |Our test coverage after deliverable 2 as reported by JaCoCo|Our final test coverage as reported by JaCoCo| 
 
