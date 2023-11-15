@@ -110,13 +110,13 @@ Then run this command:
 mvn javafx:jlink -f ./ui/pom.xml
 ```
 
-This will generate a jlink image of the project located in [ui](/chore-manager/ui/target/chore-manager). Inside the chore-manager folder [ui](/chore-manager/ui/target/chore-manager) there will be generated four folders; bin, conf, legal lib, including a text file called release. While the project could be run from the chore-manager.exe script located in [ui](/chore-manager/ui/target/chore-manager/bin), this isn't very user-friendly and that's where jpackage comes into the picture.
+This will generate a jlink image of the project located in [ui](/chore-manager/ui/target). Inside the chore-manager folder there will be generated four folders; [bin](/chore-manager/ui/target/chore-manager/bin), conf[conf](/chore-manager/ui/target/chore-manager/conf), [legal](/chore-manager/ui/target/chore-manager/legal), lib[lib](/chore-manager/ui/target/chore-manager/lib), including a text file called [release](/chore-manager/ui/target/chore-manager/release). While the project could be run from the (/chore-manager/ui/target/chore-manager/bin/chore-manager-app/) script located in [bin](/chore-manager/ui/target/chore-manager/bin), this isn't very user-friendly and that's where jpackage comes into the picture.
 
 
 ```shell
 mvn jpackage:jpackage -f ./ui/pom.xml
 ```
 
-Depending on the operating system you are running this command will create a bundle Java applications along with a Java runtime into native platform-specific packages and installers. Again depending on your OS, you will then proceed normally like downloading any other application. This executable will be placed in [ui](/chore-manager/ui/target/dist).
+Depending on the operating system you are running this command will create a bundle Java applications along with a Java runtime into native platform-specific packages and installers. Again depending on your OS, you will then proceed normally like downloading any other application. This executable will be placed in [dist](/chore-manager/ui/target/dist).
 
-For the application to work properly you must also make sure to run the API in the background. Like any other application, our application too needs a backend server. Instructions to run the API can be found above. 
+For the application to work properly you must also make sure to run the API in the background. Like any other application, our application too needs a backend server. Instructions to run the API can be found above.
