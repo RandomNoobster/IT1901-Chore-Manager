@@ -142,4 +142,5 @@ A new person has joined Lisas collective. They do not understand what the differ
   - when the chore is overdue
   - the status of the chore
   - who the chore is asssigned to
+  - how many points the chore is worth
   in a menu

@@ -34,6 +34,7 @@ Instead of creating a new client, we are going to implement more features.
   - when the chore is overdue
   - the status of the chore
   - who the chore is assigned to 
+  - how many points the chore is worth
   in a menu (from **Detective**)
 
 
@@ -57,7 +58,7 @@ We now have pages for:
 
 ## Description of the finished product
 
- |![State diagram](images/stateDiagram.png)|
+ |![State diagram](../../img/stateDiagram.png)|
  |:--:|
  |State diagram for the application|
 
