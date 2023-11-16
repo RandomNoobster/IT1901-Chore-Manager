@@ -16,6 +16,9 @@ public class RestrictedPerson {
     private String displayName;
     private String collectiveJoinCode;
 
+    private static final Integer ALLOWED_USERNAME = 3;
+    private static final Integer ALLOWED_DISPLAYNAME = 3;
+
     public RestrictedPerson(RestrictedPerson person) {
         this(person.getUsername(), person.getCollectiveJoinCode(), person.getDisplayName());
     }
@@ -38,8 +41,9 @@ public class RestrictedPerson {
      * @param displayName        The display name of the person
      */
     public RestrictedPerson(String username, String collectiveJoinCode, String displayName) {
-        if (username == null || username.isEmpty())
-            throw new IllegalArgumentException("Username cannot be empty");
+        if (!isValid(username, displayName))
+            throw new IllegalArgumentException(getRequirements(username, displayName));
+
         this.username = username;
         this.collectiveJoinCode = collectiveJoinCode;
         this.displayName = displayName;
@@ -129,5 +133,48 @@ public class RestrictedPerson {
     @Override
     public String toString() {
         return this.getUsername();
+    }
+
+    /**
+     * Checks if username and displayName follows correct format, if they dont, false is returned.
+     *
+     * @param username    username of person
+     * @param displayName displayname of person
+     * @return false if issues, true otherwise
+     */
+    public static boolean isValid(String username, String displayName) {
+        return getRequirements(username, displayName) == null;
+    }
+
+    /**
+     * Checks if username and displayName follows correct format, if they dont, a string is returned
+     * with the issues.
+     *
+     * @param username    username of person
+     * @param displayName displayname of person
+     * @return string with issues, otherwise null
+     */
+    public static String getRequirements(String username, String displayName) {
+        if (username == null || username.isEmpty())
+            return "Username cannot be empty";
+        if (displayName == null || displayName.isEmpty())
+            return "Displayname cannot be empty";
+
+        String returnStr = "Issues: ";
+
+        if (username.length() < ALLOWED_USERNAME)
+            returnStr += "\n - Username must be at least " + ALLOWED_USERNAME + " characters";
+
+        if (displayName.length() < ALLOWED_DISPLAYNAME)
+            returnStr += "\n - Displayname must be at least " + ALLOWED_DISPLAYNAME + " characters";
+
+        if (username.contains(" "))
+            returnStr += "\n - Username must not contain space";
+
+        if (returnStr.equals("Issues: "))
+            return null;
+
+        return returnStr;
+
     }
 }
