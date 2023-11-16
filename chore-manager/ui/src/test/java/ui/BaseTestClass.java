@@ -7,8 +7,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.testfx.framework.junit5.ApplicationTest;
 
 import core.data.Collective;
@@ -26,7 +24,6 @@ import ui.dataAccessLayer.RemoteDataAccess;
 /**
  * Basic test class that all other test classes should extend.
  */
-@TestInstance(Lifecycle.PER_CLASS)
 public class BaseTestClass extends ApplicationTest {
 
     protected Parent root;
@@ -58,19 +55,19 @@ public class BaseTestClass extends ApplicationTest {
      * Sets the current environment to test.
      */
     @BeforeAll
-    public void setTestEnvironment() {
+    public static void setTestEnvironment() {
         System.setProperty("env", "test");
         Storage.deleteInstance();
         Storage.getInstance().deleteFile();
         dataAccess.enterTestMode();
         dataAccess.resetAPI();
-        this.setup();
+        BaseTestClass.setup();
     }
 
     /**
      * Sets up the test environment.
      */
-    protected void setup() {
+    protected static void setup() {
         Storage.getInstance().deleteFileContent();
 
         testCollective = new Collective("Test Collective", Collective.LIMBO_COLLECTIVE_JOIN_CODE);
@@ -116,7 +113,7 @@ public class BaseTestClass extends ApplicationTest {
      */
     @BeforeEach
     public void setupItems() {
-        this.setup();
+        setup();
     }
 
     /**
@@ -131,7 +128,7 @@ public class BaseTestClass extends ApplicationTest {
      * After all tests, delete the file.
      */
     @AfterAll
-    public void deleteFile() {
+    public static void deleteFile() {
         Storage.getInstance().deleteFile();
     }
 }
