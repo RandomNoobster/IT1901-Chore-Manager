@@ -26,7 +26,7 @@ public class LeaderboardTest extends BaseTestClass {
     }
 
     @BeforeAll
-    private void boot() {
+    private static void boot() {
         Chore chore = new Chore("Vaske", LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 2), 0,
                 "#000000", testPerson.getUsername(), testPerson.getUsername());
         chore.setChecked(true);
