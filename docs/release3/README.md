@@ -85,7 +85,7 @@ Finally, you will be taken to the main page, "the calendar" page. From here you 
 
 The "Joining collectives" page and the "Creating collectives" page were initially planned to be just one page. However, as we made the pages for joining and creating collectives, we felt that the idea of creating a user and logging into a user, are ideas that each map to creating a collective and joining a collective. Therefore, since joining and creating a user were on separate pages, creating a collective and joining a collective should also be, for consistency. 
 
-Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. The "Viewing info about chores" page was intended to just be a popup where you could mark a chore as done, however, we realised that we needed a way to display extra information, and because of that this also ended up being its own page. **The reasons we were able to add these extra pages were threefold.**
+Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. The "Viewing info about chores" page was intended to just be a popup where you could mark a chore as done, however, we realized that we needed a way to display extra information, and because of that this also ended up being its own page. **The reasons we were able to add these extra pages were threefold.**
 
 Firstly, we originally planned that the creation of week-chores (chores that can be done over a week), and the creation of day-chores (chores that need to be done on a specific day), should have their own pages. This ended up not being necessary as the only difference between a week-chore and a day-chore, is that day-chores have the same start and end date, while week-chores end-date are 7 days after their start date. Therefore they both got the same creation page. Therefore we saved a bit of time on that. 
 
@@ -355,14 +355,14 @@ We have taken the Builder design pattern into use, which creates a `PasswordVali
 ## Workflow 
 
 ### General Workflow
-In the last stage of our project, a bit has changed when it comes to our general workflow. As before we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer,in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting looking at the requirements for deliverable 3. What has changed is that we have made greater use of pair-programming, and agile methods like the Scrum framework, which I will come back to. 
+In the last stage of our project, a bit has changed when it comes to our general workflow. As before, we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer, in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting to look at the requirements for deliverable 3. During our last deliverable we have made greater use of pair-programming, and agile methods like the Scrum framework, which we will come back to. 
 
 ### Issues
-For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible, making it as easy as possible for the developer to deal with. This has also made sure that every issue is dealt with in accordance with the issues level of importance. Most issues we have made has been marked with a label stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
+For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible with a well-defined scope, making it as easy as possible for the developer to deal with.Furthermore, we have made sure that every issue is dealt with in accordance with the issues level of importance. Most issues have been marked with a label stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
 
 
 ### Branching
-We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). Our master branch houses our production-ready code,  All issues are branched into their own branch to minimize conflicts and securing that the master branch is always working. We have continued to adopt the same good practices as with previous deliverables. This includes: 
+We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). Our master branch houses our production-ready code, and each issue is branched out from master into their own separate branch. By working on separate branches it becomes easier to maintain the correct changes while minimizing the risk of overwriting each other by accident. We have continued to adopt the same good practices as with previous deliverables. This includes: 
 
 - Creating merge requests when an issue is finished, having at least one team member review and approve the code before being able to merge with `master`.
 
@@ -370,17 +370,16 @@ We have continued to use branching diligently throughout the project until the e
 
 This is also documented in [Developer guide](/DEVELOPER_GUIDE.md). 
 
-Small and frequent commits have helped in tracking changes and easier identifying when and why a particular change was made.
-
-When merging to the master branch, we choose to keep the history from the branches (Merge commits). The alternative would be to squash our commits into a single commit, which do provide a shorter and cleaner, but also loses context, and it becomes more difficult to identify introductions of bugs as the history is condensed. There is pros and cons to everything, but for out particular project we found this to be the superior solution. 
+We have adopted to small and frequent commits, which has helped in tracking changes and easier identifying when and why a particular change was made.
+When merging to the master branch, we choose to keep the history from the branches (merge commits). The alternative would be to squash our commits into a single commit, which do provide a shorter and cleaner history, but also loses context, and it becomes more difficult to identify introductions of bugs as the history is condensed.
 
 
 ### Milestones
-As with previous deliverables we have created milestones for the project. These milestones have been used to group issues together. 
+As with previous deliverables we have created milestones for the project. These milestones have been used to group issues together. By grouping issues together it becomes easier to prioritize and filter issues based on their relevance and importance to the final goal of the milestone. The milestones act as a deadline, and help us with time-based planning. It also allows us to quickly assess the overall status of a milestone, and how much remains to be done. This has been a useful tool for us, and has helped us stay on track and meet our deadlines.
 
 
 ### Pair-programming
-Pair programming has become a notable part of our approach, especially towards the end of the project. As the project grew in size, the development of new features and debugging became increasingly complex. Gradually adopting more and more pair-programming has helped us effectively tackle these complexities and issues. This method has not only improved the overall quality of our code but also streamlined the problem-solving process. By working closely together, we have been able to quickly share insights and alternative perspectives, leading to better solutions and quicker fixes. Additionally, this approach has significantly reduced the occurrence of bugs and errors, ensuring a more reliable and robust end product.
+Pair programming has become a notable part of our approach, especially towards the end of the project. As the project grew in size, the development of new features and debugging became increasingly complex. Gradually adopting more and more pair-programming has helped us effectively tackle these complexities and issues. This method has not only improved the overall quality of our code but also streamlined the problem-solving process. By working closely together, we have been able to quickly share insights and alternate perspectives, leading to better solutions and quicker fixes. Additionally, this approach has significantly reduced the occurrence of bugs and errors, ensuring a more reliable and robust end product.
 
 ### Agile methods
 Agile methods have gradually become a more significant part of our workflow. As the project has gotten bigger, and more time is spent working outside the set meetings, we've found that Agile practices, particularly Scrum, enhance our flexibility and responsiveness to change. Implementing Scrum has brought structure and clarity to our process, with regular sprints and sprint planning meetings ensuring that we are always working towards well-defined goals. While daily stand-ups for obvious reasons has not been a part of our project, we have implemented a simplified version of the Scrum framework:
@@ -389,19 +388,22 @@ Agile methods have gradually become a more significant part of our workflow. As 
 
 - Product Backlog: We created lists of user stories consisting of features that could potentially go into the product. This list has evolved throughout the project and each item is prioritized based on its importance and impact on the project.
 
-- Sprint backlog: The highest priority user (aka the feature we decide we want to implement) goes into the sprint backlog. These are the tasks we aim to in the upcoming sprint. 
+- Sprint backlog: The user stories with the highest priority (in other words the feature we decide we want to implement) goes into the sprint backlog. These are the tasks we aim to in the upcoming sprint. 
 
 - Daily (Weekly) Scrum: These have been held during our weekly meetings. Three main talking points in the weekly scrum, aka standup-meetings:
 - What I did since our last meeting
 - What I plan to work on today and until our next meeting
 - Any impediments or blockers
 
-The ladder might need some more explanation. Team members communicate any obstacles or challenges they are facing that may hinder their progress. Examples include dependencies on other team members or technical issues. By talking about the obstacle, the team can quickly identify and share knowledge to address the issue, which reduces the amount of time a team members stays stuck on a problem.
+The latter is arguably the most important. In this part, team members communicate any obstacles or challenges they are facing that may hinder their progress. Examples include dependencies on other team members or technical issues. By talking about the obstacle, the team can quickly identify and share knowledge to address the issue, which reduces the amount of time a team members stays stuck on a problem.
 
 - Sprint: A sprint typically lasts for 1-4 weeks, meaning each deliverable could be viewed as a sprint. 
 
-All the above steps combined describe how we have implemented a "Scrum light" framework.  It offers the structured framework of traditional Scrum, yet provides the adaptability we needed given the fact that this is a school-project. This method has both improved our project management and also enhanced team collaboration and efficiency.
+All the above steps combined describe how we have implemented a "Scrum light" framework. It offers the structured framework of traditional Scrum, yet provides the adaptability we needed given the fact that this is a school-project. This method has both improved our project management and also enhanced team collaboration and efficiency.
 
+### Communication
+
+Our team did not suffer from communication issues, and because of this, we never had multiple team member accidentally working on the same issue, producing duplicate work. Since we communicated effectively, we were also very aware of merge conflicts. We knew when certain merge conflicts would emerge, and therefore planned accordingly to ensure both team members were present to discuss which changes to keep.
 
 ### Code-quality
 In regards to our code-quality a lot has stayed the same. We still have the automatic formatter which uses RedHat's default formatting settings. The code is formatted automatically on save, this helps to keep the code style consistent, and makes the development easier, as the developer has less things on their mind. In addition to the formatter, we have also setup other actions to be performed on save:
@@ -414,12 +416,10 @@ For more information about linters see [release2's README](/docs/release2/README
 We have also extensively followed best practices in Java, you can see some of them in the [Developer Guide](/DEVELOPER_GUIDE.md). 
 To ensure a consistent code structure we continue using the MVC-principle, which means that the model, view and controller are separated.
 
-We also ensure to always comment and document our code, so that the next person who reads the code can quickly understand it. This has been very benificial for the workflow internal in the group but it also makes makes it a lot easier for outsiders to view and understand the code that we have written. Not only does this make the process of evaluating and giving feedback on the project a lot easier, it also makes going back to the project in the future a lot easier. One scenario could be that we at a later point want to continue to the develop the application with new features. This might be with the existing team, but also with new team members. In any case, having code with well structured commenting and documentation makes it a lot easier. 
+We also ensure to always comment and document our code, so that the next person who reads the code can quickly understand it. This has been very beneficial for the internal workflow within the group, but it also makes makes it a lot easier for outsiders to view and understand the code that we have written. Not only does this make the process of evaluating and giving feedback on the project a lot easier, it also makes going back to the project in the future a lot easier. One scenario could be that we at a later point want to continue to the develop the application with new features. This might be with the existing team, but also with new team members. In any case, having code with well structured commenting and documentation makes it a lot easier. 
 
-Another important aspect of the code quality is the naming of functions, variables, classes etc.. Utalizing a good naming convention with descriptive names can be equally beneficial in order to read and understand the code. 
+Another important aspect of the code quality is the naming of functions, variables, classes etc. Utilizing a consistent naming convention with descriptive names can be equally beneficial in order to read and understand the code. 
 
-As mentioned before, in order to merge to the master branch, we have required at least one other team member to review the code. This has made it a lot easier to spot anti-patterns and suggest better alternatives. Overall this has been a hugh contribution to our code-quality and also probably saved us a lot of work not having to go back in old code and review it and make improvements to it at a later stage. Spotting bugs and potential errors before production is something we strive to achieve. 
+As mentioned before, in order to merge to the master branch, we have required at least one other team member to review the code. This has made it a lot easier to spot anti-patterns and suggest better alternatives. Overall this has been a huge contribution to our code-quality and has probably saved us lots of work by not having to refactor code at a later stage. Spotting bugs and potential errors before production is something we strive to achieve. 
 
 
-
-Refactoring???
