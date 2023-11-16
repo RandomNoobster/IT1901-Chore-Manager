@@ -65,6 +65,10 @@ public class RemoteDataAccess implements DataAccess {
         return URI.create(builder.toString());
     }
 
+    private boolean successfulStatusCode(HttpResponse<String> response) {
+        return response.statusCode() >= 200 && response.statusCode() < 300;
+    }
+
     @Override
     public RestrictedCollective getCollective(String joinCode) {
         if (joinCode == null || joinCode.isEmpty())
@@ -74,13 +78,14 @@ public class RemoteDataAccess implements DataAccess {
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
-            if (responseBody == null || responseBody.isEmpty())
+            if (!this.successfulStatusCode(response) || responseBody == null
+                    || responseBody.isEmpty())
                 return null;
 
             // Deserialize the response body
@@ -105,7 +110,7 @@ public class RemoteDataAccess implements DataAccess {
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers
                         .ofString(Collective.encodeToJSONObject(collective).toString()))
                 .build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -123,7 +128,7 @@ public class RemoteDataAccess implements DataAccess {
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).DELETE().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -145,13 +150,14 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_FORM_URLENCODED).GET().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
-            if (responseBody == null || responseBody.isEmpty())
+            if (!this.successfulStatusCode(response) || responseBody == null
+                    || responseBody.isEmpty())
                 return null;
 
             // Deserialize the response body
@@ -176,7 +182,6 @@ public class RemoteDataAccess implements DataAccess {
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
 
-        System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -204,7 +209,7 @@ public class RemoteDataAccess implements DataAccess {
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .PUT(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -228,7 +233,7 @@ public class RemoteDataAccess implements DataAccess {
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -246,7 +251,7 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).POST(HttpRequest.BodyPublishers.noBody())
                 .build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -263,13 +268,14 @@ public class RemoteDataAccess implements DataAccess {
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
-            if (responseBody == null || responseBody.isEmpty()) {
+            if (!this.successfulStatusCode(response) || responseBody == null
+                    || responseBody.isEmpty()) {
                 System.out.println("No user was logged in");
                 return null;
             }
@@ -288,13 +294,14 @@ public class RemoteDataAccess implements DataAccess {
 
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
-            if (responseBody == null || responseBody.isEmpty())
+            if (!this.successfulStatusCode(response) || responseBody == null
+                    || responseBody.isEmpty())
                 return null;
 
             // Deserialize the response body
@@ -317,7 +324,7 @@ public class RemoteDataAccess implements DataAccess {
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString())).build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -335,7 +342,7 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON).DELETE().build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -355,7 +362,7 @@ public class RemoteDataAccess implements DataAccess {
                 .header(ACCEPT_HEADER, APPLICATION_JSON)
                 .header(CONTENT_TYPE_HEADER, APPLICATION_JSON)
                 .PUT(HttpRequest.BodyPublishers.noBody()).build();
-        System.out.println("REQUEST: " + request.toString());
+
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -373,7 +380,6 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
 
-        System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
@@ -404,13 +410,13 @@ public class RemoteDataAccess implements DataAccess {
         HttpRequest request = HttpRequest.newBuilder(endpoint)
                 .header(ACCEPT_HEADER, APPLICATION_JSON).GET().build();
 
-        System.out.println("REQUEST: " + request.toString());
         try {
             final HttpResponse<String> response = HttpClient.newBuilder().build().send(request,
                     HttpResponse.BodyHandlers.ofString());
             final String responseBody = response.body();
 
-            if (responseBody == null || responseBody.isEmpty())
+            if (!this.successfulStatusCode(response) || responseBody == null
+                    || responseBody.isEmpty())
                 return null;
 
             // Deserialize the response body
