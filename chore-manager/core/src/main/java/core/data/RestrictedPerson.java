@@ -16,8 +16,8 @@ public class RestrictedPerson {
     private String displayName;
     private String collectiveJoinCode;
 
-    private static final Integer ALLOWED_USERNAME = 3;
-    private static final Integer ALLOWED_DISPLAYNAME = 3;
+    private static final int ALLOWED_USERNAME = 3;
+    private static final int ALLOWED_DISPLAYNAME = 3;
 
     public RestrictedPerson(RestrictedPerson person) {
         this(person.getUsername(), person.getCollectiveJoinCode(), person.getDisplayName());
