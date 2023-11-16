@@ -332,3 +332,17 @@ In release 2, our `Password` class stored the password in clear text. In order t
 We also decided to refactor the `Password` class to better follow best practices and design patterns. We now have three classes related to Password, [`Password`](/chore-manager/core/src/main/java/core/data/Password.java), [`PasswordValidator`](/chore-manager/core/src/main/java/core/data/PasswordValidator.java), [`PasswordValidatorBuilder`](/chore-manager/core/src/main/java/core/data/PasswordValidatorBuilder.java).
 By splitting `Password` into three classes, we conform better with the single responsibility principle. `Password` now manages the password, `PasswordValidator` validates the password, and `PasswordValidatorBuilder` builds the validation rules. This helps in maintaining and modifying the code without affecting unrelated functionalities.
 We have taken the Builder design pattern into use, which creates a `PasswordValidator`-object with the rules specified in the `PasswordValidatorBuilder`. This makes it easier to create a `PasswordValidator`-instance, as you do not need to specify all the rules in the constructor, but instead can add them one by one. This also makes it easier to add new rules, as you do not need to change the constructor, but instead add a new method in the `PasswordValidatorBuilder`, which conforms with the Open/Closed Principle.
+
+## Diagrams
+
+ |![Sequence diagram](images/umlDiagrams/choreCreationSequenceDiagram.svg)|
+ |:--:|
+ | This is a simplified sequence diagram for when a user creates a chore|
+
+ |![Package diagram](images/umlDiagrams/choreManagerPackageDiagram.svg)|
+ |:--:|
+ | This is a package diagram of our entire application|
+
+ |![Sequence diagram](images/umlDiagrams/coreDataClassDiagram.svg)|
+ |:--:|
+ | This is a class diagram for our most important classes in the core module|
