@@ -347,3 +347,32 @@ We have taken the Builder design pattern into use, which creates a `PasswordVali
  |![Sequence diagram](images/umlDiagrams/coreDataClassDiagram.svg)|
  |:--:|
  | This is a class diagram for our most important classes in the core module|
+
+### Time management
+
+For tracking time spent, we organized an Excel spreadsheet, where each team member enter a row for what they have done.
+Here is an example:
+![Excel Time Tracking](./images/excelTimeTracking.png)
+
+A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. this is due to the fact that it took longer than planned to develop a robust REST API, which a lot of other code depended on. Another aspect that took longer than expected was the addition of JLink and JPackage.
+
+ |![Burndown chart](./images/burndownChart.png)|
+ |:--:|
+ | Burndown chart for hours spent working on this project. The blue dots represent a deliverable. |
+
+
+
+Time spent on each deliverable (all 4 team members combined):
+| Deliverable | Hours | Total days in deliverable | Hours per day |
+| -----------:| -----:| -------------------------:| -------------:|
+| 1           |  58   | 11 days                   | 5.28          |
+| 2           |  90   | 22 days                   | 4.09          |
+| 3           |  272  | 36 days                   | 7.56          |
+| **Total**   |  **420**  | **69 days**           | **6.09**      |
+
+
+
+
+
+
+
