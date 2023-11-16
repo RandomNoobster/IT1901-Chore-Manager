@@ -85,7 +85,7 @@ Finally, you will be taken to the main page, "the calendar" page. From here you 
 
 The "Joining collectives" page and the "Creating collectives" page were initially planned to be just one page. However, as we made the pages for joining and creating collectives, we felt that the idea of creating a user and logging into a user, are ideas that each map to creating a collective and joining a collective. Therefore, since joining and creating a user were on separate pages, creating a collective and joining a collective should also be, for consistency. 
 
-Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. The "Viewing info about chores" page was intended to just be a popup where you could mark a chore as done, however, we realised that we needed a way to display extra information, and because of that this also ended up being its own page. **The reasons we were able to add these extra pages were threefold.**
+Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. The "Viewing info about chores" page was intended to just be a popup where you could mark a chore as done, however, we realized that we needed a way to display extra information, and because of that this also ended up being its own page. **The reasons we were able to add these extra pages were threefold.**
 
 Firstly, we originally planned that the creation of week-chores (chores that can be done over a week), and the creation of day-chores (chores that need to be done on a specific day), should have their own pages. This ended up not being necessary as the only difference between a week-chore and a day-chore, is that day-chores have the same start and end date, while week-chores end-date are 7 days after their start date. Therefore they both got the same creation page. Therefore we saved a bit of time on that. 
 
@@ -150,25 +150,6 @@ public void initialize() {
 
 ### The model, view, controller principle
 Refactoring in the model parts and additional refactoring in the controller parts of the project was needed to better conform to the model, view, controller principle. A lot of checks when creating accounts and chores were done by their respective controllers, CreateUserController and ChoreCreationController, in UI.  These checks could and should have been done by the respective classes that these controllers create. Therefore we added static isValid and getRequirements methods in both the Chore class and the RestrictedPerson class in core. These were used by the controllers to check inputs given by the users. 
-
-## Test coverage
-According to JaCoCo, our line coverage was at 77% and our branch coverage was at 55% after the second deliverable. We have worked on improving our coverage as much as possible. However, some code branches are hard to get coverage for, since they are only executed in case of an error. We have tried to test these cases as well, but it is not always possible to get 100% coverage. There is also some code that makes no sense to test, i.e. the `main`-method in [`App`](/chore-manager/ui/src/main/java/ui/App.java) or the `main`-method in [`AppApplication`](/chore-manager/springboot/restserver/src/main/java/springboot/restserver/AppApplication.java). 
-
-|![jaCoCo coverage](images/jaCoCo_coverage_deliverable2.png)|![jaCoCo coverage](images/jaCoCo_coverage_deliverable3.png)|
-|:--:|:--:|
-|Our test coverage after deliverable 2 as reported by JaCoCo|Our final test coverage as reported by JaCoCo| 
-
-|![jaCoCo coverage](images/jaCoCo_ui_deliverable2.png)|![jaCoCo coverage](images/jaCoCo_ui_deliverable3.png)|
-|:--:|:--:|
-|Our test coverage in [ui](../../chore-manager/ui/src/main/java/ui/) after deliverable 2 as reported by JaCoCo|Our final test coverage in [ui](../../chore-manager/ui/src/main/java/ui/) as reported by JaCoCo| 
-
-Even though our line coverage only increased from 77% to 90%, the amount of code (both lines and branches) in the project has increased by a lot. The total amount of lines and branches has more than doubled since deliverable 2. The amount of lines we test increased from 1849 -> 5875 (217% increase) and the amount of branches we test increased from 66 -> 271 (310% increase). We also test the UI a lot more thoroughly now. Previously our tests did not have very good branch coverage (40%), but now we have reached 72%. This reflects our renewed focus on ensuring that the application has a proper test suite, as well as a more test-driven approach to development.
-
-When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this issue by (1) being aware of it and (2) writing tests to explicitly test all the code we want to test. 
-
-In accordance to the DRY principle, we have used a `BaseTestClass` which all our other tests extend. This decision was made in order to avoid having a lot of boilerplate code in all of our test classes. Amongst other things, this includes methods like `setTestEnvironment` that sets the test environment, and methods such as `deleteFile` or `clearItems` that resets the state of the application between tests. This base class was especially useful for ui tests, since these tests also include boilerplate for handling the view as well as creating test persons and test collectives.
-
-An issue we ran into when extending from the [base class in the ui module](../../chore-manager/ui/src/test/java/ui/BaseTestClass.java), was when we wanted to override the `setup` method. Since `setup` was used in static methods (decorated with `@BeforeAll`) it also had to be static - and we cannot override static methods. A possible solution to this was by adding `@TestInstance(Lifecycle.PER_CLASS)` to the base class. This meant that `@BeforeAll`-methods did not have to be static and could be overridden. We did not do this, the main reason being that the state of the test class would persist between tests. Our tests have been made with the assumption that the state resets between tests, meaning we would see unexpected behavior if we were to suddenly change this. The solution we went for was instead to change the extending class so it did not have to be override the `setup`-method.
 
 ## Environments / Isolation
 We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data. Previously we needed to manually change the file paths in tests, if we failed to change the file path somewhere, we would overwrite our main text file with test data. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of choosing the file, as the file name is defined in the `.env`-files.  
@@ -408,6 +389,87 @@ Time spent on each deliverable (all 4 team members combined):
 In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. Given that the project spanned 10 weeks, our initial time estimate amounted to 280 hours. Originally, we anticipated spending 4 hours weekly on lectures, bringing the total time allocated to this subject to 11 hours per week. However, when the lectures stopped midway through the semester, we adjusted our strategy. This allowed us to extends our meetings by an additional 4 hours. Our projection for time spent on the project consequently increased to 400 hours. As you can see from the table above, we spent 420 hours on the project, which is 20 hours more than our initial projection, which isn't so far off considering the scope of the project.
 
 
+## Workflow 
+
+### General Workflow
+In the last stage of our project, a bit has changed when it comes to our general workflow. As before, we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer, in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting to look at the requirements for deliverable 3. During our last deliverable we have made greater use of pair-programming, and agile methods like the Scrum framework, which we will come back to. 
+
+### Issues
+For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible with a well-defined scope, making it as easy as possible for the developer to deal with. Furthermore, we have made sure that every issue is dealt with in accordance with the issues level of importance. Most issues have been marked with a label stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
+
+
+### Branching
+We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). Our master branch houses our production-ready code, and each issue is branched out from master into their own separate branch. By working on separate branches it becomes easier to maintain the correct changes while minimizing the risk of overwriting each other by accident. We have continued to adopt the same good practices as with previous deliverables. This includes: 
+
+- Creating merge requests when an issue is finished, having at least one team member review and approve the code before being able to merge with `master`.
+
+- Strict naming convention: `{issue-number}-name-of-branch`. 
+
+This is also documented in [Developer guide](/DEVELOPER_GUIDE.md). 
+
+We have adopted to small and frequent commits, which has helped in tracking changes and easier identifying when and why a particular change was made.
+When merging to the master branch, we choose to keep the history from the branches (merge commits). The alternative would be to squash our commits into a single commit, which do provide a shorter and cleaner history, but also loses context, and it becomes more difficult to identify introductions of bugs as the history is condensed.
+
+
+### Milestones
+As with previous deliverables we have created milestones for the project. These milestones have been used to group issues together. By grouping issues together it becomes easier to prioritize and filter issues based on their relevance and importance to the final goal of the milestone. The milestones act as a deadline, and help us with time-based planning. It also allows us to quickly assess the overall status of a milestone, and how much remains to be done. This has been a useful tool for us, and has helped us stay on track and meet our deadlines.
+
+
+### Pair-programming
+Pair programming has become a notable part of our approach, especially towards the end of the project. As the project grew in size, the development of new features and debugging became increasingly complex. Gradually adopting more and more pair-programming has helped us effectively tackle these complexities and issues. This method has not only improved the overall quality of our code but also streamlined the problem-solving process. By working closely together, we have been able to quickly share insights and alternate perspectives, leading to better solutions and quicker fixes. Additionally, this approach has significantly reduced the occurrence of bugs and errors, ensuring a more reliable and robust end product.
+
+### Agile methods
+Agile methods have gradually become a more significant part of our workflow. As the project has gotten bigger, and more time is spent working outside the set meetings, we've found that Agile practices, particularly Scrum, enhance our flexibility and responsiveness to change. Implementing Scrum has brought structure and clarity to our process, with regular sprints and sprint planning meetings ensuring that we are always working towards well-defined goals. While daily stand-ups for obvious reasons has not been a part of our project, we have implemented a simplified version of the Scrum framework:
+
+- In our project, we've embraced a flexible approach to Scrum, adapting its roles and processes to fit our team's workflow. For roles like the Product Owner and Scrum Master, we've opted for a collaborative approach rather than assigning them to specific individuals. This has encouraged a sense of shared responsibility and made a more inclusive decision-making process.
+
+- Product Backlog: We created lists of user stories consisting of features that could potentially go into the product. This list has evolved throughout the project and each item is prioritized based on its importance and impact on the project.
+
+- Sprint backlog: The user stories with the highest priority (in other words the feature we decide we want to implement) goes into the sprint backlog. These are the tasks we aim to in the upcoming sprint. 
+
+- Daily (Weekly) Scrum: These have been held during our weekly meetings. Three main talking points in the weekly scrum, aka standup-meetings:
+- What I did since our last meeting
+- What I plan to work on today and until our next meeting
+- Any impediments or blockers
+
+The latter is arguably the most important. In this part, team members communicate any obstacles or challenges they are facing that may hinder their progress. Examples include dependencies on other team members or technical issues. By talking about the obstacle, the team can quickly identify and share knowledge to address the issue, which reduces the amount of time a team members stays stuck on a problem.
+
+- Sprint: A sprint typically lasts for 1-4 weeks, meaning each deliverable could be viewed as a sprint. 
+
+All the above steps combined describe how we have implemented a "Scrum light" framework. It offers the structured framework of traditional Scrum, yet provides the adaptability we needed given the fact that this is a school-project. This method has both improved our project management and also enhanced team collaboration and efficiency.
+
+
+### Communication
+Our team did not suffer from communication issues, and because of this, we never had multiple team member accidentally working on the same issue, producing duplicate work. Since we communicated effectively, we were also very aware of merge conflicts. We knew when certain merge conflicts would emerge, and therefore planned accordingly to ensure both team members were present to discuss which changes to keep.
+
+### Code-quality
+In regards to our code-quality a lot has stayed the same. We still have the automatic formatter which uses RedHat's default formatting settings. The code is formatted automatically on save, this helps to keep the code style consistent, and makes the development easier, as the developer has less things on their mind. In addition to the formatter, we have also setup other actions to be performed on save:
+- `organizeImports` (add imports + reorganize import order)
+- `qualifyMembers` (automatically add `this` on attributes)
+- `addOverride` (automatically add `@Override` to methods that override a superclass method)
+
+For more information about linters see [release2's README](/docs/release2/README.md).
+
+We have also extensively followed best practices in Java, you can see some of them in the [Developer Guide](/DEVELOPER_GUIDE.md). 
+To ensure a consistent code structure we continue using the MVC-principle, which means that the model, view and controller are separated.
+
+We also ensure to always comment and document our code, so that the next person who reads the code can quickly understand it. This has been very beneficial for the internal workflow within the group, but it also makes makes it a lot easier for outsiders to view and understand the code that we have written. Not only does this make the process of evaluating and giving feedback on the project a lot easier, it also makes going back to the project in the future a lot easier. One scenario could be that we at a later point want to continue to the develop the application with new features. This might be with the existing team, but also with new team members. In any case, having code with well structured commenting and documentation makes it a lot easier. 
+
+Another important aspect of the code quality is the naming of functions, variables, classes etc. Utilizing a consistent naming convention with descriptive names can be equally beneficial in order to read and understand the code. 
+
+As mentioned before, in order to merge to the master branch, we have required at least one other team member to review the code. This has made it a lot easier to spot anti-patterns and suggest better alternatives. Overall this has been a huge contribution to our code-quality and has probably saved us lots of work by not having to refactor code at a later stage. Spotting bugs and potential errors before production is something we strive to achieve. 
+
+
+### In retrospect
+
+Reflecting on our project, the disciplined yet flexible workflow has been crucial to our project. Embracing agile methodologies, especially a tailored Scrum framework, optimized project management and helped us keep the process as sturctured as possible. The adoption of pair-programming in later stages significantly enhanced code quality and problem-solving efficiency when things got more complicated.
+
+Our systematic approach to addressing feedback and prioritizing issues helped us minimize problems and enhancing overall efficiency. Consistantly prioritizing code quality through formatting, commenting and documentation established a robus foundation for potential future development and maintenance. 
+
+In conclusion, this project has been valuable learning experience, teaching us about the importance of adaptability, good planning and teamwork when working on a development project like this. The experience and skills we have developed will most certainly benefit us in the future. 
+
+
 # Other documentation
 - Test coverage is documented in the [tests.md](tests.md) file.
 - Diagrams are documented in the [diagrams.md](diagrams.md) file.
+
