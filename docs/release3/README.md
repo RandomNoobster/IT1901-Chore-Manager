@@ -122,11 +122,12 @@ When using JaCoCo, we learned that just looking at test coverage can be misleadi
 
 
 
-
 ## Workflow 
 
 ### General Workflow
 In the last stage of our project, a bit has changed when it comes to our general workflow. As before we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer,in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting looking at the requirements for deliverable 3. What has changed is that we have made greater use of pair-programming, and agile methods like the Scrum framework, which I will come back to. 
+
+Our team did not suffer from communication issues, and because of this, we never had multiple team member accidentally working on the same issue, producing duplicate work. Since we communicated effectively, we were also very aware of merge conflicts. We knew when certain merge conflicts would emerge, and therefore planned accordingly to ensure both team members were present to discuss which changes to keep.
 
 ### Issues
 For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible, making it as easy as possible for the developer to deal with. This has also made sure that every issue is dealt with in accordance with the issues level of importance. Most issues we have made has been marked with a label stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
@@ -191,6 +192,14 @@ Another important aspect of the code quality is the naming of functions, variabl
 
 As mentioned before, in order to merge to the master branch, we have required at least one other team member to review the code. This has made it a lot easier to spot anti-patterns and suggest better alternatives. Overall this has been a hugh contribution to our code-quality and also probably saved us a lot of work not having to go back in old code and review it and make improvements to it at a later stage. Spotting bugs and potential errors before production is something we strive to achieve. 
 
+### In retrospect
+
+Reflecting on our project, the disciplined yet flexible workflow has been crucial to our project. Embracing agile methodologies, especially a tailored Scrum framework, optimized project management and helped us keep the process as sturctured as possible. The adoption of pair-programming in later stages significantly enhanced code quality and problem-solving efficiency when things got more complicated.
+
+Our systematic approach to addressing feedback and prioritizing issues helped us minimize problems and enhancing overall efficiency. Consistantly prioritizing code quality through formatting, commenting and documentation established a robus foundation for potential future development and maintenance. 
+
+In conclusion, this project has been valuable learning experience, teaching us about the importance of adaptability, good planning and teamwork when working on a development project like this. The experience and skills we have developed will most certainly benefit us in the future. 
 
 
-Refactoring???
+
+
