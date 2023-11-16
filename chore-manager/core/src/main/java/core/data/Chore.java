@@ -256,7 +256,7 @@ public class Chore {
         map.put("points", chore.points);
         map.put("color", chore.color);
         map.put("checked", chore.checked);
-        map.put("daysIncompleted", chore.daysIncompleted);
+        map.put("daysIncompleted", chore.getDaysIncompleted());
         map.put("creator", chore.creator);
         map.put("assignedTo", chore.assignedTo);
 
