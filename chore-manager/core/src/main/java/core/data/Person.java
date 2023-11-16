@@ -192,5 +192,4 @@ public class Person extends RestrictedPerson {
                     "Invalid JSONObject, could not be converted to Person object");
         }
     }
-
 }
