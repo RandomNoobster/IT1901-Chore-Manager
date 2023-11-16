@@ -176,7 +176,7 @@ We have introduced environments in release 3, which are used to isolate the conf
 Although it is not recommended to push .env-files to GitLab, and instead share it confidentially within the team. We needed to push it to the remote repository, so that the app has the necessary information without needing to contact us when grading. In addition, our .env files do not contain any sensitive information.
 
 ## JSON in Java
-In release 2, we used `JSON.simple`, which gave us a warning: ![Name of automatic module is unstable](json-simple-warning.png)
+In release 2, we used `JSON.simple`, which gave us a warning: ![Name of automatic module is unstable](images/json-simple-warning.png)
 Maven did not find the module if we specified an alternate path, therefore we decided to change our JSON library all together. We found [`JSON in Java`](https://mvnrepository.com/artifact/org.json/json) to be a more popular library, while the implementation was relatively similar to `JSON.simple`. By changing to this library, we got rid of the warning, with minimal code changes, this library also provided greater JSON support, which made building the REST API easier. 
 We chose `JSON.simple`/`JSON in Java` because we thought that would cover all our use cases, at that time we did not know Spring Boot used Jackson to serialize/deserialize. Because of this, we could not use Spring Boot's JSON serialization/deserialization, and instead had to return plain Strings. In retrospect it would be better to utilize Jackson as our JSON library, as it was better supported by Spring Boot.
 
@@ -299,6 +299,10 @@ If any of these commands fail, the pipeline will fail, and the merge request wil
 ## REST API
 In this release we needed to create a REST API. The API has endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE. As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
 
+ |![Package diagram](images/umlDiagrams/choreManagerPackageDiagram.svg)|
+ |:--:|
+ | This package diagram shows the architecture of our application after implementing the REST API |
+
 Note:
 At the time of writing this documentation, we noticed the REST API is not stateless. This means the API stores information about the authorized user, which should instead be provided on each request. Our `StateController` stores the currently logged in user, which should instead be handled by the frontend. Although our API would conform better with the REST standard if it was stateless, we have decided to leave it as is. This is because it would require a lot of development time and code changes in order to make our REST API stateless, and other issues are more pressing. In addition, it is not a requirement for this course to have a stateless REST API, so we kept the stateful REST API which uses the state as authorization.
 It would not be difficult to make our API stateless, but it would take a lot of time, here is a list of changes which would need to be made:
@@ -369,16 +373,14 @@ We also decided to refactor the `Password` class to better follow best practices
 By splitting `Password` into three classes, we conform better with the single responsibility principle. `Password` now manages the password, `PasswordValidator` validates the password, and `PasswordValidatorBuilder` builds the validation rules. This helps in maintaining and modifying the code without affecting unrelated functionalities.
 We have taken the Builder design pattern into use, which creates a `PasswordValidator`-object with the rules specified in the `PasswordValidatorBuilder`. This makes it easier to create a `PasswordValidator`-instance, as you do not need to specify all the rules in the constructor, but instead can add them one by one. This also makes it easier to add new rules, as you do not need to change the constructor, but instead add a new method in the `PasswordValidatorBuilder`, which conforms with the Open/Closed Principle.
 
-## Diagrams
+## JLink and JPackage
 
- |![Sequence diagram](images/umlDiagrams/choreCreationSequenceDiagram.svg)|
- |:--:|
- | This is a simplified sequence diagram for when a user creates a chore|
+We added support for JLink and JPackage in order to make the application shippable. This means that we can create a custom runtime image, which contains the application and all its dependencies. The runtime image can then be distributed to users, and they can run the application without having to install Java. This is a major improvement in usability, as the user does not need to install Java, and can instead just run the application.
 
- |![Package diagram](images/umlDiagrams/choreManagerPackageDiagram.svg)|
- |:--:|
- | This is a package diagram of our entire application|
+A drawback when using Windows is that you also have to install the [Wix Toolset](https://wixtoolset.org/), which is used to create the installer. This is because JPackage does not support creating installers for Windows, and therefore we have to use Wix Toolset to create the installer. This is not an issue on Linux, as JPackage supports creating installers for Linux.
 
- |![Sequence diagram](images/umlDiagrams/coreDataClassDiagram.svg)|
- |:--:|
- | This is a class diagram for our most important classes in the core module|
+Another important thing to note is that the Spring Boot server has to run in the background in order for the shipped application to work. This is because the frontend of the application relies on API to fetch application data.
+
+# Other documentation
+- Test coverage is documented in the [tests.md](tests.md) file.
+- Diagrams are documented in the [diagrams.md](diagrams.md) file.
