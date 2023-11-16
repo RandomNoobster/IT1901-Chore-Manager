@@ -59,7 +59,7 @@ After a user has created a brand new collective, the calendar page will look qui
 |:--:|
 |The different colors that days have convay different things|
 
-If a user clicks "Add" on one of the days or weeks, they will be sent to the create chore page. Once the user has filled in the necessary information, one or more chores will pop up in the calendar .
+If a user clicks "Add" on one of the days or weeks, they will be sent to the create chore page. Once the user has filled in the necessary information, one or more chores will pop up in the calendar.
 
 If the user clicked "Add" on one of the days, a chore will be displayed on that day in the calendar. If the user clicked "Add" on a week, a long chore will be displayed on that week. 
 
