@@ -95,7 +95,7 @@ Secondly, between deliverables 1 and 2, we created most "page-types" needed for 
  |:--:|
  |Pages follow a clear structure|
 
-Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one page to another, which we had done up to that point, we instead followed the "Don't Repeat Yourself" (DRY)principle. We defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
+Finally, the framework for going between pages made between deliverables 1 and 2 also saved us a lot of time. Instead of each controller having to define its own method for going from one page to another, which we had done up to that point, we instead followed the "Don't Repeat Yourself" (DRY) principle. We defined a static method in the App class in the UI that does this. We could then call this method from anywhere in the UI, and easily switch between scenes. This saved us a lot of time for this delivery, as we added a lot of buttons that take you from one page to another, such as the "Go back" buttons.
 
 ```java
 public static void switchScene(String fxmlName) {
@@ -109,12 +109,47 @@ public static void switchScene(String fxmlName) {
 }
 ```
 
-Another diversion was a switch from weekly, recurring chores, to the ability to state how many weeks a chore should repeat. Weekly tasks were tasks that were going to reoccur every week, until it was deleted by a user. We instead gave the user the ability to choose how many weeks a chore should repeat, as deletion should be reserved for when the user has done something wrong, like spelling a chore wrong or assigning the wrong person, and not be something a user is forced to in able to use the application. 
+Another diversion was a switch from weekly, recurring chores, to the ability to state how many weeks a chore should repeat. Weekly chores were tasks that were going to reoccur every week, until it was deleted by a user. We instead gave the user the ability to choose how many weeks a chore should repeat, as deletion should be reserved for when the user has done something wrong, like spelling a chore wrong or assigning the wrong person, and not be something a user is forced to in able to use the application. 
 
  |![Repeating input](images/repeating.png)|
  |:--:|
  |The user can decide how many weeks a chore should repeat|
- 
+
+## Restructuring of fxml hierarchy
+The fxml hierarchy over nodes for the calendar page grew substantially in size as new features were added. The main reason for this growth, was the addition of week chores, as they need to lay under every other day, as well as their own "Add" buttons, just like the day chores.
+
+|![Chores](../../img/chores.png)|
+|:--:|
+|A day chore and a week chore|
+
+|![Old hierarchy](../release1/mainViewFxmlStructure.png)|![New hierarchy](../release3/images/mainViewFxmlStructure.png)|
+|:--:|:--:|
+|The old fxml hierarchy|The new fxml hierarchy|
+
+
+## Refactoring in controllers
+
+### The KISS and DRY principles
+Since this is the last deliverable, alot of refactoring was done. As the fxml hierarchy for the calendar page grew, the controller for the page, the AppController, became longer. To conform with the "Keep It Simple, Stupid" (KISS) principle, we started extracting code into their own methods. Part of this was done up to deliverable 2, but the rest was done for deliverable 3. Now the initialize method almost exclusively contains method calls. By doing this we also conformed more to the DRY principle, as we could call these methods from other methods, instead of writing the same code twice. 
+
+Below you can see the initialize method. Comments in the code have been removed to shorten it down.
+
+```java
+public void initialize() {
+    this.dataAccess = App.getDataAccess();
+    this.setCollectiveName();
+    this.setTopColumn();
+    this.weeks = this.createWeeks();
+    this.handleScreenResizing();
+    this.updateFxml();
+    this.weekContainer.getChildren().add(this.subWeekScrollContainer);
+    this.subWeekScrollContainer.setContent(this.subWeekContainer);
+    this.consumeScroll();
+}
+```
+
+### The model, view, controller principle
+Refactoring in the model parts and additional refactoring in the controller parts of the project was needed to better conform to the model, view, controller principle. A lot of checks when creating accounts and chores were done by their respective controllers, CreateUserController and ChoreCreationController, in UI.  These checks could and should have been done by the respective classes that these controllers create. Therefore we added static isValid and getRequirements methods in both the Chore class and the RestrictedPerson class in core. These were used by the controllers to check inputs given by the users. 
 
 ## Test coverage
 According to JaCoCo, our line coverage was at 77% and our branch coverage was at 55% after the second deliverable. We have worked on improving our coverage as much as possible. However, some code branches are hard to get coverage for, since they are only executed in case of an error. We have tried to test these cases as well, but it is not always possible to get 100% coverage. There is also some code that makes no sense to test, i.e. the `main`-method in [`App`](/chore-manager/ui/src/main/java/ui/App.java) or the `main`-method in [`AppApplication`](/chore-manager/springboot/restserver/src/main/java/springboot/restserver/AppApplication.java). 
@@ -131,7 +166,7 @@ Even though our line coverage only increased from 77% to 90%, the amount of code
 
 When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this issue by (1) being aware of it and (2) writing tests to explicitly test all the code we want to test. 
 
-In accordance to the DRY (Don't repeat yourself) principle, we have used a `BaseTestClass` which all our other tests extend. This decision was made in order to avoid having a lot of boilerplate code in all of our test classes. Amongst other things, this includes methods like `setTestEnvironment` that sets the test environment, and methods such as `deleteFile` or `clearItems` that resets the state of the application between tests. This base class was especially useful for ui tests, since these tests also include boilerplate for handling the view as well as creating test persons and test collectives.
+In accordance to the DRY principle, we have used a `BaseTestClass` which all our other tests extend. This decision was made in order to avoid having a lot of boilerplate code in all of our test classes. Amongst other things, this includes methods like `setTestEnvironment` that sets the test environment, and methods such as `deleteFile` or `clearItems` that resets the state of the application between tests. This base class was especially useful for ui tests, since these tests also include boilerplate for handling the view as well as creating test persons and test collectives.
 
 An issue we ran into when extending from the [base class in the ui module](../../chore-manager/ui/src/test/java/ui/BaseTestClass.java), was when we wanted to override the `setup` method. Since `setup` was used in static methods (decorated with `@BeforeAll`) it also had to be static - and we cannot override static methods. A possible solution to this was by adding `@TestInstance(Lifecycle.PER_CLASS)` to the base class. This meant that `@BeforeAll`-methods did not have to be static and could be overridden. We did not do this, the main reason being that the state of the test class would persist between tests. Our tests have been made with the assumption that the state resets between tests, meaning we would see unexpected behavior if we were to suddenly change this. The solution we went for was instead to change the extending class so it did not have to be override the `setup`-method.
 
@@ -141,7 +176,7 @@ We have introduced environments in release 3, which are used to isolate the conf
 Although it is not recommended to push .env-files to GitLab, and instead share it confidentially within the team. We needed to push it to the remote repository, so that the app has the necessary information without needing to contact us when grading. In addition, our .env files do not contain any sensitive information.
 
 ## JSON in Java
-In release 2, we used `JSON.simple`, which gave us a warning: ![Name of automatic module is unstable](json-simple-warning.png)
+In release 2, we used `JSON.simple`, which gave us a warning: ![Name of automatic module is unstable](images/json-simple-warning.png)
 Maven did not find the module if we specified an alternate path, therefore we decided to change our JSON library all together. We found [`JSON in Java`](https://mvnrepository.com/artifact/org.json/json) to be a more popular library, while the implementation was relatively similar to `JSON.simple`. By changing to this library, we got rid of the warning, with minimal code changes, this library also provided greater JSON support, which made building the REST API easier. 
 We chose `JSON.simple`/`JSON in Java` because we thought that would cover all our use cases, at that time we did not know Spring Boot used Jackson to serialize/deserialize. Because of this, we could not use Spring Boot's JSON serialization/deserialization, and instead had to return plain Strings. In retrospect it would be better to utilize Jackson as our JSON library, as it was better supported by Spring Boot.
 
@@ -264,6 +299,10 @@ If any of these commands fail, the pipeline will fail, and the merge request wil
 ## REST API
 In this release we needed to create a REST API. The API has endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE. As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
 
+ |![Package diagram](images/umlDiagrams/choreManagerPackageDiagram.svg)|
+ |:--:|
+ | This package diagram shows the architecture of our application after implementing the REST API |
+
 Note:
 At the time of writing this documentation, we noticed the REST API is not stateless. This means the API stores information about the authorized user, which should instead be provided on each request. Our `StateController` stores the currently logged in user, which should instead be handled by the frontend. Although our API would conform better with the REST standard if it was stateless, we have decided to leave it as is. This is because it would require a lot of development time and code changes in order to make our REST API stateless, and other issues are more pressing. In addition, it is not a requirement for this course to have a stateless REST API, so we kept the stateful REST API which uses the state as authorization.
 It would not be difficult to make our API stateless, but it would take a lot of time, here is a list of changes which would need to be made:
@@ -334,19 +373,13 @@ We also decided to refactor the `Password` class to better follow best practices
 By splitting `Password` into three classes, we conform better with the single responsibility principle. `Password` now manages the password, `PasswordValidator` validates the password, and `PasswordValidatorBuilder` builds the validation rules. This helps in maintaining and modifying the code without affecting unrelated functionalities.
 We have taken the Builder design pattern into use, which creates a `PasswordValidator`-object with the rules specified in the `PasswordValidatorBuilder`. This makes it easier to create a `PasswordValidator`-instance, as you do not need to specify all the rules in the constructor, but instead can add them one by one. This also makes it easier to add new rules, as you do not need to change the constructor, but instead add a new method in the `PasswordValidatorBuilder`, which conforms with the Open/Closed Principle.
 
-## Diagrams
+## JLink and JPackage
 
- |![Sequence diagram](images/umlDiagrams/choreCreationSequenceDiagram.svg)|
- |:--:|
- | This is a simplified sequence diagram for when a user creates a chore|
+We added support for JLink and JPackage in order to make the application shippable. This means that we can create a custom runtime image, which contains the application and all its dependencies. The runtime image can then be distributed to users, and they can run the application without having to install Java. This is a major improvement in usability, as the user does not need to install Java, and can instead just run the application.
 
- |![Package diagram](images/umlDiagrams/choreManagerPackageDiagram.svg)|
- |:--:|
- | This is a package diagram of our entire application|
+A drawback when using Windows is that you also have to install the [Wix Toolset](https://wixtoolset.org/), which is used to create the installer. This is because JPackage does not support creating installers for Windows, and therefore we have to use Wix Toolset to create the installer. This is not an issue on Linux, as JPackage supports creating installers for Linux.
 
- |![Sequence diagram](images/umlDiagrams/coreDataClassDiagram.svg)|
- |:--:|
- | This is a class diagram for our most important classes in the core module|
+Another important thing to note is that the Spring Boot server has to run in the background in order for the shipped application to work. This is because the frontend of the application relies on API to fetch application data.
 
 ## Time tracking
 
@@ -379,3 +412,7 @@ We can estimate that the expected time used based on our group contract therefor
 
 
 
+
+# Other documentation
+- Test coverage is documented in the [tests.md](tests.md) file.
+- Diagrams are documented in the [diagrams.md](diagrams.md) file.
