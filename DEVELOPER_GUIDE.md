@@ -58,34 +58,30 @@ All code for the **controller** is located in the [ui package](/chore-manager/ui
 \
 Not sure if this is the best way to structure the project, I may change this. We need to discuss this.
 
-## Run the code
-
+## How to run
 First install the necessary dependencies in [chore-manager](/chore-manager/):
 
-```
-cd chore-manager
-mvn install -DskipTests 
-```
-
-Make sure you are in the [ui folder](/chore-manager/ui/) when running these commands (`cd chore-manager/ui/`)
-
-Compile code:
-
-```
-mvn compile
+```shell
+cd chore-manager/
+mvn install -DskipTests
 ```
 
-Run tests:
+Then you will need to start the REST API in [chore-manager/springboot/restserver](/chore-manager/springboot/restserver/):
+Navigate to `chore-manager/springboot/restserver`:
 
-```
-mvn test
+```shell
+cd springboot/restserver
+mvn spring-boot:run
 ```
 
-Run the application:
-
-```
+Then you need to open a new terminal window, while the API is running.
+Then navigate to [chore-manager/ui](/chore-manager/ui/) in your new terminal, and run the following command:
+```shell
+cd chore-manager/ui/
 mvn javafx:run
 ```
+
+You will be presented with a login page. Please create a user in the application by clicking the "Create user" button. Then you can log in with the user you just created.
 
 ## Issues
 
@@ -131,7 +127,7 @@ When the review is done, you are ready to merge into `master`. Click the "Merge 
 
 ## Note
 
-Note: I have not used GitLab extensively, so I am not completely sure how the workflow is there. I wrote this DEVELOPER_GUIDE with GitHub in mind, but I assume the workflow is similar on GitLab. If there is any devitation from the GitHub workflow, please update this guide.
+Note: I have not used GitLab extensively, so I am not completely sure how the workflow is there. I wrote this DEVELOPER_GUIDE with GitHub in mind, but I assume the workflow is similar on GitLab. If there is any deviation from the GitHub workflow, please update this guide.
 
 ## Best practices
 
