@@ -9,9 +9,11 @@ workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
+# List of stages for jobs, and their execution order
 stages:
-#    - build
+    - build
     - test
+    - install
 
 cache:
   key: $CACHE_KEY
@@ -20,58 +22,38 @@ cache:
    - .sbt
    - target
     
-
-# Run all tests in same job, because each job runs in a seperate environment,
-# and then we would need to install the same dependencies multiple times
-test_core_persistence:
-  stage: test
+compile:
+  stage: build
+  allow_failure: false
   tags:
     - docker
 
   script: 
-    - echo "Maven test for core started"
+    - echo "Stage for compiling tests has started"
     - "cd chore-manager"
-    - "mvn install -DskipTests"
-    
-    - "cd core"
-    - "mvn test"
+    - "mvn compile"
 
-    - "cd ../persistence"
-    - "mvn test"
-  
+test:
+  stage: test
+  allow_failure: false
+  needs: ["compile"]
+  tags:
+    - docker
 
-#build_job:
-#  stage: build
-#  tags:
-#    - docker 
-#
-#  script: 
-#    - echo "Maven compile started"
-#    - "cd chore-manager"
-#    - "mvn install -DskipTests"
+  script: 
+    - echo "Stage for running tests has started"
+    - "cd chore-manager"
+    - "mvn test -DskipUITests"
 
-#test_core:
-#  stage: test
-#  tags:
-#    - docker 
-#
-#  script: 
-#    - echo "Maven test started"
-#    - "cd chore-manager/core"
-#    - "mvn compile"
-#    - "mvn test"
-#  dependencies:
-#    - build_job
+# Runs install
+# Also runs Spotbugs, Checkstyle, JaCoCo and JavaDocs
+install:
+  stage: install
+  allow_failure: false
+  tags:
+    - docker
 
-#test_persistence:
-#  stage: test
-#  tags:
-#    - docker 
-#
-#  script: 
-#    - echo "Maven test started"
-#    - "cd chore-manager/persistence"
-#    - "mvn compile"
-#    - "mvn test"
-#  dependencies:
-#    - build_job
+  script: 
+    - echo "Stage for installing application"
+    - "cd chore-manager"
+    - "mvn clean install -DskipTests"
