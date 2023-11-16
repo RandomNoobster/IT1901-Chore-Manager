@@ -260,7 +260,7 @@ public class Storage {
      * called if you do not have any persons in the application.
      */
     public void fillFileWithDefaultData() {
-        Collective limboCollective = new Collective("Empty Collective",
+        Collective limboCollective = new Collective("Limbo Collective",
                 Collective.LIMBO_COLLECTIVE_JOIN_CODE);
         Collective collective = new Collective("The Almighty Collective");
         this.collectives.put(collective.getJoinCode(), collective);
