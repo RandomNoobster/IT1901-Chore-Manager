@@ -3,6 +3,7 @@ package ui;
 import core.data.Password;
 import core.data.Person;
 import core.data.RestrictedCollective;
+import core.data.RestrictedPerson;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -30,9 +31,6 @@ public class CreateUserController {
     @FXML
     private Button createButton;
 
-    private final Integer allowedUsername = 3;
-    private final Integer allowedDisplayname = 3;
-
     public CreateUserController() {
 
     }
@@ -45,15 +43,8 @@ public class CreateUserController {
     private Pair<Boolean, Person> createAccount(String username, String displayName,
             String passwordString, RestrictedCollective collectiveToJoin) {
 
-        if (username.length() < this.allowedUsername) {
-            App.showAlert("Username issue",
-                    "Username must be at least " + this.allowedUsername + " characters",
-                    AlertType.WARNING);
-            return new Pair<Boolean, Person>(false, null);
-        }
-        if (displayName.length() < this.allowedDisplayname) {
-            App.showAlert("Fullname issue",
-                    "Displayname must be at least " + this.allowedDisplayname + " characters",
+        if (!RestrictedPerson.isValid(username, displayName)) {
+            App.showAlert("Naming issue", RestrictedPerson.getRequirements(username, displayName),
                     AlertType.WARNING);
             return new Pair<Boolean, Person>(false, null);
         }
