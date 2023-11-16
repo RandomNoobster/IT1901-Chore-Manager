@@ -50,7 +50,8 @@ public class AppController {
     private List<WeekView> weeks = new ArrayList<>();
     private ScrollPane subWeekScrollContainer = new ScrollPane();
     private VBox subWeekContainer = new VBox();
-    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks before current week)
+    private static final int SHIFT_WEEKS = -1; // Number of weeks to shift (example how many weeks
+                                               // before current week)
     private static final int NUM_WEEKS = 5; // Number of weeks to create
 
     private final List<String> WEEKDAYS = Arrays.asList("Week", "Monday", "Tuesday", "Wednesday",
@@ -63,7 +64,8 @@ public class AppController {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
+     * Initializes the controller class. This method is automatically called after the fxml file has
+     * been loaded.
      */
     @FXML
     public void initialize() {
@@ -85,17 +87,24 @@ public class AppController {
         // Update view
         this.updateFxml();
 
+        // Setting up hierarchy
         this.weekContainer.getChildren().add(this.subWeekScrollContainer);
         this.subWeekScrollContainer.setContent(this.subWeekContainer);
 
-        // Remove scrolling using trackpad, source:
-        // stackoverflow.com/questions/17830531/javafx-scrollpane-disable-panning-for-touch-events
+        // Stop trackpad scrolling
+        this.consumeScroll();
+    }
+
+    /**
+     * Remove scrolling using trackpad, source:
+     * stackoverflow.com/questions/17830531/javafx-scrollpane-disable-panning-for-touch-events
+     */
+    private void consumeScroll() {
         this.subScene.addEventFilter(InputEvent.ANY, (event) -> {
             if (event.getEventType().toString().equals("SCROLL")) {
                 event.consume();
             }
         });
-
     }
 
     /**
