@@ -273,11 +273,11 @@ The JSON representation of the data is as follows:
 
 ## CI/CD pipelines
 In order to conform with best practices, we decided to protect the `master` branch. This means we removed the ability to directly push to the `master` branch, and instead have to go through merge requests. Following this change, we introduced continuous integration and continuous delivery (CI/CD) pipelines. The pipeline is only triggered on merge requests, and it will run certain maven commands. The pipeline will run the following commands:
-- `mvn install -DskipTests` - Installs the necessary dependencies.
-- `mvn test` - Runs all tests (in core and persistence).
+- `mvn compile` - Installs the necessary dependencies.
+- `mvn test -DskipUITests` - Runs all tests in core, persistence and springboot.
+- `mvn clean install -DskipTests` - Runs everything, including Spotbugs, Checkstyle, JavaDocs and JaCoCo
 
-If any of these commands fail, the pipeline will fail, and the merge request will not be allowed to merge. This ensures that the `master` branch is always in a working state, and that no unforeseen bugs are introduced. `mvn install -DskipTests` installs the necessary dependencies, and run Spotbugs, Checkstyle, JavaDocs and JaCoCo. If any of these fail, the pipeline will fail.
-`mvn test` runs all tests in core and persistence, the pipeline will fail. However, the pipeline does not run tests in the UI package as the pipeline fails to run the JavaFX application and render the GUI. To conclude, the pipeline has successfully identified bugs and test-fails in our code and has helped us produce a more stable application and keep master in a working state.
+If any of these commands fail, the pipeline will fail, and the merge request will not be allowed to merge. This ensures that the `master` branch is always in a working state, and that no unforeseen bugs are introduced. The pipeline is divided into stages accordingly, with three different stages: `build`, `test` and `install`, with their own seperate resonsibility. However, the pipeline does not run tests in the UI package as the pipeline fails to run the JavaFX application and render the GUI. To conclude, the pipeline has successfully identified bugs and test-fails in our code and has helped us produce a more stable application and keep master in a working state.
 
 ## REST API
 In this release we needed to create a REST API. The API has endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE. As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 
@@ -363,6 +363,33 @@ We added support for JLink and JPackage in order to make the application shippab
 A drawback when using Windows is that you also have to install the [Wix Toolset](https://wixtoolset.org/), which is used to create the installer. This is because JPackage does not support creating installers for Windows, and therefore we have to use Wix Toolset to create the installer. This is not an issue on Linux, as JPackage supports creating installers for Linux.
 
 Another important thing to note is that the Spring Boot server has to run in the background in order for the shipped application to work. This is because the frontend of the application relies on API to fetch application data.
+
+## Time tracking
+
+For tracking time spent, we organized an Excel spreadsheet, where each team member enter a row for what they have done.
+Below is a screenshot of parts of the spreadsheet:
+![Excel Time Tracking](./images/excelTimeTracking.png)
+
+
+A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. This is due to the fact that it took longer than planned to develop a robust REST API, a crucial component which numerous other components depended on. Due to this dependency, certain components had to be postponed until the completion of the REST API. Another aspect that took longer than expected was the addition of JLink and JPackage.
+
+ |![Burndown chart](./images/burndownChart.png)|
+ |:--:|
+ | Burndown chart for hours spent working on this project. The blue dots represent a deliverable. |
+
+
+
+Time spent on each deliverable (all 4 team members combined):
+| Deliverable | Hours | Total days in deliverable | Hours per day |
+| -----------:| -----:| -------------------------:| -------------:|
+| 1           |  58   | 11 days                   | 5.28          |
+| 2           |  90   | 22 days                   | 4.09          |
+| 3           |  272  | 36 days                   | 7.56          |
+| **Total**   |  **420**  | **69 days**           | **6.09**      |
+
+
+In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. Given that the project spanned 10 weeks, our initial time estimate amounted to 280 hours. Originally, we anticipated spending 4 hours weekly on lectures, bringing the total time allocated to this subject to 11 hours per week. However, when the lectures stopped midway through the semester, we adjusted our strategy. This allowed us to extends our meetings by an additional 4 hours. Our projection for time spent on the project consequently increased to 400 hours. As you can see from the table above, we spent 420 hours on the project, which is 20 hours more than our initial projection, which isn't so far off considering the scope of the project.
+
 
 # Other documentation
 - Test coverage is documented in the [tests.md](tests.md) file.
