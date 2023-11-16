@@ -348,13 +348,14 @@ We have taken the Builder design pattern into use, which creates a `PasswordVali
  |:--:|
  | This is a class diagram for our most important classes in the core module|
 
-### Time management
+## Time tracking
 
 For tracking time spent, we organized an Excel spreadsheet, where each team member enter a row for what they have done.
-Here is an example:
+Below is a screenshot of parts of the spreadsheet:
 ![Excel Time Tracking](./images/excelTimeTracking.png)
 
-A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. this is due to the fact that it took longer than planned to develop a robust REST API, which a lot of other code depended on. Another aspect that took longer than expected was the addition of JLink and JPackage.
+
+A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. This is due to the fact that it took longer than planned to develop a robust REST API, which a lot of other code depended on. Another aspect that took longer than expected was the addition of JLink and JPackage.
 
  |![Burndown chart](./images/burndownChart.png)|
  |:--:|
@@ -371,6 +372,8 @@ Time spent on each deliverable (all 4 team members combined):
 | **Total**   |  **420**  | **69 days**           | **6.09**      |
 
 
+In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. This project lasted 10 weeks, so the total time estimation equates to 280 hours. We wrote the group contract with the expectation that lectures would take up 4 hours every week (so 11 hours on this subject per week). Since the lectures stopped mid-way through the semester, we could extend our meetings by an additional 4 hours, and therefore spend more time on our project.
+We can estimate that the expected time used based on our group contract therefore became 400 hours in total. 
 
 
 
