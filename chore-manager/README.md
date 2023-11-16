@@ -1,6 +1,6 @@
 # Chore Manager
 ## Description
-Chore Manager is an application designed to help users manage their daily, and weekly, chores. The application allows users to create chores, as well as assign chores to other users within their household. Chores will show up in a calendar view, that shows both past and upcoming chores. A leaderboard system is implemented so that the members of a household can rack up points by completing chores, and compete against each other.
+Chore Manager is an application designed to help users manage their daily and weekly chores. The application allows users to create chores, as well as assign chores to other users within their household. Chores will show up in a calendar view, that shows both past and upcoming chores. A leaderboard system is implemented so that the members of a household can rack up points by completing chores, and compete against each other.
 
 ## Traversing through the application
 
@@ -8,7 +8,7 @@ Chore Manager is an application designed to help users manage their daily, and w
 |:--:|
 |State diagram for the application|
 
-The applications contain many views, that we will call pages. We will now go more in-depth on what the different pages do and how a user will traverse through them.
+The application contains many views, that we will call pages. We will now go more in-depth on what the different pages do and how a user will traverse through them.
 
 ### Login page
 When a user runs the application, they get presented with the login page. Here the user can create a new account by clicking "Create user", or log in to an existing one. After filling in the details and clicking "Log in" the user will be taken to one of two pages. If the account has not yet been assigned to a collective, the user will be taken to the "Join collective" page. Otherwise, the user will be taken to the main calendar page.
@@ -55,9 +55,9 @@ After a user has created a brand new collective, the calendar page will look qui
 |:--:|
 |The calendar page when a collective is first created|
 
-|![Colors convay different meanings](../img/weekColors.png)|
+|![Colors convey different meanings](../img/weekColors.png)|
 |:--:|
-|The different colors that days have convay different things|
+|The different colors that days have convey different things|
 
 If a user clicks "Add" on one of the days or weeks, they will be sent to the create chore page. Once the user has filled in the necessary information, one or more chores will pop up in the calendar.
 
