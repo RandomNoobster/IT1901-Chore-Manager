@@ -151,25 +151,6 @@ public void initialize() {
 ### The model, view, controller principle
 Refactoring in the model parts and additional refactoring in the controller parts of the project was needed to better conform to the model, view, controller principle. A lot of checks when creating accounts and chores were done by their respective controllers, CreateUserController and ChoreCreationController, in UI.  These checks could and should have been done by the respective classes that these controllers create. Therefore we added static isValid and getRequirements methods in both the Chore class and the RestrictedPerson class in core. These were used by the controllers to check inputs given by the users. 
 
-## Test coverage
-According to JaCoCo, our line coverage was at 77% and our branch coverage was at 55% after the second deliverable. We have worked on improving our coverage as much as possible. However, some code branches are hard to get coverage for, since they are only executed in case of an error. We have tried to test these cases as well, but it is not always possible to get 100% coverage. There is also some code that makes no sense to test, i.e. the `main`-method in [`App`](/chore-manager/ui/src/main/java/ui/App.java) or the `main`-method in [`AppApplication`](/chore-manager/springboot/restserver/src/main/java/springboot/restserver/AppApplication.java). 
-
-|![jaCoCo coverage](images/jaCoCo_coverage_deliverable2.png)|![jaCoCo coverage](images/jaCoCo_coverage_deliverable3.png)|
-|:--:|:--:|
-|Our test coverage after deliverable 2 as reported by JaCoCo|Our final test coverage as reported by JaCoCo| 
-
-|![jaCoCo coverage](images/jaCoCo_ui_deliverable2.png)|![jaCoCo coverage](images/jaCoCo_ui_deliverable3.png)|
-|:--:|:--:|
-|Our test coverage in [ui](../../chore-manager/ui/src/main/java/ui/) after deliverable 2 as reported by JaCoCo|Our final test coverage in [ui](../../chore-manager/ui/src/main/java/ui/) as reported by JaCoCo| 
-
-Even though our line coverage only increased from 77% to 90%, the amount of code (both lines and branches) in the project has increased by a lot. The total amount of lines and branches has more than doubled since deliverable 2. The amount of lines we test increased from 1849 -> 5875 (217% increase) and the amount of branches we test increased from 66 -> 271 (310% increase). We also test the UI a lot more thoroughly now. Previously our tests did not have very good branch coverage (40%), but now we have reached 72%. This reflects our renewed focus on ensuring that the application has a proper test suite, as well as a more test-driven approach to development.
-
-When using JaCoCo, we learned that just looking at test coverage can be misleading. JaCoCo marks code as "covered" if it is run during the test phase. However, this does not mean that the code is explicitly tested. It might just be run as periphery code during another test. We have tried to avoid this issue by (1) being aware of it and (2) writing tests to explicitly test all the code we want to test. 
-
-In accordance to the DRY principle, we have used a `BaseTestClass` which all our other tests extend. This decision was made in order to avoid having a lot of boilerplate code in all of our test classes. Amongst other things, this includes methods like `setTestEnvironment` that sets the test environment, and methods such as `deleteFile` or `clearItems` that resets the state of the application between tests. This base class was especially useful for ui tests, since these tests also include boilerplate for handling the view as well as creating test persons and test collectives.
-
-An issue we ran into when extending from the [base class in the ui module](../../chore-manager/ui/src/test/java/ui/BaseTestClass.java), was when we wanted to override the `setup` method. Since `setup` was used in static methods (decorated with `@BeforeAll`) it also had to be static - and we cannot override static methods. A possible solution to this was by adding `@TestInstance(Lifecycle.PER_CLASS)` to the base class. This meant that `@BeforeAll`-methods did not have to be static and could be overridden. We did not do this, the main reason being that the state of the test class would persist between tests. Our tests have been made with the assumption that the state resets between tests, meaning we would see unexpected behavior if we were to suddenly change this. The solution we went for was instead to change the extending class so it did not have to be override the `setup`-method.
-
 ## Environments / Isolation
 We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data. Previously we needed to manually change the file paths in tests, if we failed to change the file path somewhere, we would overwrite our main text file with test data. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of choosing the file, as the file name is defined in the `.env`-files.  
 
@@ -392,10 +373,20 @@ A visual representation of our project's progress can be found in the burndown c
 
  |![Burndown chart](./images/burndownChart.png)|
  |:--:|
+ | Burndown chart for hours spent working on this project. The blue dots represent a deliverable. |
 
- | This is a class diagram for our most important classes in the core module|
 
 
+Time spent on each deliverable (all 4 team members combined):
+| Deliverable | Hours | Total days in deliverable | Hours per day |
+| -----------:| -----:| -------------------------:| -------------:|
+| 1           |  58   | 11 days                   | 5.28          |
+| 2           |  90   | 22 days                   | 4.09          |
+| 3           |  272  | 36 days                   | 7.56          |
+| **Total**   |  **420**  | **69 days**           | **6.09**      |
+
+
+In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. Given that the project spanned 10 weeks, our initial time estimate amounted to 280 hours. Originally, we anticipated spending 4 hours weekly on lectures, bringing the total time allocated to this subject to 11 hours per week. However, when the lectures stopped midway through the semester, we adjusted our strategy. This allowed us to extends our meetings by an additional 4 hours. Our projection for time spent on the project consequently increased to 400 hours. As you can see from the table above, we spent 420 hours on the project, which is 20 hours more than our initial projection, which isn't so far off considering the scope of the project.
 
 
 ## Workflow 
@@ -476,22 +467,6 @@ Reflecting on our project, the disciplined yet flexible workflow has been crucia
 Our systematic approach to addressing feedback and prioritizing issues helped us minimize problems and enhancing overall efficiency. Consistantly prioritizing code quality through formatting, commenting and documentation established a robus foundation for potential future development and maintenance. 
 
 In conclusion, this project has been valuable learning experience, teaching us about the importance of adaptability, good planning and teamwork when working on a development project like this. The experience and skills we have developed will most certainly benefit us in the future. 
-
-
- | Burndown chart for hours spent working on this project. The blue dots represent a deliverable. |
-
-
-
-Time spent on each deliverable (all 4 team members combined):
-| Deliverable | Hours | Total days in deliverable | Hours per day |
-| -----------:| -----:| -------------------------:| -------------:|
-| 1           |  58   | 11 days                   | 5.28          |
-| 2           |  90   | 22 days                   | 4.09          |
-| 3           |  272  | 36 days                   | 7.56          |
-| **Total**   |  **420**  | **69 days**           | **6.09**      |
-
-
-In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. Given that the project spanned 10 weeks, our initial time estimate amounted to 280 hours. Originally, we anticipated spending 4 hours weekly on lectures, bringing the total time allocated to this subject to 11 hours per week. However, when the lectures stopped midway through the semester, we adjusted our strategy. This allowed us to extends our meetings by an additional 4 hours. Our projection for time spent on the project consequently increased to 400 hours. As you can see from the table above, we spent 420 hours on the project, which is 20 hours more than our initial projection, which isn't so far off considering the scope of the project.
 
 
 # Other documentation
