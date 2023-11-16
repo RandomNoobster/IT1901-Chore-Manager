@@ -243,8 +243,8 @@ In order to conform with best practices, we decided to protect the `master` bran
 - `mvn install -DskipTests` - Installs the necessary dependencies.
 - `mvn test` - Runs all tests (in core and persistence).
 
-If any of these commands fail, the pipeline will fail, and the merge request will not be allowed to merge. This ensures that the `master` branch is always in a working state, and that no unforeseen bugs are introduced.
-`mvn test` does not only run the tests, but also Spotbugs and Checkstyle, and if any of them throw errors, the pipeline will fail. However, the pipeline does not run tests in the UI package as the pipeline fails to run the JavaFX application and render the GUI. Spotbugs and Checkstyle is still checking all packages. To conclude, the pipeline has successfully identified bugs and test-fails in our code and has helped us produce a more stable application and keep master in a working state.
+If any of these commands fail, the pipeline will fail, and the merge request will not be allowed to merge. This ensures that the `master` branch is always in a working state, and that no unforeseen bugs are introduced. `mvn install -DskipTests` installs the necessary dependencies, and run Spotbugs, Checkstyle, JavaDocs and JaCoCo. If any of these fail, the pipeline will fail.
+`mvn test` runs all tests in core and persistence, the pipeline will fail. However, the pipeline does not run tests in the UI package as the pipeline fails to run the JavaFX application and render the GUI. To conclude, the pipeline has successfully identified bugs and test-fails in our code and has helped us produce a more stable application and keep master in a working state.
 
 ## REST API
 In this release we needed to create a REST API. The API has endpoints for each of the CRUD (Create, Read, Update, Delete) operations, where we respectively use the HTTP Methods POST, GET, PUT, DELETE. As a result of the REST API, no classes in the UI-package uses `Storage` or `State` methods/data directly, but instead gets all information through `DataAccess`. 

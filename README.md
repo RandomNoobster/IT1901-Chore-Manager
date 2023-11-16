@@ -13,7 +13,7 @@ Now you can open Eclipse Che with the link above. Then you must follow the steps
 The project is located in [/chore-manager/](/chore-manager/). The project follows the Model-View-Controller (MVC) principle, where the model is located in the [core module](/chore-manager/core/) and the view and controller are located in the [ui module](/chore-manager/ui/). There is also a [persistence module](/chore-manager/persistence) that handles reading and writing to a json file for storage. Documentation and user stories are located in [docs](/docs/).
 
 ## Modules
-- **Core:** The [core module](/chore-manager/core/) contains the model of the application. It contains class logic for [chores](/chore-manager/core/src/main/java/core/data/Chore.java), [users](/chore-manager/core/src/main/java/core/data/Person.java), [days](/chore-manager/core/src/main/java/core/data/Day.java) and [weeks](/chore-manager/core/src/main/java/core/data/Week.java).
+- **Core:** The [core module](/chore-manager/core/) contains the model of the application. This module contains class logic for all base classes.
 
 - **Persistence:** The [persistence module](/chore-manager/persistence/) contains the logic for reading and writing to a json file for storage. The file is saved in the home folder of the user. (`System.getProperty("user.home")`). \
 For Windows users, it is often: `C:\Users\YourName\chore-manager-data.json`\
@@ -24,6 +24,8 @@ The reason for writing to the home folder is that this ensures that the applicat
 - **UI:** The [ui module](/chore-manager/ui/) contains the [view](/chore-manager/ui/src/main/java/ui/viewClasses/) and [controller](/chore-manager/ui/src/main/java/ui/AppController.java) of the application. The fxml and css files for the views are located in [/chore-manager/ui/src/main/resources/ui/](/chore-manager/ui/src/main/resources/ui/).
 
 - **JacocoAggregateReporter:** The [jacocoAggregateReporter module](/chore-manager/jacocoAggregateReporter/) has the required pom.xml configuration for generating an aggregate Jacoco report for the project. The report is generated in [/chore-manager/jacocoAggregateReporter/target/site/](/chore-manager/jacocoAggregateReporter/target/site/).
+
+- **Springboot:** The [springboot module](/chore-manager/springboot/) contains the code for the REST API, which is built with Spring Boot. 
 
 ## Project description
 A description of the project can be found in [/chore-manager/README.md](/chore-manager/README.md).
@@ -86,15 +88,15 @@ Then run the maven test command:
 mvn test
 ```
 
-A Jacoco report will then be generated in [chore-manager/jacocoAggregateReporter/target/site](/chore-manager/jacocoAggregateReporter/target/site/).
+A JaCoCo report will then be generated in [chore-manager/jacocoAggregateReporter/target/site](/chore-manager/jacocoAggregateReporter/target/site/).
 
-A Checkstyle report will be generated during the first maven phase, `verify`, meaning it will be generated if you run `mvn test`. If you want to generate a Spotbugs report as well, you can run the following command:
+A Checkstyle report is generated during the maven phase `verify`, and you can trigger its generation by executing either `mvn verify` or `mvn install -DskipTests`. Executing the following command will generate Checkstyle, Spotbugs and JaCoCo reports: 
 
 ```shell
 mvn verify
 ```
 
-The `mvn verify` command will generate a Checkstyle report, Jacoco report and a Spotbugs report. The Checkstyle reports are located in [persistence](/chore-manager/persistence/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The Spotbugs reports are located in [persistence](/chore-manager/persistence/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).
+The Checkstyle reports are located in [persistence](/chore-manager/persistence/target/checkstyle-result.xml), [core](/chore-manager/core/target/checkstyle-result.xml) and [ui](/chore-manager/ui/target/checkstyle-result.xml). The Spotbugs reports are located in [persistence](/chore-manager/persistence/target/spotbugs.html), [core](/chore-manager/core/target/spotbugs.html) and [ui](/chore-manager/ui/target/spotbugs.html).
 
 
 
