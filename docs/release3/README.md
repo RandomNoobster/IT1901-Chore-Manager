@@ -388,7 +388,7 @@ Below is a screenshot of parts of the spreadsheet:
 ![Excel Time Tracking](./images/excelTimeTracking.png)
 
 
-A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. This is due to the fact that it took longer than planned to develop a robust REST API, which a lot of other code depended on. Another aspect that took longer than expected was the addition of JLink and JPackage.
+A visual representation of our project's progress can be found in the burndown chart below. Each blue dot corresponds to a completed deliverable, providing a quick overview of how our time was spent. As you can see, our time spent increased significantly in the last stage of the project. This is due to the fact that it took longer than planned to develop a robust REST API, a crucial component which numerous other components depended on. Due to this dependency, certain components had to be postponed until the completion of the REST API. Another aspect that took longer than expected was the addition of JLink and JPackage.
 
  |![Burndown chart](./images/burndownChart.png)|
  |:--:|
@@ -405,12 +405,7 @@ Time spent on each deliverable (all 4 team members combined):
 | **Total**   |  **420**  | **69 days**           | **6.09**      |
 
 
-In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. This project lasted 10 weeks, so the total time estimation equates to 280 hours. We wrote the group contract with the expectation that lectures would take up 4 hours every week (so 11 hours on this subject per week). Since the lectures stopped mid-way through the semester, we could extend our meetings by an additional 4 hours, and therefore spend more time on our project.
-We can estimate that the expected time used based on our group contract therefore became 400 hours in total. 
-
-
-
-
+In our group contract we agreed to spend 4 hours on meetings and 3 hours independently each week, in total 7 hours per team member on our project. Given that the project spanned 10 weeks, our initial time estimate amounted to 280 hours. Originally, we anticipated spending 4 hours weekly on lectures, bringing the total time allocated to this subject to 11 hours per week. However, when the lectures stopped midway through the semester, we adjusted our strategy. This allowed us to extends our meetings by an additional 4 hours. Our projection for time spent on the project consequently increased to 400 hours. As you can see from the table above, we spent 420 hours on the project, which is 20 hours more than our initial projection, which isn't so far off considering the scope of the project.
 
 
 # Other documentation
