@@ -17,8 +17,8 @@ import ui.BaseTestClass;
  */
 public class ChoreViewTest extends BaseTestClass {
 
-    private Chore chore1;
-    private Chore chore2;
+    private static Chore chore1;
+    private static Chore chore2;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -26,17 +26,17 @@ public class ChoreViewTest extends BaseTestClass {
     }
 
     @BeforeAll
-    public void boot() {
+    public static void boot() {
         // create chore with dark color and overdue
-        this.chore1 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
+        chore1 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
                 "#000000", testPerson.getUsername(), testPerson.getUsername());
-        testPerson.addChore(this.chore1);
+        testPerson.addChore(chore1);
 
         // create chore with light color and checked
-        this.chore2 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
+        chore2 = new Chore("Vaske", LocalDate.of(2023, 5, 1), LocalDate.of(2023, 5, 2), 1,
                 "#FFFFFF", testPerson.getUsername(), testPerson.getUsername());
-        this.chore2.setChecked(true);
-        testPerson.addChore(this.chore2);
+        chore2.setChecked(true);
+        testPerson.addChore(chore2);
     }
 
     /**
@@ -44,8 +44,8 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testConstructor() {
-        assertDoesNotThrow(() -> new ChoreView(this.chore1, testPerson.getUsername()));
-        assertDoesNotThrow(() -> new ChoreView(this.chore2, testPerson.getUsername()));
+        assertDoesNotThrow(() -> new ChoreView(chore1, testPerson.getUsername()));
+        assertDoesNotThrow(() -> new ChoreView(chore2, testPerson.getUsername()));
     }
 
     /**
@@ -54,7 +54,7 @@ public class ChoreViewTest extends BaseTestClass {
     @Test
     public void testUpdateWith() {
         double newWidth = 100;
-        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
+        ChoreView choreView = new ChoreView(chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.updateWidth(newWidth));
     }
 
@@ -63,7 +63,7 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testGetFxml() {
-        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
+        ChoreView choreView = new ChoreView(chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.getFxml());
     }
 
@@ -72,7 +72,7 @@ public class ChoreViewTest extends BaseTestClass {
      */
     @Test
     public void testGetContainer() {
-        ChoreView choreView = new ChoreView(this.chore1, testPerson.getUsername());
+        ChoreView choreView = new ChoreView(chore1, testPerson.getUsername());
         assertDoesNotThrow(() -> choreView.getContainer());
     }
 
