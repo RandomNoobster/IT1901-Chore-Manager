@@ -126,20 +126,24 @@ When using JaCoCo, we learned that just looking at test coverage can be misleadi
 ## Workflow 
 
 ### General Workflow
-In the last stage of our project, not much has changed when it comes to our general workflow. As before we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer,in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting looking at the requirements for deliverable 3.  
+In the last stage of our project, a bit has changed when it comes to our general workflow. As before we have continued holding two meetings a week. As the deadline has approached these meetings have gotten longer and longer,in order to finish our application on time before the deadline. As with deliverable 2, we started this last stage by looking at the feedback we had received from the previous deliverable, before starting looking at the requirements for deliverable 3. What has changed is that we have made greater use of pair-programming, and agile methods like the Scrum framework, which I will come back to. 
 
 ### Issues
-For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible, making it as easy as possible for the developer to deal with. This has also made sure that every issue is dealt with in accordance with the issues level of importance. Most issues we have made has been marked with a tag stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
+For this last deliverable, we have created issues according to the feedback we received from the previous deliverable. This has helped us deal with these issues in a structured and orderly manner. Next, we started making issues with the requirements for deliverable 3. Making every issue as concrete as possible, making it as easy as possible for the developer to deal with. This has also made sure that every issue is dealt with in accordance with the issues level of importance. Most issues we have made has been marked with a label stating the importance and degree of urgency, always making it clear what issues should be the top priority. 
 
 
 ### Branching
-We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). This means that we have a master branch which is the main branch of the project. All issues are branched into their own branch to minimize conflicts and securing that the master branch is always working. We have continued to adopt the same good practices as with previous deliverables. This includes: 
+We have continued to use branching diligently throughout the project until the end. This last deliverable is no exception. As with previous deliverables we have used the same strategy when it comes to branching. This is described in the first deliverable and the [Developer Guide](/DEVELOPER_GUIDE.md). Our master branch houses our production-ready code,  All issues are branched into their own branch to minimize conflicts and securing that the master branch is always working. We have continued to adopt the same good practices as with previous deliverables. This includes: 
 
-- Creating merge requests when an issue is finished, having at least one teammember reviewe and approve the code before being able to merge with `master`.
+- Creating merge requests when an issue is finished, having at least one team member review and approve the code before being able to merge with `master`.
 
 - Strict naming convention: `{issue-number}-name-of-branch`. 
 
 This is also documented in [Developer guide](/DEVELOPER_GUIDE.md). 
+
+Small and frequent commits have helped in tracking changes and easier identifying when and why a particular change was made.
+
+When merging to the master branch, we choose to keep the history from the branches (Merge commits). The alternative would be to squash our commits into a single commit, which do provide a shorter and cleaner, but also loses context, and it becomes more difficult to identify introductions of bugs as the history is condensed. There is pros and cons to everything, but for out particular project we found this to be the superior solution. 
 
 
 ### Milestones
@@ -158,7 +162,12 @@ Agile methods have gradually become a more significant part of our workflow. As 
 
 - Sprint backlog: The highest priority user (aka the feature we decide we want to implement) goes into the sprint backlog. These are the tasks we aim to in the upcoming sprint. 
 
-- Daily (Weekly) Scrum: These have been held during our weekly meetings, where we talk about what we have been working on since the last meeting, what we plan on working on during the meeting, as well as what will be the priority until the next meeting. 
+- Daily (Weekly) Scrum: These have been held during our weekly meetings. Three main talking points in the weekly scrum, aka standup-meetings:
+- What I did since our last meeting
+- What I plan to work on today and until our next meeting
+- Any impediments or blockers
+
+The ladder might need some more explanation. Team members communicate any obstacles or challenges they are facing that may hinder their progress. Examples include dependencies on other team members or technical issues. By talking about the obstacle, the team can quickly identify and share knowledge to address the issue, which reduces the amount of time a team members stays stuck on a problem.
 
 - Sprint: A sprint typically lasts for 1-4 weeks, meaning each deliverable could be viewed as a sprint. 
 
@@ -176,4 +185,12 @@ For more information about linters see [release2's README](/docs/release2/README
 We have also extensively followed best practices in Java, you can see some of them in the [Developer Guide](/DEVELOPER_GUIDE.md). 
 To ensure a consistent code structure we continue using the MVC-principle, which means that the model, view and controller are separated.
 
+We also ensure to always comment and document our code, so that the next person who reads the code can quickly understand it. This has been very benificial for the workflow internal in the group but it also makes makes it a lot easier for outsiders to view and understand the code that we have written. Not only does this make the process of evaluating and giving feedback on the project a lot easier, it also makes going back to the project in the future a lot easier. One scenario could be that we at a later point want to continue to the develop the application with new features. This might be with the existing team, but also with new team members. In any case, having code with well structured commenting and documentation makes it a lot easier. 
 
+Another important aspect of the code quality is the naming of functions, variables, classes etc.. Utalizing a good naming convention with descriptive names can be equally beneficial in order to read and understand the code. 
+
+As mentioned before, in order to merge to the master branch, we have required at least one other team member to review the code. This has made it a lot easier to spot anti-patterns and suggest better alternatives. Overall this has been a hugh contribution to our code-quality and also probably saved us a lot of work not having to go back in old code and review it and make improvements to it at a later stage. Spotting bugs and potential errors before production is something we strive to achieve. 
+
+
+
+Refactoring???
