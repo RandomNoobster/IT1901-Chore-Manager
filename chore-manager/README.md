@@ -8,7 +8,7 @@ Chore Manager is an application designed to help users manage their daily and we
 |:--:|
 |State diagram for the application|
 
-The application contains many views, that we will call pages. We will now go more in-depth on what the different pages do and how a user will traverse through them.
+The applications contain many views, that we will call pages. We will now go more in-depth on what the different pages do and how users will traverse through them.
 
 ### Login page
 When a user runs the application, they get presented with the login page. Here the user can create a new account by clicking "Create user", or log in to an existing one. After filling in the details and clicking "Log in" the user will be taken to one of two pages. If the account has not yet been assigned to a collective, the user will be taken to the "Join collective" page. Otherwise, the user will be taken to the main calendar page.
@@ -61,7 +61,7 @@ After a user has created a brand new collective, the calendar page will look qui
 
 If a user clicks "Add" on one of the days or weeks, they will be sent to the create chore page. Once the user has filled in the necessary information, one or more chores will pop up in the calendar.
 
-If the user clicked "Add" on one of the days, a chore will be displayed on that day in the calendar. If the user clicked "Add" on a week, a long chore will be displayed on that week. 
+If the user clicked "Add" on one of the days, a chore will be displayed on that day in the calendar. If the user clicked "Add" on a week, a long chore will be displayed on that week. It doesnt make sense to add chores to days before today, therefore buttons from past days have been replaced with labels.
 
 |![Chores](../img/chores.png)|
 |:--:|
@@ -88,7 +88,7 @@ Sharing a collectives join-code can be done by clicking the "Code xxxxxx" button
 ### Create chore page
 The user will be sent to this page after a user has clicked "Add" on a day or week. Here the user can fill out the necessary information about the chore, then click "Create" to create the chore. They will then be sent to the calendar page. If the user wants to go back to the calendar page without creating a chore, they can do so by clicking "Go back".
 
-|![Crate chore page](../img/createChore.png)|
+|![Create chore page](../img/createChore.png)|
 |:--:|
 |The create chore page|
 
@@ -126,5 +126,5 @@ Clicking "Go back" sends a user back to the calendar page.
 
 |![Leaderboard page](../img/leaderboard.png)|
 |:--:|
-|The leader page|
+|The leaderboard page|
 
