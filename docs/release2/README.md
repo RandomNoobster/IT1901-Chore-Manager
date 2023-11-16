@@ -50,7 +50,7 @@ By implementing these user-stories, the amount of pages with corresponding contr
 |:--:|
 |Calendar| 
 
-|![Create Chore](Login.png)|
+|![Create Chore](CreateChore.png)|
 |:--:|
 |Create chore| 
 
