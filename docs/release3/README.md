@@ -30,17 +30,18 @@ Instead of creating a new client, we are going to implement more features.
 - State how many weeks a chore should repeat in the chore-creation menu (from **Spacetime**)
 - Create chores that can be done every day of the week (from **Spacetime**)
 - View:
-  - name of the chore
-  - when the chore is overdue
-  - the status of the chore
-  - who the chore is assigned to 
-  - how many points the chore is worth
+   - name of the chore
+   - when the chore is overdue
+   - the status of the chore
+   - who the chore is assigned to 
+   - how many points the chore is worth
+
   in a menu (from **Detective**)
 
 
 ### How far we got
 
-We completed all the user stories, meaning we managed to finish the application. As we added features, we also realized that some quality of life (QOL) features were missing, such as "Go back" and "Log out" buttons as well as an easy way for members of a collective to spread the "collective code" around. These QOL features combined into the user story creatively named ["Quality of life"](../../UserStory.md).
+We completed all the user stories, meaning we managed to finish the application. As we added features, we also realized that some quality of life (QOL) features were missing, such as "Go back" and "Log out" buttons as well as an easy way for members of a collective to spread their join-code around. These QOL features combined into the user story creatively named ["Quality of life"](../../UserStory.md).
 
 We now have pages for:
  - Logging in
@@ -62,7 +63,7 @@ We now have pages for:
  |:--:|
  |State diagram for the application|
 
-The figure above shows a state diagram of how the different pages interact. You start at the "Logging in" page. From there you can either log in to an existing user or create a brand new one by clicking "Create user" and filling in the details on the "Creating users" page. 
+The figure above shows a state diagram of you traverse the pages. You start at the "Logging in" page. From there you can either log in to an existing user or create a brand new one by clicking "Create user" and filling in the details on the "Creating users" page. 
 
 After creating a user, or logging in to a user that has not yet been assigned to a collective, you will be taken to the "Joining collectives" page. From here you can either choose to join a collective by typing in a code given to you by someone who has created a collective already or create a brand new collective by clicking the "Create collective" button and filling in the name of the collective.
 
@@ -87,7 +88,7 @@ The "Joining collectives" page and the "Creating collectives" page were initiall
 
 Moving the leaderboard from under the calendar, to its own page, was another diversion from the original plan. This was done to make the calendar page seem less overcrowded with features. The "Viewing info about chores" page was intended to just be a popup where you could mark a chore as done, however, we realized that we needed a way to display extra information, and because of that this also ended up being its own page. **The reasons we were able to add these extra pages were threefold.**
 
-Firstly, we originally planned that the creation of week-chores (chores that can be done over a week), and the creation of day-chores (chores that need to be done on a specific day), should have their own pages. This ended up not being necessary as the only difference between a week-chore and a day-chore, is that day-chores have the same start and end date, while week-chores end-date are 7 days after their start date. Therefore they both got the same creation page. Therefore we saved a bit of time on that. 
+Firstly, we originally planned that the creation of week-chores (chores that can be done over a week), and the creation of day-chores (chores that need to be done on a specific day), should have their own pages. This ended up not being necessary as the only difference between a week-chore and a day-chore, is that day-chores have the same start and end date, while week-chores end-date are 7 days after their start date. Therefore they both got the same creation page. We saved a bit of time on that. 
 
 Secondly, between deliverables 1 and 2, we created most "page-types" needed for the rest of the application. As visible in the overview of all pages, most pages follow a similar structure. Because of this, when we created new pages, we could use the already implemented pages as starting points. We could copy one of the old fxml-files, edit where needed, and pass it off as a new page. This saved us a lot of time. 
 
@@ -116,7 +117,7 @@ Another diversion was a switch from weekly, recurring chores, to the ability to 
  |The user can decide how many weeks a chore should repeat|
 
 ## Restructuring of fxml hierarchy
-The fxml hierarchy over nodes for the calendar page grew substantially in size as new features were added. The main reason for this growth, was the addition of week chores, as they need to lay under every other day, as well as their own "Add" buttons, just like the day chores.
+The fxml hierarchy over nodes for the calendar page grew substantially in size as new features were added. The main reason for this growth, was the addition of week chores. They get placed below the days of the week they are added to, and for this to happen, a lot of other fxml elements are needed. This type of chore also needed its own button next to the number of the week, which increased the complexity even further.
 
 |![Chores](../../img/chores.png)|
 |:--:|
@@ -130,7 +131,7 @@ The fxml hierarchy over nodes for the calendar page grew substantially in size a
 ## Refactoring in controllers
 
 ### The KISS and DRY principles
-Since this is the last deliverable, alot of refactoring was done. As the fxml hierarchy for the calendar page grew, the controller for the page, the AppController, became longer. To conform with the "Keep It Simple, Stupid" (KISS) principle, we started extracting code into their own methods. Part of this was done up to deliverable 2, but the rest was done for deliverable 3. Now the initialize method almost exclusively contains method calls. By doing this we also conformed more to the DRY principle, as we could call these methods from other methods, instead of writing the same code twice. 
+Since this is the last deliverable, alot of refactoring was done. As the fxml hierarchy for the calendar page grew, the controller for the page, the AppController, became longer. To conform with the "Keep It Simple, Stupid" (KISS) principle, we started extracting code into their own methods. We began doing this towards the end of deliverable 2, but the finished it for deliverable 3. Now the initialize method almost exclusively contains method calls. By doing this we also conformed more to the DRY principle, as other methods now could utilize these methods, instead of them having to write the same code again. 
 
 Below you can see the initialize method. Comments in the code have been removed to shorten it down.
 
@@ -149,22 +150,23 @@ public void initialize() {
 ```
 
 ### The model, view, controller principle
-Refactoring in the model parts and additional refactoring in the controller parts of the project was needed to better conform to the model, view, controller principle. A lot of checks when creating accounts and chores were done by their respective controllers, CreateUserController and ChoreCreationController, in UI.  These checks could and should have been done by the respective classes that these controllers create. Therefore we added static isValid and getRequirements methods in both the Chore class and the RestrictedPerson class in core. These were used by the controllers to check inputs given by the users. 
+Refactoring in the model parts and additional refactoring in the controller parts of the project was needed to better conform to the model, view, controller principle. A lot of checks when creating accounts and chores were done by their respective controllers, CreateUserController and ChoreCreationController, in UI.  These checks could and should have been done by the respective classes that these controllers create. Therefore we added static "isValid" and "getRequirements" methods in both the Chore class and the RestrictedPerson class in core. These were used by the controllers to check inputs given by the users. 
+
 
 ## Environments / Isolation
 We have introduced environments in release 3, which are used to isolate the configuration of the application. In total, we have two `.env`-files, one for each environment, which are [`.env.development`](/chore-manager/.env.development) and [`.env.test`](/chore-manager/.env.test). By introducing environments there is no way for the test environment to access the information used in the development environment, and vice versa. This solved a major concern regarding accidentally overwriting our main text file with our test data. Previously we needed to manually change the file paths in tests, if we failed to change the file path somewhere, we would overwrite our main text file with test data. With environments, testing has no knowledge of the existence of the development environment, and therefore cannot overwrite it. Also by doing this, we automated the process of choosing the file, as the file name is defined in the `.env`-files.  
 
-Although it is not recommended to push .env-files to GitLab, and instead share it confidentially within the team. We needed to push it to the remote repository, so that the app has the necessary information without needing to contact us when grading. In addition, our .env files do not contain any sensitive information.
+It is not recommended to push .env-files to GitLab, and keep them confidentially within the team. However, we needed to push them to the remote repository, so that the app has the necessary information when the people evaluating the project runs it. In addition, our .env files do not contain any sensitive information.
 
 ## JSON in Java
 In release 2, we used `JSON.simple`, which gave us a warning: ![Name of automatic module is unstable](images/json-simple-warning.png)
-Maven did not find the module if we specified an alternate path, therefore we decided to change our JSON library all together. We found [`JSON in Java`](https://mvnrepository.com/artifact/org.json/json) to be a more popular library, while the implementation was relatively similar to `JSON.simple`. By changing to this library, we got rid of the warning, with minimal code changes, this library also provided greater JSON support, which made building the REST API easier. 
+Maven did not find the module if we specified an alternate path, therefore we decided to change our JSON library all together. We found [`JSON in Java`](https://mvnrepository.com/artifact/org.json/json) to be a more popular library. Its implementation was also relatively similar to `JSON.simple`. By changing to this library, we got rid of the warning, with minimal code changes, this library also provided greater JSON support, which made building the REST API easier. 
 We chose `JSON.simple`/`JSON in Java` because we thought that would cover all our use cases, at that time we did not know Spring Boot used Jackson to serialize/deserialize. Because of this, we could not use Spring Boot's JSON serialization/deserialization, and instead had to return plain Strings. In retrospect it would be better to utilize Jackson as our JSON library, as it was better supported by Spring Boot.
 
 Another change related to JSON, is that each class now has a static encode and decode method. This is used to convert the class to and from JSON, and is used when parsing the file. These methods handle exceptions appropriately. To assist us in converting `Strings` to `JSONObject` and `JSONArray`, we created a new class [`JSONValidator`](/chore-manager/core/src/main/java/core/json/JSONValidator.java).
 
 ## Changes in file classes
-Previously we only had a `Storage` class, which contained all information about the application. Now we introduced a new class `State`, which holds information about the current state of the application. By that, I mean which person is logged in and the corresponding collective. By introducing this class we better uphold the Single Responsibility Principle. In addition, this made it easier to hide information about other collectives and users, which is important for security reasons, since we do not want to expose information about other users and collectives outside the collective the logged-in user is registered to. 
+Previously we only had a `Storage` class, which contained all information about the application. Now we have a new class `State`, which holds information about the current state of the application, meaning which user is logged in and the users corresponding collective. By introducing this class we better uphold the Single Responsibility Principle. In addition, this made it easier to hide information about other collectives and users, which is important for security reasons, since we do not want to expose information about other users and collectives outside the collective the logged-in user is registered to. 
 
 Since we have extended the functionality of the application, the JSON representation has also changed. Previously we had a list of `Persons`, but now we have a list of `Collectives`. Each `Collective` has a map of `Persons` with username as key. We have an empty collective called `LimboCollective`, which is used to temporarily hold users which has yet to be assigned to a collective.
 There have been some changes in the attributes of each class, which would be to many too list, but some notable ones is: 

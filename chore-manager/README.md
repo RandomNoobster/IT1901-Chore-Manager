@@ -1,6 +1,6 @@
 # Chore Manager
 ## Description
-Chore Manager is an application designed to help users manage their daily, and weekly, chores. The application allows users to create chores, as well as assign chores to other users within their household. Chores will show up in a calendar view, that shows both past and upcoming chores. A leaderboard system is implemented so that the members of a household can rack up points by completing chores, and compete against each other.
+Chore Manager is an application designed to help users manage their daily and weekly chores. The application allows users to create chores, as well as assign chores to other users within their household. Chores will show up in a calendar view, that shows both past and upcoming chores. A leaderboard system is implemented so that the members of a household can rack up points by completing chores, and compete against each other.
 
 ## Traversing through the application
 
@@ -57,7 +57,7 @@ After a user has created a brand new collective, the calendar page will look qui
 
 |![Colors convey different meanings](../img/weekColors.png)|
 |:--:|
-|The different colors that days have convay different things|
+|The different colors that days have convey different things|
 
 If a user clicks "Add" on one of the days or weeks, they will be sent to the create chore page. Once the user has filled in the necessary information, one or more chores will pop up in the calendar.
 
