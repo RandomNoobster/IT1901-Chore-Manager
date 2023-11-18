@@ -226,7 +226,7 @@
 }
 
 .on-hover-background-green:hover {
-    -fx-background-color: derive(-checked, 10%);
+    -fx-background-color: derive(-checked, -15%);
     -fx-cursor: hand;
 }
 
