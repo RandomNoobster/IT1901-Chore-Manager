@@ -117,7 +117,12 @@ If a chore is overdue, the deadline will be replaced with the text "[OVERDUE]" u
 |:--:|
 |The red box with an x represents that the chore is unfinished, green box with a white checkmark represents that its done|
 
+The chore will be deleted if the user clicks "Delete". This means it will no longer show up in the calendar, and if the chore was completed, points will be deducted from the assignee.
+
 ### Leaderboard page
+This page displays how many points each user in the collective has. Users are displayed in descending order, with the user with the most points on top.
+
+Clicking "Go back" sends a user back to the calendar page.
 
 |![Leaderboard page](../img/leaderboard.png)|
 |:--:|
