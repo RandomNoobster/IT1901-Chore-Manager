@@ -35,7 +35,7 @@
             <artifactId>javafx-fxml</artifactId>
             <version>17.0.8</version>
         </dependency>
-
+       
         <!-- junit testing with jupiter -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -58,7 +58,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.testfx</groupId>
+             <groupId>org.testfx</groupId>
             <artifactId>testfx-junit5</artifactId>
             <version>4.0.16-alpha</version>
             <scope>test</scope>
@@ -69,9 +69,12 @@
             <version>2.2</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.guicedee.services</groupId>
+            <artifactId>json</artifactId>
+            <version>1.2.0.2-jre16</version>
+        </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -116,8 +119,47 @@
                 <configuration>
                     <!-- syntax: module-name/full-app-class-name -->
                     <mainClass>main.ui/ui.App</mainClass>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <stripDebug>true</stripDebug>
+                    <noManPages>true</noManPages>
+                    <launcher>chore-manager-app</launcher>
+                    <jlinkImageName>chore-manager</jlinkImageName>
+                    <jlinkZipName>chore-manager</jlinkZipName>
                 </configuration>
             </plugin>
+
+            <!-- Jpackage -->
+
+            <plugin>
+                <groupId>org.panteleyev</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>1.4.0</version>
+                <configuration>
+                    <name>chore-manager</name>
+                    <appVersion>1.0.0</appVersion>
+                    <vendor>it1901</vendor>
+                    <destination>target/dist</destination>
+                    <module>main.ui/ui.App</module>
+                    <runtimeImage>target/chore-manager
+                    </runtimeImage>
+                    <javaOptions>
+                        <option>-Dfile.encoding=UTF-8</option>
+                    </javaOptions>
+
+                    <!-- linuxoptions -->
+                    <linuxShortcut>true</linuxShortcut>
+                    <linuxMenuGroup>chore-manager</linuxMenuGroup>
+
+                    <!-- windows options  -->
+                    <winDirChooser>true</winDirChooser>
+                    <winShortcut>true</winShortcut>
+                    <winMenu>true</winMenu>
+                    <winMenuGroup>chore-manager</winMenuGroup>
+                </configuration>
+            </plugin>
+
         </plugins>
+       
     </build>
 </project>
